@@ -10,7 +10,7 @@ package
 	import flash.utils.getDefinitionByName;
 	
 	/**
-	 * ...
+	 * Preloader class of the application
 	 * @author desweb
 	 */
 	public class Preloader extends MovieClip 

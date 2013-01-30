@@ -4,7 +4,7 @@ package
 	import flash.events.Event;
 
 	/**
-	 * ...
+	 * Main class of the application
 	 * @author desweb
 	 */
 	[Frame(factoryClass="Preloader")]
