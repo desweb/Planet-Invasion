@@ -6,6 +6,18 @@ package core
 	 */
 	public class Common 
 	{
+		// Scene id
+		public static const SCENE_ACHIEVEMENT:uint	= 1;
+		public static const SCENE_CREDIT:uint		= 2;
+		public static const SCENE_DIALOG:uint		= 3;
+		public static const SCENE_FINAL:uint		= 4;
+		public static const SCENE_GAME_MODE:uint	= 5;
+		public static const SCENE_IMPROVEMENT:uint	= 6;
+		public static const SCENE_MENU:uint			= 7;
+		public static const SCENE_RANK:uint			= 8;
+		public static const SCENE_RESEARCH_DUO:uint	= 9;
+		public static const SCENE_SELECT_LEVEL:uint	= 10;
+		
 		// Game security key
 		public static const GAME_ADVENTURE:String	= '172ae58a586c65c8c4487062c695fe7f';
 		public static const GAME_SURVIVAL:String	= 'c6acb7315b55571d750dc8fb08c9aa3d';
