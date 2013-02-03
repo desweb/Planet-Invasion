@@ -1,6 +1,6 @@
 package core.scene 
 {
-	import core.scene.iScene;
+	import core.scene.IScene;
 	
 	import flash.display.Sprite;
 	
@@ -8,7 +8,7 @@ package core.scene
 	 * Base of scenes
 	 * @author desweb
 	 */
-	public class Scene extends Sprite implements iScene
+	public class Scene extends Sprite implements IScene
 	{
 		public function Scene() 
 		{

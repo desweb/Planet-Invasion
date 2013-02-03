@@ -4,10 +4,10 @@ package core.popup
 	 * Popup interface
 	 * @author desweb
 	 */
-	public class iPopup 
+	public class IPopup 
 	{
 		
-		public function iPopup() 
+		public function IPopup() 
 		{
 			
 		}

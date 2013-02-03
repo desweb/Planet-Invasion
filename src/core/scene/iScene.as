@@ -4,7 +4,7 @@ package core.scene
 	 * Scene interface
 	 * @author desweb
 	 */
-	public interface iScene 
+	public interface IScene 
 	{
 		/*
 		 * Create
