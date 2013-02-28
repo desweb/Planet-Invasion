@@ -1,8 +1,10 @@
 package core.scene 
 {
-	import core.scene.IScene;
-	
 	import flash.display.Sprite;
+	
+	//import citrus.core.State;
+	
+	import core.scene.IScene;
 	
 	/**
 	 * Base of scenes
@@ -14,12 +16,23 @@ package core.scene
 		{
 		}
 		
-		public function onExit():void
+		/*override public function initialize():void
 		{
-		}
+			super.initialize();
+		}*/
+
+		/*override public function onExit():void
+		{
+			super.onExit();
+		}*/
 		
-		public function onEnter():void
+		/*public function onExit():void
 		{
 		}
+
+		override public function destroy():void
+		{
+			super.destroy();
+		}*/
 	}
 }

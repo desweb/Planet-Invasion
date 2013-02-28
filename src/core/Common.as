@@ -6,6 +6,8 @@ package core
 	 */
 	public class Common 
 	{
+		public static const IS_DEBUG:Boolean = true;
+		
 		// Scene id
 		public static const SCENE_ACHIEVEMENT:uint	= 1;
 		public static const SCENE_CREDIT:uint		= 2;

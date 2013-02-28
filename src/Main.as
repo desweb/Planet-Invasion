@@ -12,20 +12,30 @@ package
 	 * Main class of the application
 	 * @author desweb
 	 */
-	[Frame(factoryClass="Preloader")]
-	public class Main extends Sprite 
+	
+	[SWF(backgroundColor="#000", frameRate="60", width="640", height="480")]
+	[Frame(factoryClass = "Preloader")]
+	
+	public class Main extends Sprite
 	{
 
 		public function Main():void 
 		{
+			if (Common.IS_DEBUG) trace('create Main');
+			
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
 		private function init(e:Event = null):void 
 		{
+			if (Common.IS_DEBUG) trace('init Main');
+			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
+			
+			//var _stats:Stats = new StatsMonitor();
+			//stage.addChild(_stats);
 			
 			GameState.main = this;
 			

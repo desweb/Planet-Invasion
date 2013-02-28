@@ -51,7 +51,8 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="assets\scene.swc" />
+    <element path="lib\CEV3-1-4-Starling-Feathers-Box2D.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

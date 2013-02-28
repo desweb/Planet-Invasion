@@ -9,12 +9,13 @@ package core.scene
 		/*
 		 * Create
 		 */
-		function onEnter():void;
+		//function initialize():void
 		
 		/*
 		 * Destroy
 		 */
-		function onExit():void;
+		//function onExit():void;
+		//function destroy():void;
 	}
 
 }

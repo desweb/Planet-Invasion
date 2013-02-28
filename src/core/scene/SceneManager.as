@@ -23,7 +23,7 @@ package core.scene
 		
 		/**
 		 * Singleton
-		 */	
+		 */
 		public static function getInstance():SceneManager
 		{
 			if (_instance == null) _instance = new SceneManager();
