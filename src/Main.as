@@ -7,6 +7,7 @@ package
 	import core.GameState;
 	import core.scene.MenuScene;
 	import core.scene.SceneManager;
+	import core.utils.Stats;
 	
 	/**
 	 * Main class of the application
@@ -18,7 +19,8 @@ package
 	
 	public class Main extends Sprite
 	{
-
+		private var _stats:Stats;
+		
 		public function Main():void 
 		{
 			if (Common.IS_DEBUG) trace('create Main');
@@ -34,8 +36,11 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
-			//var _stats:Stats = new StatsMonitor();
-			//stage.addChild(_stats);
+			if (Common.IS_DEBUG)
+			{
+				_stats = new Stats();
+				stage.addChild(_stats);
+			}
 			
 			GameState.main = this;
 			

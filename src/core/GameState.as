@@ -34,6 +34,19 @@ package core
 		{ 
 			return _main;
 		}
-	}
+		
+		/**
+		 * Tools functions
+		 */
+		
+		static public function get stageWidth():int
+		{
+			return _main.stage.stageWidth;
+		}
 
+		static public function get stageHeight():int
+		{
+			return _main.stage.stageHeight;
+		}
+	}
 }

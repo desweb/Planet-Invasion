@@ -1,11 +1,19 @@
 package core 
 {
+	import flash.text.Font;
+	import flash.text.TextFormat;
+	
 	/**
 	 * Manage general const of the application
 	 * @author desweb
 	 */
-	public class Common 
+	
+	public class Common
 	{
+		/**
+		 * Const variables
+		 */
+		
 		public static const IS_DEBUG:Boolean = true;
 		
 		// Scene id
@@ -62,6 +70,26 @@ package core
 			
 		}
 		
+		/**
+		 * Fonts functions
+		 */
+		public static function getPolicy(policy:String = 'Arial', color:int = 0xffffff, size:int = 24):TextFormat
+		{
+			//var font:Font;
+			
+			//if (policy == 'Arial') font = new Arial();
+			
+			var format:TextFormat = new TextFormat();
+			format.color = color;
+			format.size = size;
+			//format.font = font.fontName;
+			
+			return format;
+		}
+		
+		public static function getPolicyArialWhite24():TextFormat
+		{
+			return getPolicy('Arial', 0xffffff, 24);
+		}
 	}
-
 }
