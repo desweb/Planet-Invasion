@@ -73,7 +73,7 @@ package core
 		/**
 		 * Fonts functions
 		 */
-		public static function getPolicy(policy:String = 'Arial', color:int = 0xffffff, size:int = 24):TextFormat
+		public static function generatePolicy(policy:String = 'Arial', color:int = 0xffffff, size:int = 24):TextFormat
 		{
 			//var font:Font;
 			
@@ -87,9 +87,14 @@ package core
 			return format;
 		}
 		
+		public static function getPolicy(policy:String, color:int, size:int):TextFormat
+		{
+			return generatePolicy(policy, color, size);
+		}
+		
 		public static function getPolicyArialWhite24():TextFormat
 		{
-			return getPolicy('Arial', 0xffffff, 24);
+			return generatePolicy('Arial', 0xffffff, 24);
 		}
 	}
 }

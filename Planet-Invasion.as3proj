@@ -52,7 +52,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="assets\scene.swc" />
-    <element path="lib\CEV3-1-4-Starling-Feathers-Box2D.swc" />
+    <element path="lib\greensock.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
