@@ -3,13 +3,14 @@ package com.scroll
 	import flash.display.Sprite;
 	
 	/**
-	 * ...
+	 * To use this class, you must instantiate your object, enter your parameters (x, y, width, height) and use "generateScroll" last
 	 * @author desweb
 	 */
-	public class ScrollManager extends Sprite
+	public class ScrollManager extends Bg // Tmp extends, change by Scroll later
 	{
 		private static const SCROLL_WIDTH:uint = 20;
 		
+		private var _bg:Sprite;
 		private var _content:Sprite;
 		
 		private var _scroll:Sprite;
@@ -21,21 +22,28 @@ package com.scroll
 		
 		public function ScrollManager() 
 		{
-			graphics.beginFill(0x000000);
-			graphics.drawRect(0, 0, 100, 200);
-			graphics.endFill();
+			super();
 			
-			alpha = 0.5;
-			
-			_content = new Sprite();
+			_content	= new Sprite();
 		}
 		
 		public function generateScroll():void
 		{
+			trace(width + '*' + height);
+			// Background
+			_bg = new Sprite();
+			_bg.graphics.beginFill(0x000000);
+			_bg.graphics.drawRect(0, 0, 200, 200);
+			_bg.graphics.endFill();
+			_bg.alpha = 0.5;
+			addChild(_bg);
+			
+			// Scrollable content
 			_content.width = width - SCROLL_WIDTH;
 			_content.height = height;
 			addChild(_content);
 			
+			// Scroll bar
 			generateScrollBar();
 		}
 		

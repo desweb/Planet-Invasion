@@ -6,6 +6,7 @@ package core.scene
 	import flash.text.TextFormat;
 	
 	import com.scroll.ScrollManager;
+	import com.scroll.ScrollBarMovieClip;
 	
 	import core.Common;
 	import core.GameState;
@@ -17,12 +18,12 @@ package core.scene
 	 */
 	public class CreditScene extends Scene
 	{
-		private var _scroll:ScrollManager;
+		private var _scroll:ScrollBarMovieClip;
 		private var _credits:TextField;
 		
 		public function CreditScene() 
 		{
-			if (Common.IS_DEBUG) trace('create MenuScene');
+			if (Common.IS_DEBUG) trace('create CreditScene');
 			
 			/**
 			 * Initialization
@@ -48,27 +49,19 @@ package core.scene
 			_credits.x = GameState.stageWidth/2 - _credits.width/2;
 			_credits.y = GameState.stageHeight / 2 - _credits.height / 2;
 			
-			var upPoints:Vector.<Number> = new Vector.<Number>(6, true);
-			upPoints[0] = 5;
-			upPoints[1] = 0;
-			upPoints[2] = 10;
-			upPoints[3] = 10;
-			upPoints[4] = 0;
-			upPoints[5] = 10;
-			
-			var _up:Sprite = new Sprite();
-			_up.x = 100;
-			_up.y = 100;
-			_up.graphics.beginFill(0xfff000);
-			_up.graphics.drawTriangles(upPoints);
-			_up.graphics.endFill();
-			addChild(_up);
-			
 			/**
 			 * Test scroll
 			 */
-			_scroll = new ScrollManager();
-			_scroll.x = 100;
+			_scroll = new ScrollBarMovieClip();
+			
+			_scroll.setHeight (200);
+ 
+			// Spécifie le clip ou le sprite cible et sa hauteur maximum
+			_scroll.setTarget (_credits, 0);
+			
+			addChild(_scroll);
+			
+			/*_scroll.x = 100;
 			_scroll.y = 100;
 			_scroll.width = 200;
 			_scroll.height = 200;
@@ -76,7 +69,8 @@ package core.scene
 			
 			_scroll.content.addChild(_credits);
 			
-			_scroll.generateScroll();
+			_scroll.generateScroll();*/
+			
 		}
 	}
 }
