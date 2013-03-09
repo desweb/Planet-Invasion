@@ -1,61 +1,64 @@
 package com.scroll 
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
+	import com.jessamin.controls.*;
+	import com.pixelbreaker.ui.osx.MacMouseWheel;
+	import com.spikything.utils.MouseWheelTrap;
+	
+	import core.GameState;
 	
 	/**
-	 * To use this class, you must instantiate your object, enter your parameters (x, y, width, height) and use "generateScroll" last
+	 * Generate standard
 	 * @author desweb
 	 */
-	public class ScrollManager extends Bg // Tmp extends, change by Scroll later
+	public class ScrollManager extends Sprite
 	{
-		private static const SCROLL_WIDTH:uint = 20;
+		private static const CONTENT_WIDTH:int	= 560;
+		private static const CONTENT_HEIGHT:int	= 360;
 		
 		private var _bg:Sprite;
-		private var _content:Sprite;
-		
-		private var _scroll:Sprite;
-		private var _bar:Sprite;
+		private var _win:Sprite;
+		private var _content:DisplayObject;
+		private var _thumb:Sprite;
+		private var _track:Sprite;
 		private var _up:Sprite;
 		private var _down:Sprite;
 		
-		private var _scrollOffsetY:int;
-		
-		public function ScrollManager() 
+		public function ScrollManager(content:DisplayObject)
 		{
-			super();
+			x = (GameState.stageWidth - CONTENT_WIDTH)/2;
+			y = GameState.stageHeight - CONTENT_HEIGHT - 20;
 			
-			_content	= new Sprite();
-		}
-		
-		public function generateScroll():void
-		{
-			trace(width + '*' + height);
+			_content = content;
+			
+			MacMouseWheel.setup(GameState.stage);
+			MouseWheelTrap.setup(GameState.stage);
+			
 			// Background
 			_bg = new Sprite();
-			_bg.graphics.beginFill(0x000000);
-			_bg.graphics.drawRect(0, 0, 200, 200);
-			_bg.graphics.endFill();
 			_bg.alpha = 0.5;
+			_bg.graphics.beginFill(0x000000);
+			_bg.graphics.drawRect(0, 0, CONTENT_WIDTH, CONTENT_HEIGHT);
+			_bg.graphics.endFill();
 			addChild(_bg);
 			
-			// Scrollable content
-			_content.width = width - SCROLL_WIDTH;
-			_content.height = height;
+			// Window
+			_win = new Sprite();
+			_win.graphics.beginFill(0x000000);
+			_win.graphics.drawRect(0, 0, CONTENT_WIDTH, CONTENT_HEIGHT);
+			_win.graphics.endFill();
+			addChild(_win);
+			
+			_content.x = 0;
+			_content.y = 0;
+			_content.mask = _win;
 			addChild(_content);
 			
-			// Scroll bar
-			generateScrollBar();
-		}
-		
-		private function generateScrollBar():void
-		{
-			_scroll = new Sprite();
-			_scroll.x = width - SCROLL_WIDTH;
-			_scroll.width = SCROLL_WIDTH;
-			_scroll.height = height;
-			addChild(_scroll);
-			
-			// Create up button
+			// Up button
 			var upPoints:Vector.<Number> = new Vector.<Number>(6, true);
 			upPoints[0] = 5;
 			upPoints[1] = 0;
@@ -65,19 +68,33 @@ package com.scroll
 			upPoints[5] = 10;
 			
 			_up = new Sprite();
-			_up.graphics.beginFill(0xffff00);
+			_up.x = CONTENT_WIDTH + 10;
+			_up.y = 0;
+			_up.graphics.beginFill(0x00ffff);
 			_up.graphics.drawTriangles(upPoints);
 			_up.graphics.endFill();
-			_scroll.addChild(_up);
+			addChild(_up);
 			
-			// Create scroll bar
-			_bar = new Sprite();
-			_bar.graphics.beginFill(0xffff00);
-			_bar.graphics.drawRect(0, 0, 10, 20);
-			_bar.graphics.endFill();
-			_scroll.addChild(_bar);
+			// Scroll bar bg
+			_track = new Sprite();
+			_track.x = CONTENT_WIDTH + 10;
+			_track.y = 20;
+			_track.graphics.beginFill(0x000000);
+			_track.graphics.drawRect(0, 0, 10, CONTENT_HEIGHT - 40);
+			_track.graphics.endFill();
+			_track.alpha = 0.5;
+			addChild(_track);
 			
-			// Create down button
+			// Scroller
+			_thumb = new Sprite();
+			_thumb.x = _track.x;
+			_thumb.y = _track.y;
+			_thumb.graphics.beginFill(0x00ffff);
+			_thumb.graphics.drawRect(0, 0, 10, 50);
+			_thumb.graphics.endFill();
+			addChild(_thumb);
+			
+			// Down button
 			var downPoints:Vector.<Number> = new Vector.<Number>(6, true);
 			downPoints[0] = 0;
 			downPoints[1] = 0;
@@ -87,23 +104,14 @@ package com.scroll
 			downPoints[5] = 10;
 			
 			_down = new Sprite();
-			_down.graphics.beginFill(0xffff00);
+			_down.x = CONTENT_WIDTH + 10;
+			_down.y = CONTENT_HEIGHT - 10;
+			_down.graphics.beginFill(0x00ffff);
 			_down.graphics.drawTriangles(downPoints);
 			_down.graphics.endFill();
-			_scroll.addChild(_down);
+			addChild(_down);
+			
+			var scrollbar:VerticalScrollbar = new VerticalScrollbar(GameState.stage, _thumb, _track, _win, _content, _up, _down);
 		}
-		
-		/**
-		 * Getters functions
-		 */
-		
-		public function get content():Sprite
-		{
-			return _content;
-		}
-		
-		/**
-		 * Setters functions
-		 */
 	}
 }
