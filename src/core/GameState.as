@@ -1,5 +1,7 @@
 package core 
 {
+	import flash.display.Stage;
+	
 	/**
 	 * General singleton of the application
 	 * @author desweb
@@ -38,6 +40,11 @@ package core
 		/**
 		 * Tools functions
 		 */
+		
+		static public function get stage():Stage
+		{
+			return _main.stage;
+		}
 		
 		static public function get stageWidth():int
 		{
