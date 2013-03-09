@@ -12,6 +12,8 @@ package
 	import flash.text.TextFormat;
 	import flash.utils.getDefinitionByName;
 	
+	import core.Common;
+	
 	/**
 	 * Preloader class of the application
 	 * @author desweb
@@ -24,6 +26,8 @@ package
 		
 		public function Preloader() 
 		{
+			if (Common.IS_DEBUG) trace('create Preloader');
+			
 			if (stage) {
 				stage.scaleMode = StageScaleMode.NO_SCALE;
 				stage.align = StageAlign.TOP_LEFT;
@@ -64,6 +68,12 @@ package
 		private function progress(e:ProgressEvent):void 
 		{
 			// TODO update loader
+			
+			if (Common.IS_DEBUG)
+			{
+				var percent:int = (e.bytesLoaded / e.bytesTotal) * 100;
+				trace('loading : ' + percent + '%');
+			}
 		}
 		
 		private function checkFrame(e:Event):void 
@@ -79,6 +89,8 @@ package
 		
 		private function loadingFinished():void 
 		{
+			if (Common.IS_DEBUG) trace('loading finished');
+			
 			removeEventListener(Event.ENTER_FRAME, checkFrame);
 			loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioError);
@@ -90,10 +102,10 @@ package
 		
 		private function startup():void 
 		{
+			if (Common.IS_DEBUG) trace('launch project');
+			
 			var mainClass:Class = getDefinitionByName("Main") as Class;
 			addChild(new mainClass() as DisplayObject);
 		}
-		
 	}
-	
 }

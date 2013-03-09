@@ -1,21 +1,25 @@
 package core.scene 
 {
+	import flash.events.MouseEvent;
+	
 	/**
 	 * Scene interface
 	 * @author desweb
 	 */
 	public interface IScene 
 	{
-		/*
-		 * Create
+		/**
+		 * Interface elements
 		 */
-		//function initialize():void
+		function generateBg():void;
+		function generateBtnReturn():void;
+		function generateBtnSound():void;
+		function generateLogin():void;
 		
-		/*
-		 * Destroy
+		/**
+		 * Events
 		 */
-		//function onExit():void;
-		//function destroy():void;
+		function over(e:MouseEvent):void;
+		function out(e:MouseEvent):void;
 	}
-
 }

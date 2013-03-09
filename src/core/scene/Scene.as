@@ -81,13 +81,15 @@ package core.scene
 			_btnLogin = new BtnLeft();
 			_btnLogin.x = GameState.stageWidth * 0.6;
 			_btnLogin.y = GameState.stageHeight * 0.05;
-			//_btnLogin.btn_txt.selectable = false;
+			_btnLogin.btn_txt.text = 'Login';
+			_btnLogin.btn_txt.selectable = false;
 			addChild(_btnLogin);
 			
 			_btnRegister = new BtnRight();
 			_btnRegister.x = _btnLogin.x + _btnLogin.width;
 			_btnRegister.y = _btnLogin.y;
-			//_btnRegister.btn_txt.selectable = false;
+			_btnRegister.btn_txt.text = 'Register';
+			_btnRegister.btn_txt.selectable = false;
 			addChild(_btnRegister);
 			
 			_btnLogin.addEventListener(MouseEvent.MOUSE_OVER, over);

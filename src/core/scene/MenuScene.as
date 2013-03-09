@@ -92,10 +92,15 @@ package core.scene
 			_btnCredits.addEventListener(MouseEvent.MOUSE_OVER, over);
 			_btnCredits.addEventListener(MouseEvent.MOUSE_OUT, out);
 			_btnCredits.addEventListener(MouseEvent.CLICK, clickCredits);
+			
+			/**
+			 * Test popup
+			 */
+			
 		}
 		
 		/**
-		 * Events functions
+		 * Events
 		 */
 		
 		private function clickPlay(e:MouseEvent):void
