@@ -8,6 +8,7 @@ package
 	import core.scene.MenuScene;
 	import core.scene.SceneManager;
 	import core.utils.Stats;
+	import core.utils.StatsMonitor;
 	
 	/**
 	 * Main class of the application
@@ -20,6 +21,7 @@ package
 	public class Main extends Sprite
 	{
 		private var _stats:Stats;
+		private var _stats_monitor:StatsMonitor;
 		
 		public function Main():void 
 		{
@@ -38,13 +40,16 @@ package
 			
 			if (Common.IS_DEBUG)
 			{
-				_stats = new Stats();
-				stage.addChild(_stats);
+				//_stats = new Stats();
+				//stage.addChild(_stats);
+				
+				_stats_monitor = new StatsMonitor();
+				stage.addChild(_stats_monitor);
 			}
 			
 			GameState.main = this;
 			
-			SceneManager.getInstance().setCurrentScene(Common.SCENE_CREDIT);
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 		}
 
 	}

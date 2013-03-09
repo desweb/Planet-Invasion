@@ -12,7 +12,7 @@ package com.scroll
 	import core.GameState;
 	
 	/**
-	 * Generate standard
+	 * Generate scroll with standard skin
 	 * @author desweb
 	 */
 	public class ScrollManager extends Sprite
