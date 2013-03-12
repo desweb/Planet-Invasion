@@ -9,6 +9,9 @@ package core.popup
 	 */
 	public interface IPopup 
 	{
+		function display():void;
+		function undisplay():void;
+		
 		function generatePopup():void;
 		
 		/**

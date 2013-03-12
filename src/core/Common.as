@@ -14,6 +14,7 @@ package core
 		 * Const variables
 		 */
 		
+		// Debug
 		public static const IS_DEBUG:Boolean = true;
 		
 		// Scene id
@@ -65,10 +66,7 @@ package core
 		public static const IMPROVEMENT_BOMB:String						= '1b7417bf9151374d7b062a64abd29425';
 		public static const IMPROVEMENT_REINFORCE:String				= 'd724842bf8d7855b964c4018b0484d7d';
 		
-		public function Common() 
-		{
-			
-		}
+		public function Common() {}
 		
 		/**
 		 * Fonts functions

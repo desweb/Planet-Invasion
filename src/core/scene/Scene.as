@@ -1,15 +1,16 @@
 package core.scene 
 {
-	import core.popup.LoginPopup;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.text.TextField;
 	
-	//import citrus.core.State;
+	import com.greensock.TweenLite;
 	
 	import core.Common;
 	import core.GameState;
+	import core.popup.LoginPopup;
+	import core.popup.Popup;
 	import core.scene.IScene;
 	import core.scene.SceneManager;
 	
@@ -29,7 +30,7 @@ package core.scene
 		
 		public var sceneReturn:uint;
 		
-		private var _loginPopup:LoginPopup;
+		private var _popup:Popup;
 		
 		public function Scene() 
 		{
@@ -130,10 +131,11 @@ package core.scene
 		
 		private function clickLogin(e:MouseEvent):void
 		{
-			_loginPopup = new LoginPopup();
-			addChild(_loginPopup);
+			_popup = new LoginPopup();
+			addChild(_popup);
+			_popup.display();
 			
-			_loginPopup.close.addEventListener(MouseEvent.CLICK, clickPopupClose);
+			_popup.close.addEventListener(MouseEvent.CLICK, clickLoginPopupClose);
 		}
 		
 		private function clickRegister(e:MouseEvent):void
@@ -141,13 +143,21 @@ package core.scene
 			
 		}
 		
-		private function clickPopupClose(e:MouseEvent):void
+		private function clickLoginPopupClose(e:MouseEvent):void
 		{
-			trace('destroy loginPopup');
+			_popup.removeEventListener(MouseEvent.CLICK, clickLoginPopupClose);
 			
-			_loginPopup.removeEventListener(MouseEvent.CLICK, clickPopupClose);
+			TweenLite.to(_popup, 1, {alpha:0, onComplete:removePopup});
+		}
+		
+		private function removePopup():void
+		{
+			if (!_popup) return;
 			
-			removeChild(_loginPopup);
+			if (Common.IS_DEBUG) trace('delete Popup');
+			
+			removeChild(_popup);
+			_popup = null;
 		}
 	}
 }

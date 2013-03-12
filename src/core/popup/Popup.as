@@ -7,6 +7,8 @@ package core.popup
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
+	import com.greensock.TweenLite;
+	
 	import core.Common;
 	import core.GameState;
 	
@@ -26,6 +28,8 @@ package core.popup
 		
 		public function Popup() 
 		{
+			alpha = 0;
+			
 			// Background
 			_bg = new Sprite();
 			_bg.alpha = 0.5;
@@ -38,6 +42,9 @@ package core.popup
 			_title = new TextField();
 			_close = new BtnClose();
 		}
+		
+		public function display		():void { TweenLite.to(this, 1, {alpha:1}); }
+		public function undisplay	():void { TweenLite.to(this, 1, {alpha:0}); }
 		
 		/**
 		 * Generation functions
