@@ -1,6 +1,7 @@
 package core.popup 
 {
 	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * Popup interface
@@ -9,6 +10,12 @@ package core.popup
 	public interface IPopup 
 	{
 		function generatePopup():void;
+		
+		/**
+		 * Events
+		 */
+		function over	(e:MouseEvent):void;
+		function out	(e:MouseEvent):void;
 		
 		/**
 		 * Getters
@@ -21,6 +28,8 @@ package core.popup
 		function set popupWidth			(value:int):void;
 		function set popupHeight		(value:int):void;
 		function set popupBorderColor	(value:int):void;
-		function set popupContent		(value:DisplayObject):void;
+		
+		function setTitleText	(value:String)			:void
+		function setPopupContent(value:DisplayObject)	:void;
 	}
 }

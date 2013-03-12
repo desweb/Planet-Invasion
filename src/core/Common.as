@@ -88,9 +88,9 @@ package core
 			return format;
 		}
 		
-		public static function getPolicy(policy:String, color:int, size:int):TextFormat
+		public static function getPolicy(policy:String, color:int, size:int, align:String = 'center'):TextFormat
 		{
-			return generatePolicy(policy, color, size);
+			return generatePolicy(policy, color, size, align);
 		}
 		
 		public static function getPolicyArialWhite24():TextFormat

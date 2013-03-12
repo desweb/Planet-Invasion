@@ -95,14 +95,6 @@ package core.scene
 			_btnCredits.addEventListener(MouseEvent.MOUSE_OVER, over);
 			_btnCredits.addEventListener(MouseEvent.MOUSE_OUT, out);
 			_btnCredits.addEventListener(MouseEvent.CLICK, clickCredits);
-			
-			/**
-			 * Test popup
-			 */
-			_loginPopup = new LoginPopup();
-			addChild(_loginPopup);
-			
-			_loginPopup.close.addEventListener(MouseEvent.CLICK, closePopup);
 		}
 		
 		/**
@@ -127,13 +119,6 @@ package core.scene
 		private function clickCredits(e:MouseEvent):void
 		{
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_CREDIT);
-		}
-		
-		private function closePopup(e:Event):void
-		{
-			trace('removePopup');
-			
-			removeChild(_loginPopup);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package core.scene 
 {
+	import core.popup.LoginPopup;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.Event;
@@ -27,6 +28,8 @@ package core.scene
 		//private var _btnLogout:BtnLogout;
 		
 		public var sceneReturn:uint;
+		
+		private var _loginPopup:LoginPopup;
 		
 		public function Scene() 
 		{
@@ -127,12 +130,24 @@ package core.scene
 		
 		private function clickLogin(e:MouseEvent):void
 		{
+			_loginPopup = new LoginPopup();
+			addChild(_loginPopup);
 			
+			_loginPopup.close.addEventListener(MouseEvent.CLICK, clickPopupClose);
 		}
 		
 		private function clickRegister(e:MouseEvent):void
 		{
 			
+		}
+		
+		private function clickPopupClose(e:MouseEvent):void
+		{
+			trace('destroy loginPopup');
+			
+			_loginPopup.removeEventListener(MouseEvent.CLICK, clickPopupClose);
+			
+			removeChild(_loginPopup);
 		}
 	}
 }
