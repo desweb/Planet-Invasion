@@ -28,11 +28,10 @@ package core.popup
 		/**
 		 * Setters
 		 */
-		function set popupWidth			(value:int):void;
-		function set popupHeight		(value:int):void;
-		function set popupBorderColor	(value:int):void;
-		
-		function setTitleText	(value:String)			:void
-		function setPopupContent(value:DisplayObject)	:void;
+		function setPopupWidth			(value:int)				:void;
+		function setPopupHeight			(value:int)				:void;
+		function setPopupBorderColor	(value:int)				:void;
+		function setTitleText			(value:String)			:void
+		function setPopupContent		(value:DisplayObject)	:void;
 	}
 }

@@ -9,8 +9,8 @@ package core.scene
 	
 	import core.Common;
 	import core.GameState;
+	import core.popup.ErrorPopup;
 	import core.popup.LoginPopup;
-	import core.popup.Popup;
 	import core.scene.IScene;
 	import core.scene.SceneManager;
 	
@@ -30,7 +30,8 @@ package core.scene
 		
 		public var sceneReturn:uint;
 		
-		private var _popup:Popup;
+		public var loginPopup:LoginPopup;
+		public var errorPopup:ErrorPopup;
 		
 		public function Scene() 
 		{
@@ -131,11 +132,11 @@ package core.scene
 		
 		private function clickLogin(e:MouseEvent):void
 		{
-			_popup = new LoginPopup();
-			addChild(_popup);
-			_popup.display();
+			loginPopup = new LoginPopup();
+			addChild(loginPopup);
+			loginPopup.display();
 			
-			_popup.close.addEventListener(MouseEvent.CLICK, clickLoginPopupClose);
+			loginPopup.close.addEventListener(MouseEvent.CLICK, clickLoginPopupClose);
 		}
 		
 		private function clickRegister(e:MouseEvent):void
@@ -145,19 +146,40 @@ package core.scene
 		
 		private function clickLoginPopupClose(e:MouseEvent):void
 		{
-			_popup.removeEventListener(MouseEvent.CLICK, clickLoginPopupClose);
+			loginPopup.removeEventListener(MouseEvent.CLICK, clickLoginPopupClose);
 			
-			TweenLite.to(_popup, 1, {alpha:0, onComplete:removePopup});
+			TweenLite.to(loginPopup, 1, {alpha:0, onComplete:removeLoginPopup});
 		}
 		
-		private function removePopup():void
+		private function clickErrorPopupClose(e:MouseEvent):void
 		{
-			if (!_popup) return;
+			errorPopup.removeEventListener(MouseEvent.CLICK, clickErrorPopupClose);
 			
-			if (Common.IS_DEBUG) trace('delete Popup');
+			TweenLite.to(errorPopup, 1, {alpha:0, onComplete:removeErrorPopup});
+		}
+		
+		/**
+		 * Removes
+		 */
+		
+		private function removeLoginPopup():void
+		{
+			if (!loginPopup) return;
 			
-			removeChild(_popup);
-			_popup = null;
+			if (Common.IS_DEBUG) trace('delete LoginPopup');
+			
+			removeChild(loginPopup);
+			loginPopup = null;
+		}
+		
+		private function removeErrorPopup():void
+		{
+			if (!errorPopup) return;
+			
+			if (Common.IS_DEBUG) trace('delete ErrorPopup');
+			
+			removeChild(errorPopup);
+			errorPopup = null;
 		}
 	}
 }

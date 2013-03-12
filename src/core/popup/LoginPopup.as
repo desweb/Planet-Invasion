@@ -14,8 +14,6 @@ package core.popup
 	 */
 	public class LoginPopup extends Popup
 	{
-		private var _content:Sprite;
-		
 		private var _usernameInput:TextField;
 		private var _passwordInput:TextField;
 		private var _submitLoader:Loader;
@@ -111,6 +109,8 @@ package core.popup
 			
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
+			
+			displayErrorPopup('Login failed !');
 		}
 	}
 }

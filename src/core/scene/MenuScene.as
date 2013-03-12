@@ -1,13 +1,9 @@
 package core.scene 
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.text.TextField;
 	
 	import core.Common;
 	import core.GameState;
-	import core.popup.LoginPopup;
 	
 	/**
 	 * First menu
@@ -19,8 +15,6 @@ package core.scene
 		private var _btnRanking:Btn;
 		private var _btnAchievements:Btn;
 		private var _btnCredits:Btn;
-		
-		private var _loginPopup:LoginPopup;
 		
 		public function MenuScene()
 		{
