@@ -7,6 +7,7 @@ package core.scene
 	
 	import core.Common;
 	import core.GameState;
+	import core.popup.LoginPopup;
 	
 	/**
 	 * First menu
@@ -18,6 +19,8 @@ package core.scene
 		private var _btnRanking:Btn;
 		private var _btnAchievements:Btn;
 		private var _btnCredits:Btn;
+		
+		private var _loginPopup:LoginPopup;
 		
 		public function MenuScene()
 		{
@@ -96,7 +99,10 @@ package core.scene
 			/**
 			 * Test popup
 			 */
+			_loginPopup = new LoginPopup();
+			addChild(_loginPopup);
 			
+			_loginPopup.close.addEventListener(MouseEvent.CLICK, closePopup);
 		}
 		
 		/**
@@ -122,6 +128,12 @@ package core.scene
 		{
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_CREDIT);
 		}
+		
+		private function closePopup(e:Event):void
+		{
+			trace('removePopup');
+			
+			removeChild(_loginPopup);
+		}
 	}
-
 }

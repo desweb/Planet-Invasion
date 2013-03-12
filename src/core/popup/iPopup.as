@@ -1,17 +1,26 @@
 package core.popup 
 {
+	import flash.display.DisplayObject;
+	
 	/**
 	 * Popup interface
 	 * @author desweb
 	 */
-	public class IPopup 
+	public interface IPopup 
 	{
+		function generatePopup():void;
 		
-		public function IPopup() 
-		{
-			
-		}
+		/**
+		 * Getters
+		 */
+		function get close():BtnClose;
 		
+		/**
+		 * Setters
+		 */
+		function set popupWidth			(value:int):void;
+		function set popupHeight		(value:int):void;
+		function set popupBorderColor	(value:int):void;
+		function set popupContent		(value:DisplayObject):void;
 	}
-
 }
