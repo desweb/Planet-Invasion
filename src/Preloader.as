@@ -21,6 +21,7 @@ package
 	
 	public class Preloader extends MovieClip
 	{
+		private var _bg:Bg;
 		private var _txtLoading:TextField;
 		private var _loader:Loader;
 		
@@ -36,13 +37,17 @@ package
 			loaderInfo.addEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioError);
 			
-			// TODO show loader
-			//var font:Font = new Arial();
+			// Show loader scene
+			_bg = new Bg();
+			_bg.gotoAndStop(2);
+			addChild(_bg);
+			
+			var font:Font = new MyArialPolicy();
 			
 			var format:TextFormat = new TextFormat();
-			format.color	= 0xFFFF00;
+			format.color	= 0x00ffff;
 			format.size		= 24;
-			//format.font		= font.fontName;
+			format.font		= font.fontName;
 			
 			_txtLoading = new TextField();
 			_txtLoading.text = 'Loading...';
@@ -51,13 +56,13 @@ package
 			addChild(_txtLoading);
 			
 			_txtLoading.x = stage.stageWidth/2 - _txtLoading.width/2;
-			_txtLoading.y = stage.stageHeight / 2 - _txtLoading.height / 2;
+			_txtLoading.y = stage.stageHeight*0.3;
 			
 			_loader = new Loader();
-			_loader.y = _txtLoading.y + stage.stageHeight*0.1;
+			_loader.x = stage.stageWidth / 2;
+			_loader.y = stage.stageHeight / 2;
 			addChild(_loader);
 			
-			_loader.x = stage.stageWidth / 2 - _txtLoading.width / 2;
 		}
 		
 		private function ioError(e:IOErrorEvent):void 

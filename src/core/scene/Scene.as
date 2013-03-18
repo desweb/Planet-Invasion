@@ -39,7 +39,7 @@ package core.scene
 		}
 		
 		/**
-		 * Generation functions
+		 * Generation
 		 */
 		
 		// Background
@@ -56,8 +56,6 @@ package core.scene
 			_btnReturn = new BtnReturn();
 			_btnReturn.x = Common.IS_DEBUG? GameState.stageWidth*0.15: GameState.stageWidth*0.05;
 			_btnReturn.y = GameState.stageHeight*0.05;
-			_btnReturn.scaleX = 0.25;
-			_btnReturn.scaleY = 0.25;
 			addChild(_btnReturn);
 			
 			_btnReturn.addEventListener(MouseEvent.MOUSE_OVER, over);
@@ -71,8 +69,6 @@ package core.scene
 			_btnSound = new BtnSound();
 			_btnSound.x = Common.IS_DEBUG? GameState.stageWidth*0.2: GameState.stageWidth*0.1;
 			_btnSound.y = GameState.stageHeight*0.05;
-			_btnSound.scaleX = 0.25;
-			_btnSound.scaleY = 0.25;
 			addChild(_btnSound);
 			
 			_btnSound.addEventListener(MouseEvent.MOUSE_OVER, over);
@@ -86,15 +82,15 @@ package core.scene
 			_btnLogin = new BtnLeft();
 			_btnLogin.x = GameState.stageWidth * 0.6;
 			_btnLogin.y = GameState.stageHeight * 0.05;
-			_btnLogin.btn_txt.text = 'Login';
-			_btnLogin.btn_txt.selectable = false;
+			//_btnLogin.btn_txt.text = 'Login';
+			//_btnLogin.btn_txt.selectable = false;
 			addChild(_btnLogin);
 			
 			_btnRegister = new BtnRight();
 			_btnRegister.x = _btnLogin.x + _btnLogin.width;
 			_btnRegister.y = _btnLogin.y;
-			_btnRegister.btn_txt.text = 'Register';
-			_btnRegister.btn_txt.selectable = false;
+			//_btnRegister.btn_txt.text = 'Register';
+			//_btnRegister.btn_txt.selectable = false;
 			addChild(_btnRegister);
 			
 			_btnLogin.addEventListener(MouseEvent.MOUSE_OVER, over);
@@ -107,7 +103,7 @@ package core.scene
 		}
 		
 		/**
-		 * Events functions
+		 * Events
 		 */
 		
 		public function over(e:MouseEvent):void

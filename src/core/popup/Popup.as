@@ -77,8 +77,6 @@ package core.popup
 			
 			// Close
 			_close.y = 5;
-			_close.scaleX = 0.25;
-			_close.scaleY = 0.25;
 			_popup.addChild(_close);
 			
 			_close.x = _popup.width - _close.width - 5;

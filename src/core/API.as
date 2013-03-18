@@ -1,5 +1,11 @@
 package core 
 {
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
+	
+	import core.utils.MD5;
+	
 	/**
 	 * Manage api client to save datas with the web service
 	 * @author desweb
@@ -8,16 +14,13 @@ package core
 	{
 		private static const URL:String = 'http://api.planet-invasion.desweb-creation.fr/';
 		
-		public function API() 
-		{
-			
-		}
+		public function API() {}
 		
 		// Auth
-		public static function get_auth(user_key:String)
+		public static function get_auth(user_key:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'auth/access_token');
+			var request:URLRequest = API.generateURL('auth/access_token');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -28,41 +31,40 @@ package core
 			return request;
 		}
 		
-		public static function post_auth(username:String, password:String)
+		public static function post_auth(username:String, password:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'auth');
+			var request:URLRequest = API.generateURL('auth');
 			request.method = URLRequestMethod.POST;
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
 			vars.username = username;
-			vars.password = password;
+			vars.password = MD5.encrypt(password);
 			request.data = vars;
 			
 			return request;
 		}
 		
-		public static function delete_auth(access_token:String)
+		public static function delete_auth(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'auth/access_token');
+			var request:URLRequest = API.generateURL('auth/access_token');
 			request.method = URLRequestMethod.DELETE;
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.username = username;
-			vars.password = password;
+			vars.access_token = access_token;
 			request.data = vars;
 			
 			return request;
 		}
 		
 		// User
-		public static function get_user(access_token:String)
+		public static function get_user(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'user');
+			var request:URLRequest = API.generateURL('user');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -73,10 +75,10 @@ package core
 			return request;
 		}
 		
-		public static function get_userRank(access_token:String)
+		public static function get_userRank(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'user/rank');
+			var request:URLRequest = API.generateURL('user/rank');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -87,10 +89,10 @@ package core
 			return request;
 		}
 		
-		public static function post_user(access_token:String, username:String, email:String)
+		public static function post_user(access_token:String, username:String, email:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'user');
+			var request:URLRequest = API.generateURL('user');
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -103,10 +105,10 @@ package core
 			return request;
 		}
 		
-		public static function post_userPassword(access_token:String, old_password:String, new_password:String)
+		public static function post_userPassword(access_token:String, old_password:String, new_password:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'user/password');
+			var request:URLRequest = API.generateURL('user/password');
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -119,10 +121,10 @@ package core
 			return request;
 		}
 		
-		public static function post_userStat(access_token:String, metal:int, crystal:int, money:int, score:int, level_adventure:int)
+		public static function post_userStat(access_token:String, metal:int, crystal:int, money:int, score:int, level_adventure:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'user/stat');
+			var request:URLRequest = API.generateURL('user/stat');
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -138,10 +140,10 @@ package core
 			return request;
 		}
 		
-		public static function put_user(username:String, email:String, password:String)
+		public static function put_user(username:String, email:String, password:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'user');
+			var request:URLRequest = API.generateURL('user');
 			request.method = URLRequestMethod.PUT;
 			
 			// Params
@@ -155,10 +157,10 @@ package core
 		}
 		
 		// Rank
-		public static function get_rank(access_token:String, page:int, offset:int)
+		public static function get_rank(access_token:String, page:int, offset:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'rank');
+			var request:URLRequest = API.generateURL('rank');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -171,10 +173,10 @@ package core
 			return request;
 		}
 		
-		public static function get_rankAdventure(access_token:String, page:int, offset:int)
+		public static function get_rankAdventure(access_token:String, page:int, offset:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'rank/adventure');
+			var request:URLRequest = API.generateURL('rank/adventure');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -187,10 +189,10 @@ package core
 			return request;
 		}
 		
-		public static function get_rankSurvival(access_token:String, page:int, offset:int)
+		public static function get_rankSurvival(access_token:String, page:int, offset:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'rank/survival');
+			var request:URLRequest = API.generateURL('rank/survival');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -203,10 +205,10 @@ package core
 			return request;
 		}
 		
-		public static function get_rankDuo(access_token:String, page:int, offset:int)
+		public static function get_rankDuo(access_token:String, page:int, offset:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'rank/duo');
+			var request:URLRequest = API.generateURL('rank/duo');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -220,10 +222,10 @@ package core
 		}
 		
 		// Achievement
-		public static function get_achievement(access_token:String)
+		public static function get_achievement(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'achievement');
+			var request:URLRequest = API.generateURL('achievement');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -234,10 +236,10 @@ package core
 			return request;
 		}
 		
-		public static function post_achievementKey(access_token:String, key:int, score:int, is_unlock:Boolean)
+		public static function post_achievementKey(access_token:String, key:int, score:int, is_unlock:Boolean):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'achievement/' + key);
+			var request:URLRequest = API.generateURL('achievement/' + key);
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -251,10 +253,10 @@ package core
 		}
 		
 		// Improvement
-		public static function get_improvement(access_token:String)
+		public static function get_improvement(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'improvement');
+			var request:URLRequest = API.generateURL('improvement');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -265,10 +267,10 @@ package core
 			return request;
 		}
 		
-		public static function post_improvementKey(access_token:String, key:int, level:int)
+		public static function post_improvementKey(access_token:String, key:int, level:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'improvement/' + key);
+			var request:URLRequest = API.generateURL('improvement/' + key);
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -280,10 +282,10 @@ package core
 			return request;
 		}
 		
-		public static function post_improvementInititalize(access_token:String)
+		public static function post_improvementInititalize(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'improvement/initialize');
+			var request:URLRequest = API.generateURL('improvement/initialize');
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -295,10 +297,10 @@ package core
 		}
 		
 		// Game
-		public static function get_game(access_token:String)
+		public static function get_game(access_token:String):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'game');
+			var request:URLRequest = API.generateURL('game');
 			request.method = URLRequestMethod.GET;
 			
 			// Params
@@ -309,10 +311,10 @@ package core
 			return request;
 		}
 		
-		public static function post_gameKey(access_token:String, key:String, total_metal:int, total_crystal:int, total_money:int, score:int, total_time:int, best_time:int, total_boost_attack:int, total_boost_speed:int, total_boost_resistance:int)
+		public static function post_gameKey(access_token:String, key:String, total_metal:int, total_crystal:int, total_money:int, score:int, total_time:int, best_time:int, total_boost_attack:int, total_boost_speed:int, total_boost_resistance:int):URLRequest
 		{
 			// Request
-			var request:URLRequest = new URLRequest(self.URL + 'game/' + key);
+			var request:URLRequest = API.generateURL('game/' + key);
 			request.method = URLRequestMethod.POST;
 			
 			// Params
@@ -331,6 +333,14 @@ package core
 			
 			return request;
 		}
+		
+		private static function generateURL(str:String):URLRequest
+		{
+			var url:String = URL + str;
+			
+			trace('webservice : ' + url);
+			
+			return new URLRequest(url);
+		}
 	}
-
 }

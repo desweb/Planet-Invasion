@@ -29,7 +29,7 @@ package core.popup
 			_errorLabel.height		= GameState.stageHeight * 0.05;
 			_errorLabel.selectable	= false;
 			_errorLabel.textColor	= 0xff0000;
-			_errorLabel.setTextFormat(Common.getPolicy('Arial', 0xff0000, 20));
+			_errorLabel.setTextFormat(Common.getPolicy('MyArialPolicy', 0xff0000, 20));
 			setPopupContent(_errorLabel);
 		}
 		

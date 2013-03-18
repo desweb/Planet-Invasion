@@ -1,10 +1,13 @@
 package core.popup 
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.net.URLLoader;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
+	import core.API;
 	import core.Common;
 	import core.GameState;
 	
@@ -14,6 +17,8 @@ package core.popup
 	 */
 	public class LoginPopup extends Popup
 	{
+		private var _isURLLoader:Boolean = false;
+		
 		private var _usernameInput:TextField;
 		private var _passwordInput:TextField;
 		private var _submitLoader:Loader;
@@ -82,13 +87,15 @@ package core.popup
 			// Loader
 			_submitLoader = new Loader();
 			_submitLoader.alpha = 0;
-			_submitLoader.x = GameState.stageWidth*0.15;
+			_submitLoader.scaleX = 0.5;
+			_submitLoader.scaleY = 0.5;
+			_submitLoader.x = GameState.stageWidth*0.3;
 			_submitLoader.y = GameState.stageHeight*0.5;
 			setPopupContent(_submitLoader);
 			
 			// Submit
 			_submitBtn = new Btn();
-			_submitBtn.btn_txt.text = 'Credits';
+			_submitBtn.btn_txt.text = 'Submit';
 			_submitBtn.x = GameState.stageWidth*0.15;
 			_submitBtn.y = GameState.stageHeight*0.5;
 			_submitBtn.btn_txt.selectable = false;
@@ -105,12 +112,51 @@ package core.popup
 		
 		private function clickSubmit(e:MouseEvent):void
 		{
-			trace(_usernameInput.text + ' - ' + _passwordInput.text);
+			if (!_usernameInput.text || !_passwordInput.text)
+			{
+				displayErrorPopup('All fields are required !');
+				return;
+			}
+			
+			_isURLLoader = true;
 			
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
 			
-			displayErrorPopup('Login failed !');
+			var loader:URLLoader = new URLLoader();
+			loader.addEventListener(Event.COMPLETE, completeResponse);
+			loader.load(API.post_auth(_usernameInput.text, _passwordInput.text));
+			
+			addEventListener(Event.ENTER_FRAME, updateResponse);
+		}
+		
+		private function updateResponse(e:Event):void
+		{
+			_submitLoader.rotation += 10;
+		}
+		
+		private function completeResponse(e:Event):void
+		{
+			_isURLLoader = false;
+			
+			_submitLoader	.alpha = 0;
+			_submitBtn		.alpha = 1;
+			
+			removeEventListener(Event.ENTER_FRAME, updateResponse);
+			
+			var loader:URLLoader = URLLoader(e.target);
+			
+			var myXML:XML;
+			myXML = new XML(loader.data);			
+			trace('login response : ' + myXML);
+			
+			if (myXML.error)
+			{
+				displayErrorPopup('Login failed !');
+				return;
+			}
+			
+			displaySuccessPopup('Login success !');
 		}
 	}
 }

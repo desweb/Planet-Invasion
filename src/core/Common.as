@@ -73,15 +73,18 @@ package core
 		 */
 		public static function generatePolicy(policy:String = 'Arial', color:int = 0xffffff, size:int = 24, align:String = 'center'):TextFormat
 		{
-			//var font:Font;
+			var font:Font;
 			
-			//if (policy == 'Arial') font = new Arial();
+			//if (policy == 'Arial')	font = new Arial();
+			//else					font = new MyArialPolicy();
+			
+			font = new MyArialPolicy();
 			
 			var format:TextFormat = new TextFormat();
 			format.color = color;
 			format.size = size;
 			format.align = align;
-			//format.font = font.fontName;
+			format.font = font.fontName;
 			
 			return format;
 		}
