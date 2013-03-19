@@ -22,17 +22,27 @@ package core
 		public static const SCENE_CREDIT:uint		= 2;
 		public static const SCENE_DIALOG:uint		= 3;
 		public static const SCENE_FINAL:uint		= 4;
-		public static const SCENE_GAME_MODE:uint	= 5;
-		public static const SCENE_IMPROVEMENT:uint	= 6;
-		public static const SCENE_MENU:uint			= 7;
-		public static const SCENE_RANK:uint			= 8;
-		public static const SCENE_RESEARCH_DUO:uint	= 9;
-		public static const SCENE_SELECT_LEVEL:uint	= 10;
+		public static const SCENE_GAME:uint			= 5;
+		public static const SCENE_GAME_MODE:uint	= 6;
+		public static const SCENE_IMPROVEMENT:uint	= 7;
+		public static const SCENE_MENU:uint			= 8;
+		public static const SCENE_RANK:uint			= 9;
+		public static const SCENE_RESEARCH_DUO:uint	= 10;
+		public static const SCENE_SELECT_LEVEL:uint	= 11;
 		
 		// Game security key
-		public static const GAME_ADVENTURE:String	= '172ae58a586c65c8c4487062c695fe7f';
-		public static const GAME_SURVIVAL:String	= 'c6acb7315b55571d750dc8fb08c9aa3d';
-		public static const GAME_DUO:String			= '4f6ef9504774efbcced5d562fec7ac68';
+		public static const GAME_ADVENTURE_KEY:String	= '172ae58a586c65c8c4487062c695fe7f';
+		public static const GAME_SURVIVAL_KEY:String	= 'c6acb7315b55571d750dc8fb08c9aa3d';
+		public static const GAME_DUO_KEY:String			= '4f6ef9504774efbcced5d562fec7ac68';
+		
+		// Game identifier
+		public static const GAME_1:uint			= 1;
+		public static const GAME_2:uint			= 2;
+		public static const GAME_3:uint			= 3;
+		public static const GAME_4:uint			= 4;
+		public static const GAME_5:uint			= 5;
+		public static const GAME_SURVIVAL:uint	= 6;
+		public static const GAME_DUO:uint		= 7;
 		
 		// Achievement security key
 		public static const ACHIEVEMENT_METAL:String			= '74108a89672c573afee1fae6de8e4e0b';

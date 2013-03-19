@@ -2,6 +2,8 @@ package core
 {
 	import flash.display.Stage;
 	
+	import core.game.Game;
+	
 	/**
 	 * General singleton of the application
 	 * @author desweb
@@ -10,6 +12,7 @@ package core
 	{
 		private static var _instance:GameState;
 		private static var _main:Main;
+		private static var _game:Game;
 		
 		public function GameState() 
 		{
@@ -35,6 +38,16 @@ package core
 		static public function get main():Main
 		{ 
 			return _main;
+		}
+		
+		static public function set game(value:Game):void
+		{ 
+			_game = value;
+		}
+		
+		static public function get game():Game
+		{ 
+			return _game;
 		}
 		
 		/**
