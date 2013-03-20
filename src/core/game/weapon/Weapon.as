@@ -13,7 +13,7 @@ package core.game.weapon
 	 */
 	public class Weapon extends Sprite
 	{
-		public var isKilled:Boolean = false;
+		private var _isKilled:Boolean = false;
 		
 		public var dt:Number = 0;
 		
@@ -45,6 +45,10 @@ package core.game.weapon
 		// Destroy
 		public function destroy():void
 		{
+			if (_isKilled) return;
+			
+			_isKilled = true;
+			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
 			tween.pause();

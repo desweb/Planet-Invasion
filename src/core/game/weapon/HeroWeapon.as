@@ -26,15 +26,10 @@ package core.game.weapon
 		{
 			super.update(e);
 			
-			if (isKilled) return;
-			
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)
 			{
-				if (e_hit.isKilled || !hitTestObject(e_hit)) continue;
-				
-				e_hit.isKilled = true;
-				isKilled = true;
+				if (!hitTestObject(e_hit)) continue;
 				
 				e_hit.destroy();
 				destroy();

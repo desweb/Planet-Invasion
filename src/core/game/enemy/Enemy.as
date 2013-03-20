@@ -32,6 +32,10 @@ package core.game.enemy
 		
 		public function destroy():void
 		{
+			if (isKilled) return;
+			
+			isKilled = true;
+			
 			_tween.pause();
 			_tween.kill();
 			
