@@ -11,6 +11,7 @@ package core.game
 	
 	import core.Common;
 	import core.GameState;
+	import core.game.enemy.Enemy;
 	
 	/**
 	 * Container of the game scene
@@ -23,12 +24,11 @@ package core.game
 		
 		private var _gameState:GameState;
 		
-		private var _enemies:Array = new Array();
+		public var enemies:Array = new Array();
 		private var _speedEnemy:int			= 5;
 		private var _speedEnemyTimer:Number	= 5;
 		
 		private var _hero:Hero;
-		private var _heroMachineGuns:Array = new Array();
 		
 		public function Game(type:uint) 
 		{
@@ -76,22 +76,7 @@ package core.game
 				var new_e:Enemy = new Enemy();
 				addChild(new_e);
 				
-				_enemies[_enemies.length] = new_e;
-			}
-			
-			for each(var e_hit:Enemy in _enemies)
-			{
-				for each(var hmg_hit:HeroMachineGun in _heroMachineGuns)
-				{
-					if (!e_hit.isKilled && !hmg_hit.isKilled && e_hit.hitTestObject(hmg_hit))
-					{
-						e_hit	.isKilled = true;
-						hmg_hit	.isKilled = true;
-						
-						hmg_hit	.destroy();
-						e_hit	.destroy();
-					}
-				}
+				enemies[enemies.length] = new_e;
 			}
 		}
 		
@@ -106,11 +91,6 @@ package core.game
 		public function get hero():Hero
 		{
 			return _hero;
-		}
-		
-		public function get heroMachineGuns():Array
-		{
-			return _heroMachineGuns;
 		}
 		
 		/**

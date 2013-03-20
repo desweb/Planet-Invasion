@@ -8,7 +8,10 @@ package core.game
 	import com.greensock.TweenLite;
 	
 	import core.GameState;
+	import core.game.weapon.HeroLazer;
 	import core.game.weapon.HeroMachineGun;
+	import core.game.weapon.HeroMissile;
+	import core.game.weapon.HeroMissileHoming;
 	import core.scene.Scene;
 	
 	/**
@@ -17,8 +20,15 @@ package core.game
 	 */
 	public class Hero extends Sprite
 	{
-		private var _speedFire:int			= .5;
-		private var _speedFireTimer:Number	= 0;
+		private var _speedFireMachineGun	:int = .5;
+		private var _speedFireLazer			:int = .5;
+		private var _speedFireMissile		:int = .5;
+		private var _speedFireMissileHoming	:int = .5;
+		
+		private var _speedFireMachineGunTimer	:Number = 0;
+		private var _speedFireLazerTimer		:Number = 0;
+		private var _speedFireMissileTimer		:Number = 0;
+		private var _speedFireMissileHomingTimer:Number = 0;
 		
 		public function Hero() 
 		{
@@ -33,6 +43,8 @@ package core.game
 		// Init
 		private function initialize(e:Event):void
 		{
+			removeEventListener(Event.ADDED_TO_STAGE, initialize);
+			
 			/**
 			 * Globals events
 			 */
@@ -46,7 +58,7 @@ package core.game
 		{
 			var dt:Number = GameState.game.dt;
 			
-			if (_speedFireTimer > 0) _speedFireTimer -= dt;
+			if (_speedFireMachineGunTimer > 0) _speedFireMachineGunTimer -= dt;
 		}
 		
 		/**
@@ -77,31 +89,43 @@ package core.game
 		 */
 		private function fireGun():void
 		{
-			if (_speedFireTimer > 0) return;
+			if (_speedFireMachineGunTimer > 0) return;
 			
-			_speedFireTimer = _speedFire;
+			_speedFireMachineGunTimer = _speedFireMachineGun;
 			
-			var machineGun:HeroMachineGun = new HeroMachineGun();
-			GameState.game.addChild(machineGun);
-			
-			GameState.game.heroMachineGuns[GameState.game.heroMachineGuns.length] = machineGun;
+			GameState.game.addChild(new HeroMachineGun());
 		}
 		
 		private function fireLazer():void
 		{
-			trace('fireLazer !');
+			if (_speedFireLazerTimer > 0) return;
+			
+			_speedFireLazerTimer = _speedFireLazer;
+			
+			GameState.game.addChild(new HeroLazer());
 		}
 		
 		private function fireMissile():void
 		{
-			trace('fireMissile !');
+			if (_speedFireMissileTimer > 0) return;
+			
+			_speedFireMissileTimer = _speedFireMissile;
+			
+			GameState.game.addChild(new HeroMissile());
 		}
 		
 		private function fireMissileHoming():void
 		{
-			trace('fireMissileHoming !');
+			if (_speedFireMissileHomingTimer > 0) return;
+			
+			_speedFireMissileHomingTimer = _speedFireMissileHoming;
+			
+			GameState.game.addChild(new HeroMissileHoming());
 		}
 		
+		/**
+		 * Specials actions
+		 */
 		private function launchIEM():void
 		{
 			trace('launchIEM !');
@@ -115,6 +139,16 @@ package core.game
 		private function launchReinforcement():void
 		{
 			trace('launchReinforcement !');
+		}
+		
+		// Destroy
+		public function destroy():void
+		{
+			stage.removeEventListener(Event.ENTER_FRAME,		update);
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
+			
+			GameState.game.removeChild(this);
 		}
 	}
 }

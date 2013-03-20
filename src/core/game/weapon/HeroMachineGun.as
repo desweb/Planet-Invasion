@@ -1,7 +1,6 @@
 package core.game.weapon 
 {
-	import core.game.Hero;
-	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
 	
@@ -11,33 +10,20 @@ package core.game.weapon
 	 * ...
 	 * @author desweb
 	 */
-	public class HeroMachineGun extends Sprite
+	public class HeroMachineGun extends HeroWeapon
 	{
-		public var isKilled:Boolean = false;
-		
-		private var _speed:int = 1;
-		private var _tween:TweenLite;
-		
-		public function HeroMachineGun() 
+		public function HeroMachineGun()
 		{
-			var hero:Hero = GameState.game.hero;
-			
-			var startX:int = hero.x + hero.width;
-			var startY:int = hero.y + (hero.height/2);
-			
 			graphics.beginFill(0xffff00);
-			graphics.drawRoundRect(startX, startY, 10, 5, 2);
+			graphics.drawRoundRect(0, 0, 10, 5, 2);
 			graphics.endFill();
-			
-			_tween = new TweenLite(this, _speed-_speed*(startX/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy });
 		}
 		
-		public function destroy():void
+		override public function initialize(e:Event):void
 		{
-			_tween.pause();
-			_tween.kill();
+			super.initialize(e);
 			
-			GameState.game.removeChild(this);
+			tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy });
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package core.game 
+package core.game.enemy 
 {
 	import flash.display.Sprite;
 	

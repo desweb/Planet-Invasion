@@ -4,10 +4,10 @@ package core.game.weapon
 	 * ...
 	 * @author desweb
 	 */
-	public class HeroMissileHoming 
+	public class HeroMissileHoming extends HeroWeapon
 	{
 		
-		public function HeroMissileHoming() 
+		public function HeroMissileHoming()
 		{
 			
 		}
