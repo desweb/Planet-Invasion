@@ -4,6 +4,8 @@ package core.game
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
 	
@@ -20,15 +22,15 @@ package core.game
 	 */
 	public class Hero extends Sprite
 	{
-		private var _speedFireMachineGun	:int = .5;
-		private var _speedFireLazer			:int = .5;
-		private var _speedFireMissile		:int = .5;
-		private var _speedFireMissileHoming	:int = .5;
+		private var _fireMachineGunTimer	:Timer = new Timer(5000);
+		private var _fireLazerTimer			:Timer = new Timer(5000);
+		private var _fireMissileTimer		:Timer = new Timer(5000);
+		private var _fireMissileHomingTimer	:Timer = new Timer(5000);
 		
-		private var _speedFireMachineGunTimer	:Number = 0;
-		private var _speedFireLazerTimer		:Number = 0;
-		private var _speedFireMissileTimer		:Number = 0;
-		private var _speedFireMissileHomingTimer:Number = 0;
+		private var _isFireMachineGun	:Boolean = true;
+		private var _isFireLazer		:Boolean = true;
+		private var _isFireMissile		:Boolean = true;
+		private var _isFireMissileHoming:Boolean = true;
 		
 		public function Hero() 
 		{
@@ -48,17 +50,21 @@ package core.game
 			/**
 			 * Globals events
 			 */
-			stage.addEventListener(Event.ENTER_FRAME,		update);
+			addEventListener(Event.ENTER_FRAME, update);
+			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,	downKey);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
+			
+			_fireMachineGunTimer	.addEventListener(TimerEvent.TIMER, enableFireMachineGun);
+			_fireLazerTimer			.addEventListener(TimerEvent.TIMER, enableFireLazer);
+			_fireMissileTimer		.addEventListener(TimerEvent.TIMER, enableFireMissile);
+			_fireMissileHomingTimer	.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
 		}
 		
 		// Update
 		private function update(e:Event):void
 		{
 			var dt:Number = GameState.game.dt;
-			
-			if (_speedFireMachineGunTimer > 0) _speedFireMachineGunTimer -= dt;
 		}
 		
 		/**
@@ -68,7 +74,7 @@ package core.game
 		{
 			switch (String.fromCharCode(e.charCode))
 			{
-				case 'a': fireGun();				break;
+				case 'a': fireMachineGun();			break;
 				case 'z': fireLazer();				break;
 				case 'e': fireMissile();			break;
 				case 'r': fireMissileHoming();		break;
@@ -84,43 +90,83 @@ package core.game
 			TweenLite.to(this, 0.1, { x:GameState.main.mouseX - (width/2), y:GameState.main.mouseY - (height/2) });
 		}
 		
+		private function enableFireMachineGun(e:TimerEvent):void
+		{
+			_fireMachineGunTimer.stop();
+			_fireMachineGunTimer.reset();
+			
+			_isFireMachineGun = true;
+		}
+		
+		private function enableFireLazer(e:TimerEvent):void
+		{
+			_fireLazerTimer.stop();
+			_fireLazerTimer.reset();
+			
+			_isFireLazer = true;
+		}
+		
+		private function enableFireMissile(e:TimerEvent):void
+		{
+			_fireMissileTimer.stop();
+			_fireMissileTimer.reset();
+			
+			_isFireMissile = true;
+		}
+		
+		private function enableFireMissileHoming(e:TimerEvent):void
+		{
+			_fireMissileHomingTimer.stop();
+			_fireMissileHomingTimer.reset();
+			
+			_isFireMissileHoming = true;
+		}
+		
 		/**
 		 * Fire actions
 		 */
-		private function fireGun():void
+		private function fireMachineGun():void
 		{
-			if (_speedFireMachineGunTimer > 0) return;
+			if (!_isFireMachineGun) return;
 			
-			_speedFireMachineGunTimer = _speedFireMachineGun;
+			_isFireMachineGun = false;
 			
 			GameState.game.addChild(new HeroMachineGun());
+			
+			_fireMachineGunTimer.start();
 		}
 		
 		private function fireLazer():void
 		{
-			if (_speedFireLazerTimer > 0) return;
+			if (!_isFireLazer) return;
 			
-			_speedFireLazerTimer = _speedFireLazer;
+			_isFireLazer = false;
 			
 			GameState.game.addChild(new HeroLazer());
+			
+			_fireLazerTimer.start();
 		}
 		
 		private function fireMissile():void
 		{
-			if (_speedFireMissileTimer > 0) return;
+			if (!_isFireMissile) return;
 			
-			_speedFireMissileTimer = _speedFireMissile;
+			_isFireMissile = false;
 			
 			GameState.game.addChild(new HeroMissile());
+			
+			_fireMissileTimer.start();
 		}
 		
 		private function fireMissileHoming():void
 		{
-			if (_speedFireMissileHomingTimer > 0) return;
+			if (!_isFireMissileHoming) return;
 			
-			_speedFireMissileHomingTimer = _speedFireMissileHoming;
+			_isFireMissileHoming = false;
 			
 			GameState.game.addChild(new HeroMissileHoming());
+			
+			_fireMissileHomingTimer.start();
 		}
 		
 		/**
@@ -147,6 +193,11 @@ package core.game
 			stage.removeEventListener(Event.ENTER_FRAME,		update);
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
+			
+			_fireMachineGunTimer	.removeEventListener(TimerEvent.TIMER, enableFireMachineGun);
+			_fireLazerTimer			.removeEventListener(TimerEvent.TIMER, enableFireLazer);
+			_fireMissileTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissile);
+			_fireMissileHomingTimer	.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
 			
 			GameState.game.removeChild(this);
 		}

@@ -4,6 +4,7 @@ package core.game.weapon
 	
 	import com.greensock.TweenLite;
 	
+	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
 	
@@ -18,6 +19,8 @@ package core.game.weapon
 		
 		public function HeroMissileHoming()
 		{
+			if (Common.IS_DEBUG) trace('create HeroMissileHoming');
+			
 			var trianglePoints:Vector.<Number> = new Vector.<Number>(6, true);
 			trianglePoints[0] = 0;
 			trianglePoints[1] = 0;

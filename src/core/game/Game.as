@@ -44,6 +44,8 @@ package core.game
 		// Init
 		private function initialize(e:Event):void
 		{
+			removeEventListener(Event.ADDED_TO_STAGE, initialize);
+			
 			_t = getTimer();
 			
 			var bg:GameBg = new GameBg();
@@ -53,6 +55,12 @@ package core.game
 			addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			//stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+		}
+		
+		private function keyDown(e:KeyboardEvent):void
+		{
+			trace('keydown !');
 		}
 		
 		// Update

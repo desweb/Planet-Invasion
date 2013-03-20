@@ -19,7 +19,7 @@ package core.game.weapon
 		
 		public var damage:int = 1;
 		
-		public var moveSpeed:int		= 1;
+		public var moveSpeed:int = 2;
 		
 		public var tween:TweenLite;
 		
