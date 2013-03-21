@@ -1,5 +1,8 @@
 package core.game 
 {
+	import core.game.weapon.hero.Bombardment;
+	import core.game.weapon.hero.IEM;
+	import core.game.weapon.hero.Reinforcement;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -37,6 +40,9 @@ package core.game
 		private var _fireLazerTimer			:Timer = new Timer(5000);
 		private var _fireMissileTimer		:Timer = new Timer(5000);
 		private var _fireMissileHomingTimer	:Timer = new Timer(500);
+		private var _fireIEMTimer			:Timer = new Timer(5000);
+		private var _fireBombardmentTimer	:Timer = new Timer(5000);
+		private var _fireReinforcementTimer	:Timer = new Timer(5000);
 		
 		public function Hero() 
 		{
@@ -76,6 +82,9 @@ package core.game
 			_fireLazerTimer			.addEventListener(TimerEvent.TIMER, enableFireLazer);
 			_fireMissileTimer		.addEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer	.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
+			_fireIEMTimer			.addEventListener(TimerEvent.TIMER, enableFireIEM);
+			_fireBombardmentTimer	.addEventListener(TimerEvent.TIMER, enableFireBombardment);
+			_fireReinforcementTimer	.addEventListener(TimerEvent.TIMER, enableFireReinforcement);
 		}
 		
 		// Update
@@ -113,18 +122,19 @@ package core.game
 			}
 			else if (keyCode == KEY_IEM && !_downKeys[KEY_IEM])
 			{
+				trace(_downKeys[KEY_IEM]);
 				_downKeys[KEY_IEM] = true;
-				launchIEM();
+				fireIEM();
 			}
 			else if (keyCode == KEY_BOMBARDMENT && !_downKeys[KEY_BOMBARDMENT])
 			{
 				_downKeys[KEY_BOMBARDMENT] = true;
-				launchBombardment();
+				fireBombardment();
 			}
 			else if (keyCode == KEY_REINFORCEMENT && !_downKeys[KEY_REINFORCEMENT])
 			{
 				_downKeys[KEY_REINFORCEMENT] = true;
-				launchReinforcement();
+				fireReinforcement();
 			}
 		}
 		
@@ -180,6 +190,30 @@ package core.game
 			if (_downKeys[KEY_MACHINE_GUN]) fireMissileHoming();
 		}
 		
+		private function enableFireIEM(e:TimerEvent):void
+		{
+			_fireIEMTimer.stop();
+			_fireIEMTimer.reset();
+			
+			if (_downKeys[KEY_IEM]) fireIEM();
+		}
+		
+		private function enableFireBombardment(e:TimerEvent):void
+		{
+			_fireBombardmentTimer.stop();
+			_fireBombardmentTimer.reset();
+			
+			if (_downKeys[KEY_BOMBARDMENT]) fireBombardment();
+		}
+		
+		private function enableFireReinforcement(e:TimerEvent):void
+		{
+			_fireReinforcementTimer.stop();
+			_fireReinforcementTimer.reset();
+			
+			if (_downKeys[KEY_REINFORCEMENT]) fireReinforcement();
+		}
+		
 		/**
 		 * Fire actions
 		 */
@@ -214,32 +248,43 @@ package core.game
 		/**
 		 * Specials actions
 		 */
-		private function launchIEM():void
+		private function fireIEM():void
 		{
-			trace('launchIEM !');
+			GameState.game.addChild(new IEM());
+			
+			_fireIEMTimer.start();
 		}
 		
-		private function launchBombardment():void
+		private function fireBombardment():void
 		{
-			trace('launchBombardment !');
+			GameState.game.addChild(new Bombardment());
+			
+			_fireBombardmentTimer.start();
 		}
 		
-		private function launchReinforcement():void
+		private function fireReinforcement():void
 		{
-			trace('launchReinforcement !');
+			GameState.game.addChild(new Reinforcement());
+			
+			_fireReinforcementTimer.start();
 		}
 		
 		// Destroy
 		public function destroy():void
 		{
-			stage.removeEventListener(Event.ENTER_FRAME,		update);
+			removeEventListener(Event.ENTER_FRAME, update);
+			
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
+			stage.removeEventListener(KeyboardEvent.KEY_UP,		upKey);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
 			_fireMachineGunTimer	.removeEventListener(TimerEvent.TIMER, enableFireMachineGun);
 			_fireLazerTimer			.removeEventListener(TimerEvent.TIMER, enableFireLazer);
 			_fireMissileTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer	.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
+			_fireIEMTimer			.removeEventListener(TimerEvent.TIMER, enableFireIEM);
+			_fireBombardmentTimer	.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
+			_fireReinforcementTimer	.removeEventListener(TimerEvent.TIMER, enableFireReinforcement);
 			
 			GameState.game.removeChild(this);
 		}
