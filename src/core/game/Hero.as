@@ -26,7 +26,7 @@ package core.game
 	 */
 	public class Hero extends Sprite
 	{
-		private var _downKeys:Array = new Array();
+		private var _keys:Array = new Array();
 		
 		private static const KEY_MACHINE_GUN	:String = 'a';
 		private static const KEY_LAZER			:String = 'z';
@@ -37,9 +37,9 @@ package core.game
 		private static const KEY_REINFORCEMENT	:String = 'f';
 		
 		private var _fireMachineGunTimer	:Timer = new Timer(100);
-		private var _fireLazerTimer			:Timer = new Timer(5000);
-		private var _fireMissileTimer		:Timer = new Timer(5000);
-		private var _fireMissileHomingTimer	:Timer = new Timer(500);
+		private var _fireLazerTimer			:Timer = new Timer(1000);
+		private var _fireMissileTimer		:Timer = new Timer(1000);
+		private var _fireMissileHomingTimer	:Timer = new Timer(1000);
 		private var _fireIEMTimer			:Timer = new Timer(5000);
 		private var _fireBombardmentTimer	:Timer = new Timer(5000);
 		private var _fireReinforcementTimer	:Timer = new Timer(5000);
@@ -61,13 +61,19 @@ package core.game
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			_downKeys[KEY_MACHINE_GUN]		= false;
-			_downKeys[KEY_LAZER]			= false;
-			_downKeys[KEY_MISSILE]			= false;
-			_downKeys[KEY_MISSILE_HOMING]	= false;
-			_downKeys[KEY_IEM]				= false;
-			_downKeys[KEY_BOMBARDMENT]		= false;
-			_downKeys[KEY_REINFORCEMENT]	= false;
+			_keys[KEY_MACHINE_GUN]		= new Array();
+			_keys[KEY_LAZER]			= new Array();
+			_keys[KEY_MISSILE]			= new Array();
+			_keys[KEY_MISSILE_HOMING]	= new Array();
+			_keys[KEY_IEM]				= new Array();
+			_keys[KEY_BOMBARDMENT]		= new Array();
+			_keys[KEY_REINFORCEMENT]	= new Array();
+			
+			for (var i:String in _keys)
+			{
+				_keys[i]['is_down']		= false;
+				_keys[i]['is_timer']	= false;
+			}
 			
 			/**
 			 * Globals events
@@ -100,55 +106,77 @@ package core.game
 		{
 			var keyCode:String = String.fromCharCode(e.charCode);
 			
-			if (keyCode == KEY_MACHINE_GUN && !_downKeys[KEY_MACHINE_GUN])
+			for (var i:String in _keys)
 			{
-				_downKeys[KEY_MACHINE_GUN] = true;
+				if (keyCode == i && !_keys[keyCode]['is_down'] && !_keys[keyCode]['is_timer'])
+				{
+					_keys[keyCode]['is_down']	= true;
+					_keys[keyCode]['is_timer']	= true;
+					
+					switch (keyCode)
+					{
+						case KEY_MACHINE_GUN	: fireMachineGun();		break;
+						case KEY_LAZER			: fireLazer();			break;
+						case KEY_MISSILE		: fireMissile();		break;
+						case KEY_MISSILE_HOMING	: fireMissileHoming();	break;
+						case KEY_IEM			: fireIEM();			break;
+						case KEY_BOMBARDMENT	: fireBombardment();	break;
+						case KEY_REINFORCEMENT	: fireReinforcement();	break;
+						default: return;
+					}
+					
+					return;
+				}
+			}
+			
+			/*if (keyCode == KEY_MACHINE_GUN && !_keys[KEY_MACHINE_GUN]['is_down'] && !_keys[KEY_MACHINE_GUN]['is_timer'])
+			{
+				_keys[KEY_MACHINE_GUN]['is_down'] = true;
 				fireMachineGun();
 			}
-			else if (keyCode == KEY_LAZER && !_downKeys[KEY_LAZER])
+			else if (keyCode == KEY_LAZER && !_keys[KEY_LAZER]['is_down'] && !_keys[KEY_MACHINE_GUN]['is_timer'])
 			{
-				_downKeys[KEY_LAZER] = true;
+				_keys[KEY_LAZER]['is_down'] = true;
 				fireLazer();
 			}
-			else if (keyCode == KEY_MISSILE && !_downKeys[KEY_MISSILE])
+			else if (keyCode == KEY_MISSILE && !_keys[KEY_MISSILE]['is_down'])
 			{
-				_downKeys[KEY_MISSILE] = true;
+				_keys[KEY_MISSILE]['is_down'] = true;
 				fireMissile();
 			}
-			else if (keyCode == KEY_MISSILE_HOMING && !_downKeys[KEY_MISSILE_HOMING])
+			else if (keyCode == KEY_MISSILE_HOMING && !_keys[KEY_MISSILE_HOMING]['is_down'])
 			{
-				_downKeys[KEY_MISSILE_HOMING] = true;
+				_keys[KEY_MISSILE_HOMING]['is_down'] = true;
 				fireMissileHoming();
 			}
-			else if (keyCode == KEY_IEM && !_downKeys[KEY_IEM])
+			else if (keyCode == KEY_IEM && !_keys[KEY_IEM]['is_down'])
 			{
-				trace(_downKeys[KEY_IEM]);
-				_downKeys[KEY_IEM] = true;
+				_keys[KEY_IEM]['is_down'] = true;
 				fireIEM();
 			}
-			else if (keyCode == KEY_BOMBARDMENT && !_downKeys[KEY_BOMBARDMENT])
+			else if (keyCode == KEY_BOMBARDMENT && !_keys[KEY_BOMBARDMENT]['is_down'])
 			{
-				_downKeys[KEY_BOMBARDMENT] = true;
+				_keys[KEY_BOMBARDMENT]['is_down'] = true;
 				fireBombardment();
 			}
-			else if (keyCode == KEY_REINFORCEMENT && !_downKeys[KEY_REINFORCEMENT])
+			else if (keyCode == KEY_REINFORCEMENT && !_keys[KEY_REINFORCEMENT]['is_down'])
 			{
-				_downKeys[KEY_REINFORCEMENT] = true;
+				_keys[KEY_REINFORCEMENT]['is_down'] = true;
 				fireReinforcement();
-			}
+			}*/
 		}
 		
 		private function upKey(e:KeyboardEvent):void
 		{
 			switch (String.fromCharCode(e.charCode))
 			{
-				case KEY_MACHINE_GUN	: _downKeys[KEY_MACHINE_GUN]	= false; break;
-				case KEY_LAZER			: _downKeys[KEY_LAZER]			= false; break;
-				case KEY_MISSILE		: _downKeys[KEY_MISSILE]		= false; break;
-				case KEY_MISSILE_HOMING	: _downKeys[KEY_MISSILE_HOMING]	= false; break;
-				case KEY_IEM			: _downKeys[KEY_IEM]			= false; break;
-				case KEY_BOMBARDMENT	: _downKeys[KEY_BOMBARDMENT]	= false; break;
-				case KEY_REINFORCEMENT	: _downKeys[KEY_REINFORCEMENT]	= false; break;
+				case KEY_MACHINE_GUN	: _keys[KEY_MACHINE_GUN]['is_down']		= false; break;
+				case KEY_LAZER			: _keys[KEY_LAZER]['is_down']			= false; break;
+				case KEY_MISSILE		: _keys[KEY_MISSILE]['is_down']			= false; break;
+				case KEY_MISSILE_HOMING	: _keys[KEY_MISSILE_HOMING]['is_down']	= false; break;
+				case KEY_IEM			: _keys[KEY_IEM]['is_down']				= false; break;
+				case KEY_BOMBARDMENT	: _keys[KEY_BOMBARDMENT]['is_down']		= false; break;
+				case KEY_REINFORCEMENT	: _keys[KEY_REINFORCEMENT]['is_down']	= false; break;
 				default	: return;
 			}
 		}
@@ -162,56 +190,63 @@ package core.game
 		{
 			_fireMachineGunTimer.stop();
 			_fireMachineGunTimer.reset();
+			_keys[KEY_MACHINE_GUN]['is_timer'] = false;
 			
-			if (_downKeys[KEY_MACHINE_GUN]) fireMachineGun();
+			if (_keys[KEY_MACHINE_GUN]['is_down']) fireMachineGun();
 		}
 		
 		private function enableFireLazer(e:TimerEvent):void
 		{
 			_fireLazerTimer.stop();
 			_fireLazerTimer.reset();
+			_keys[KEY_LAZER]['is_timer'] = false;
 			
-			if (_downKeys[KEY_MACHINE_GUN]) fireMachineGun();
+			if (_keys[KEY_LAZER]['is_down']) fireMachineGun();
 		}
 		
 		private function enableFireMissile(e:TimerEvent):void
 		{
 			_fireMissileTimer.stop();
 			_fireMissileTimer.reset();
+			_keys[KEY_MISSILE]['is_timer'] = false;
 			
-			if (_downKeys[KEY_MACHINE_GUN]) fireMissile();
+			if (_keys[KEY_MISSILE]['is_down']) fireMissile();
 		}
 		
 		private function enableFireMissileHoming(e:TimerEvent):void
 		{
 			_fireMissileHomingTimer.stop();
 			_fireMissileHomingTimer.reset();
+			_keys[KEY_MISSILE_HOMING]['is_timer'] = false;
 			
-			if (_downKeys[KEY_MACHINE_GUN]) fireMissileHoming();
+			if (_keys[KEY_MISSILE_HOMING]['is_down']) fireMissileHoming();
 		}
 		
 		private function enableFireIEM(e:TimerEvent):void
 		{
 			_fireIEMTimer.stop();
 			_fireIEMTimer.reset();
+			_keys[KEY_IEM]['is_timer'] = false;
 			
-			if (_downKeys[KEY_IEM]) fireIEM();
+			if (_keys[KEY_IEM]['is_down']) fireIEM();
 		}
 		
 		private function enableFireBombardment(e:TimerEvent):void
 		{
 			_fireBombardmentTimer.stop();
 			_fireBombardmentTimer.reset();
+			_keys[KEY_BOMBARDMENT]['is_timer'] = false;
 			
-			if (_downKeys[KEY_BOMBARDMENT]) fireBombardment();
+			if (_keys[KEY_BOMBARDMENT]['is_down']) fireBombardment();
 		}
 		
 		private function enableFireReinforcement(e:TimerEvent):void
 		{
 			_fireReinforcementTimer.stop();
 			_fireReinforcementTimer.reset();
+			_keys[KEY_REINFORCEMENT]['is_timer'] = false;
 			
-			if (_downKeys[KEY_REINFORCEMENT]) fireReinforcement();
+			if (_keys[KEY_REINFORCEMENT]['is_down']) fireReinforcement();
 		}
 		
 		/**
@@ -221,6 +256,7 @@ package core.game
 		{
 			GameState.game.addChild(new HeroMachineGun());
 			
+			_keys[KEY_MACHINE_GUN]['is_timer'] = true;
 			_fireMachineGunTimer.start();
 		}
 		
@@ -228,6 +264,7 @@ package core.game
 		{
 			GameState.game.addChild(new HeroLazer());
 			
+			_keys[KEY_LAZER]['is_timer'] = true;
 			_fireLazerTimer.start();
 		}
 		
@@ -235,6 +272,7 @@ package core.game
 		{
 			GameState.game.addChild(new HeroMissile());
 			
+			_keys[KEY_MISSILE]['is_timer'] = true;
 			_fireMissileTimer.start();
 		}
 		
@@ -242,6 +280,7 @@ package core.game
 		{
 			GameState.game.addChild(new HeroMissileHoming());
 			
+			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;
 			_fireMissileHomingTimer.start();
 		}
 		
@@ -252,6 +291,7 @@ package core.game
 		{
 			GameState.game.addChild(new IEM());
 			
+			_keys[KEY_IEM]['is_timer'] = true;
 			_fireIEMTimer.start();
 		}
 		
@@ -259,6 +299,7 @@ package core.game
 		{
 			GameState.game.addChild(new Bombardment());
 			
+			_keys[KEY_BOMBARDMENT]['is_timer'] = true;
 			_fireBombardmentTimer.start();
 		}
 		
@@ -266,6 +307,7 @@ package core.game
 		{
 			GameState.game.addChild(new Reinforcement());
 			
+			_keys[KEY_REINFORCEMENT]['is_timer'] = true;
 			_fireReinforcementTimer.start();
 		}
 		
