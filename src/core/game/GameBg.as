@@ -4,6 +4,7 @@ package core.game
 	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
 	
 	import core.GameState;
 	import core.utils.Tools;
@@ -39,7 +40,7 @@ package core.game
 				star.graphics.endFill();
 				addChild(star);
 				
-				TweenLite.to(star, Tools.random(1, 3), { x: -100, onComplete:removeStar, onCompleteParams:[star] } );
+				TweenLite.to(star, Tools.random(1, 3), { x: -100, onComplete:removeStar, ease:Linear.easeNone, onCompleteParams:[star] } );
 			}
 		}
 		

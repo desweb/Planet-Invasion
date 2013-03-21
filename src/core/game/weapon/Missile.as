@@ -3,6 +3,7 @@ package core.game.weapon
 	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
 	
 	import core.GameState;
 	
@@ -10,10 +11,11 @@ package core.game.weapon
 	 * ...
 	 * @author desweb
 	 */
-	public class HeroMissile extends HeroWeapon
+	public class Missile extends Weapon
 	{
+		public var targetX:int;
 		
-		public function HeroMissile()
+		public function Missile()
 		{
 			var trianglePoints:Vector.<Number> = new Vector.<Number>(6, true);
 			trianglePoints[0] = 0;
@@ -32,7 +34,7 @@ package core.game.weapon
 		{
 			super.initialize(e);
 			
-			tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy });
+			tween = new TweenLite(this, moveSpeed-moveSpeed*(x/targetX), { x:targetX, ease:Linear.easeNone, onComplete:destroy });
 		}
 	}
 }

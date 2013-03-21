@@ -1,13 +1,9 @@
 package core.game 
 {
-	import core.game.weapon.HeroMachineGun;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
-	import flash.events.MouseEvent;
+	import flash.ui.Mouse;
 	import flash.utils.getTimer;
-	
-	import com.greensock.TweenLite;
 	
 	import core.Common;
 	import core.GameState;
@@ -25,7 +21,7 @@ package core.game
 		private var _gameState:GameState;
 		
 		public var enemies:Array = new Array();
-		private var _speedEnemy:int			= 5;
+		private var _speedEnemy:int			= .5;
 		private var _speedEnemyTimer:Number	= 5;
 		
 		private var _hero:Hero;
@@ -37,6 +33,8 @@ package core.game
 			GameState.game = this;
 			
 			_gameState = GameState.getInstance();
+			
+			Mouse.hide();
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -55,12 +53,6 @@ package core.game
 			addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			//stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-		}
-		
-		private function keyDown(e:KeyboardEvent):void
-		{
-			trace('keydown !');
 		}
 		
 		// Update

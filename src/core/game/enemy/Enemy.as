@@ -3,6 +3,7 @@ package core.game.enemy
 	import flash.display.Sprite;
 	
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
 	
 	import core.GameState;
 	import core.utils.Tools;
@@ -27,7 +28,7 @@ package core.game.enemy
 			graphics.drawRect(0, 0, 50, 50);
 			graphics.endFill();
 			
-			_tween = new TweenLite(this, 10, { x:-100, onComplete:destroy });
+			_tween = new TweenLite(this, 10, { x:-100, ease:Linear.easeNone, onComplete:destroy });
 		}
 		
 		public function destroy():void

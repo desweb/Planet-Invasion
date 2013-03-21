@@ -3,6 +3,7 @@ package core.game.weapon
 	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
 	
 	import core.GameState;
 	
@@ -10,9 +11,11 @@ package core.game.weapon
 	 * ...
 	 * @author desweb
 	 */
-	public class HeroMachineGun extends HeroWeapon
+	public class MachineGun extends Weapon
 	{
-		public function HeroMachineGun()
+		public var targetX:int;
+		
+		public function MachineGun()
 		{
 			graphics.beginFill(0xffff00);
 			graphics.drawRoundRect(0, 0, 10, 5, 2);
@@ -23,7 +26,7 @@ package core.game.weapon
 		{
 			super.initialize(e);
 			
-			tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy });
+			tween = new TweenLite(this, moveSpeed-moveSpeed*(x/targetX), { x:targetX, ease:Linear.easeNone, onComplete:destroy });
 		}
 	}
 }

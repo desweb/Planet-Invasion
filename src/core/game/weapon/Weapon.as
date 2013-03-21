@@ -1,5 +1,7 @@
 package core.game.weapon 
 {
+	import core.game.Hero;
+	import core.game.enemy.Enemy;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -23,8 +25,16 @@ package core.game.weapon
 		
 		public var tween:TweenLite;
 		
-		public function Weapon() 
+		public var owner:Sprite;
+		
+		public function Weapon()
 		{
+			// Default position
+			if (owner is Hero)	x = owner.x + owner.width;
+			else				x = owner.x - 25;
+			
+			y = owner.y + (owner.height / 2);
+			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
@@ -40,6 +50,31 @@ package core.game.weapon
 		public function update(e:Event):void
 		{
 			dt = GameState.game.dt;
+			
+			if (owner is Hero)	heroUpdate();
+			else				enemyUpdate();
+		}
+		
+		private function heroUpdate():void
+		{
+			// Enemy hit
+			for each(var e_hit:Enemy in GameState.game.enemies)
+			{
+				if (e_hit.isKilled || !hitTestObject(e_hit)) continue;
+				
+				e_hit.destroy();
+				destroy();
+			}
+		}
+		
+		private function enemyUpdate():void
+		{
+			// Hero hit
+			if (hitTestObject(GameState.game.hero))
+			{
+				GameState.game.hero.destroy();
+				destroy();
+			}
 		}
 		
 		// Destroy
@@ -51,8 +86,11 @@ package core.game.weapon
 			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
-			tween.pause();
-			tween.kill();
+			if (tween)
+			{
+				tween.pause();
+				tween.kill();
+			}
 			
 			GameState.game.removeChild(this);
 		}

@@ -1,4 +1,4 @@
-package core.game.weapon 
+package core.game.weapon.hero 
 {
 	/**
 	 * ...
