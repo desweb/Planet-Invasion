@@ -62,13 +62,13 @@ package core.game.weapon
 		
 		private function tweenPointTarget():void
 		{
-			_tweenX = x+((target.x-x)*_ratioTouchTarget);
-			_tweenY = y + ((target.y - y) * _ratioTouchTarget);
+			_tweenX = x + ((target.x - x + (target.width/2)) * _ratioTouchTarget);
+			_tweenY = y + ((target.y - y + (target.height/2)) * _ratioTouchTarget);
 			
 			if (_ratioTouchTarget < 1) _ratioTouchTarget += 0.1;
 		}
 		
-		private function reinitTween():void 
+		private function reinitTween():void
 		{
 			tweenPointTarget();
 			
@@ -82,16 +82,16 @@ package core.game.weapon
 			tween = new TweenLite(this, duration, { x:_tweenX, y:_tweenY, ease:Linear.easeNone, onComplete:reinitTween } );
 		}
 		
-		private function autoRotation():void 
+		private function autoRotation():void
 		{
 			// Haut/Bas
-			if	(x - 10 < target.x && x + 10 > target.x)
+			if	(x < target.x+target.width && x > target.x)
 			{
 				if (y < target.y)	rotation = 90;
 				else				rotation = -90;
 			}
 			// Avant/Arrière
-			if	(y - 10 < target.y && y + 10 > target.y)
+			else if	(y < target.y+target.height && y > target.y)
 			{
 				if (x > target.x)	rotation = 180;
 				else				rotation = 0;
@@ -103,7 +103,7 @@ package core.game.weapon
 				else				rotation = -45;
 			}
 			// Arrière-Haut/Arrière-Bas
-			else if	(x > target.x)
+			else if	(x > target.x+target.width)
 			{
 				if (y < target.y)	rotation = 135;
 				else				rotation = -135;

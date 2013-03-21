@@ -29,7 +29,7 @@ package core.game.weapon.hero
 			{
 				if (eTarget && eTarget.isKilled) continue;
 				
-				if (!target || (eTarget.x < target.x && eTarget.x > GameState.game.hero.x))
+				if (!target || (eTarget.x < target.x && eTarget.x > GameState.game.hero.x + GameState.game.hero.width))
 				{
 					isTraget = true;
 					target = eTarget;
