@@ -29,7 +29,7 @@ package core.game.weapon
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)
 			{
-				if (!hitTestObject(e_hit)) continue;
+				if (e_hit.isKilled || !hitTestObject(e_hit)) continue;
 				
 				e_hit.destroy();
 				destroy();

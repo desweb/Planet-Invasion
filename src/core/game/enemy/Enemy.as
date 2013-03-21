@@ -27,7 +27,7 @@ package core.game.enemy
 			graphics.drawRect(0, 0, 50, 50);
 			graphics.endFill();
 			
-			_tween = new TweenLite(this, 4, { x:-100, onComplete:destroy });
+			_tween = new TweenLite(this, 10, { x:-100, onComplete:destroy });
 		}
 		
 		public function destroy():void

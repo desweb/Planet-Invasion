@@ -9,6 +9,7 @@ package core.game
 	
 	import com.greensock.TweenLite;
 	
+	import core.Common;
 	import core.GameState;
 	import core.game.weapon.HeroLazer;
 	import core.game.weapon.HeroMachineGun;
@@ -22,10 +23,10 @@ package core.game
 	 */
 	public class Hero extends Sprite
 	{
-		private var _fireMachineGunTimer	:Timer = new Timer(5000);
+		private var _fireMachineGunTimer	:Timer = new Timer(500);
 		private var _fireLazerTimer			:Timer = new Timer(5000);
 		private var _fireMissileTimer		:Timer = new Timer(5000);
-		private var _fireMissileHomingTimer	:Timer = new Timer(5000);
+		private var _fireMissileHomingTimer	:Timer = new Timer(500);
 		
 		private var _isFireMachineGun	:Boolean = true;
 		private var _isFireLazer		:Boolean = true;
@@ -34,6 +35,8 @@ package core.game
 		
 		public function Hero() 
 		{
+			if (Common.IS_DEBUG) trace('create Hero');
+			
 			graphics.lineStyle(2, 0x00ffff);
 			graphics.beginFill(0xededed);
 			graphics.drawRect(0, 0, 100, 100);

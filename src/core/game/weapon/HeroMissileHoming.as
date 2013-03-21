@@ -3,6 +3,7 @@ package core.game.weapon
 	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
 	
 	import core.Common;
 	import core.GameState;
@@ -16,6 +17,11 @@ package core.game.weapon
 	{
 		private var _isTraget:Boolean = false;
 		private var _eTarget:Enemy;
+		
+		private var _tweenX:int;
+		private var _tweenY:int;
+		
+		private var _ratioTouchTarget:Number = 0.1;
 		
 		public function HeroMissileHoming()
 		{
@@ -50,8 +56,12 @@ package core.game.weapon
 				}
 			}
 			
-			if (_isTraget)	tween = new TweenLite(this, moveSpeed - moveSpeed * (x / _eTarget.x), { x:_eTarget.x, y:_eTarget.y, onComplete:destroy } );
-			else			tween = new TweenLite(this, moveSpeed - moveSpeed * (x / GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy } );
+			if (_isTraget)
+			{
+				tweenPointTarget();
+				tween = new TweenLite(this, 0.2, { x:_tweenX, y:_tweenY, onComplete:reinitTween } );
+			}
+			else tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy } );
 		}
 		
 		override public function update(e:Event):void
@@ -60,6 +70,26 @@ package core.game.weapon
 			
 			// Enemy killed
 			if (_isTraget && !_eTarget) destroy();
+		}
+		
+		private function tweenPointTarget():void
+		{
+			_tweenX = x+((_eTarget.x-x)*_ratioTouchTarget);
+			_tweenY = y + ((_eTarget.y - y) * _ratioTouchTarget);
+			
+			if (_ratioTouchTarget < 1) _ratioTouchTarget += 0.1;
+		}
+		
+		private function reinitTween():void 
+		{
+			tweenPointTarget();
+			
+			var duration:Number = _eTarget.x > x? 0.1 * ((_eTarget.x - x) / 100): 0.1 * ((x - _eTarget.x) / 100);
+			
+			tween.pause();
+			tween.kill();
+			
+			tween = new TweenLite(this, duration, { x:_tweenX, y:_tweenY, ease:Linear.easeNone, onComplete:reinitTween } );
 		}
 	}
 }
