@@ -177,5 +177,10 @@ package core.scene
 			removeChild(errorPopup);
 			errorPopup = null;
 		}
+		
+		public function destroy():void
+		{
+			GameState.main.removeChild(this);
+		}
 	}
 }

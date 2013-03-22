@@ -73,5 +73,16 @@ package core.scene
 			_scroll = new ScrollManager(_scroll_content);
 			addChild(_scroll);
 		}
+		
+		/**
+		 * Override
+		 */
+		
+		override public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy CreditScene');
+			
+			super.destroy();
+		}
 	}
 }

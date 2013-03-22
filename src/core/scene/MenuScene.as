@@ -92,6 +92,33 @@ package core.scene
 		}
 		
 		/**
+		 * Override
+		 */
+		
+		override public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy MenuScene');
+			
+			_btnPlay.removeEventListener(MouseEvent.MOUSE_OVER, over);
+			_btnPlay.removeEventListener(MouseEvent.MOUSE_OUT, out);
+			_btnPlay.removeEventListener(MouseEvent.CLICK, clickPlay);
+			
+			_btnRanking.removeEventListener(MouseEvent.MOUSE_OVER, over);
+			_btnRanking.removeEventListener(MouseEvent.MOUSE_OUT, out);
+			_btnRanking.removeEventListener(MouseEvent.CLICK, clickRanking);
+			
+			_btnAchievements.removeEventListener(MouseEvent.MOUSE_OVER, over);
+			_btnAchievements.removeEventListener(MouseEvent.MOUSE_OUT, out);
+			_btnAchievements.removeEventListener(MouseEvent.CLICK, clickAchievements);
+			
+			_btnCredits.removeEventListener(MouseEvent.MOUSE_OVER, over);
+			_btnCredits.removeEventListener(MouseEvent.MOUSE_OUT, out);
+			_btnCredits.removeEventListener(MouseEvent.CLICK, clickCredits);
+			
+			super.destroy();
+		}
+		
+		/**
 		 * Events
 		 */
 		

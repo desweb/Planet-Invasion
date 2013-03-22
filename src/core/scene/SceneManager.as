@@ -35,7 +35,7 @@ package core.scene
 		{
 			if (_current_scene_uid)
 			{
-				GameState.main.removeChild(_current_scene);
+				_current_scene.destroy();
 				_current_scene = null;
 			}
 			

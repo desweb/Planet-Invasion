@@ -77,6 +77,19 @@ package core.scene
 		}
 		
 		/**
+		 * Override
+		 */
+		
+		override public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy GameModeScene');
+			
+			_btnAdventure.removeEventListener(MouseEvent.CLICK, clickAdventure);
+			
+			super.destroy();
+		}
+		
+		/**
 		 * Events
 		 */
 		

@@ -18,5 +18,16 @@ package core.scene
 			_game = new Game(type);
 			addChild(_game);
 		}
+		
+		/**
+		 * Override
+		 */
+		
+		override public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy GameScene');
+			
+			super.destroy();
+		}
 	}
 }
