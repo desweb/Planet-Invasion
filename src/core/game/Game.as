@@ -22,7 +22,7 @@ package core.game
 		
 		public var enemies:Array = new Array();
 		private var _speedEnemy:int			= 2;
-		private var _speedEnemyTimer:Number	= 5;
+		private var _speedEnemyTimer:Number	= 2;
 		
 		private var _hero:Hero;
 		
@@ -34,7 +34,7 @@ package core.game
 			
 			_gameState = GameState.getInstance();
 			
-			Mouse.hide();
+			//Mouse.hide();
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -50,6 +50,8 @@ package core.game
 			addChild(bg);
 			
 			_hero = new Hero();
+			_hero.x = 550;
+			_hero.y = 100;
 			addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);

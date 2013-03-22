@@ -37,8 +37,11 @@ package core.game.enemy
 			
 			isKilled = true;
 			
-			_tween.pause();
-			_tween.kill();
+			if (_tween)
+			{
+				_tween.pause();
+				_tween.kill();
+			}
 			
 			GameState.game.removeChild(this);
 		}
