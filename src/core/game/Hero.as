@@ -218,7 +218,7 @@ package core.game
 		 */
 		private function fireMachineGun():void
 		{
-			GameState.game.addChild(new HeroMachineGun());
+			GameState.game.weaponsContainer.addChild(new HeroMachineGun());
 			
 			_keys[KEY_MACHINE_GUN]['is_timer'] = true;
 			_fireMachineGunTimer.start();
@@ -226,7 +226,7 @@ package core.game
 		
 		private function fireLazer():void
 		{
-			GameState.game.addChild(new HeroLazer());
+			GameState.game.weaponsContainer.addChild(new HeroLazer());
 			
 			_keys[KEY_LAZER]['is_timer'] = true;
 			_fireLazerTimer.start();
@@ -234,7 +234,7 @@ package core.game
 		
 		private function fireMissile():void
 		{
-			GameState.game.addChild(new HeroMissile());
+			GameState.game.weaponsContainer.addChild(new HeroMissile());
 			
 			_keys[KEY_MISSILE]['is_timer'] = true;
 			_fireMissileTimer.start();
@@ -242,7 +242,7 @@ package core.game
 		
 		private function fireMissileHoming():void
 		{
-			GameState.game.addChild(new HeroMissileHoming());
+			GameState.game.weaponsContainer.addChild(new HeroMissileHoming());
 			
 			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;
 			_fireMissileHomingTimer.start();
@@ -253,7 +253,7 @@ package core.game
 		 */
 		private function fireIEM():void
 		{
-			GameState.game.addChild(new IEM());
+			GameState.game.powersContainer.addChild(new IEM());
 			
 			_keys[KEY_IEM]['is_timer'] = true;
 			_fireIEMTimer.start();
@@ -261,7 +261,7 @@ package core.game
 		
 		private function fireBombardment():void
 		{
-			GameState.game.addChild(new Bombardment());
+			GameState.game.powersContainer.addChild(new Bombardment());
 			
 			_keys[KEY_BOMBARDMENT]['is_timer'] = true;
 			_fireBombardmentTimer.start();
@@ -269,7 +269,7 @@ package core.game
 		
 		private function fireReinforcement():void
 		{
-			GameState.game.addChild(new Reinforcement());
+			GameState.game.powersContainer.addChild(new Reinforcement());
 			
 			_keys[KEY_REINFORCEMENT]['is_timer'] = true;
 			_fireReinforcementTimer.start();
@@ -278,6 +278,8 @@ package core.game
 		// Destroy
 		public function destroy():void
 		{
+			if (Common.IS_DEBUG) trace('destroy Hero');
+			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);

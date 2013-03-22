@@ -21,7 +21,7 @@ package core.game.weapon
 		
 		public var damage:int = 1;
 		
-		public var moveSpeed:int = 2;
+		public var moveSpeed:Number = 2;
 		
 		public var tween:TweenLite;
 		
@@ -30,10 +30,13 @@ package core.game.weapon
 		public function Weapon()
 		{
 			// Default position
-			if (owner is Hero)	x = owner.x + owner.width;
-			else				x = owner.x - 25;
-			
-			y = owner.y + (owner.height / 2);
+			if (owner)
+			{
+				if		(owner is Hero)		x = owner.x + owner.width;
+				else if	(owner is Enemy)	x = owner.x - 25;
+				
+				y = owner.y + (owner.height / 2);
+			}
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -51,8 +54,11 @@ package core.game.weapon
 		{
 			dt = GameState.game.dt;
 			
-			if (owner is Hero)	heroUpdate();
-			else				enemyUpdate();
+			if (owner)
+			{
+				if		(owner is Hero)		heroUpdate();
+				else if	(owner is Enemy)	enemyUpdate();
+			}
 		}
 		
 		private function heroUpdate():void
@@ -92,7 +98,7 @@ package core.game.weapon
 				tween.kill();
 			}
 			
-			GameState.game.removeChild(this);
+			GameState.game.weaponsContainer.removeChild(this);
 		}
 	}
 }

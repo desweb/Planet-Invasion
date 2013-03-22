@@ -1,5 +1,6 @@
 package core.game.weapon.hero 
 {
+	import core.game.enemy.Enemy;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -40,14 +41,30 @@ package core.game.weapon.hero
 		
 		private function explosion():void
 		{
-			TweenLite.to(this, 1, { width:GameState.stageWidth, height:GameState.stageWidth, onComplete:destroy });
+			TweenLite.to(this, 1, { width:GameState.stageWidth, height:GameState.stageWidth, onComplete:stopEnemies });
+		}
+		
+		private function stopEnemies():void
+		{
+			visible = false;
+			
+			for each (var e:Enemy in GameState.game.enemies) e.stop();
+			
+			TweenLite.to(this, 3, { onComplete:relaunchEnemies });
+		}
+		
+		private function relaunchEnemies():void
+		{
+			for each (var e:Enemy in GameState.game.enemies) e.restart();
+			
+			destroy();
 		}
 		
 		private function destroy():void
 		{
 			if (Common.IS_DEBUG) trace('destroy IEM');
 			
-			GameState.game.removeChild(this);
+			GameState.game.powersContainer.removeChild(this);
 		}
 	}
 }

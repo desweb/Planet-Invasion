@@ -20,6 +20,12 @@ package core.game
 		
 		private var _gameState:GameState;
 		
+		public var weaponsContainer	:Sprite = new Sprite();
+		public var heroContainer	:Sprite = new Sprite();
+		public var itemsContainer	:Sprite = new Sprite();
+		public var enemiesContainer	:Sprite = new Sprite();
+		public var powersContainer	:Sprite = new Sprite();
+		
 		public var enemies:Array = new Array();
 		private var _speedEnemy:int			= .5;
 		private var _speedEnemyTimer:Number	= 2;
@@ -34,7 +40,7 @@ package core.game
 			
 			_gameState = GameState.getInstance();
 			
-			//Mouse.hide();
+			Mouse.hide();
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -49,10 +55,18 @@ package core.game
 			var bg:GameBg = new GameBg();
 			addChild(bg);
 			
+			// Containers
+			addChild(weaponsContainer);
+			addChild(heroContainer);
+			addChild(itemsContainer);
+			addChild(enemiesContainer);
+			addChild(powersContainer);
+			
+			// Hero
 			_hero = new Hero();
 			_hero.x = 550;
 			_hero.y = 100;
-			addChild(_hero);
+			heroContainer.addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
@@ -76,7 +90,7 @@ package core.game
 				_speedEnemyTimer = _speedEnemy;
 				
 				var new_e:Enemy = new Enemy();
-				addChild(new_e);
+				enemiesContainer.addChild(new_e);
 				
 				enemies[enemies.length] = new_e;
 			}

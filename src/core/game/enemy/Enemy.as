@@ -31,6 +31,16 @@ package core.game.enemy
 			_tween = new TweenLite(this, 10, { x:-100, ease:Linear.easeNone, onComplete:destroy });
 		}
 		
+		public function stop():void
+		{
+			_tween.pause();
+		}
+		
+		public function restart():void
+		{
+			_tween.play();
+		}
+		
 		public function destroy():void
 		{
 			if (isKilled) return;
@@ -43,7 +53,7 @@ package core.game.enemy
 				_tween.kill();
 			}
 			
-			GameState.game.removeChild(this);
+			GameState.game.enemiesContainer.removeChild(this);
 		}
 	}
 }
