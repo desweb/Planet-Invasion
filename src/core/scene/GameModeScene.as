@@ -1,5 +1,6 @@
 package core.scene 
 {
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
 	import core.Common;
@@ -45,7 +46,7 @@ package core.scene
 			
 			// Adventure button
 			_btnAdventure = new Btn();
-			_btnAdventure.btn_txt.text = 'Improvements';
+			_btnAdventure.btn_txt.text = 'Adventure';
 			_btnAdventure.btn_txt.selectable = false;
 			addChild(_btnAdventure);
 			
@@ -54,7 +55,7 @@ package core.scene
 			
 			// Survival button
 			_btnSurvival = new Btn();
-			_btnSurvival.btn_txt.text = 'Improvements';
+			_btnSurvival.btn_txt.text = 'Survival';
 			_btnSurvival.btn_txt.selectable = false;
 			_btnSurvival.gotoAndStop(3);
 			addChild(_btnSurvival);
@@ -64,15 +65,24 @@ package core.scene
 			
 			// Duo button
 			_btnDuo = new Btn();
-			_btnDuo.btn_txt.text = 'Improvements';
+			_btnDuo.btn_txt.text = 'Duo';
 			_btnDuo.btn_txt.selectable = false;
 			_btnDuo.gotoAndStop(3);
 			addChild(_btnDuo);
 			
 			_btnDuo.y = _btnSurvival.y + _btnSurvival.height + GameState.stageHeight*0.1;
-			_btnDuo.x = GameState.stageWidth/2 - _btnDuo.width/2;
+			_btnDuo.x = GameState.stageWidth / 2 - _btnDuo.width / 2;
+			
+			_btnAdventure.addEventListener(MouseEvent.CLICK, clickAdventure);
 		}
 		
+		/**
+		 * Events
+		 */
+		
+		private function clickAdventure(e:MouseEvent):void
+		{
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME, Common.GAME_1);
+		}
 	}
-
 }

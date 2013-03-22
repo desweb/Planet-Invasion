@@ -49,7 +49,7 @@ package
 			
 			GameState.main = this;
 			
-			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME, Common.GAME_1);
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 		}
 
 	}
