@@ -20,5 +20,12 @@ package core.game.weapon.hero
 			
 			super();
 		}
+		
+		override public function destroy():void 
+		{
+			if (Common.IS_DEBUG) trace('destroy HeroMissile');
+			
+			super.destroy();
+		}
 	}
 }

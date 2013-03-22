@@ -38,5 +38,12 @@ package core.game.weapon.hero
 			
 			super.initialize(e);
 		}
+		
+		override public function destroy():void 
+		{
+			if (Common.IS_DEBUG) trace('destroy HeroMissileHoming');
+			
+			super.destroy();
+		}
 	}
 }
