@@ -21,7 +21,7 @@ package core.game
 		private var _gameState:GameState;
 		
 		public var enemies:Array = new Array();
-		private var _speedEnemy:int			= 2;
+		private var _speedEnemy:int			= .5;
 		private var _speedEnemyTimer:Number	= 2;
 		
 		private var _hero:Hero;

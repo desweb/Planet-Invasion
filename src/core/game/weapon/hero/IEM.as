@@ -45,6 +45,8 @@ package core.game.weapon.hero
 		
 		private function destroy():void
 		{
+			if (Common.IS_DEBUG) trace('destroy IEM');
+			
 			GameState.game.removeChild(this);
 		}
 	}

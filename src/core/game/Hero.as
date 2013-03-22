@@ -128,42 +128,6 @@ package core.game
 					return;
 				}
 			}
-			
-			/*if (keyCode == KEY_MACHINE_GUN && !_keys[KEY_MACHINE_GUN]['is_down'] && !_keys[KEY_MACHINE_GUN]['is_timer'])
-			{
-				_keys[KEY_MACHINE_GUN]['is_down'] = true;
-				fireMachineGun();
-			}
-			else if (keyCode == KEY_LAZER && !_keys[KEY_LAZER]['is_down'] && !_keys[KEY_MACHINE_GUN]['is_timer'])
-			{
-				_keys[KEY_LAZER]['is_down'] = true;
-				fireLazer();
-			}
-			else if (keyCode == KEY_MISSILE && !_keys[KEY_MISSILE]['is_down'])
-			{
-				_keys[KEY_MISSILE]['is_down'] = true;
-				fireMissile();
-			}
-			else if (keyCode == KEY_MISSILE_HOMING && !_keys[KEY_MISSILE_HOMING]['is_down'])
-			{
-				_keys[KEY_MISSILE_HOMING]['is_down'] = true;
-				fireMissileHoming();
-			}
-			else if (keyCode == KEY_IEM && !_keys[KEY_IEM]['is_down'])
-			{
-				_keys[KEY_IEM]['is_down'] = true;
-				fireIEM();
-			}
-			else if (keyCode == KEY_BOMBARDMENT && !_keys[KEY_BOMBARDMENT]['is_down'])
-			{
-				_keys[KEY_BOMBARDMENT]['is_down'] = true;
-				fireBombardment();
-			}
-			else if (keyCode == KEY_REINFORCEMENT && !_keys[KEY_REINFORCEMENT]['is_down'])
-			{
-				_keys[KEY_REINFORCEMENT]['is_down'] = true;
-				fireReinforcement();
-			}*/
 		}
 		
 		private function upKey(e:KeyboardEvent):void
