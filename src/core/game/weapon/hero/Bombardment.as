@@ -22,11 +22,7 @@ package core.game.weapon.hero
 		public var isFinish:Boolean = false;
 		
 		private var _timerFinish		:Timer = new Timer(2000);
-		private var _timerEnemiesDetroy	:Timer = new Timer(1000);
-		
-		private var _firstPartDestroy	:Timer = new Timer(600);
-		private var _secondPartDestroy	:Timer = new Timer(1200);
-		private var _thirdPartDestroy	:Timer = new Timer(1800);
+		private var _timerEnemiesDetroy	:Timer = new Timer(500);
 		
 		private var missileTrianglePoints:Vector.<Number> = new Vector.<Number>(6, true);
 		
@@ -52,16 +48,10 @@ package core.game.weapon.hero
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
 			_timerFinish		.addEventListener(TimerEvent.TIMER, endTimerFinish);
-			//_timerEnemiesDetroy	.addEventListener(TimerEvent.TIMER, endTimerEnemiesDestroy);
-			_firstPartDestroy	.addEventListener(TimerEvent.TIMER, endFirstPartDestroy);
-			_secondPartDestroy	.addEventListener(TimerEvent.TIMER, endSecondPartDestroy);
-			_thirdPartDestroy	.addEventListener(TimerEvent.TIMER, endThirdPartDestroy);
+			_timerEnemiesDetroy	.addEventListener(TimerEvent.TIMER, endTimerEnemiesDestroy);
 			
 			_timerFinish		.start();
-			//_timerEnemiesDetroy	.start();
-			_firstPartDestroy		.start();
-			_secondPartDestroy		.start();
-			_thirdPartDestroy		.start();
+			_timerEnemiesDetroy	.start();
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
@@ -98,38 +88,6 @@ package core.game.weapon.hero
 		
 		private function endTimerEnemiesDestroy(e:TimerEvent):void
 		{
-			_timerEnemiesDetroy.stop();
-			
-			for each(var e_destroy:Enemy in GameState.game.enemies)
-			{
-				if (Tools.random(1, 2) == 1) e_destroy.destroy();
-			}
-		}
-		
-		private function endFirstPartDestroy(e:TimerEvent):void
-		{
-			_firstPartDestroy.stop();
-			
-			for each(var e_destroy:Enemy in GameState.game.enemies)
-			{
-				if (Tools.random(1, 6) == 1) e_destroy.destroy();
-			}
-		}
-		
-		private function endSecondPartDestroy(e:TimerEvent):void
-		{
-			_secondPartDestroy.stop();
-			
-			for each(var e_destroy:Enemy in GameState.game.enemies)
-			{
-				if (Tools.random(1, 6) == 1) e_destroy.destroy();
-			}
-		}
-		
-		private function endThirdPartDestroy(e:TimerEvent):void
-		{
-			_thirdPartDestroy.stop();
-			
 			for each(var e_destroy:Enemy in GameState.game.enemies)
 			{
 				if (Tools.random(1, 6) == 1) e_destroy.destroy();
@@ -140,13 +98,12 @@ package core.game.weapon.hero
 		{
 			if (Common.IS_DEBUG) trace('destroy Bombardment');
 			
+			_timerEnemiesDetroy.stop();
+			
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
 			_timerFinish		.removeEventListener(TimerEvent.TIMER, endTimerFinish);
 			_timerEnemiesDetroy	.removeEventListener(TimerEvent.TIMER, endTimerEnemiesDestroy);
-			_firstPartDestroy	.removeEventListener(TimerEvent.TIMER, endFirstPartDestroy);
-			_secondPartDestroy	.removeEventListener(TimerEvent.TIMER, endSecondPartDestroy);
-			_thirdPartDestroy	.removeEventListener(TimerEvent.TIMER, endThirdPartDestroy);
 			
 			GameState.game.removeChild(this);
 		}
