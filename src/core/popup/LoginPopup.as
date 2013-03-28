@@ -18,6 +18,7 @@ package core.popup
 	public class LoginPopup extends Popup
 	{
 		private var _isURLLoader:Boolean = false;
+		private var _loader:URLLoader;
 		
 		private var _usernameInput:TextField;
 		private var _passwordInput:TextField;
@@ -123,9 +124,9 @@ package core.popup
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
 			
-			var loader:URLLoader = new URLLoader();
-			loader.addEventListener(Event.COMPLETE, completeResponse);
-			loader.load(API.post_auth(_usernameInput.text, _passwordInput.text));
+			_loader = new URLLoader();
+			_loader.addEventListener(Event.COMPLETE, completeResponse);
+			_loader.load(API.post_auth(_usernameInput.text, _passwordInput.text));
 			
 			addEventListener(Event.ENTER_FRAME, updateResponse);
 		}
@@ -143,6 +144,8 @@ package core.popup
 			_submitBtn		.alpha = 1;
 			
 			removeEventListener(Event.ENTER_FRAME, updateResponse);
+			
+			_loader.removeEventListener(Event.COMPLETE, completeResponse);
 			
 			var loader:URLLoader = URLLoader(e.target);
 			

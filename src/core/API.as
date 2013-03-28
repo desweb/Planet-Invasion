@@ -157,7 +157,7 @@ package core
 		}
 		
 		// Rank
-		public static function get_rank(access_token:String, page:int, offset:int):URLRequest
+		public static function get_rank(page:int, offset:int):URLRequest
 		{
 			// Request
 			var request:URLRequest = API.generateURL('rank');
@@ -165,7 +165,6 @@ package core
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.access_token	= access_token;
 			vars.page			= page;
 			vars.offset			= offset;
 			request.data = vars;

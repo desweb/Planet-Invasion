@@ -33,10 +33,7 @@ package core.scene
 		public var loginPopup:LoginPopup;
 		public var errorPopup:ErrorPopup;
 		
-		public function Scene() 
-		{
-			
-		}
+		public function Scene() {}
 		
 		/**
 		 * Generation
