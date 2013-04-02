@@ -51,8 +51,6 @@ package core.scene
 		
 		private function completeResponseRank(e:Event):void
 		{
-			trace('complete');
-			
 			_loader.removeEventListener(Event.COMPLETE, completeResponseRank);
 			
 			var loader:URLLoader = URLLoader(e.target);
@@ -75,8 +73,6 @@ package core.scene
 		
 		private function generateLine(user:XML, i:int):Sprite
 		{
-			trace(user);
-			
 			// Rank line
 			var lineSprite:Sprite = new Sprite();
 			lineSprite.y		= 25 * i;

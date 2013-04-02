@@ -4,6 +4,7 @@ package core.scene
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	import com.greensock.TweenLite;
 	
@@ -33,7 +34,12 @@ package core.scene
 		public var loginPopup:LoginPopup;
 		public var errorPopup:ErrorPopup;
 		
-		public function Scene() {}
+		public var btnFormat:TextFormat;
+		
+		public function Scene()
+		{
+			btnFormat = Common.getPolicy('Arial', 0x00ffff, 15);
+		}
 		
 		/**
 		 * Generation
@@ -76,27 +82,118 @@ package core.scene
 		// Login area
 		public function generateLogin():void
 		{
-			_btnLogin = new BtnLeft();
+			_btnLogin = generateBtnLeft('Login');
 			_btnLogin.x = GameState.stageWidth * 0.6;
 			_btnLogin.y = GameState.stageHeight * 0.05;
-			//_btnLogin.btn_txt.text = 'Login';
-			//_btnLogin.btn_txt.selectable = false;
-			addChild(_btnLogin);
 			
-			_btnRegister = new BtnRight();
+			_btnRegister = generateBtnRight('Register');
 			_btnRegister.x = _btnLogin.x + _btnLogin.width;
 			_btnRegister.y = _btnLogin.y;
-			//_btnRegister.btn_txt.text = 'Register';
-			//_btnRegister.btn_txt.selectable = false;
-			addChild(_btnRegister);
 			
-			_btnLogin.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnLogin.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnLogin.addEventListener(MouseEvent.CLICK, clickLogin);
+			_btnLogin		.addEventListener(MouseEvent.CLICK, clickLogin);
+			_btnRegister	.addEventListener(MouseEvent.CLICK, clickRegister);
+		}
+		
+		/**
+		 * Interface
+		 */
+		
+		public function generateBtn(txt:String, frame:int = 1):Btn
+		{
+			var btn:Btn = new Btn();
+			btn.mouseChildren = false;
+			addChild(btn);
 			
-			_btnRegister.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnRegister.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnRegister.addEventListener(MouseEvent.CLICK, clickRegister);
+			btn.x = (GameState.stageWidth - btn.width) / 2;
+			btn.y = (GameState.stageHeight - btn.height) / 2;
+			
+			var label:TextField = new TextField();
+			label.width						= btn.width;
+			label.height					= btn.height;
+			label.defaultTextFormat	= btnFormat;
+			label.text						= txt;
+			label.selectable				= false;
+			btn.addChild(label);
+			
+			btn.gotoAndStop(frame);
+			
+			btn.addEventListener(MouseEvent.MOUSE_OVER, over);
+			btn.addEventListener(MouseEvent.MOUSE_OUT, out);
+			
+			return btn;
+		}
+		
+		public function generateBtnLeft(txt:String, frame:int = 1):BtnLeft
+		{
+			var btn:BtnLeft = new BtnLeft();
+			btn.mouseChildren = false;
+			addChild(btn);
+			
+			btn.x = (GameState.stageWidth - btn.width) / 2;
+			btn.y = (GameState.stageHeight - btn.height) / 2;
+			
+			var label:TextField = new TextField();
+			label.width						= btn.width;
+			label.height					= btn.height;
+			label.defaultTextFormat	= btnFormat;
+			label.text						= txt;
+			label.selectable				= false;
+			btn.addChild(label);
+			
+			btn.gotoAndStop(frame);
+			
+			btn.addEventListener(MouseEvent.MOUSE_OVER, over);
+			btn.addEventListener(MouseEvent.MOUSE_OUT, out);
+			
+			return btn;
+		}
+		
+		public function generateBtnRight(txt:String, frame:int = 1):BtnRight
+		{
+			var btn:BtnRight = new BtnRight();
+			btn.mouseChildren = false;
+			addChild(btn);
+			
+			btn.x = (GameState.stageWidth - btn.width) / 2;
+			btn.y = (GameState.stageHeight - btn.height) / 2;
+			
+			var label:TextField = new TextField();
+			label.width						= btn.width;
+			label.height					= btn.height;
+			label.defaultTextFormat	= btnFormat;
+			label.text						= txt;
+			label.selectable				= false;
+			btn.addChild(label);
+			
+			btn.gotoAndStop(frame);
+			
+			btn.addEventListener(MouseEvent.MOUSE_OVER, over);
+			btn.addEventListener(MouseEvent.MOUSE_OUT, out);
+			
+			return btn;
+		}
+		
+		public function generateBtnCenter(txt:String, frame:String = 'default'):TextField
+		{
+			var label:TextField = new TextField();
+			label.width						= GameState.stageWidth * .1;
+			label.height					= GameState.stageHeight * .1;
+			label.defaultTextFormat	= btnFormat;
+			label.text						= txt;
+			label.selectable				= false;
+			label.border					= true;
+			addChild(label);
+			
+			label.x = (GameState.stageWidth - label.width) / 2;
+			label.y = (GameState.stageHeight - label.height) / 2;
+			
+			if			(frame == 'default')	label.borderColor = 0x00ffff;
+			else if	(frame == 'error')		label.borderColor = 0xff0000;
+			
+			label.addEventListener(MouseEvent.MOUSE_OVER, over);
+			label.addEventListener(MouseEvent.MOUSE_OUT, out);
+			
+			return label;
 		}
 		
 		/**

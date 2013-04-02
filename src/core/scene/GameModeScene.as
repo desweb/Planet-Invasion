@@ -17,6 +17,10 @@ package core.scene
 		private var _btnSurvival:Btn;
 		private var _btnDuo:Btn;
 		
+		/**
+		 * Constructor
+		 */
+		
 		public function GameModeScene() 
 		{
 			if (Common.IS_DEBUG) trace('create GameModeScene');
@@ -24,6 +28,7 @@ package core.scene
 			/**
 			 * Initialization
 			 */
+			
 			generateBg();
 			generateBtnReturn();
 			generateBtnSound();
@@ -36,42 +41,20 @@ package core.scene
 			 */
 			
 			// Improvements button
-			_btnImprovements = new Btn();
-			_btnImprovements.btn_txt.text = 'Improvements';
-			_btnImprovements.y = GameState.stageHeight*0.3;
-			_btnImprovements.btn_txt.selectable = false;
-			addChild(_btnImprovements);
-			
-			_btnImprovements.x = GameState.stageWidth/2 - _btnImprovements.width/2;
+			_btnImprovements = generateBtn('Improvements');
+			_btnImprovements.y = GameState.stageHeight * 0.3;
 			
 			// Adventure button
-			_btnAdventure = new Btn();
-			_btnAdventure.btn_txt.text = 'Adventure';
-			_btnAdventure.btn_txt.selectable = false;
-			addChild(_btnAdventure);
-			
-			_btnAdventure.y = _btnImprovements.y + _btnImprovements.height + GameState.stageHeight*0.1;
-			_btnAdventure.x = GameState.stageWidth/2 - _btnAdventure.width/2;
+			_btnAdventure = generateBtn('Adventure');
+			_btnAdventure.y = GameState.stageHeight * 0.4;
 			
 			// Survival button
-			_btnSurvival = new Btn();
-			_btnSurvival.btn_txt.text = 'Survival';
-			_btnSurvival.btn_txt.selectable = false;
-			_btnSurvival.gotoAndStop(3);
-			addChild(_btnSurvival);
-			
-			_btnSurvival.y = _btnAdventure.y + _btnAdventure.height + GameState.stageHeight*0.1;
-			_btnSurvival.x = GameState.stageWidth/2 - _btnSurvival.width/2;
+			_btnSurvival = generateBtn('Survival', 3);
+			_btnSurvival.y = GameState.stageHeight * 0.5;
 			
 			// Duo button
-			_btnDuo = new Btn();
-			_btnDuo.btn_txt.text = 'Duo';
-			_btnDuo.btn_txt.selectable = false;
-			_btnDuo.gotoAndStop(3);
-			addChild(_btnDuo);
-			
-			_btnDuo.y = _btnSurvival.y + _btnSurvival.height + GameState.stageHeight*0.1;
-			_btnDuo.x = GameState.stageWidth / 2 - _btnDuo.width / 2;
+			_btnDuo = generateBtn('Duo', 3);
+			_btnDuo.y = GameState.stageHeight * 0.6;
 			
 			_btnAdventure.addEventListener(MouseEvent.CLICK, clickAdventure);
 		}

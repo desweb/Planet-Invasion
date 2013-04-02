@@ -16,6 +16,10 @@ package core.scene
 		private var _btnAchievements:Btn;
 		private var _btnCredits:Btn;
 		
+		/**
+		 * Contructor
+		 */
+		
 		public function MenuScene()
 		{
 			if (Common.IS_DEBUG) trace('create MenuScene');
@@ -23,8 +27,8 @@ package core.scene
 			/**
 			 * Initialization
 			 */
+			
 			generateBg();
-			//generateBtnReturn();
 			generateBtnSound();
 			generateLogin();
 			
@@ -33,62 +37,29 @@ package core.scene
 			 */
 			
 			// Play button
-			_btnPlay = new Btn();
-			_btnPlay.btn_txt.backgroundColor = 0xFFFFFF;
-			_btnPlay.btn_txt.text = 'Play';
-			_btnPlay.y = GameState.stageHeight*0.3;
-			_btnPlay.btn_txt.selectable = false;
-			addChild(_btnPlay);
-			
-			_btnPlay.x = GameState.stageWidth/2 - _btnPlay.width/2;
+			_btnPlay = generateBtn('Play');
+			_btnPlay.y = GameState.stageHeight * 0.3;
 			
 			// Ranking button
-			_btnRanking = new Btn();
-			_btnRanking.btn_txt.backgroundColor = 0xFFFFFF;
-			_btnRanking.btn_txt.text = 'Ranking';
-			_btnRanking.y = GameState.stageHeight*0.4;
-			_btnRanking.btn_txt.selectable = false;
-			addChild(_btnRanking);
-			
-			_btnRanking.x = GameState.stageWidth/2 - _btnRanking.width/2;
+			_btnRanking = generateBtn('Ranking');
+			_btnRanking.y = GameState.stageHeight * 0.4;
 			
 			// Achievements button
-			_btnAchievements = new Btn();
-			_btnAchievements.btn_txt.text = 'Achievements';
-			_btnAchievements.y = GameState.stageHeight*0.5;
-			_btnAchievements.btn_txt.selectable = false;
-			addChild(_btnAchievements);
-			
-			_btnAchievements.x = GameState.stageWidth/2 - _btnAchievements.width/2;
+			_btnAchievements = generateBtn('Achievements');
+			_btnAchievements.y = GameState.stageHeight * 0.5;
 			
 			// Credits button
-			_btnCredits = new Btn();
-			_btnCredits.btn_txt.text = 'Credits';
-			_btnCredits.y = GameState.stageHeight*0.6;
-			_btnCredits.btn_txt.selectable = false;
-			addChild(_btnCredits);
-			
-			_btnCredits.x = GameState.stageWidth/2 - _btnCredits.width/2;
+			_btnCredits = generateBtn('Credits');
+			_btnCredits.y = GameState.stageHeight * 0.6;
 			
 			/**
 			 * Events
 			 */
 			
-			_btnPlay.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnPlay.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnPlay.addEventListener(MouseEvent.CLICK, clickPlay);
-			
-			_btnRanking.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnRanking.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnRanking.addEventListener(MouseEvent.CLICK, clickRanking);
-			
-			_btnAchievements.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnAchievements.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnAchievements.addEventListener(MouseEvent.CLICK, clickAchievements);
-			
-			_btnCredits.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnCredits.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnCredits.addEventListener(MouseEvent.CLICK, clickCredits);
+			_btnPlay				.addEventListener(MouseEvent.CLICK, clickPlay);
+			_btnRanking			.addEventListener(MouseEvent.CLICK, clickRanking);
+			_btnAchievements	.addEventListener(MouseEvent.CLICK, clickAchievements);
+			_btnCredits			.addEventListener(MouseEvent.CLICK, clickCredits);
 		}
 		
 		/**

@@ -79,8 +79,9 @@ package core
 		public function Common() {}
 		
 		/**
-		 * Fonts functions
+		 * Fonts
 		 */
+		
 		public static function generatePolicy(policy:String = 'Arial', color:int = 0xffffff, size:int = 24, align:String = 'center'):TextFormat
 		{
 			var font:Font;
