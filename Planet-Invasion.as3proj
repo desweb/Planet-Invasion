@@ -51,8 +51,8 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="assets\scene.swc" />
     <element path="lib\greensock.swc" />
+    <element path="assets\scene.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

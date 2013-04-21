@@ -165,14 +165,14 @@ package core
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.page			= page;
-			vars.offset			= offset;
+			vars.page	= page;
+			vars.offset	= offset;
 			request.data = vars;
 			
 			return request;
 		}
 		
-		public static function get_rankAdventure(access_token:String, page:int, offset:int):URLRequest
+		public static function get_rankAdventure(page:int, offset:int):URLRequest
 		{
 			// Request
 			var request:URLRequest = API.generateURL('rank/adventure');
@@ -180,15 +180,14 @@ package core
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.access_token	= access_token;
-			vars.page			= page;
-			vars.offset			= offset;
+			vars.page	= page;
+			vars.offset	= offset;
 			request.data = vars;
 			
 			return request;
 		}
 		
-		public static function get_rankSurvival(access_token:String, page:int, offset:int):URLRequest
+		public static function get_rankSurvival(page:int, offset:int):URLRequest
 		{
 			// Request
 			var request:URLRequest = API.generateURL('rank/survival');
@@ -196,15 +195,14 @@ package core
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.access_token	= access_token;
-			vars.page			= page;
-			vars.offset			= offset;
+			vars.page	= page;
+			vars.offset	= offset;
 			request.data = vars;
 			
 			return request;
 		}
 		
-		public static function get_rankDuo(access_token:String, page:int, offset:int):URLRequest
+		public static function get_rankDuo(page:int, offset:int):URLRequest
 		{
 			// Request
 			var request:URLRequest = API.generateURL('rank/duo');
@@ -212,9 +210,8 @@ package core
 			
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.access_token	= access_token;
-			vars.page			= page;
-			vars.offset			= offset;
+			vars.page	= page;
+			vars.offset	= offset;
 			request.data = vars;
 			
 			return request;

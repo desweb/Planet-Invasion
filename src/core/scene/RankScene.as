@@ -2,6 +2,7 @@ package core.scene
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -18,17 +19,25 @@ package core.scene
 	 */
 	public class RankScene extends Scene
 	{
-		private var _loader:URLLoader;
+		private var _loaderRank					:URLLoader;
+		private var _loaderRankAdventure	:URLLoader;
+		private var _loaderRankSurvival		:URLLoader;
+		private var _loaderRankDuo			:URLLoader;
 		
-		private var _contentRank			:Sprite;
+		private var _tabRank					:Sprite;
+		private var _tabRankAdventure	:Sprite;
+		private var _tabRankSurvival		:Sprite;
+		private var _tabRankDuo			:Sprite;
+		
+		private var _contentRank				:Sprite;
 		private var _contentRankAdventure	:Sprite;
 		private var _contentRankSurvival	:Sprite;
 		private var _contentRankDuo			:Sprite;
 		
-		private var _scrollRank				:ScrollManager;
+		private var _scrollRank					:ScrollManager;
 		private var _scrollRankAdventure	:ScrollManager;
 		private var _scrollRankSurvival		:ScrollManager;
-		private var _scrollRankDuo			:ScrollManager;
+		private var _scrollRankDuo				:ScrollManager;
 		
 		private var _scrollFormat:TextFormat;
 		
@@ -39,23 +48,110 @@ package core.scene
 			/**
 			 * Initialization
 			 */
+			
 			generateBg();
 			generateBtnReturn();
 			
+			// Tab bar
+			_tabRank = generateTab('General');
+			_tabRank.x = GameState.stageWidth * .1;
+			_tabRank.y = GameState.stageHeight * .15;
+			
+			_tabRankAdventure = generateTab('Adventure');
+			_tabRankAdventure.x = _tabRank.x + _tabRank.width;
+			_tabRankAdventure.y = _tabRank.y;
+			
+			_tabRankSurvival = generateTab('Survival');
+			_tabRankSurvival.x = _tabRankAdventure.x + _tabRankAdventure.width;
+			_tabRankSurvival.y = _tabRank.y;
+			
+			_tabRankDuo = generateTab('Duo');
+			_tabRankDuo.x = _tabRankSurvival.x + _tabRankSurvival.width;
+			_tabRankDuo.y = _tabRank.y;
+			
+			_tabRank				.addEventListener(MouseEvent.CLICK, clickTabRank);
+			_tabRankAdventure.addEventListener(MouseEvent.CLICK, clickTabRankAdventure);
+			_tabRankSurvival	.addEventListener(MouseEvent.CLICK, clickTabRankSurvival);
+			_tabRankDuo			.addEventListener(MouseEvent.CLICK, clickTabRankDuo);
+			
+			// scroll
 			_scrollFormat = Common.getPolicy('Arial', 0x00ffff, 15);
 			
-			_loader = new URLLoader();
-			_loader.addEventListener(Event.COMPLETE, completeResponseRank);
-			_loader.load(API.get_rank(1, 25));
+			// webservice
+			_loaderRank = new URLLoader();
+			_loaderRank.addEventListener(Event.COMPLETE, completeResponseRank);
+			_loaderRank.load(API.get_rank(1, 50));
+			
+			_loaderRankAdventure = new URLLoader();
+			_loaderRankAdventure.addEventListener(Event.COMPLETE, completeResponseRankAdventure);
+			_loaderRankAdventure.load(API.get_rankAdventure(1, 50));
+			
+			_loaderRankSurvival = new URLLoader();
+			_loaderRankSurvival.addEventListener(Event.COMPLETE, completeResponseRankSurvival);
+			_loaderRankSurvival.load(API.get_rankSurvival(1, 50));
+			
+			_loaderRankDuo = new URLLoader();
+			_loaderRankDuo.addEventListener(Event.COMPLETE, completeResponseRankDuo);
+			_loaderRankDuo.load(API.get_rankDuo(1, 50));
 		}
+		
+		/**
+		 * Events
+		 */
+		
+		private function clickTabRank(e:Event):void
+		{
+			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRank.visible) return;
+			
+			_scrollRank				.visible = true;
+			_scrollRankAdventure	.visible = false;
+			_scrollRankSurvival	.visible = false;
+			_scrollRankDuo			.visible = false;
+		}
+		
+		private function clickTabRankAdventure(e:Event):void
+		{
+			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankAdventure.visible) return;
+			
+			_scrollRank				.visible = false;
+			_scrollRankAdventure	.visible = true;
+			_scrollRankSurvival	.visible = false;
+			_scrollRankDuo			.visible = false;
+		}
+		
+		private function clickTabRankSurvival(e:Event):void
+		{
+			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankSurvival.visible) return;
+			
+			_scrollRank				.visible = false;
+			_scrollRankAdventure	.visible = false;
+			_scrollRankSurvival	.visible = true;
+			_scrollRankDuo			.visible = false;
+		}
+		
+		private function clickTabRankDuo(e:Event):void
+		{
+			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankDuo.visible) return;
+			
+			_scrollRank				.visible = false;
+			_scrollRankAdventure	.visible = false;
+			_scrollRankSurvival	.visible = false;
+			_scrollRankDuo			.visible = true;
+		}
+		
+		/**
+		 * Webservice
+		 */
 		
 		private function completeResponseRank(e:Event):void
 		{
-			_loader.removeEventListener(Event.COMPLETE, completeResponseRank);
+			_loaderRank.removeEventListener(Event.COMPLETE, completeResponseRank);
 			
 			var loader:URLLoader = URLLoader(e.target);
 			
 			var users_rank:XML = new XML(loader.data);
+			
+			if (Common.IS_DEBUG) trace('completeResponseRank : ' + users_rank);
 			
 			_contentRank = new Sprite();
 			
@@ -70,6 +166,85 @@ package core.scene
 			_scrollRank = new ScrollManager(_contentRank);
 			addChild(_scrollRank);
 		}
+		
+		private function completeResponseRankAdventure(e:Event):void
+		{
+			_loaderRank.removeEventListener(Event.COMPLETE, completeResponseRankAdventure);
+			
+			var loader:URLLoader = URLLoader(e.target);
+			
+			var users_rank:XML = new XML(loader.data);
+			
+			if (Common.IS_DEBUG) trace('completeResponseRankAdventure : ' + users_rank);
+			
+			_contentRankAdventure = new Sprite();
+			
+			var i:int = 0;
+			for each (var user:XML in users_rank.users.user)
+			{
+				_contentRankAdventure.addChild(generateLine(user, i));
+				
+				i++;
+			}
+			
+			_scrollRankAdventure = new ScrollManager(_contentRankAdventure);
+			_scrollRankAdventure.visible = false;
+			addChild(_scrollRankAdventure);
+		}
+		
+		private function completeResponseRankSurvival(e:Event):void
+		{
+			_loaderRank.removeEventListener(Event.COMPLETE, completeResponseRankSurvival);
+			
+			var loader:URLLoader = URLLoader(e.target);
+			
+			var users_rank:XML = new XML(loader.data);
+			
+			if (Common.IS_DEBUG) trace('completeResponseRankSurvival : ' + users_rank);
+			
+			_contentRankSurvival = new Sprite();
+			
+			var i:int = 0;
+			for each (var user:XML in users_rank.users.user)
+			{
+				_contentRankSurvival.addChild(generateLine(user, i));
+				
+				i++;
+			}
+			
+			_scrollRankSurvival = new ScrollManager(_contentRankSurvival);
+			_scrollRankSurvival.visible = false;
+			addChild(_scrollRankSurvival);
+		}
+		
+		private function completeResponseRankDuo(e:Event):void
+		{
+			_loaderRank.removeEventListener(Event.COMPLETE, completeResponseRankDuo);
+			
+			var loader:URLLoader = URLLoader(e.target);
+			
+			var users_rank:XML = new XML(loader.data);
+			
+			if (Common.IS_DEBUG) trace('completeResponseRankDuo : ' + users_rank);
+			
+			_contentRankDuo = new Sprite();
+			
+			var i:int = 0;
+			for each (var user:XML in users_rank.users.user)
+			{
+				_contentRankDuo.addChild(generateLine(user, i));
+				
+				i++;
+			}
+			
+			_scrollRankDuo = new ScrollManager(_contentRankDuo);
+			_scrollRankDuo.visible = false;
+			addChild(_scrollRankDuo);
+		}
+		
+		/**
+		 * Interface
+		 */
 		
 		private function generateLine(user:XML, i:int):Sprite
 		{

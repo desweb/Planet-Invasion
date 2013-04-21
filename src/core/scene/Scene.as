@@ -46,7 +46,7 @@ package core.scene
 		 */
 		
 		// Background
-		public function generateBg():void
+		protected function generateBg():void
 		{
 			_bg = new Bg();
 			_bg.gotoAndStop(2);
@@ -54,7 +54,7 @@ package core.scene
 		}
 		
 		// Return button
-		public function generateBtnReturn():void
+		protected function generateBtnReturn():void
 		{
 			_btnReturn = new BtnReturn();
 			_btnReturn.x = Common.IS_DEBUG? GameState.stageWidth*0.15: GameState.stageWidth*0.05;
@@ -67,7 +67,7 @@ package core.scene
 		}
 		
 		// Sound button
-		public function generateBtnSound():void
+		protected function generateBtnSound():void
 		{
 			_btnSound = new BtnSound();
 			_btnSound.x = Common.IS_DEBUG? GameState.stageWidth*0.2: GameState.stageWidth*0.1;
@@ -80,7 +80,7 @@ package core.scene
 		}
 		
 		// Login area
-		public function generateLogin():void
+		protected function generateLogin():void
 		{
 			_btnLogin = generateBtnLeft('Login');
 			_btnLogin.x = GameState.stageWidth * 0.6;
@@ -98,7 +98,41 @@ package core.scene
 		 * Interface
 		 */
 		
-		public function generateBtn(txt:String, frame:int = 1):Btn
+		protected function generateTab(txt:String):Sprite
+		{
+			var tab:Sprite = new Sprite();
+			tab.mouseChildren	= false;
+			addChild(tab);
+			
+			var bg:Sprite = new Sprite();
+			bg.graphics.beginFill(0x000000);
+			bg.graphics.drawRect(0, 0, GameState.stageWidth * .2, GameState.stageHeight * .05);
+			bg.graphics.endFill();
+			bg.alpha = .5;
+			tab.addChild(bg);
+			
+			tab.x = (GameState.stageWidth - bg.width) / 2;
+			tab.y = (GameState.stageHeight - bg.height) / 2;
+			
+			var label:TextField = new TextField();
+			label.x							= 0;
+			label.y							= 0;
+			label.width						= tab.width;
+			label.height					= tab.height;
+			label.defaultTextFormat	= btnFormat;
+			label.text						= txt;
+			label.selectable				= false;
+			label.border					= true;
+			label.borderColor			= 0x00ffff;
+			tab.addChild(label);
+			
+			tab.addEventListener(MouseEvent.MOUSE_OVER, over);
+			tab.addEventListener(MouseEvent.MOUSE_OUT, out);
+			
+			return tab;
+		}
+		
+		protected function generateBtn(txt:String, frame:int = 1):Btn
 		{
 			var btn:Btn = new Btn();
 			btn.mouseChildren = false;
@@ -123,7 +157,7 @@ package core.scene
 			return btn;
 		}
 		
-		public function generateBtnLeft(txt:String, frame:int = 1):BtnLeft
+		protected function generateBtnLeft(txt:String, frame:int = 1):BtnLeft
 		{
 			var btn:BtnLeft = new BtnLeft();
 			btn.mouseChildren = false;
@@ -148,7 +182,7 @@ package core.scene
 			return btn;
 		}
 		
-		public function generateBtnRight(txt:String, frame:int = 1):BtnRight
+		protected function generateBtnRight(txt:String, frame:int = 1):BtnRight
 		{
 			var btn:BtnRight = new BtnRight();
 			btn.mouseChildren = false;
@@ -173,7 +207,7 @@ package core.scene
 			return btn;
 		}
 		
-		public function generateBtnCenter(txt:String, frame:String = 'default'):TextField
+		protected function generateBtnCenter(txt:String, frame:String = 'default'):TextField
 		{
 			var label:TextField = new TextField();
 			label.width						= GameState.stageWidth * .1;

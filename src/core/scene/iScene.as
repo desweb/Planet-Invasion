@@ -11,10 +11,10 @@ package core.scene
 		/**
 		 * Interface elements
 		 */
-		function generateBg():void;
+		/*function generateBg():void;
 		function generateBtnReturn():void;
 		function generateBtnSound():void;
-		function generateLogin():void;
+		function generateLogin():void;*/
 		
 		/**
 		 * Events
