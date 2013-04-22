@@ -44,7 +44,7 @@ package core.popup
 			usernameLabel.width			= GameState.stageWidth*0.3;
 			usernameLabel.height		= GameState.stageHeight * 0.05;
 			usernameLabel.selectable	= false;
-			usernameLabel.textColor		= 0x00ffff;
+			usernameLabel.textColor	= 0x00ffff;
 			usernameLabel.setTextFormat(textFormatLabel);
 			setPopupContent(usernameLabel);
 			

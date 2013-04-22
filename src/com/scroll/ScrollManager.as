@@ -111,6 +111,14 @@ package com.scroll
 			_down.graphics.endFill();
 			addChild(_down);
 			
+			if (_content.height <= CONTENT_HEIGHT)
+			{
+				_track	.visible = false;
+				_thumb	.visible = false;
+				_up		.visible = false;
+				_down	.visible = false;
+			}
+			
 			var scrollbar:VerticalScrollbar = new VerticalScrollbar(GameState.stage, _thumb, _track, _win, _content, _up, _down);
 		}
 	}
