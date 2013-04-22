@@ -9,29 +9,34 @@ package core.popup
 	 */
 	public interface IPopup 
 	{
-		function display():void;
-		function undisplay():void;
+		/**
+		 * Override
+		 */
 		
-		function generatePopup():void;
+		function destroy():void;
+		
+		/**
+		 * Functions
+		 */
+		
+		
 		
 		/**
 		 * Events
 		 */
-		function over	(e:MouseEvent):void;
-		function out	(e:MouseEvent):void;
+		
+		
 		
 		/**
 		 * Getters
 		 */
-		function get close():BtnClose;
+		
+		
 		
 		/**
 		 * Setters
 		 */
-		function setPopupWidth			(value:int)				:void;
-		function setPopupHeight			(value:int)				:void;
-		function setPopupBorderColor	(value:int)				:void;
-		function setTitleText			(value:String)			:void
-		function setPopupContent		(value:DisplayObject)	:void;
+		
+		
 	}
 }

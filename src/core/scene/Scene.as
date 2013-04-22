@@ -10,6 +10,7 @@ package core.scene
 	
 	import core.Common;
 	import core.GameState;
+	import core.Interface;
 	import core.popup.ErrorPopup;
 	import core.popup.LoginPopup;
 	import core.scene.IScene;
@@ -19,7 +20,7 @@ package core.scene
 	 * Base of scenes
 	 * @author desweb
 	 */
-	public class Scene extends Sprite implements IScene
+	public class Scene extends Interface implements IScene
 	{
 		private var _bg:Bg;
 		private var _btnReturn:BtnReturn;
@@ -27,18 +28,13 @@ package core.scene
 		private var _btnLogin:BtnLeft;
 		private var _btnRegister:BtnRight;
 		private var _txtUsername:TextField;
-		//private var _btnLogout:BtnLogout;
+		private var _btnLogout:BtnLeft;
 		
 		public var sceneReturn:uint;
 		
-		public var loginPopup:LoginPopup;
-		public var errorPopup:ErrorPopup;
-		
-		public var btnFormat:TextFormat;
-		
 		public function Scene()
 		{
-			btnFormat = Common.getPolicy('Arial', 0x00ffff, 15);
+			
 		}
 		
 		/**
@@ -82,167 +78,32 @@ package core.scene
 		// Login area
 		protected function generateLogin():void
 		{
-			_btnLogin = generateBtnLeft('Login');
-			_btnLogin.x = GameState.stageWidth * 0.6;
-			_btnLogin.y = GameState.stageHeight * 0.05;
-			
-			_btnRegister = generateBtnRight('Register');
-			_btnRegister.x = _btnLogin.x + _btnLogin.width;
-			_btnRegister.y = _btnLogin.y;
-			
-			_btnLogin		.addEventListener(MouseEvent.CLICK, clickLogin);
-			_btnRegister	.addEventListener(MouseEvent.CLICK, clickRegister);
-		}
-		
-		/**
-		 * Interface
-		 */
-		
-		protected function generateTab(txt:String):Sprite
-		{
-			var tab:Sprite = new Sprite();
-			tab.mouseChildren	= false;
-			addChild(tab);
-			
-			var bg:Sprite = new Sprite();
-			bg.graphics.beginFill(0x000000);
-			bg.graphics.drawRect(0, 0, GameState.stageWidth * .2, GameState.stageHeight * .05);
-			bg.graphics.endFill();
-			bg.alpha = .5;
-			tab.addChild(bg);
-			
-			tab.x = (GameState.stageWidth - bg.width) / 2;
-			tab.y = (GameState.stageHeight - bg.height) / 2;
-			
-			var label:TextField = new TextField();
-			label.x							= 0;
-			label.y							= 0;
-			label.width						= tab.width;
-			label.height					= tab.height;
-			label.defaultTextFormat	= btnFormat;
-			label.text						= txt;
-			label.selectable				= false;
-			label.border					= true;
-			label.borderColor			= 0x00ffff;
-			tab.addChild(label);
-			
-			tab.addEventListener(MouseEvent.MOUSE_OVER, over);
-			tab.addEventListener(MouseEvent.MOUSE_OUT, out);
-			
-			return tab;
-		}
-		
-		protected function generateBtn(txt:String, frame:int = 1):Btn
-		{
-			var btn:Btn = new Btn();
-			btn.mouseChildren = false;
-			addChild(btn);
-			
-			btn.x = (GameState.stageWidth - btn.width) / 2;
-			btn.y = (GameState.stageHeight - btn.height) / 2;
-			
-			var label:TextField = new TextField();
-			label.width						= btn.width;
-			label.height					= btn.height;
-			label.defaultTextFormat	= btnFormat;
-			label.text						= txt;
-			label.selectable				= false;
-			btn.addChild(label);
-			
-			btn.gotoAndStop(frame);
-			
-			btn.addEventListener(MouseEvent.MOUSE_OVER, over);
-			btn.addEventListener(MouseEvent.MOUSE_OUT, out);
-			
-			return btn;
-		}
-		
-		protected function generateBtnLeft(txt:String, frame:int = 1):BtnLeft
-		{
-			var btn:BtnLeft = new BtnLeft();
-			btn.mouseChildren = false;
-			addChild(btn);
-			
-			btn.x = (GameState.stageWidth - btn.width) / 2;
-			btn.y = (GameState.stageHeight - btn.height) / 2;
-			
-			var label:TextField = new TextField();
-			label.width						= btn.width;
-			label.height					= btn.height;
-			label.defaultTextFormat	= btnFormat;
-			label.text						= txt;
-			label.selectable				= false;
-			btn.addChild(label);
-			
-			btn.gotoAndStop(frame);
-			
-			btn.addEventListener(MouseEvent.MOUSE_OVER, over);
-			btn.addEventListener(MouseEvent.MOUSE_OUT, out);
-			
-			return btn;
-		}
-		
-		protected function generateBtnRight(txt:String, frame:int = 1):BtnRight
-		{
-			var btn:BtnRight = new BtnRight();
-			btn.mouseChildren = false;
-			addChild(btn);
-			
-			btn.x = (GameState.stageWidth - btn.width) / 2;
-			btn.y = (GameState.stageHeight - btn.height) / 2;
-			
-			var label:TextField = new TextField();
-			label.width						= btn.width;
-			label.height					= btn.height;
-			label.defaultTextFormat	= btnFormat;
-			label.text						= txt;
-			label.selectable				= false;
-			btn.addChild(label);
-			
-			btn.gotoAndStop(frame);
-			
-			btn.addEventListener(MouseEvent.MOUSE_OVER, over);
-			btn.addEventListener(MouseEvent.MOUSE_OUT, out);
-			
-			return btn;
-		}
-		
-		protected function generateBtnCenter(txt:String, frame:String = 'default'):TextField
-		{
-			var label:TextField = new TextField();
-			label.width						= GameState.stageWidth * .1;
-			label.height					= GameState.stageHeight * .1;
-			label.defaultTextFormat	= btnFormat;
-			label.text						= txt;
-			label.selectable				= false;
-			label.border					= true;
-			addChild(label);
-			
-			label.x = (GameState.stageWidth - label.width) / 2;
-			label.y = (GameState.stageHeight - label.height) / 2;
-			
-			if			(frame == 'default')	label.borderColor = 0x00ffff;
-			else if	(frame == 'error')		label.borderColor = 0xff0000;
-			
-			label.addEventListener(MouseEvent.MOUSE_OVER, over);
-			label.addEventListener(MouseEvent.MOUSE_OUT, out);
-			
-			return label;
+			if (GameState.user.isLog)
+			{
+				_btnLogout = generateBtnLeft('Logout');
+				_btnLogout.x = GameState.stageWidth * 0.6;
+				_btnLogout.y = GameState.stageHeight * 0.05;
+				
+				_btnLogout.addEventListener(MouseEvent.CLICK, clickLogout);
+			}
+			else
+			{
+				_btnLogin = generateBtnLeft('Login');
+				_btnLogin.x = GameState.stageWidth * 0.6;
+				_btnLogin.y = GameState.stageHeight * 0.05;
+				
+				_btnRegister = generateBtnRight('Register');
+				_btnRegister.x = _btnLogin.x + _btnLogin.width;
+				_btnRegister.y = _btnLogin.y;
+				
+				_btnLogin		.addEventListener(MouseEvent.CLICK, clickLogin);
+				_btnRegister	.addEventListener(MouseEvent.CLICK, clickRegister);
+			}
 		}
 		
 		/**
 		 * Events
 		 */
-		
-		public function over(e:MouseEvent):void
-		{
-			buttonMode = true;
-		}
-		
-		public function out(e:MouseEvent):void
-		{
-			buttonMode = false;
-		}
 		
 		private function clickReturn(e:MouseEvent):void
 		{
@@ -256,11 +117,16 @@ package core.scene
 		
 		private function clickLogin(e:MouseEvent):void
 		{
-			loginPopup = new LoginPopup();
+			var loginPopup:LoginPopup = new LoginPopup();
 			addChild(loginPopup);
 			loginPopup.display();
+		}
+		
+		private function clickLogout(e:MouseEvent):void
+		{
+			GameState.user.logout();
 			
-			loginPopup.close.addEventListener(MouseEvent.CLICK, clickLoginPopupClose);
+			SceneManager.getInstance().setCurrentScene(SceneManager.getInstance().sceneId);
 		}
 		
 		private function clickRegister(e:MouseEvent):void
@@ -268,46 +134,19 @@ package core.scene
 			
 		}
 		
-		private function clickLoginPopupClose(e:MouseEvent):void
-		{
-			loginPopup.removeEventListener(MouseEvent.CLICK, clickLoginPopupClose);
-			
-			TweenLite.to(loginPopup, 1, {alpha:0, onComplete:removeLoginPopup});
-		}
-		
-		private function clickErrorPopupClose(e:MouseEvent):void
-		{
-			errorPopup.removeEventListener(MouseEvent.CLICK, clickErrorPopupClose);
-			
-			TweenLite.to(errorPopup, 1, {alpha:0, onComplete:removeErrorPopup});
-		}
-		
 		/**
 		 * Removes
 		 */
 		
-		private function removeLoginPopup():void
-		{
-			if (!loginPopup) return;
-			
-			if (Common.IS_DEBUG) trace('delete LoginPopup');
-			
-			removeChild(loginPopup);
-			loginPopup = null;
-		}
-		
-		private function removeErrorPopup():void
-		{
-			if (!errorPopup) return;
-			
-			if (Common.IS_DEBUG) trace('delete ErrorPopup');
-			
-			removeChild(errorPopup);
-			errorPopup = null;
-		}
-		
 		public function destroy():void
 		{
+			if (_btnLogout) _btnLogout.removeEventListener(MouseEvent.CLICK, clickLogout);
+			else
+			{
+				_btnLogin		.removeEventListener(MouseEvent.CLICK, clickLogin);
+				_btnRegister	.removeEventListener(MouseEvent.CLICK, clickRegister);
+			}
+			
 			GameState.main.removeChild(this);
 		}
 	}

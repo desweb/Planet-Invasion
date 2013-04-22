@@ -31,13 +31,17 @@ package core
 		
 		static public function set main(value:Main):void
 		{ 
-			if (_main == null)
-				_main = value;
+			if (_main == null) _main = value;
 		}
 		
 		static public function get main():Main
 		{ 
 			return _main;
+		}
+		
+		static public function get user():User
+		{ 
+			return _main.user;
 		}
 		
 		static public function set game(value:Game):void

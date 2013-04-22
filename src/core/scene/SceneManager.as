@@ -1,5 +1,7 @@
 package core.scene 
 {
+	import com.greensock.TweenLite;
+	
 	import core.Common;
 	import core.GameState;
 	
@@ -13,7 +15,8 @@ package core.scene
 		
 		private var _current_scene_uid:uint;
 		
-		private var _current_scene:Scene;
+		private var _current_scene	:Scene;
+		private var _old_scene		:Scene;
 		
 		public function SceneManager() 
 		{
@@ -24,6 +27,7 @@ package core.scene
 		/**
 		 * Singleton
 		 */
+		
 		public static function getInstance():SceneManager
 		{
 			if (_instance == null) _instance = new SceneManager();
@@ -31,45 +35,55 @@ package core.scene
 			return _instance;
 		}
 		
+		/**
+		 * Functions
+		 */
+		
 		public function setCurrentScene(scene_uid:uint, type:uint = 0):void
 		{
-			if (_current_scene_uid)
-			{
-				_current_scene.destroy();
-				_current_scene = null;
-			}
+			if (_current_scene_uid) _old_scene = _current_scene;
 			
 			_current_scene = checkNewScene(scene_uid, type);
+			_current_scene.alpha = 0;
 			GameState.main.addChild(_current_scene);
+			
+			TweenLite.to(_current_scene, .5, {alpha:1});
+			
+			if (_old_scene) TweenLite.to(_old_scene, .5, {alpha:0, onComplete:destroyOldScene});
 			
 			_current_scene_uid = scene_uid;
 		}
 		
-		private static function checkNewScene(scene_uid:uint, type:uint = 0):Scene
+		private function destroyOldScene():void
+		{
+			_old_scene.destroy();
+			_old_scene = null;
+		}
+		
+		static private function checkNewScene(scene_uid:uint, type:uint = 0):Scene
 		{
 			switch (scene_uid)
 			{
-				case Common.SCENE_ACHIEVEMENT:	return new AchievementScene();	break;
-				case Common.SCENE_CREDIT:		return new CreditScene();		break;
-				case Common.SCENE_DIALOG:		return new DialogScene();		break;
-				case Common.SCENE_FINAL:		return new FinalScene();		break;
-				case Common.SCENE_GAME:			return new GameScene(type);		break;
-				case Common.SCENE_GAME_MODE:	return new GameModeScene();		break;
-				case Common.SCENE_IMPROVEMENT:	return new ImprovementScene();	break;
-				case Common.SCENE_MENU:			return new MenuScene();			break;
-				case Common.SCENE_RANK:			return new RankScene();			break;
-				case Common.SCENE_RESEARCH_DUO:	return new ResearchDuoScene();	break;
-				case Common.SCENE_SELECT_LEVEL:	return new SelectLevelScene();	break;
-				default:						return new MenuScene();
+				case Common.SCENE_ACHIEVEMENT		: return new AchievementScene();	break;
+				case Common.SCENE_CREDIT				: return new CreditScene();			break;
+				case Common.SCENE_DIALOG				: return new DialogScene();			break;
+				case Common.SCENE_FINAL					: return new FinalScene();				break;
+				case Common.SCENE_GAME					: return new GameScene(type);		break;
+				case Common.SCENE_GAME_MODE		: return new GameModeScene();		break;
+				case Common.SCENE_IMPROVEMENT		: return new ImprovementScene();	break;
+				case Common.SCENE_MENU					: return new MenuScene();				break;
+				case Common.SCENE_RANK					: return new RankScene();				break;
+				case Common.SCENE_RESEARCH_DUO	: return new ResearchDuoScene();	break;
+				case Common.SCENE_SELECT_LEVEL		: return new SelectLevelScene();	break;
+				default													: return new MenuScene();
 			}
 		}
 		
 		/**
 		 * Getters
 		 */
-		public function get scene():Scene
-		{
-			return _current_scene;
-		}
+		
+		public function get sceneId()	:uint		{ return _current_scene_uid; }
+		public function get scene()		:Scene	{ return _current_scene; }
 	}
 }

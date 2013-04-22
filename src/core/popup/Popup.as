@@ -11,14 +11,17 @@ package core.popup
 	
 	import core.Common;
 	import core.GameState;
+	import core.Interface;
+	import core.scene.SceneManager;
 	
 	/**
 	 * ...
 	 * @author desweb
 	 */
-	public class Popup extends Sprite implements IPopup
+	public class Popup extends Interface
 	{
-		public static const BG_ALPHA:Number = 0.5;
+		public static const ANIM_TIMER	:Number = .5;
+		public static const BG_ALPHA		:Number = .5;
 		
 		private var _bg:Sprite;
 		private var _title:TextField;
@@ -43,13 +46,16 @@ package core.popup
 			_bg.graphics.endFill();
 			addChild(_bg);
 			
-			_popup = new Sprite();
-			_title = new TextField();
-			_close = new BtnClose();
+			// Content
+			_popup	= new Sprite();
+			_title		= new TextField();
+			_close	= new BtnClose();
+			
+			_close.addEventListener(MouseEvent.CLICK, clickClose);
 		}
 		
-		public function display		():void { TweenLite.to(this, 1, {alpha:1}); }
-		public function undisplay	():void { TweenLite.to(this, 1, {alpha:0}); }
+		public function display	():void { TweenLite.to(this, ANIM_TIMER, {alpha:1}); }
+		public function undisplay	():void { TweenLite.to(this, ANIM_TIMER, {alpha:0}); }
 		
 		/**
 		 * Generation functions
@@ -89,85 +95,54 @@ package core.popup
 		{
 			successPopup = new SuccessPopup();
 			successPopup.setText(message);
-			addChild(successPopup);
-			
-			successPopup.close.addEventListener(MouseEvent.CLICK, clickSuccessPopupClose);
-			
+			SceneManager.getInstance().scene.addChild(successPopup);
 			successPopup.display();
-			TweenLite.to(_bg, 1, {alpha:0});
 		}
 		
 		public function displayErrorPopup (message:String):void
 		{
 			errorPopup = new ErrorPopup();
 			errorPopup.setText(message);
-			addChild(errorPopup);
-			
-			errorPopup.close.addEventListener(MouseEvent.CLICK, clickErrorPopupClose);
-			
+			SceneManager.getInstance().scene.addChild(errorPopup);
 			errorPopup.display();
-			TweenLite.to(_bg, 1, {alpha:0});
 		}
 		
 		/**
 		 * Events
 		 */
-		public function over(e:MouseEvent):void { buttonMode = true; }
-		public function out	(e:MouseEvent):void { buttonMode = false; }
 		
-		
-		public function clickSuccessPopupClose (e:MouseEvent):void
+		private function clickClose(e:MouseEvent):void
 		{
-			successPopup.close.removeEventListener(MouseEvent.CLICK, clickSuccessPopupClose);
-			
-			TweenLite.to(successPopup, 1, {alpha:0, onComplete:removeSuccessPopup});
-			TweenLite.to(_bg, 1, {alpha:BG_ALPHA});
-		}
-		
-		public function clickErrorPopupClose (e:MouseEvent):void
-		{
-			errorPopup.close.removeEventListener(MouseEvent.CLICK, clickErrorPopupClose);
-			
-			TweenLite.to(errorPopup, 1, {alpha:0, onComplete:removeErrorPopup});
-			TweenLite.to(_bg, 1, {alpha:BG_ALPHA});
+			destroy();
 		}
 		
 		/**
 		 * Getters
 		 */
-		public function get close():BtnClose { return _close; }
+		
+		
 		
 		/**
 		 * Setters
 		 */
-		public function setPopupWidth		(value:int)				:void { _popupWidth			= value; }
-		public function setPopupHeight		(value:int)				:void { _popupHeight		= value; }
-		public function setPopupBorderColor	(value:int)				:void { _popupBorderColor	= value; }
-		public function setTitleText		(value:String)			:void { _title.text 		= value; }
+		
+		public function setPopupWidth			(value:int)					:void { _popupWidth			= value; }
+		public function setPopupHeight		(value:int)					:void { _popupHeight			= value; }
+		public function setPopupBorderColor(value:int)					:void { _popupBorderColor	= value; }
+		public function setTitleText				(value:String)			:void { _title.text 				= value; }
 		public function setPopupContent		(value:DisplayObject)	:void { _popup.addChild(value); }
 		
 		/**
 		 * Removes
 		 */
 		
-		private function removeSuccessPopup():void
+		public function destroy():void
 		{
-			if (!successPopup) return;
+			_close.removeEventListener(MouseEvent.CLICK,				clickClose);
+			_close.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+			_close.removeEventListener(MouseEvent.MOUSE_OUT,		out);
 			
-			if (Common.IS_DEBUG) trace('delete SuccessPopup');
-			
-			removeChild(successPopup);
-			successPopup = null;
-		}
-		
-		private function removeErrorPopup():void
-		{
-			if (!errorPopup) return;
-			
-			if (Common.IS_DEBUG) trace('delete ErrorPopup');
-			
-			removeChild(errorPopup);
-			errorPopup = null;
+			TweenLite.to(this, ANIM_TIMER, {alpha:0, onComplete:SceneManager.getInstance().scene.removeChild, onCompleteParams:[this]});
 		}
 	}
 }

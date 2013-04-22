@@ -5,6 +5,7 @@ package
 	
 	import core.Common;
 	import core.GameState;
+	import core.User;
 	import core.scene.MenuScene;
 	import core.scene.SceneManager;
 	import core.utils.Stats;
@@ -22,6 +23,8 @@ package
 	{
 		private var _stats:Stats;
 		private var _stats_monitor:StatsMonitor;
+		
+		public var user:User;
 		
 		public function Main():void 
 		{
@@ -46,6 +49,8 @@ package
 				_stats_monitor = new StatsMonitor();
 				stage.addChild(_stats_monitor);
 			}
+			
+			user = new User();
 			
 			GameState.main = this;
 			

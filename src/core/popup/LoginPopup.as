@@ -10,12 +10,13 @@ package core.popup
 	import core.API;
 	import core.Common;
 	import core.GameState;
+	import core.scene.SceneManager;
 	
 	/**
 	 * ...
 	 * @author desweb
 	 */
-	public class LoginPopup extends Popup
+	public class LoginPopup extends Popup implements IPopup 
 	{
 		private var _isURLLoader:Boolean = false;
 		private var _loader:URLLoader;
@@ -95,16 +96,29 @@ package core.popup
 			setPopupContent(_submitLoader);
 			
 			// Submit
-			_submitBtn = new Btn();
-			_submitBtn.btn_txt.text = 'Submit';
+			_submitBtn = generateBtn('Submit');
 			_submitBtn.x = GameState.stageWidth*0.15;
 			_submitBtn.y = GameState.stageHeight*0.5;
-			_submitBtn.btn_txt.selectable = false;
 			setPopupContent(_submitBtn);
 			
 			_submitBtn.addEventListener(MouseEvent.MOUSE_OVER,	over);
 			_submitBtn.addEventListener(MouseEvent.MOUSE_OUT,	out);
-			_submitBtn.addEventListener(MouseEvent.CLICK,		clickSubmit);
+			_submitBtn.addEventListener(MouseEvent.CLICK,				clickSubmit);
+		}
+		
+		/**
+		 * Override
+		 */
+		
+		override public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy LoginPopup');
+			
+			_submitBtn.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+			_submitBtn.removeEventListener(MouseEvent.MOUSE_OUT,		out);
+			_submitBtn.removeEventListener(MouseEvent.CLICK,				clickSubmit);
+			
+			super.destroy();
 		}
 		
 		/**
@@ -149,17 +163,18 @@ package core.popup
 			
 			var loader:URLLoader = URLLoader(e.target);
 			
-			var myXML:XML;
-			myXML = new XML(loader.data);			
-			trace('login response : ' + myXML);
+			var xml:XML;
+			xml = new XML(loader.data);
 			
-			if (myXML.error)
+			if (xml.error.length() > 0)
 			{
 				displayErrorPopup('Login failed !');
 				return;
 			}
 			
-			displaySuccessPopup('Login success !');
+			GameState.user.login(xml.access_token, xml.expired_at);
+			
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 		}
 	}
 }

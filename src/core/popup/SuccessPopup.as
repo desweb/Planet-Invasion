@@ -9,7 +9,7 @@ package core.popup
 	 * ...
 	 * @author desweb
 	 */
-	public class SuccessPopup extends Popup
+	public class SuccessPopup extends Popup implements IPopup
 	{
 		private var _successLabel:TextField;
 		
@@ -34,8 +34,20 @@ package core.popup
 		}
 		
 		/**
+		 * Override
+		 */
+		
+		override public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy SuccessPopup');
+			
+			super.destroy();
+		}
+		
+		/**
 		 * Setters
 		 */
+		
 		public function setText(value:String):void
 		{
 			_successLabel.text = value;
