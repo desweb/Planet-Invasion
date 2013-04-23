@@ -138,9 +138,24 @@ package core.popup
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
 			
-			_loader = new URLLoader();
-			_loader.addEventListener(Event.COMPLETE, completeResponse);
-			_loader.load(API.post_auth(_usernameInput.text, _passwordInput.text));
+			API.post_auth(_usernameInput.text, _passwordInput.text,
+			function(response:XML):void
+			{
+				_isURLLoader = false;
+				
+				_submitLoader	.alpha = 0;
+				_submitBtn		.alpha = 1;
+				
+				removeEventListener(Event.ENTER_FRAME, updateResponse);
+				
+				if (response.error.length() > 0)
+				{
+					displayErrorPopup('Login failed !');
+					return;
+				}
+				
+				SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
+			});
 			
 			addEventListener(Event.ENTER_FRAME, updateResponse);
 		}
@@ -148,33 +163,6 @@ package core.popup
 		private function updateResponse(e:Event):void
 		{
 			_submitLoader.rotation += 10;
-		}
-		
-		private function completeResponse(e:Event):void
-		{
-			_isURLLoader = false;
-			
-			_submitLoader	.alpha = 0;
-			_submitBtn		.alpha = 1;
-			
-			removeEventListener(Event.ENTER_FRAME, updateResponse);
-			
-			_loader.removeEventListener(Event.COMPLETE, completeResponse);
-			
-			var loader:URLLoader = URLLoader(e.target);
-			
-			var xml:XML;
-			xml = new XML(loader.data);
-			
-			if (xml.error.length() > 0)
-			{
-				displayErrorPopup('Login failed !');
-				return;
-			}
-			
-			GameState.user.login(xml.access_token, xml.expired_at);
-			
-			SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 		}
 	}
 }

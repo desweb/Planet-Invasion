@@ -140,12 +140,9 @@ package core.scene
 		
 		public function destroy():void
 		{
-			if (_btnLogout) _btnLogout.removeEventListener(MouseEvent.CLICK, clickLogout);
-			else
-			{
-				_btnLogin		.removeEventListener(MouseEvent.CLICK, clickLogin);
-				_btnRegister	.removeEventListener(MouseEvent.CLICK, clickRegister);
-			}
+			if (_btnLogout)	_btnLogout	.removeEventListener(MouseEvent.CLICK, clickLogout);
+			if (_btnLogin)		_btnLogin		.removeEventListener(MouseEvent.CLICK, clickLogin);
+			if (_btnRegister)	_btnRegister	.removeEventListener(MouseEvent.CLICK, clickRegister);
 			
 			GameState.main.removeChild(this);
 		}

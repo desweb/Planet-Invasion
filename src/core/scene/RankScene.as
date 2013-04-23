@@ -3,7 +3,6 @@ package core.scene
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.net.URLLoader;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
@@ -19,11 +18,6 @@ package core.scene
 	 */
 	public class RankScene extends Scene
 	{
-		private var _loaderRank					:URLLoader;
-		private var _loaderRankAdventure	:URLLoader;
-		private var _loaderRankSurvival		:URLLoader;
-		private var _loaderRankDuo			:URLLoader;
-		
 		private var _tabRank					:Sprite;
 		private var _tabRankAdventure	:Sprite;
 		private var _tabRankSurvival		:Sprite;
@@ -78,21 +72,76 @@ package core.scene
 			_scrollFormat = Common.getPolicy('Arial', 0x00ffff, 15);
 			
 			// webservice
-			_loaderRank = new URLLoader();
-			_loaderRank.addEventListener(Event.COMPLETE, completeResponseRank);
-			_loaderRank.load(API.get_rank(1, 50));
+			API.get_rank(1, 50,
+			function(response:XML):void
+			{
+				_contentRank = new Sprite();
+				
+				var i:int = 0;
+				for each (var user:XML in response.users.user)
+				{
+					_contentRank.addChild(generateLine(user, i));
+					
+					i++;
+				}
+				
+				_scrollRank = new ScrollManager(_contentRank);
+				addChild(_scrollRank);
+			});
 			
-			_loaderRankAdventure = new URLLoader();
-			_loaderRankAdventure.addEventListener(Event.COMPLETE, completeResponseRankAdventure);
-			_loaderRankAdventure.load(API.get_rankAdventure(1, 50));
+			API.get_rankAdventure(1, 50,
+			function(response:XML):void
+			{
+				_contentRankAdventure = new Sprite();
+				
+				var i:int = 0;
+				for each (var user:XML in response.users.user)
+				{
+					_contentRankAdventure.addChild(generateLine(user, i));
+					
+					i++;
+				}
+				
+				_scrollRankAdventure = new ScrollManager(_contentRankAdventure);
+				_scrollRankAdventure.visible = false;
+				addChild(_scrollRankAdventure);
+			});
 			
-			_loaderRankSurvival = new URLLoader();
-			_loaderRankSurvival.addEventListener(Event.COMPLETE, completeResponseRankSurvival);
-			_loaderRankSurvival.load(API.get_rankSurvival(1, 50));
+			API.get_rankSurvival(1, 50,
+			function(response:XML):void
+			{
+				_contentRankSurvival = new Sprite();
+				
+				var i:int = 0;
+				for each (var user:XML in response.users.user)
+				{
+					_contentRankSurvival.addChild(generateLine(user, i));
+					
+					i++;
+				}
+				
+				_scrollRankSurvival = new ScrollManager(_contentRankSurvival);
+				_scrollRankSurvival.visible = false;
+				addChild(_scrollRankSurvival);
+			});
 			
-			_loaderRankDuo = new URLLoader();
-			_loaderRankDuo.addEventListener(Event.COMPLETE, completeResponseRankDuo);
-			_loaderRankDuo.load(API.get_rankDuo(1, 50));
+			API.get_rankDuo(1, 50,
+			function(response:XML):void
+			{
+				_contentRankDuo = new Sprite();
+				
+				var i:int = 0;
+				for each (var user:XML in response.users.user)
+				{
+					_contentRankDuo.addChild(generateLine(user, i));
+					
+					i++;
+				}
+				
+				_scrollRankDuo = new ScrollManager(_contentRankDuo);
+				_scrollRankDuo.visible = false;
+				addChild(_scrollRankDuo);
+			});
 		}
 		
 		/**
@@ -143,7 +192,7 @@ package core.scene
 		 * Webservice
 		 */
 		
-		private function completeResponseRank(e:Event):void
+		/*private function completeResponseRank(e:Event):void
 		{
 			_loaderRank.removeEventListener(Event.COMPLETE, completeResponseRank);
 			
@@ -240,7 +289,7 @@ package core.scene
 			_scrollRankDuo = new ScrollManager(_contentRankDuo);
 			_scrollRankDuo.visible = false;
 			addChild(_scrollRankDuo);
-		}
+		}*/
 		
 		/**
 		 * Interface

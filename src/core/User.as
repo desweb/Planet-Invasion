@@ -1,6 +1,9 @@
 package core 
 {
-	import com.greensock.TweenLite;
+	import flash.net.URLLoader;
+	import flash.events.Event;
+	
+	//import com.greensock.TweenLite;
 	
 	/**
 	 * Manage user
@@ -8,8 +11,8 @@ package core
 	 */
 	public class User 
 	{
-		private var _accessToken:String;
-		private var _accessTokenExpiredAt:int;
+		private var _accessToken				:String;
+		private var _accessTokenExpiredAt	:int;
 		
 		private var _key:String;
 		private var _username:String;
@@ -24,9 +27,8 @@ package core
 		
 		public var isLog:Boolean;
 		
-		private var _loaderAccessToken:Loader;
+		private var _loaderAccessToken:URLLoader;
 		
-		private var _tweenAccessToken:TweenLite;
 		
 		public function User() 
 		{
@@ -86,17 +88,10 @@ package core
 			_accessTokenExpiredAt	= expiredAt;
 			
 			isLog = true;
-			
-			_tweenAccessToken = new TweenLite();
-			_tweenAccessToken.delayedCall(25, refreshAccessToken);
 		}
 		
 		public function logout():void
 		{
-			_tweenAccessToken.pause();
-			_tweenAccessToken.kill();
-			_tweenAccessToken = null;
-			
 			init();
 		}
 		
@@ -106,41 +101,23 @@ package core
 		
 		private function refreshAccessToken():void
 		{
-			_loaderAccessToken = new URLLoader();
-			_loaderAccessToken.addEventListener(Event.COMPLETE, completeRrefreshAccessToken);
-			_loaderAccessToken.load(API.get_auth(_key));
-			
-			_tweenAccessToken.pause();
-			_tweenAccessToken.kill();
-			
-			_tweenAccessToken = new TweenLite();
-			_tweenAccessToken.delayedCall(25, refreshAccessToken);
-		}
-		
-		private function completeRrefreshAccessToken():void
-		{
-			_loaderAccessToken.removeEventListener(Event.COMPLETE, completeResponse);
-			_loaderAccessToken = null;
-			
-			var xml:XML;
-			xml = new XML(loader.data);
-			
-			if (xml.error.length() > 0)
-			{
-				refreshAccessToken();
-				return;
-			}
-			
-			_accessToken				= xml.access_token;
-			_accessTokenExpiredAt	= xml.expired_at;
+			API.get_auth(function(response:XML):void {});
 		}
 		
 		/**
 		 * Getters
 		 */
 		
+		public function get accessToken				():String	{ return _accessToken; }
+		public function get accessTokenExpiredAt	():int			{ return _accessTokenExpiredAt; }
+		public function get key							():String	{ return _key; }
+		
 		/**
 		 * Setters
 		 */
+		
+		public function set accessToken				(value:String):void { _accessToken = value; }
+		public function set accessTokenExpiredAt	(value:int)		:void { _accessTokenExpiredAt = value; }
+		
 	}
 }
