@@ -11,11 +11,15 @@ package core
 	 */
 	public class Interface extends Sprite
 	{
-		public var btnFormat:TextFormat;
+		public var btnFormat			:TextFormat;
+		public var inputFormat		:TextFormat;
+		public var inputLabelFormat:TextFormat;
 		
 		public function Interface() 
 		{
-			btnFormat = Common.getPolicy('Arial', 0x00ffff, 15);
+			btnFormat				= Common.getPolicy('Arial', 0x00FFFF, 15);
+			inputFormat			= Common.getPolicy('Arial', 0xFFFFFF, 15);
+			inputLabelFormat	= Common.getPolicy('Arial', 0x00FFFF, 15);
 		}
 		
 		protected function generateTab(txt:String):Sprite
@@ -148,6 +152,37 @@ package core
 			label.addEventListener(MouseEvent.MOUSE_OUT, out);
 			
 			return label;
+		}
+		
+		protected function generateInputLabel(txt:String):TextField
+		{
+			var label:TextField	= new TextField();
+			label.text			= txt;
+			label.width			= GameState.stageWidth*0.3;
+			label.height		= GameState.stageHeight * 0.05;
+			label.x				= (GameState.stageWidth - label.width) * 0.5;
+			label.y				= (GameState.stageHeight - label.height) * 0.5;
+			label.selectable	= false;
+			label.textColor	= 0x00ffff;
+			label.setTextFormat(inputLabelFormat);
+			
+			return label;
+		}
+		
+		protected function generateInput():TextField
+		{
+			var input:TextField = new TextField();
+			input.type				= 'input';
+			input.width			= GameState.stageWidth*0.3;
+			input.height			= GameState.stageHeight*0.05;
+			input.x					= (GameState.stageWidth - input.width) * 0.5;
+			input.y					= (GameState.stageHeight - input.height) * 0.5;
+			input.border 			= true;
+			input.borderColor	= 0x00ffff;
+			input.textColor		= 0xffffff;
+			input.setTextFormat(inputFormat);
+			
+			return input;
 		}
 		
 		/**

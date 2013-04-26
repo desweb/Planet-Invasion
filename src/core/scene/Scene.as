@@ -13,6 +13,7 @@ package core.scene
 	import core.Interface;
 	import core.popup.ErrorPopup;
 	import core.popup.LoginPopup;
+	import core.popup.RegisterPopup;
 	import core.scene.IScene;
 	import core.scene.SceneManager;
 	
@@ -131,7 +132,9 @@ package core.scene
 		
 		private function clickRegister(e:MouseEvent):void
 		{
-			
+			var registerPopup:RegisterPopup = new RegisterPopup();
+			addChild(registerPopup);
+			registerPopup.display();
 		}
 		
 		/**

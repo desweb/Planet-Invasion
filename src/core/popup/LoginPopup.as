@@ -34,56 +34,27 @@ package core.popup
 			
 			generatePopup();
 			
-			var textFormatInput:TextFormat = Common.getPolicy('Arial', 0xffffff, 15);
-			var textFormatLabel:TextFormat = Common.getPolicy('Arial', 0x00ffff, 15);
-			
 			// Username
-			var usernameLabel:TextField = new TextField();
-			usernameLabel.text			= 'Username';
-			usernameLabel.x				= GameState.stageWidth*0.15;
-			usernameLabel.y				= GameState.stageHeight*0.1;
-			usernameLabel.width			= GameState.stageWidth*0.3;
-			usernameLabel.height		= GameState.stageHeight * 0.05;
-			usernameLabel.selectable	= false;
-			usernameLabel.textColor	= 0x00ffff;
-			usernameLabel.setTextFormat(textFormatLabel);
+			var usernameLabel:TextField = generateInputLabel('Username');
+			usernameLabel.x	= GameState.stageWidth*0.15;
+			usernameLabel.y	= GameState.stageHeight*0.1;
 			setPopupContent(usernameLabel);
 			
-			_usernameInput = new TextField();
-			_usernameInput.type			= 'input';
-			_usernameInput.x			= GameState.stageWidth*0.15;
-			_usernameInput.y			= GameState.stageHeight*0.15;
-			_usernameInput.width		= GameState.stageWidth*0.3;
-			_usernameInput.height		= GameState.stageHeight*0.05;
-			_usernameInput.border 		= true;
-			_usernameInput.borderColor	= 0x00ffff;
-			_usernameInput.textColor	= 0xffffff;
-			_usernameInput.setTextFormat(textFormatInput);
+			_usernameInput = generateInput();
+			_usernameInput.x	= GameState.stageWidth*0.15;
+			_usernameInput.y	= GameState.stageHeight*0.15;
 			setPopupContent(_usernameInput);
 			
 			// Password
-			var passwordLabel:TextField = new TextField();
-			passwordLabel.text			= 'Password';
-			passwordLabel.x				= GameState.stageWidth*0.15;
-			passwordLabel.y				= GameState.stageHeight*0.3;
-			passwordLabel.width			= GameState.stageWidth*0.3;
-			passwordLabel.height		= GameState.stageHeight * 0.05;
-			passwordLabel.selectable	= false;
-			passwordLabel.textColor		= 0x00ffff;
-			passwordLabel.setTextFormat(textFormatLabel);
+			var passwordLabel:TextField = generateInputLabel('Password');
+			passwordLabel.x	= GameState.stageWidth*0.15;
+			passwordLabel.y	= GameState.stageHeight*0.3;
 			setPopupContent(passwordLabel);
 			
-			_passwordInput = new TextField();
-			_passwordInput.type					= 'input';
-			_passwordInput.x					= GameState.stageWidth*0.15;
-			_passwordInput.y					= GameState.stageHeight * 0.35;
-			_passwordInput.width				= GameState.stageWidth*0.3;
-			_passwordInput.height				= GameState.stageHeight*0.05;
-			_passwordInput.border				= true;
-			_passwordInput.borderColor			= 0x00ffff;
-			_passwordInput.textColor			= 0xffffff;
-			_passwordInput.displayAsPassword	= true;
-			_passwordInput.setTextFormat(textFormatInput);
+			_passwordInput = generateInput();
+			_passwordInput.x	= GameState.stageWidth*0.15;
+			_passwordInput.y	= GameState.stageHeight * 0.35;
+			_passwordInput.displayAsPassword = true;
 			setPopupContent(_passwordInput);
 			
 			// Loader
@@ -101,9 +72,7 @@ package core.popup
 			_submitBtn.y = GameState.stageHeight*0.5;
 			setPopupContent(_submitBtn);
 			
-			_submitBtn.addEventListener(MouseEvent.MOUSE_OVER,	over);
-			_submitBtn.addEventListener(MouseEvent.MOUSE_OUT,	out);
-			_submitBtn.addEventListener(MouseEvent.CLICK,				clickSubmit);
+			_submitBtn.addEventListener(MouseEvent.CLICK, clickSubmit);
 		}
 		
 		/**
@@ -114,9 +83,7 @@ package core.popup
 		{
 			if (Common.IS_DEBUG) trace('destroy LoginPopup');
 			
-			_submitBtn.removeEventListener(MouseEvent.MOUSE_OVER,	over);
-			_submitBtn.removeEventListener(MouseEvent.MOUSE_OUT,		out);
-			_submitBtn.removeEventListener(MouseEvent.CLICK,				clickSubmit);
+			_submitBtn.removeEventListener(MouseEvent.CLICK, clickSubmit);
 			
 			super.destroy();
 		}

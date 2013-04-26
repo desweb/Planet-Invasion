@@ -3,6 +3,7 @@ package core
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
@@ -50,7 +51,16 @@ package core
 		{
 			// Request
 			var request:URLRequest = API.generateURL(url);
-			request.method = httpHeader;
+			
+			// TODO : Testing !
+			// Only AIR app support PUT & DELETE http request
+			// Hack to simulate PUT & DELETE http request
+			if (httpHeader == URLRequestMethod.PUT || httpHeader == URLRequestMethod.DELETE)
+			{
+				request.method = URLRequestMethod.POST;
+				request.requestHeaders = [new URLRequestHeader('X-HTTP-Method-Override', httpHeader)];
+			}
+			else request.method = httpHeader;
 			
 			// URL Loader
 			var loader:URLLoader = new URLLoader();

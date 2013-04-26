@@ -15,7 +15,7 @@ package core
 		 */
 		
 		// Debug
-		public static const IS_DEBUG:Boolean = false;
+		public static const IS_DEBUG:Boolean = true;
 		
 		// Scene id
 		public static const SCENE_ACHIEVEMENT:uint	= 1;
