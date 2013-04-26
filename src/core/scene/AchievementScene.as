@@ -7,11 +7,16 @@ package core.scene
 	public class AchievementScene extends Scene
 	{
 		
-		public function AchievementScene() 
+		public function AchievementScene()
 		{
+			if (Common.IS_DEBUG) trace('create AchievementScene');
 			
+			/**
+			 * Initialization
+			 */
+			
+			generateBg();
+			generateBtnReturn();
 		}
-		
 	}
-
 }

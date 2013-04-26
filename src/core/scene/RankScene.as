@@ -35,7 +35,7 @@ package core.scene
 		
 		private var _scrollFormat:TextFormat;
 		
-		public function RankScene() 
+		public function RankScene()
 		{
 			if (Common.IS_DEBUG) trace('create RankScene');
 			
