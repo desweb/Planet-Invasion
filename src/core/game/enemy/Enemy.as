@@ -20,8 +20,8 @@ package core.game.enemy
 		
 		public function Enemy() 
 		{
-			x = GameState.stageWidth+100;
-			y = Tools.random(0, GameState.stageHeight-100)
+			x = GameState.stageWidth+50;
+			y = Tools.random(0, GameState.stageHeight-50)
 			
 			graphics.lineStyle(2, 0xff0000);
 			graphics.beginFill(0xededed);

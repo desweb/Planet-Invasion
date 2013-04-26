@@ -89,7 +89,7 @@ package core.game
 			{
 				//_speedEnemyTimer = _speedEnemy;
 				
-				for (var i:int = 0; i < 10; i++)
+				//for (var i:int = 0; i < 10; i++)
 				{
 					var new_e:Enemy = new Enemy();
 					enemiesContainer.addChild(new_e);
