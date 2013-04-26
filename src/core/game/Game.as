@@ -83,16 +83,19 @@ package core.game
 		
 		private function update():void
 		{
-			if (_speedEnemyTimer > 0) _speedEnemyTimer -= _dt;
+			//if (_speedEnemyTimer > 0) _speedEnemyTimer -= _dt;
 			
-			if (_speedEnemyTimer <= 0)
+			//if (_speedEnemyTimer <= 0)
 			{
-				_speedEnemyTimer = _speedEnemy;
+				//_speedEnemyTimer = _speedEnemy;
 				
-				var new_e:Enemy = new Enemy();
-				enemiesContainer.addChild(new_e);
-				
-				enemies[enemies.length] = new_e;
+				for (var i:int = 0; i < 10; i++)
+				{
+					var new_e:Enemy = new Enemy();
+					enemiesContainer.addChild(new_e);
+					
+					enemies[enemies.length] = new_e;
+				}
 			}
 		}
 		
