@@ -78,7 +78,7 @@ package core.scene
 		
 		private function clickAdventure(e:MouseEvent):void
 		{
-			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME, Common.GAME_1);
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, 1);
 		}
 	}
 }

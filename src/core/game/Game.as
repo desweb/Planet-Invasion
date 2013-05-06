@@ -15,26 +15,32 @@ package core.game
 	 */
 	public class Game extends Sprite
 	{
+		// Time
 		private var _t:int;
-		private var _dt:Number;
+		protected var _dt:Number;
 		
-		private var _gameState:GameState;
+		// Game state
+		protected var _gameState:GameState;
 		
+		// Container
+		public var bgContainer			:Sprite = new Sprite();
 		public var weaponsContainer	:Sprite = new Sprite();
 		public var heroContainer		:Sprite = new Sprite();
 		public var itemsContainer		:Sprite = new Sprite();
 		public var enemiesContainer	:Sprite = new Sprite();
 		public var powersContainer		:Sprite = new Sprite();
 		
+		// Enemies
 		public var enemies:Array = new Array();
 		private var _speedEnemy			:int			= 5;
 		private var _speedEnemyTimer	:Number	= 2;
 		
-		private var _hero:Hero;
+		// Hero
+		protected var _hero:Hero;
 		
-		public function Game(type:uint) 
+		public function Game() 
 		{
-			if (Common.IS_DEBUG) trace('create Game' + type);
+			if (Common.IS_DEBUG) trace('create Game');
 			
 			GameState.game = this;
 			
@@ -46,16 +52,14 @@ package core.game
 		}
 		
 		// Init
-		private function initialize(e:Event):void
+		public function initialize(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
 			_t = getTimer();
 			
-			var bg:GameBg = new GameBg();
-			addChild(bg);
-			
 			// Containers
+			addChild(bgContainer);
 			addChild(weaponsContainer);
 			addChild(heroContainer);
 			addChild(itemsContainer);
@@ -99,18 +103,30 @@ package core.game
 			}
 		}
 		
+		public function pause():void
+		{
+			
+		}
+		
+		public function destroy():void
+		{
+			if (Common.IS_DEBUG) trace('destroy Game');
+			
+			
+		}
+		
+		protected function generateGameBg():void
+		{
+			var bg:GameBg = new GameBg();
+			bgContainer.addChild(bg);
+		}
+		
 		/**
 		 * Getters
 		 */
-		public function get dt():Number
-		{
-			return _dt;
-		}
 		
-		public function get hero():Hero
-		{
-			return _hero;
-		}
+		public function get dt		():Number	{ return _dt; }
+		public function get hero	():Hero		{ return _hero; }
 		
 		/**
 		 * Setters

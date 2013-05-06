@@ -78,6 +78,7 @@ package core.game
 			/**
 			 * Globals events
 			 */
+			
 			addEventListener(Event.ENTER_FRAME, update);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,	downKey);
@@ -85,12 +86,12 @@ package core.game
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
 			_fireMachineGunTimer	.addEventListener(TimerEvent.TIMER, enableFireMachineGun);
-			_fireLazerTimer			.addEventListener(TimerEvent.TIMER, enableFireLazer);
-			_fireMissileTimer		.addEventListener(TimerEvent.TIMER, enableFireMissile);
+			_fireLazerTimer				.addEventListener(TimerEvent.TIMER, enableFireLazer);
+			_fireMissileTimer			.addEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer	.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
-			_fireIEMTimer			.addEventListener(TimerEvent.TIMER, enableFireIEM);
+			_fireIEMTimer				.addEventListener(TimerEvent.TIMER, enableFireIEM);
 			_fireBombardmentTimer	.addEventListener(TimerEvent.TIMER, enableFireBombardment);
-			_fireReinforcementTimer	.addEventListener(TimerEvent.TIMER, enableFireReinforcement);
+			_fireReinforcementTimer.addEventListener(TimerEvent.TIMER, enableFireReinforcement);
 		}
 		
 		// Update
@@ -102,6 +103,7 @@ package core.game
 		/**
 		 * Events
 		 */
+		
 		private function downKey(e:KeyboardEvent):void
 		{
 			var keyCode:String = String.fromCharCode(e.charCode);
@@ -115,13 +117,13 @@ package core.game
 					
 					switch (keyCode)
 					{
-						case KEY_MACHINE_GUN	: fireMachineGun();		break;
-						case KEY_LAZER			: fireLazer();			break;
-						case KEY_MISSILE		: fireMissile();		break;
+						case KEY_MACHINE_GUN		: fireMachineGun();	break;
+						case KEY_LAZER					: fireLazer();				break;
+						case KEY_MISSILE					: fireMissile();			break;
 						case KEY_MISSILE_HOMING	: fireMissileHoming();	break;
-						case KEY_IEM			: fireIEM();			break;
-						case KEY_BOMBARDMENT	: fireBombardment();	break;
-						case KEY_REINFORCEMENT	: fireReinforcement();	break;
+						case KEY_IEM						: fireIEM();				break;
+						case KEY_BOMBARDMENT		: fireBombardment();	break;
+						case KEY_REINFORCEMENT		: fireReinforcement();break;
 						default: return;
 					}
 					
@@ -216,6 +218,7 @@ package core.game
 		/**
 		 * Fire actions
 		 */
+		
 		private function fireMachineGun():void
 		{
 			GameState.game.weaponsContainer.addChild(new HeroMachineGun());
@@ -251,6 +254,7 @@ package core.game
 		/**
 		 * Specials actions
 		 */
+		
 		private function fireIEM():void
 		{
 			GameState.game.powersContainer.addChild(new IEM());

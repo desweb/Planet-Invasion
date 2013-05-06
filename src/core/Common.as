@@ -18,17 +18,19 @@ package core
 		public static const IS_DEBUG:Boolean = false;
 		
 		// Scene id
-		public static const SCENE_ACHIEVEMENT:uint	= 1;
-		public static const SCENE_CREDIT:uint		= 2;
-		public static const SCENE_DIALOG:uint		= 3;
-		public static const SCENE_FINAL:uint		= 4;
-		public static const SCENE_GAME:uint			= 5;
-		public static const SCENE_GAME_MODE:uint	= 6;
-		public static const SCENE_IMPROVEMENT:uint	= 7;
-		public static const SCENE_MENU:uint			= 8;
-		public static const SCENE_RANK:uint			= 9;
-		public static const SCENE_RESEARCH_DUO:uint	= 10;
-		public static const SCENE_SELECT_LEVEL:uint	= 11;
+		public static const SCENE_ACHIEVEMENT			:uint = 1;
+		public static const SCENE_CREDIT					:uint = 2;
+		public static const SCENE_DIALOG					:uint = 3;
+		public static const SCENE_FINAL						:uint = 4;
+		public static const SCENE_GAME_ADVENTURE	:uint = 5;
+		public static const SCENE_GAME_SURVIVAL		:uint = 6;
+		public static const SCENE_GAME_DUO				:uint = 7;
+		public static const SCENE_GAME_MODE			:uint = 8;
+		public static const SCENE_IMPROVEMENT			:uint = 9;
+		public static const SCENE_MENU						:uint = 10;
+		public static const SCENE_RANK						:uint = 11;
+		public static const SCENE_RESEARCH_DUO		:uint = 12;
+		public static const SCENE_SELECT_LEVEL			:uint = 13;
 		
 		// Game security key
 		public static const GAME_ADVENTURE_KEY:String	= '172ae58a586c65c8c4487062c695fe7f';
