@@ -21,14 +21,14 @@ package core.game
 		private var _gameState:GameState;
 		
 		public var weaponsContainer	:Sprite = new Sprite();
-		public var heroContainer	:Sprite = new Sprite();
-		public var itemsContainer	:Sprite = new Sprite();
+		public var heroContainer		:Sprite = new Sprite();
+		public var itemsContainer		:Sprite = new Sprite();
 		public var enemiesContainer	:Sprite = new Sprite();
-		public var powersContainer	:Sprite = new Sprite();
+		public var powersContainer		:Sprite = new Sprite();
 		
 		public var enemies:Array = new Array();
-		private var _speedEnemy:int			= .5;
-		private var _speedEnemyTimer:Number	= 2;
+		private var _speedEnemy			:int			= 5;
+		private var _speedEnemyTimer	:Number	= 2;
 		
 		private var _hero:Hero;
 		
@@ -83,13 +83,13 @@ package core.game
 		
 		private function update():void
 		{
-			//if (_speedEnemyTimer > 0) _speedEnemyTimer -= _dt;
+			if (_speedEnemyTimer > 0) _speedEnemyTimer -= _dt;
 			
-			//if (_speedEnemyTimer <= 0)
+			if (_speedEnemyTimer <= 0)
 			{
-				//_speedEnemyTimer = _speedEnemy;
+				_speedEnemyTimer = _speedEnemy;
 				
-				//for (var i:int = 0; i < 10; i++)
+				for (var i:int = 0; i < 10; i++)
 				{
 					var new_e:Enemy = new Enemy();
 					enemiesContainer.addChild(new_e);

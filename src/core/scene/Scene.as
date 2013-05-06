@@ -54,8 +54,8 @@ package core.scene
 		protected function generateBtnReturn():void
 		{
 			_btnReturn = new BtnReturn();
-			_btnReturn.x = Common.IS_DEBUG? GameState.stageWidth*0.15: GameState.stageWidth*0.05;
-			_btnReturn.y = GameState.stageHeight*0.05;
+			_btnReturn.x = Common.IS_DEBUG? GameState.stageWidth*0.15: GameState.stageWidth*0.02;
+			_btnReturn.y = GameState.stageHeight*0.055;
 			addChild(_btnReturn);
 			
 			_btnReturn.addEventListener(MouseEvent.MOUSE_OVER, over);
