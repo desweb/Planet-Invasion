@@ -38,6 +38,8 @@ package core.game
 		// Hero
 		protected var _hero:Hero;
 		
+		private var _isPaused:Boolean = false;
+		
 		public function Game() 
 		{
 			if (Common.IS_DEBUG) trace('create Game');
@@ -87,6 +89,8 @@ package core.game
 		
 		private function update():void
 		{
+			if (_isPaused) return;
+			
 			if (_speedEnemyTimer > 0) _speedEnemyTimer -= _dt;
 			
 			if (_speedEnemyTimer <= 0)
@@ -105,14 +109,31 @@ package core.game
 		
 		public function pause():void
 		{
+			_isPaused = true;
 			
+			Mouse.show();
+			
+			_hero.pause();
+			
+			for each(var e:Enemy in enemies) e.pause();
+		}
+		
+		public function resume():void
+		{
+			_isPaused = false;
+			
+			Mouse.hide();
+			
+			_hero.resume();
+			
+			for each(var e:Enemy in enemies) e.resume();
 		}
 		
 		public function destroy():void
 		{
 			if (Common.IS_DEBUG) trace('destroy Game');
 			
-			
+			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		protected function generateGameBg():void

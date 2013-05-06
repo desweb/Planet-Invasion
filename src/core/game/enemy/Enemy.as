@@ -18,6 +18,8 @@ package core.game.enemy
 		
 		private var _tween:TweenLite;
 		
+		private var _isPaused:Boolean = false;
+		
 		public function Enemy() 
 		{
 			x = GameState.stageWidth+50;
@@ -39,6 +41,20 @@ package core.game.enemy
 		public function restart():void
 		{
 			_tween.play();
+		}
+		
+		public function pause():void
+		{
+			_isPaused = true;
+			
+			_tween.pause();
+		}
+		
+		public function resume():void
+		{
+			_isPaused = false;
+			
+			_tween.resume();
 		}
 		
 		public function destroy():void

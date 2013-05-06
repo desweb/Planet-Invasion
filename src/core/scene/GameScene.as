@@ -8,6 +8,7 @@ package core.scene
 	import core.game.GameAdventure;
 	import core.game.GameDuo;
 	import core.game.GameSurvival;
+	import core.popup.PausePopup;
 	
 	/**
 	 * ...
@@ -19,6 +20,8 @@ package core.scene
 		private static const KEY_PAUSE:String = 'p';
 		
 		private var _game:Game;
+		
+		private var _isPaused:Boolean = false;
 		
 		public function GameScene(type:uint, level:uint = 0) 
 		{
@@ -43,6 +46,27 @@ package core.scene
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,	downKey);
+			stage.addEventListener('resumeGameScene',	resume);
+		}
+		
+		public function pause():void
+		{
+			if (_isPaused) return;
+			
+			_isPaused = true;
+			
+			_game.pause();
+			
+			var pausePopup:PausePopup = new PausePopup();
+			addChild(pausePopup);
+			pausePopup.display();
+		}
+		
+		public function resume(e:Event):void
+		{
+			_isPaused = false;
+			
+			_game.resume();
 		}
 		
 		/**
@@ -52,8 +76,6 @@ package core.scene
 		override public function destroy():void
 		{
 			if (Common.IS_DEBUG) trace('destroy GameScene');
-			
-			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
 			
 			_game.destroy();
 			
@@ -66,7 +88,9 @@ package core.scene
 		
 		private function downKey(e:KeyboardEvent):void
 		{
-			_game.pause();
+			if (String.fromCharCode(e.charCode) != KEY_PAUSE) return;
+			
+			pause();
 		}
 	}
 }

@@ -44,6 +44,8 @@ package core.game
 		private var _fireBombardmentTimer	:Timer = new Timer(5000);
 		private var _fireReinforcementTimer	:Timer = new Timer(5000);
 		
+		private var _isPaused:Boolean = false;
+		
 		public function Hero() 
 		{
 			if (Common.IS_DEBUG) trace('create Hero');
@@ -97,7 +99,19 @@ package core.game
 		// Update
 		private function update(e:Event):void
 		{
+			if (_isPaused) return;
+			
 			var dt:Number = GameState.game.dt;
+		}
+		
+		public function pause():void
+		{
+			_isPaused = true;
+		}
+		
+		public function resume():void
+		{
+			_isPaused = false;
 		}
 		
 		/**
@@ -106,6 +120,8 @@ package core.game
 		
 		private function downKey(e:KeyboardEvent):void
 		{
+			if (_isPaused) return;
+			
 			var keyCode:String = String.fromCharCode(e.charCode);
 			
 			for (var i:String in _keys)
@@ -134,6 +150,8 @@ package core.game
 		
 		private function upKey(e:KeyboardEvent):void
 		{
+			if (_isPaused) return;
+			
 			switch (String.fromCharCode(e.charCode))
 			{
 				case KEY_MACHINE_GUN	: _keys[KEY_MACHINE_GUN]['is_down']		= false; break;
@@ -149,6 +167,8 @@ package core.game
 		
 		private function mouseMove(e:MouseEvent):void
 		{
+			if (_isPaused) return;
+			
 			TweenLite.to(this, 0.1, { x:GameState.main.mouseX - (width/2), y:GameState.main.mouseY - (height/2) });
 		}
 		
