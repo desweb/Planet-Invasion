@@ -21,9 +21,9 @@ package
 	
 	public class Preloader extends MovieClip
 	{
-		private var _bg:Bg;
+		private var _bg:BgFlash;
 		private var _txtLoading:TextField;
-		private var _loader:Loader;
+		private var _loader:LoaderFlash;
 		
 		public function Preloader() 
 		{
@@ -38,7 +38,7 @@ package
 			loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioError);
 			
 			// Show loader scene
-			_bg = new Bg();
+			_bg = new BgFlash();
 			_bg.gotoAndStop(2);
 			addChild(_bg);
 			
@@ -58,7 +58,7 @@ package
 			_txtLoading.x = stage.stageWidth/2 - _txtLoading.width/2;
 			_txtLoading.y = stage.stageHeight*0.3;
 			
-			_loader = new Loader();
+			_loader = new LoaderFlash();
 			_loader.x = stage.stageWidth / 2;
 			_loader.y = stage.stageHeight / 2;
 			addChild(_loader);

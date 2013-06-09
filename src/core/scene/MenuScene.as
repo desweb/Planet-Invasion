@@ -11,10 +11,10 @@ package core.scene
 	 */
 	public class MenuScene extends Scene
 	{
-		private var _btnPlay:Btn;
-		private var _btnRanking:Btn;
-		private var _btnAchievements:Btn;
-		private var _btnCredits:Btn;
+		private var _btnPlay				:BtnFlash;
+		private var _btnRanking			:BtnFlash;
+		private var _btnAchievements	:BtnFlash;
+		private var _btnCredits			:BtnFlash;
 		
 		/**
 		 * Contructor

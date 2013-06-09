@@ -23,13 +23,13 @@ package core.scene
 	 */
 	public class Scene extends Interface implements IScene
 	{
-		private var _bg:Bg;
-		private var _btnReturn:BtnReturn;
-		private var _btnSound:BtnSound;
-		private var _btnLogin:BtnLeft;
-		private var _btnRegister:BtnRight;
+		private var _bg:BgFlash;
+		private var _btnReturn:BtnReturnFlash;
+		private var _btnSound:BtnSoundFlash;
+		private var _btnLogin:BtnLeftFlash;
+		private var _btnRegister:BtnRightFlash;
 		private var _txtUsername:TextField;
-		private var _btnLogout:BtnLeft;
+		private var _btnLogout:BtnLeftFlash;
 		
 		public var sceneReturn:uint;
 		
@@ -45,7 +45,7 @@ package core.scene
 		// Background
 		protected function generateBg():void
 		{
-			_bg = new Bg();
+			_bg = new BgFlash();
 			_bg.gotoAndStop(2);
 			addChild(_bg);
 		}
@@ -53,7 +53,7 @@ package core.scene
 		// Return button
 		protected function generateBtnReturn():void
 		{
-			_btnReturn = new BtnReturn();
+			_btnReturn = new BtnReturnFlash();
 			_btnReturn.x = Common.IS_DEBUG? GameState.stageWidth*0.15: GameState.stageWidth*0.02;
 			_btnReturn.y = GameState.stageHeight*0.055;
 			addChild(_btnReturn);
@@ -66,7 +66,7 @@ package core.scene
 		// Sound button
 		protected function generateBtnSound():void
 		{
-			_btnSound = new BtnSound();
+			_btnSound = new BtnSoundFlash();
 			_btnSound.x = Common.IS_DEBUG? GameState.stageWidth*0.2: GameState.stageWidth*0.1;
 			_btnSound.y = GameState.stageHeight*0.05;
 			addChild(_btnSound);

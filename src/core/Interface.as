@@ -56,9 +56,9 @@ package core
 			return tab;
 		}
 		
-		protected function generateBtn(txt:String, frame:int = 1):Btn
+		protected function generateBtn(txt:String, frame:int = 1):BtnFlash
 		{
-			var btn:Btn = new Btn();
+			var btn:BtnFlash = new BtnFlash();
 			btn.mouseChildren = false;
 			addChild(btn);
 			
@@ -81,9 +81,9 @@ package core
 			return btn;
 		}
 		
-		protected function generateBtnLeft(txt:String, frame:int = 1):BtnLeft
+		protected function generateBtnLeft(txt:String, frame:int = 1):BtnLeftFlash
 		{
-			var btn:BtnLeft = new BtnLeft();
+			var btn:BtnLeftFlash = new BtnLeftFlash();
 			btn.mouseChildren = false;
 			addChild(btn);
 			
@@ -106,9 +106,9 @@ package core
 			return btn;
 		}
 		
-		protected function generateBtnRight(txt:String, frame:int = 1):BtnRight
+		protected function generateBtnRight(txt:String, frame:int = 1):BtnRightFlash
 		{
-			var btn:BtnRight = new BtnRight();
+			var btn:BtnRightFlash = new BtnRightFlash();
 			btn.mouseChildren = false;
 			addChild(btn);
 			

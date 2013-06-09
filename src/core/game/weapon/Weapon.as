@@ -1,13 +1,13 @@
 package core.game.weapon 
 {
-	import core.game.Hero;
-	import core.game.enemy.Enemy;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
 	
 	import core.GameState;
+	import core.game.Hero;
+	import core.game.enemy.Enemy;
 	
 	/**
 	 * Class of weapons

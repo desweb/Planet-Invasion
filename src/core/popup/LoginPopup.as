@@ -23,8 +23,8 @@ package core.popup
 		
 		private var _usernameInput:TextField;
 		private var _passwordInput:TextField;
-		private var _submitLoader:Loader;
-		private var _submitBtn:Btn;
+		private var _submitLoader:LoaderFlash;
+		private var _submitBtn:BtnFlash;
 		
 		public function LoginPopup() 
 		{
@@ -58,7 +58,7 @@ package core.popup
 			setPopupContent(_passwordInput);
 			
 			// Loader
-			_submitLoader = new Loader();
+			_submitLoader = new LoaderFlash();
 			_submitLoader.alpha = 0;
 			_submitLoader.scaleX = 0.5;
 			_submitLoader.scaleY = 0.5;

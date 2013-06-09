@@ -25,7 +25,7 @@ package core.popup
 		
 		private var _bg:Sprite;
 		private var _title:TextField;
-		private var _close:BtnClose;
+		private var _close:BtnCloseFlash;
 		private var _popup:Sprite;
 		private var _popupWidth:int			= GameState.stageWidth*0.6;
 		private var _popupHeight:int		= GameState.stageHeight*0.8;
@@ -49,7 +49,7 @@ package core.popup
 			// Content
 			_popup	= new Sprite();
 			_title		= new TextField();
-			_close	= new BtnClose();
+			_close	= new BtnCloseFlash();
 			
 			_close.addEventListener(MouseEvent.CLICK, clickClose);
 		}

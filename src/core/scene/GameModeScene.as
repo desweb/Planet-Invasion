@@ -12,10 +12,10 @@ package core.scene
 	 */
 	public class GameModeScene extends Scene
 	{
-		private var _btnImprovements:Btn;
-		private var _btnAdventure:Btn;
-		private var _btnSurvival:Btn;
-		private var _btnDuo:Btn;
+		private var _btnImprovements:BtnFlash;
+		private var _btnAdventure		:BtnFlash;
+		private var _btnSurvival			:BtnFlash;
+		private var _btnDuo				:BtnFlash;
 		
 		/**
 		 * Constructor
