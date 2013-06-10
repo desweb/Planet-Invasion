@@ -9,6 +9,7 @@ package core.popup
 	import core.Common;
 	import core.GameState;
 	import core.scene.SceneManager;
+	import core.utils.Security;
 	
 	/**
 	 * ...
@@ -16,7 +17,7 @@ package core.popup
 	 */
 	public class RegisterPopup extends Popup implements IPopup
 	{
-		private var _isURLLoader:Boolean = false;
+		private var _is_loading:Boolean = false;
 		private var _loader:URLLoader;
 		
 		private var _emailInput:TextField;
@@ -30,6 +31,7 @@ package core.popup
 			if (Common.IS_DEBUG) trace('create RegisterPopup');
 			
 			setTitleText('Register');
+			setPopupHeight(GameState.stageHeight	* .65);
 			
 			generatePopup();
 			
@@ -70,16 +72,16 @@ package core.popup
 			// Loader
 			_submitLoader = new LoaderFlash();
 			_submitLoader.alpha = 0;
-			_submitLoader.scaleX = 0.5;
-			_submitLoader.scaleY = 0.5;
-			_submitLoader.x = GameState.stageWidth*0.3;
-			_submitLoader.y = GameState.stageHeight*0.5;
+			_submitLoader.scaleX	= .5;
+			_submitLoader.scaleY	= .5;
+			_submitLoader.x = GameState.stageWidth	* .3;
+			_submitLoader.y = GameState.stageHeight	* .575;
 			setPopupContent(_submitLoader);
 			
 			// Submit
 			_submitBtn = generateBtn('Submit');
-			_submitBtn.x = GameState.stageWidth*0.15;
-			_submitBtn.y = GameState.stageHeight*0.55;
+			_submitBtn.x = GameState.stageWidth	* .18;
+			_submitBtn.y = GameState.stageHeight	* .55;
 			setPopupContent(_submitBtn);
 			
 			_submitBtn.addEventListener(MouseEvent.CLICK, clickSubmit);
@@ -104,13 +106,21 @@ package core.popup
 		
 		private function clickSubmit(e:MouseEvent):void
 		{
-			if (!_usernameInput.text || !_passwordInput.text)
+			if (_is_loading) return;
+			
+			if (!_emailInput.text || !_usernameInput.text || !_passwordInput.text)
 			{
 				displayErrorPopup('All fields are required !');
 				return;
 			}
 			
-			_isURLLoader = true;
+			if (!Security.isValidEmail(_emailInput.text))
+			{
+				displayErrorPopup('You must enter a valid email !');
+				return;
+			}
+			
+			_is_loading = true;
 			
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
@@ -118,9 +128,7 @@ package core.popup
 			API.put_user(_usernameInput.text, _emailInput.text, _passwordInput.text,
 			function(response:XML):void
 			{
-				trace(response);
-				
-				_isURLLoader = false;
+				_is_loading = false;
 				
 				_submitLoader	.alpha = 0;
 				_submitBtn		.alpha = 1;
@@ -129,7 +137,9 @@ package core.popup
 				
 				if (response.error.length() > 0)
 				{
-					displayErrorPopup('Register failed !');
+					if (response.error.description)	displayErrorPopup(response.error.description);
+					else										displayErrorPopup('Register failed !');
+					
 					return;
 				}
 				

@@ -29,8 +29,6 @@ package core
 		{
 			var url:String = URL + str;
 			
-			if (Common.IS_DEBUG) trace('webservice : ' + url);
-			
 			return new URLRequest(url);
 		}
 		
@@ -38,13 +36,14 @@ package core
 		{
 			var now:Date = new Date();
 			
-			if (!GameState.user.accessToken || !GameState.user.accessToken || (now.getTime() > GameState.user.accessTokenExpiredAt - ACCESS_TOKEN_MARGIN_ERROR))
+			if (!GameState.user.accessToken || !GameState.user.accessTokenExpiredAt || (now.getTime() > GameState.user.accessTokenExpiredAt * 1000 - ACCESS_TOKEN_MARGIN_ERROR))
 			{
 				get_auth(function(response:XML):void
 				{
-					complete(response);
+					complete();
 				});
 			}
+			else complete();
 		}
 		
 		static private function basicHTTPRequest(httpHeader:String, url:String, vars:URLVariables, isAccessToken:Boolean, complete:Function):void
@@ -52,15 +51,7 @@ package core
 			// Request
 			var request:URLRequest = API.generateURL(url);
 			
-			// TODO : Testing !
-			// Only AIR app support PUT & DELETE http request
-			// Hack to simulate PUT & DELETE http request
-			if (httpHeader == URLRequestMethod.PUT || httpHeader == URLRequestMethod.DELETE)
-			{
-				request.method = URLRequestMethod.POST;
-				request.requestHeaders = [new URLRequestHeader('X-HTTP-Method-Override', httpHeader)];
-			}
-			else request.method = httpHeader;
+			request.method = httpHeader;
 			
 			// URL Loader
 			var loader:URLLoader = new URLLoader();
@@ -69,10 +60,12 @@ package core
 			loader.addEventListener(Event.COMPLETE,
 			function(e:Event):void
 			{
-				var loader:URLLoader = URLLoader(e.target);
+				var loader_response:URLLoader = URLLoader(e.target);
+				
+				if (Common.IS_DEBUG) trace(httpHeader + ' : ' + url + ' => ' + loader_response.data);
 				
 				var xml:XML;
-				xml = new XML(loader.data);
+				xml = new XML(loader_response.data);
 				
 				complete(xml);
 			});
@@ -80,14 +73,8 @@ package core
 			// Launch URL Loader
 			if (isAccessToken)
 			{
-				checkAccessToken(function(response:XML):void
+				checkAccessToken(function():void
 				{
-					if (response.error.length() > 0)
-					{
-						complete(response);
-						return;
-					}
-					
 					vars.access_token = GameState.user.accessToken;
 					
 					request.data = vars;
@@ -129,13 +116,9 @@ package core
 			basicHTTPRequest(URLRequestMethod.GET, 'auth/access_token', vars, false,
 			function(response:XML):void
 			{
-				if (response.error.length() == 0)
-				{
-					GameState.user.accessToken					= response.access_token;
-					GameState.user.accessTokenExpiredAt	= response.expired_at;
-				}
+				if (response.error.length() > 0) return;
 				
-				complete(response);
+				GameState.user.login(response.access_token, response.expired_at);
 			});
 		}
 		
@@ -185,6 +168,20 @@ package core
 			basicHTTPRequest(URLRequestMethod.GET, 'user', vars, true,
 			function(response:XML):void
 			{
+				if (response.error.length() > 0)
+				{
+					complete(response);
+					return;
+				}
+				
+				GameState.user.key					= response.user_key;
+				GameState.user.username			= response.username;
+				GameState.user.email				= response.email;
+				GameState.user.levelAdventure	= response.level_adventure;
+				GameState.user.metal				= response.metal;
+				GameState.user.crystal				= response.crystal;
+				GameState.user.money				= response.money;
+				
 				complete(response);
 			});
 		}
@@ -268,7 +265,18 @@ package core
 			basicHTTPRequest(URLRequestMethod.POST, 'user/create', vars, false,
 			function(response:XML):void
 			{
-				complete(response);
+				if (response.error.length() > 0)
+				{
+					complete(response);
+					return;
+				}
+				
+				GameState.user.login(response.access_token, response.expired_at);
+				
+				API.get_user(function(responseUser:XML):void
+				{
+					complete(response);
+				});
 			});
 		}
 		

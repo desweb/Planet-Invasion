@@ -66,6 +66,7 @@ package core
 			btn.y = (GameState.stageHeight - btn.height) / 2;
 			
 			var label:TextField = new TextField();
+			label.y							= btn.height * .15;
 			label.width						= btn.width;
 			label.height					= btn.height;
 			label.defaultTextFormat	= btnFormat;
@@ -91,6 +92,7 @@ package core
 			btn.y = (GameState.stageHeight - btn.height) / 2;
 			
 			var label:TextField = new TextField();
+			label.y							= btn.height * .1;
 			label.width						= btn.width;
 			label.height					= btn.height;
 			label.defaultTextFormat	= btnFormat;
@@ -116,6 +118,7 @@ package core
 			btn.y = (GameState.stageHeight - btn.height) / 2;
 			
 			var label:TextField = new TextField();
+			label.y							= btn.height * .1;
 			label.width						= btn.width;
 			label.height					= btn.height;
 			label.defaultTextFormat	= btnFormat;

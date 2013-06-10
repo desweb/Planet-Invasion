@@ -90,7 +90,7 @@ package core.scene
 			else
 			{
 				_btnLogin = generateBtnLeft('Login');
-				_btnLogin.x = GameState.stageWidth * 0.6;
+				_btnLogin.x = GameState.stageWidth * 0.55;
 				_btnLogin.y = GameState.stageHeight * 0.05;
 				
 				_btnRegister = generateBtnRight('Register');

@@ -117,8 +117,15 @@ package core
 		 * Setters
 		 */
 		
-		public function set accessToken				(value:String):void { _accessToken = value; }
-		public function set accessTokenExpiredAt	(value:int)		:void { _accessTokenExpiredAt = value; }
+		public function set accessToken				(value:String):void { _accessToken					= value; }
+		public function set accessTokenExpiredAt	(value:int)		:void { _accessTokenExpiredAt	= value; }
+		public function set key							(value:String):void	{ _key								= value; }
+		public function set username					(value:String):void	{ _username						= value; }
+		public function set email							(value:String):void	{ _email							= value; }
+		public function set levelAdventure			(value:int):void		{ _levelAdventure				= value; }
+		public function set metal							(value:int):void		{ _metal							= value; }
+		public function set crystal						(value:int):void		{ _crystal							= value; }
+		public function set money						(value:int):void		{ _money							= value; }
 		
 	}
 }

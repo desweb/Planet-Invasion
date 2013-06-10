@@ -27,8 +27,8 @@ package core.popup
 		private var _title:TextField;
 		private var _close:BtnCloseFlash;
 		private var _popup:Sprite;
-		private var _popupWidth:int			= GameState.stageWidth*0.6;
-		private var _popupHeight:int		= GameState.stageHeight*0.8;
+		private var _popupWidth:int			= GameState.stageWidth	* .6;
+		private var _popupHeight:int			= GameState.stageHeight	* .8;
 		private var _popupBorderColor:int	= 0xffffff;
 		
 		public var successPopup:SuccessPopup;
@@ -54,8 +54,8 @@ package core.popup
 			_close.addEventListener(MouseEvent.CLICK, clickClose);
 		}
 		
-		public function display	():void { TweenLite.to(this, ANIM_TIMER, {alpha:1}); }
-		public function undisplay	():void { TweenLite.to(this, ANIM_TIMER, {alpha:0}); }
+		public function display	():void { TweenLite.to(this, ANIM_TIMER, { alpha:1 }); }
+		public function undisplay	():void { TweenLite.to(this, ANIM_TIMER, { alpha:0 }); }
 		
 		/**
 		 * Generation functions
@@ -66,7 +66,7 @@ package core.popup
 		{
 			_popup.x = (GameState.stageWidth - _popupWidth) / 2;
 			_popup.y = (GameState.stageHeight - _popupHeight) / 2;
-			_popup.graphics.lineStyle(2, _popupBorderColor);
+			_popup.graphics.lineStyle(1, _popupBorderColor);
 			_popup.graphics.beginFill(0x000000);
 			_popup.graphics.drawRect(0, 0, _popupWidth, _popupHeight);
 			_popup.graphics.endFill();
@@ -103,7 +103,9 @@ package core.popup
 		{
 			errorPopup = new ErrorPopup();
 			errorPopup.setText(message);
+			
 			SceneManager.getInstance().scene.addChild(errorPopup);
+			
 			errorPopup.display();
 		}
 		
