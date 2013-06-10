@@ -103,6 +103,11 @@ package core
 			}
 		}
 		
+		static private function hashCreateUser(str:String):String
+		{
+			return MD5.encrypt(str);
+		}
+		
 		/**
 		 *************************
 		 * Webservice
@@ -159,7 +164,7 @@ package core
 			var vars:URLVariables = new URLVariables();
 			
 			// Request
-			basicHTTPRequest(URLRequestMethod.DELETE, 'auth', vars, true,
+			basicHTTPRequest(URLRequestMethod.GET, '/auth/access_token/delete', vars, true,
 			function(response:XML):void
 			{
 				complete(response);
@@ -256,10 +261,11 @@ package core
 			var vars:URLVariables = new URLVariables();
 			vars.username	= username;
 			vars.email			= email;
-			vars.password	= password;
+			vars.password	= MD5.encrypt(password);
+			vars.hash			= hashCreateUser(MD5.encrypt(password));
 			
 			// Request
-			basicHTTPRequest(URLRequestMethod.PUT, 'user', vars, false,
+			basicHTTPRequest(URLRequestMethod.POST, 'user/create', vars, false,
 			function(response:XML):void
 			{
 				complete(response);

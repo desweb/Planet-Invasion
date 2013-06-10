@@ -104,7 +104,7 @@ package core.popup
 		
 		private function clickSubmit(e:MouseEvent):void
 		{
-			/*if (!_usernameInput.text || !_passwordInput.text)
+			if (!_usernameInput.text || !_passwordInput.text)
 			{
 				displayErrorPopup('All fields are required !');
 				return;
@@ -136,7 +136,7 @@ package core.popup
 				SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 			});
 			
-			addEventListener(Event.ENTER_FRAME, updateResponse);*/
+			addEventListener(Event.ENTER_FRAME, updateResponse);
 		}
 		
 		private function updateResponse(e:Event):void
