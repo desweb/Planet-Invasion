@@ -120,7 +120,7 @@ package core.popup
 				
 				if (response.error.length() > 0)
 				{
-					displayErrorPopup('Login failed !');
+					displayErrorPopup(response.error.description? response.error.description: 'Login failed !');
 					return;
 				}
 				

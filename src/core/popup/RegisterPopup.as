@@ -137,9 +137,7 @@ package core.popup
 				
 				if (response.error.length() > 0)
 				{
-					if (response.error.description)	displayErrorPopup(response.error.description);
-					else										displayErrorPopup('Register failed !');
-					
+					displayErrorPopup(response.error.description? response.error.description: 'Register failed !');
 					return;
 				}
 				

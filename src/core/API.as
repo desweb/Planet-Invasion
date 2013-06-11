@@ -1,5 +1,6 @@
 package core 
 {
+	import flash.events.IOErrorEvent;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -68,6 +69,13 @@ package core
 				xml = new XML(loader_response.data);
 				
 				complete(xml);
+			});
+			
+			
+			loader.addEventListener(IOErrorEvent.IO_ERROR,
+			function(e:IOErrorEvent):void
+			{
+				complete(new XML('<?xml version="1.0" encoding="ISO-8859-1"?><planet_invasion><error><description>No internet connection</description></error></planet_invasion>'));
 			});
 			
 			// Launch URL Loader
