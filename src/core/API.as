@@ -134,9 +134,18 @@ package core
 			basicHTTPRequest(URLRequestMethod.POST, 'auth', vars, false,
 			function(response:XML):void
 			{
-				if (response.error.length() == 0) GameState.user.login(response.access_token, response.expired_at);
+				if (response.error.length() > 0)
+				{
+					complete(response);
+					return;
+				}
 				
-				complete(response);
+				GameState.user.login(response.access_token, response.expired_at);
+				
+				API.get_user(function(responseUser:XML):void
+				{
+					complete(responseUser);
+				});
 			});
 		}
 		

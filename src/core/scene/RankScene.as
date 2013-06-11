@@ -23,17 +23,27 @@ package core.scene
 		private var _tabRankSurvival		:Sprite;
 		private var _tabRankDuo			:Sprite;
 		
+		private var _title_label:TextField;
+		
+		private var _loader:LoaderFlash;
+		
 		private var _contentRank				:Sprite;
 		private var _contentRankAdventure	:Sprite;
 		private var _contentRankSurvival	:Sprite;
 		private var _contentRankDuo			:Sprite;
 		
-		private var _scrollRank					:ScrollManager;
-		private var _scrollRankAdventure	:ScrollManager;
-		private var _scrollRankSurvival		:ScrollManager;
-		private var _scrollRankDuo				:ScrollManager;
+		private var _userRank				:RankUserBgFlash;
+		private var _userRankAdventure	:RankUserBgFlash;
+		private var _userRankSurvival	:RankUserBgFlash;
+		private var _userRankDuo			:RankUserBgFlash;
 		
-		private var _scrollFormat:TextFormat;
+		private var _scrollRank				:ScrollManager;
+		private var _scrollRankAdventure:ScrollManager;
+		private var _scrollRankSurvival	:ScrollManager;
+		private var _scrollRankDuo			:ScrollManager;
+		
+		private var _scrollFormat			:TextFormat;
+		private var _scroll_format_bold	:TextFormat;
 		
 		public function RankScene()
 		{
@@ -46,10 +56,15 @@ package core.scene
 			generateBg();
 			generateBtnReturn();
 			
+			// Format
+			_scrollFormat				= Common.getPolicy('Arial', 0x00ffff, 15);
+			_scroll_format_bold	= Common.getPolicy('Arial', 0x00ff00, 15);
+			_scroll_format_bold.bold = true;
+			
 			// Tab bar
 			_tabRank = generateTab('General');
 			_tabRank.x = GameState.stageWidth * .1;
-			_tabRank.y = GameState.stageHeight * .15;
+			_tabRank.y = GameState.stageHeight * .05;
 			
 			_tabRankAdventure = generateTab('Adventure');
 			_tabRankAdventure.x = _tabRank.x + _tabRank.width;
@@ -68,13 +83,36 @@ package core.scene
 			_tabRankSurvival	.addEventListener(MouseEvent.CLICK, clickTabRankSurvival);
 			_tabRankDuo			.addEventListener(MouseEvent.CLICK, clickTabRankDuo);
 			
-			// scroll
-			_scrollFormat = Common.getPolicy('Arial', 0x00ffff, 15);
+			// Title
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
+			format_title.bold = true;
+			
+			_title_label = new TextField();
+			_title_label.x							= GameState.stageWidth	* .25;
+			_title_label.y							= GameState.stageHeight	* .15;
+			_title_label.width					= GameState.stageWidth	* .5;
+			_title_label.height					= GameState.stageHeight	* .5;
+			_title_label.defaultTextFormat	= format_title;
+			_title_label.text						= 'General ranking';
+			_title_label.selectable				= false;
+			addChild(_title_label);
+			
+			// Loader
+			_loader = new LoaderFlash();
+			_loader.x = GameState.stageWidth / 2;
+			_loader.y = GameState.stageHeight / 2;
+			addChild(_loader);
+			
+			addEventListener(Event.ENTER_FRAME, updateLoader);
 			
 			// webservice
 			API.get_rank(1, 50,
 			function(response:XML):void
 			{
+				removeEventListener(Event.ENTER_FRAME, updateLoader);
+				removeChild(_loader);
+				_loader = null;
+				
 				_contentRank = new Sprite();
 				
 				var i:int = 0;
@@ -85,7 +123,8 @@ package core.scene
 					i++;
 				}
 				
-				_scrollRank = new ScrollManager(_contentRank);
+				_scrollRank = new ScrollManager(_contentRank, GameState.stageWidth * .9, GameState.stageHeight * .65);
+				_scrollRank.y = GameState.stageHeight * .225;
 				addChild(_scrollRank);
 			});
 			
@@ -103,6 +142,7 @@ package core.scene
 				}
 				
 				_scrollRankAdventure = new ScrollManager(_contentRankAdventure);
+				_scrollRankAdventure.y = GameState.stageHeight * .15;
 				_scrollRankAdventure.visible = false;
 				addChild(_scrollRankAdventure);
 			});
@@ -121,6 +161,7 @@ package core.scene
 				}
 				
 				_scrollRankSurvival = new ScrollManager(_contentRankSurvival);
+				_scrollRankSurvival.y = GameState.stageHeight * .15;
 				_scrollRankSurvival.visible = false;
 				addChild(_scrollRankSurvival);
 			});
@@ -139,9 +180,28 @@ package core.scene
 				}
 				
 				_scrollRankDuo = new ScrollManager(_contentRankDuo);
+				_scrollRankDuo.y = GameState.stageHeight * .15;
 				_scrollRankDuo.visible = false;
 				addChild(_scrollRankDuo);
 			});
+			
+			if (GameState.user.isLog)
+			{
+				API.get_userRank(function(response:XML):void
+				{
+					_userRank					= generateLineUser(response.general);
+					_userRankAdventure	= generateLineUser(response.adventure);
+					_userRankSurvival		= generateLineUser(response.survival);
+					_userRankDuo			= generateLineUser(response.duo);
+					
+					addChild(_userRank);
+					addChild(_userRankAdventure);
+					addChild(_userRankSurvival);
+					addChild(_userRankDuo);
+					
+					_userRank.visible = true;
+				});
+			}
 		}
 		
 		/**
@@ -152,40 +212,80 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRank.visible) return;
 			
+			_title_label.text = 'General ranking';
+			
 			_scrollRank				.visible = true;
 			_scrollRankAdventure	.visible = false;
 			_scrollRankSurvival	.visible = false;
 			_scrollRankDuo			.visible = false;
+			
+			if (GameState.user.isLog)
+			{
+				_userRank					.visible = true;
+				_userRankAdventure	.visible = false;
+				_userRankSurvival		.visible = false;
+				_userRankDuo			.visible = false;
+			}
 		}
 		
 		private function clickTabRankAdventure(e:Event):void
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankAdventure.visible) return;
 			
+			_title_label.text = 'Adventure ranking';
+			
 			_scrollRank				.visible = false;
 			_scrollRankAdventure	.visible = true;
 			_scrollRankSurvival	.visible = false;
 			_scrollRankDuo			.visible = false;
+			
+			if (GameState.user.isLog)
+			{
+				_userRank					.visible = false;
+				_userRankAdventure	.visible = true;
+				_userRankSurvival		.visible = false;
+				_userRankDuo			.visible = false;
+			}
 		}
 		
 		private function clickTabRankSurvival(e:Event):void
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankSurvival.visible) return;
 			
+			_title_label.text = 'Survival ranking';
+			
 			_scrollRank				.visible = false;
 			_scrollRankAdventure	.visible = false;
 			_scrollRankSurvival	.visible = true;
 			_scrollRankDuo			.visible = false;
+			
+			if (GameState.user.isLog)
+			{
+				_userRank					.visible = false;
+				_userRankAdventure	.visible = false;
+				_userRankSurvival		.visible = true;
+				_userRankDuo			.visible = false;
+			}
 		}
 		
 		private function clickTabRankDuo(e:Event):void
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankDuo.visible) return;
 			
+			_title_label.text = 'Duo ranking';
+			
 			_scrollRank				.visible = false;
 			_scrollRankAdventure	.visible = false;
 			_scrollRankSurvival	.visible = false;
 			_scrollRankDuo			.visible = true;
+			
+			if (GameState.user.isLog)
+			{
+				_userRank					.visible = false;
+				_userRankAdventure	.visible = false;
+				_userRankSurvival		.visible = false;
+				_userRankDuo			.visible = true;
+			}
 		}
 		
 		/**
@@ -196,26 +296,29 @@ package core.scene
 		{
 			// Rank line
 			var lineSprite:Sprite = new Sprite();
-			lineSprite.y		= 25 * i;
-			lineSprite.alpha	= 0.75;
+			lineSprite.y = 25 * i;
 			
-			lineSprite.graphics.beginFill(0x000000);
 			lineSprite.graphics.drawRect(0, 0, GameState.stageWidth * 0.9, GameState.stageHeight * 0.05);
 			lineSprite.graphics.endFill();
+			
+			// Separator
+			var separatorSprite:Sprite = new Sprite();
+			separatorSprite.y = (GameState.stageHeight * 0.05) - 1;
+			separatorSprite.graphics.beginFill(0xffffff);
+			separatorSprite.graphics.drawRect(0, 0, GameState.stageWidth * 0.9, 1);
+			separatorSprite.graphics.endFill();
+			lineSprite.addChild(separatorSprite);
 			
 			// Medal
 			if (i < 3)
 			{
-				var medalSprite:Sprite = new Sprite();
-				medalSprite.x = GameState.stageWidth * 0.05;
-				medalSprite.y = GameState.stageHeight * 0.025;
+				var medalSprite:MedalFlash = new MedalFlash();
+				medalSprite.x = GameState.stageWidth * 0.025;
+				medalSprite.y = 0;
+				medalSprite.scaleX	=
+				medalSprite.scaleY		= .5;
 				
-				if		(i == 0) medalSprite.graphics.beginFill(0xFFD700); // Gold
-				else if	(i == 1) medalSprite.graphics.beginFill(0xCECECE); // Argent
-				else if	(i == 2) medalSprite.graphics.beginFill(0x614E1A); // Bronze
-				
-				medalSprite.graphics.drawCircle(0, 0, GameState.stageHeight * 0.01);
-				medalSprite.graphics.endFill();
+				medalSprite.gotoAndStop(i+1);
 				
 				lineSprite.addChild(medalSprite);
 			}
@@ -223,25 +326,64 @@ package core.scene
 			// Rank number
 			var rankLabel:TextField = new TextField();
 			rankLabel.x = GameState.stageWidth*0.1;
-			rankLabel.defaultTextFormat = _scrollFormat;
+			rankLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
 			rankLabel.text = user.rank;
+			rankLabel.selectable = false;
 			lineSprite.addChild(rankLabel);
 			
 			// Username
 			var usernameLabel:TextField = new TextField();
-			usernameLabel.x = GameState.stageWidth*0.3;
-			usernameLabel.defaultTextFormat = _scrollFormat;
+			usernameLabel.x = GameState.stageWidth * 0.3;
+			usernameLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
 			usernameLabel.text = user.username;
+			usernameLabel.selectable = false;
 			lineSprite.addChild(usernameLabel);
 			
 			// Points
 			var pointsLabel:TextField = new TextField();
 			pointsLabel.x = GameState.stageWidth*0.7;
-			pointsLabel.defaultTextFormat = _scrollFormat;
+			pointsLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
 			pointsLabel.text = user.score + ' pts';
+			pointsLabel.selectable = false;
 			lineSprite.addChild(pointsLabel);
 			
 			return lineSprite;
+		}
+		
+		private function generateLineUser(game:XMLList):RankUserBgFlash
+		{
+			var user_rank:RankUserBgFlash = new RankUserBgFlash();
+			user_rank.x = GameState.stageWidth * .05;
+			user_rank.y = GameState.stageHeight * .9;
+			user_rank.visible = false;
+			
+			// Rank number
+			var rankLabel:TextField = new TextField();
+			rankLabel.x = GameState.stageWidth*0.1;
+			rankLabel.defaultTextFormat = _scrollFormat;
+			rankLabel.text = game.rank;
+			user_rank.addChild(rankLabel);
+			
+			// Username
+			var usernameLabel:TextField = new TextField();
+			usernameLabel.x = GameState.stageWidth * 0.3;
+			usernameLabel.defaultTextFormat = _scrollFormat;
+			usernameLabel.text = GameState.user.username;
+			user_rank.addChild(usernameLabel);
+			
+			// Points
+			var pointsLabel:TextField = new TextField();
+			pointsLabel.x = GameState.stageWidth*0.7;
+			pointsLabel.defaultTextFormat = _scrollFormat;
+			pointsLabel.text = game.score + ' pts';
+			user_rank.addChild(pointsLabel);
+			
+			return user_rank;
+		}
+		
+		private function updateLoader(e:Event):void
+		{
+			_loader.rotation += 10;
 		}
 	}
 }

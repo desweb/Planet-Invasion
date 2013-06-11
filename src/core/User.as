@@ -111,6 +111,7 @@ package core
 		public function get accessToken				():String	{ return _accessToken; }
 		public function get accessTokenExpiredAt	():int			{ return _accessTokenExpiredAt; }
 		public function get key							():String	{ return _key; }
+		public function get username					():String	{ return _username; }
 		public function get achievements				():Array	{ return _achievements; }
 		
 		/**

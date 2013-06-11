@@ -17,39 +17,42 @@ package com.scroll
 	 */
 	public class ScrollManager extends Sprite
 	{
-		private static const CONTENT_WIDTH:int	= 560;
-		private static const CONTENT_HEIGHT:int	= 360;
+		private var _width	:int;
+		private var _height	:int;
 		
-		private var _bg:Sprite;
-		private var _win:Sprite;
-		private var _content:DisplayObject;
-		private var _thumb:Sprite;
-		private var _track:Sprite;
-		private var _up:Sprite;
-		private var _down:Sprite;
+		private var _bg			:Sprite;
+		private var _win			:Sprite;
+		private var _content	:DisplayObject;
+		private var _thumb	:Sprite;
+		private var _track		:Sprite;
+		private var _up			:Sprite;
+		private var _down		:Sprite;
 		
-		public function ScrollManager(content:DisplayObject)
+		public function ScrollManager(content:DisplayObject, width:int = 560, height:int = 360)
 		{
-			x = (GameState.stageWidth - CONTENT_WIDTH)/2;
-			y = GameState.stageHeight - CONTENT_HEIGHT - 20;
+			_width	= width;
+			_height	= height;
+			
+			x = (GameState.stageWidth - _width) / 2;
+			y = GameState.stageHeight - _height - 20;
 			
 			_content = content;
 			
-			MacMouseWheel.setup(GameState.stage);
+			MacMouseWheel	.setup(GameState.stage);
 			MouseWheelTrap.setup(GameState.stage);
 			
 			// Background
 			_bg = new Sprite();
 			_bg.alpha = 0.5;
 			_bg.graphics.beginFill(0x000000);
-			_bg.graphics.drawRect(0, 0, CONTENT_WIDTH, CONTENT_HEIGHT);
+			_bg.graphics.drawRect(0, 0, _width, _height);
 			_bg.graphics.endFill();
 			addChild(_bg);
 			
 			// Window
 			_win = new Sprite();
 			_win.graphics.beginFill(0x000000);
-			_win.graphics.drawRect(0, 0, CONTENT_WIDTH, CONTENT_HEIGHT);
+			_win.graphics.drawRect(0, 0, _width, _height);
 			_win.graphics.endFill();
 			addChild(_win);
 			
@@ -68,7 +71,7 @@ package com.scroll
 			upPoints[5] = 10;
 			
 			_up = new Sprite();
-			_up.x = CONTENT_WIDTH + 10;
+			_up.x = _width + 10;
 			_up.y = 0;
 			_up.graphics.beginFill(0x00ffff);
 			_up.graphics.drawTriangles(upPoints);
@@ -77,10 +80,10 @@ package com.scroll
 			
 			// Scroll bar bg
 			_track = new Sprite();
-			_track.x = CONTENT_WIDTH + 10;
+			_track.x = _width + 10;
 			_track.y = 20;
 			_track.graphics.beginFill(0x000000);
-			_track.graphics.drawRect(0, 0, 10, CONTENT_HEIGHT - 40);
+			_track.graphics.drawRect(0, 0, 10, _height - 40);
 			_track.graphics.endFill();
 			_track.alpha = 0.5;
 			addChild(_track);
@@ -104,14 +107,14 @@ package com.scroll
 			downPoints[5] = 10;
 			
 			_down = new Sprite();
-			_down.x = CONTENT_WIDTH + 10;
-			_down.y = CONTENT_HEIGHT - 10;
+			_down.x = _width + 10;
+			_down.y = _height - 10;
 			_down.graphics.beginFill(0x00ffff);
 			_down.graphics.drawTriangles(downPoints);
 			_down.graphics.endFill();
 			addChild(_down);
 			
-			if (_content.height <= CONTENT_HEIGHT)
+			if (_content.height <= _height)
 			{
 				_track	.visible = false;
 				_thumb	.visible = false;

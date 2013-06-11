@@ -24,12 +24,14 @@ package core.scene
 	public class Scene extends Interface implements IScene
 	{
 		private var _bg:BgFlash;
-		private var _btnReturn:BtnReturnFlash;
-		private var _btnSound:BtnSoundFlash;
-		private var _btnLogin:BtnLeftFlash;
-		private var _btnRegister:BtnRightFlash;
+		
+		private var _return_btn	:BtnReturnFlash;
+		private var _sound_btn	:BtnSoundFlash;
+		private var _login_btn	:BtnLeftFlash;
+		private var _register_btn:BtnRightFlash;
+		private var _logout_btn	:BtnDisconnectFlash;
+		
 		private var _txtUsername:TextField;
-		private var _btnLogout:BtnLeftFlash;
 		
 		public var sceneReturn:uint;
 		
@@ -53,27 +55,27 @@ package core.scene
 		// Return button
 		protected function generateBtnReturn():void
 		{
-			_btnReturn = new BtnReturnFlash();
-			_btnReturn.x = Common.IS_DEBUG? GameState.stageWidth*0.15: GameState.stageWidth*0.02;
-			_btnReturn.y = GameState.stageHeight*0.055;
-			addChild(_btnReturn);
+			_return_btn = new BtnReturnFlash();
+			_return_btn.x = Common.IS_DEBUG? GameState.stageWidth * .15: GameState.stageWidth * .02;
+			_return_btn.y = GameState.stageHeight * .055;
+			addChild(_return_btn);
 			
-			_btnReturn.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnReturn.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnReturn.addEventListener(MouseEvent.CLICK, clickReturn);
+			_return_btn.addEventListener(MouseEvent.MOUSE_OVER,	over);
+			_return_btn.addEventListener(MouseEvent.MOUSE_OUT,	out);
+			_return_btn.addEventListener(MouseEvent.CLICK,			clickReturn);
 		}
 		
 		// Sound button
 		protected function generateBtnSound():void
 		{
-			_btnSound = new BtnSoundFlash();
-			_btnSound.x = Common.IS_DEBUG? GameState.stageWidth*0.2: GameState.stageWidth*0.1;
-			_btnSound.y = GameState.stageHeight*0.05;
-			addChild(_btnSound);
+			_sound_btn = new BtnSoundFlash();
+			_sound_btn.x = Common.IS_DEBUG? GameState.stageWidth * .2: GameState.stageWidth * .1;
+			_sound_btn.y = GameState.stageHeight * .05;
+			addChild(_sound_btn);
 			
-			_btnSound.addEventListener(MouseEvent.MOUSE_OVER, over);
-			_btnSound.addEventListener(MouseEvent.MOUSE_OUT, out);
-			_btnSound.addEventListener(MouseEvent.CLICK, clickSound);
+			_sound_btn.addEventListener(MouseEvent.MOUSE_OVER,	over);
+			_sound_btn.addEventListener(MouseEvent.MOUSE_OUT,	out);
+			_sound_btn.addEventListener(MouseEvent.CLICK,			clickSound);
 		}
 		
 		// Login area
@@ -81,24 +83,42 @@ package core.scene
 		{
 			if (GameState.user.isLog)
 			{
-				_btnLogout = generateBtnLeft('Logout');
-				_btnLogout.x = GameState.stageWidth * 0.6;
-				_btnLogout.y = GameState.stageHeight * 0.05;
+				var username_format:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
+				username_format.bold = true;
 				
-				_btnLogout.addEventListener(MouseEvent.CLICK, clickLogout);
+				var username_label:TextField = new TextField();
+				username_label.x							= GameState.stageWidth	* .8;
+				username_label.y							= GameState.stageHeight	* .025;
+				username_label.width						= GameState.stageWidth	* .1;
+				username_label.height					= GameState.stageHeight	* .1;
+				username_label.defaultTextFormat	= username_format;
+				username_label.text						= GameState.user.username;
+				username_label.selectable				= false;
+				addChild(username_label);
+				
+				_logout_btn = new BtnDisconnectFlash();
+				_logout_btn.x = GameState.stageWidth	* .925;
+				_logout_btn.y = GameState.stageHeight	* .03;
+				_logout_btn.scaleX	=
+				_logout_btn.scaleY	= .3;
+				addChild(_logout_btn);
+				
+				_logout_btn.addEventListener(MouseEvent.MOUSE_OVER,	over);
+				_logout_btn.addEventListener(MouseEvent.MOUSE_OUT,	out);
+				_logout_btn.addEventListener(MouseEvent.CLICK,			clickLogout);
 			}
 			else
 			{
-				_btnLogin = generateBtnLeft('Login');
-				_btnLogin.x = GameState.stageWidth * 0.55;
-				_btnLogin.y = GameState.stageHeight * 0.05;
+				_login_btn = generateBtnLeft('Login');
+				_login_btn.x = GameState.stageWidth		* .55;
+				_login_btn.y = GameState.stageHeight	* .05;
 				
-				_btnRegister = generateBtnRight('Register');
-				_btnRegister.x = _btnLogin.x + _btnLogin.width;
-				_btnRegister.y = _btnLogin.y;
+				_register_btn = generateBtnRight('Register');
+				_register_btn.x = _login_btn.x + _login_btn.width;
+				_register_btn.y = _login_btn.y;
 				
-				_btnLogin		.addEventListener(MouseEvent.CLICK, clickLogin);
-				_btnRegister	.addEventListener(MouseEvent.CLICK, clickRegister);
+				_login_btn		.addEventListener(MouseEvent.CLICK, clickLogin);
+				_register_btn	.addEventListener(MouseEvent.CLICK, clickRegister);
 			}
 		}
 		
@@ -143,9 +163,30 @@ package core.scene
 		
 		public function destroy():void
 		{
-			if (_btnLogout)	_btnLogout	.removeEventListener(MouseEvent.CLICK, clickLogout);
-			if (_btnLogin)		_btnLogin		.removeEventListener(MouseEvent.CLICK, clickLogin);
-			if (_btnRegister)	_btnRegister	.removeEventListener(MouseEvent.CLICK, clickRegister);
+			if (_return_btn)
+			{
+				_return_btn.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+				_return_btn.removeEventListener(MouseEvent.MOUSE_OUT,		out);
+				_return_btn.removeEventListener(MouseEvent.CLICK,				clickReturn);
+			}
+			
+			if (_sound_btn)
+			{
+				_sound_btn.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+				_sound_btn.removeEventListener(MouseEvent.MOUSE_OUT,		out);
+				_sound_btn.removeEventListener(MouseEvent.CLICK,				clickSound);
+			}
+			
+			if (_login_btn) _login_btn.removeEventListener(MouseEvent.CLICK, clickLogin);
+			
+			if (_logout_btn)
+			{
+				_logout_btn.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+				_logout_btn.removeEventListener(MouseEvent.MOUSE_OUT,		out);
+				_logout_btn.removeEventListener(MouseEvent.CLICK,				clickLogout);
+			}
+			
+			if (_register_btn) _register_btn.removeEventListener(MouseEvent.CLICK, clickRegister);
 			
 			GameState.main.removeChild(this);
 		}
