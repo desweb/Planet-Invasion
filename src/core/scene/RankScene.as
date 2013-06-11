@@ -325,25 +325,25 @@ package core.scene
 			
 			// Rank number
 			var rankLabel:TextField = new TextField();
-			rankLabel.text = user.rank;
 			rankLabel.x = GameState.stageWidth*0.1;
 			rankLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
+			rankLabel.text = user.rank;
 			rankLabel.selectable = false;
 			lineSprite.addChild(rankLabel);
 			
 			// Username
 			var usernameLabel:TextField = new TextField();
-			usernameLabel.text = user.username;
 			usernameLabel.x = GameState.stageWidth * 0.3;
 			usernameLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
+			usernameLabel.text = user.username;
 			usernameLabel.selectable = false;
 			lineSprite.addChild(usernameLabel);
 			
 			// Points
 			var pointsLabel:TextField = new TextField();
-			pointsLabel.text = user.score + ' pts';
 			pointsLabel.x = GameState.stageWidth*0.7;
 			pointsLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
+			pointsLabel.text = user.score + ' pts';
 			pointsLabel.selectable = false;
 			lineSprite.addChild(pointsLabel);
 			
@@ -359,23 +359,23 @@ package core.scene
 			
 			// Rank number
 			var rankLabel:TextField = new TextField();
-			rankLabel.text = game.rank;
 			rankLabel.x = GameState.stageWidth*0.1;
 			rankLabel.defaultTextFormat = _scrollFormat;
+			rankLabel.text = game.rank;
 			user_rank.addChild(rankLabel);
 			
 			// Username
 			var usernameLabel:TextField = new TextField();
-			usernameLabel.text = GameState.user.username;
 			usernameLabel.x = GameState.stageWidth * 0.3;
 			usernameLabel.defaultTextFormat = _scrollFormat;
+			usernameLabel.text = GameState.user.username;
 			user_rank.addChild(usernameLabel);
 			
 			// Points
 			var pointsLabel:TextField = new TextField();
-			pointsLabel.text = game.score + ' pts';
 			pointsLabel.x = GameState.stageWidth*0.7;
 			pointsLabel.defaultTextFormat = _scrollFormat;
+			pointsLabel.text = game.score + ' pts';
 			user_rank.addChild(pointsLabel);
 			
 			return user_rank;

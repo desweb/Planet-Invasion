@@ -16,6 +16,8 @@ package core.scene
 	 */
 	public class AchievementScene extends Scene
 	{
+		private var _title_label:TextField;
+		
 		private var _content:Sprite;
 		
 		private var _scroll:ScrollManager;
@@ -32,6 +34,20 @@ package core.scene
 			
 			generateBg();
 			generateBtnReturn();
+			
+			// Title
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
+			format_title.bold = true;
+			
+			_title_label = new TextField();
+			_title_label.x							= GameState.stageWidth	* .25;
+			_title_label.y							= GameState.stageHeight	* .1;
+			_title_label.width					= GameState.stageWidth	* .5;
+			_title_label.height					= GameState.stageHeight	* .5;
+			_title_label.defaultTextFormat	= format_title;
+			_title_label.text						= 'Achievements';
+			_title_label.selectable				= false;
+			addChild(_title_label);
 			
 			// Scroll
 			_scrollFormat = Common.getPolicy('Arial', 0x00ffff, 15);
@@ -62,51 +78,51 @@ package core.scene
 			
 			// Achievement line
 			var lineSprite:Sprite = new Sprite();
-			lineSprite.y		= 25 * i;
-			lineSprite.alpha	= 0.75;
-			
-			lineSprite.graphics.beginFill(0x000000);
-			lineSprite.graphics.drawRect(0, 0, GameState.stageWidth * 0.9, GameState.stageHeight * 0.05);
+			lineSprite.y = GameState.stageHeight * .076 * i;
+			lineSprite.graphics.drawRect(0, 0, GameState.stageWidth * .9, GameState.stageHeight * .075);
 			lineSprite.graphics.endFill();
 			
-			var lockSprite:Sprite = new Sprite();
-			lockSprite.x = GameState.stageWidth * 0.05;
-			lockSprite.y = GameState.stageHeight * 0.025;
-			
-			if (achievementUser['is_unlock'])	lockSprite.graphics.beginFill(0x00FF00);
-			else											lockSprite.graphics.beginFill(0xFF0000);
-			
-			lockSprite.graphics.drawCircle(0, 0, GameState.stageHeight * 0.01);
-			lockSprite.graphics.endFill();
-			
-			lineSprite.addChild(lockSprite);
+			// Separator
+			var separatorSprite:Sprite = new Sprite();
+			separatorSprite.y = (GameState.stageHeight * .075) - 1;
+			separatorSprite.graphics.beginFill(0xffffff);
+			separatorSprite.graphics.drawRect(0, 0, GameState.stageWidth * .9, 1);
+			separatorSprite.graphics.endFill();
+			lineSprite.addChild(separatorSprite);
 			
 			// Name
 			var nameLabel:TextField = new TextField();
-			nameLabel.x = GameState.stageWidth*0.2;
+			nameLabel.x = GameState.stageWidth 	* .05;
+			nameLabel.y = GameState.stageHeight	* .01;
 			nameLabel.defaultTextFormat = _scrollFormat;
 			nameLabel.text = achievement.name;
+			nameLabel.selectable = false;
 			lineSprite.addChild(nameLabel);
 			
 			// Description
 			var descriptionLabel:TextField = new TextField();
-			descriptionLabel.x = GameState.stageWidth*0.5;
+			descriptionLabel.x			= GameState.stageWidth 	* .2;
+			descriptionLabel.y			= GameState.stageHeight	* .01;
+			descriptionLabel.width	= GameState.stageWidth 	* .5;
 			descriptionLabel.defaultTextFormat = _scrollFormat;
 			descriptionLabel.text = achievement.description;
+			descriptionLabel.selectable = false;
 			lineSprite.addChild(descriptionLabel);
 			
 			// Score
 			var scoreLabel:TextField = new TextField();
-			scoreLabel.x = GameState.stageWidth*0.7;
+			scoreLabel.x = GameState.stageWidth		* .7;
+			scoreLabel.y = GameState.stageHeight	* .01;
 			scoreLabel.defaultTextFormat = _scrollFormat;
 			scoreLabel.text = achievementUser['score'] + ' / ' + achievement.score;
+			scoreLabel.selectable = false;
 			lineSprite.addChild(scoreLabel);
 			
 			if (!achievementUser['is_unlock'])
 			{
 				nameLabel		.alpha =
 				descriptionLabel	.alpha =
-				scoreLabel			.alpha = 0.75;
+				scoreLabel			.alpha = .9;
 			}
 			
 			return lineSprite;
