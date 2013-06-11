@@ -12,12 +12,14 @@ package core
 	public class Interface extends Sprite
 	{
 		public var btnFormat			:TextFormat;
+		public var btnErrorFormat	:TextFormat;
 		public var inputFormat		:TextFormat;
 		public var inputLabelFormat:TextFormat;
 		
 		public function Interface() 
 		{
 			btnFormat				= Common.getPolicy('Arial', 0x00FFFF, 15);
+			btnErrorFormat		= Common.getPolicy('Arial', 0xFF0000, 15);
 			inputFormat			= Common.getPolicy('Arial', 0xFFFFFF, 15);
 			inputLabelFormat	= Common.getPolicy('Arial', 0x00FFFF, 15);
 		}
@@ -69,7 +71,7 @@ package core
 			label.y							= btn.height * .15;
 			label.width						= btn.width;
 			label.height					= btn.height;
-			label.defaultTextFormat	= btnFormat;
+			label.defaultTextFormat	= frame == 3? btnErrorFormat: btnFormat;
 			label.text						= txt;
 			label.selectable				= false;
 			btn.addChild(label);
