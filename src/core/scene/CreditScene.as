@@ -38,16 +38,30 @@ package core.scene
 			 */
 			generateBg();
 			generateBtnReturn();
-			generateBtnSound();
-			generateLogin();
 			
 			sceneReturn = Common.SCENE_MENU;
 			
 			var format:TextFormat = Common.getPolicy('Arial', 0xffffff, 20);
 			
+			// Title format
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
+			format_title.bold = true;
+			
+			// Title label
+			var title_label:TextField = new TextField();
+			title_label.x							= GameState.stageWidth	* .25;
+			title_label.y							= GameState.stageHeight	* .1;
+			title_label.width						= GameState.stageWidth	* .5;
+			title_label.height					= GameState.stageHeight	* .5;
+			title_label.defaultTextFormat	= format_title;
+			title_label.text						= 'Credits';
+			title_label.selectable				= false;
+			addChild(title_label);
+			
 			/**
 			 * Content scroll
 			 */
+			
 			_scroll_content = new Sprite();
 			
 			// Developpers
