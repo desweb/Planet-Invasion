@@ -108,6 +108,8 @@ package core.popup
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
 			
+			addEventListener(Event.ENTER_FRAME, updateLoader);
+			
 			API.post_auth(_usernameInput.text, _passwordInput.text,
 			function(response:XML):void
 			{
@@ -116,7 +118,7 @@ package core.popup
 				_submitLoader	.alpha = 0;
 				_submitBtn		.alpha = 1;
 				
-				removeEventListener(Event.ENTER_FRAME, updateResponse);
+				removeEventListener(Event.ENTER_FRAME, updateLoader);
 				
 				if (response.error.length() > 0)
 				{
@@ -126,11 +128,9 @@ package core.popup
 				
 				SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 			});
-			
-			addEventListener(Event.ENTER_FRAME, updateResponse);
 		}
 		
-		private function updateResponse(e:Event):void
+		private function updateLoader(e:Event):void
 		{
 			_submitLoader.rotation += 10;
 		}

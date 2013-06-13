@@ -150,9 +150,15 @@ package core
 				
 				GameState.user.login(response.access_token, response.expired_at);
 				
-				API.get_user(function(responseUser:XML):void
+				get_user(function(responseUser:XML):void
 				{
-					complete(responseUser);
+					get_achievement(function(responseAchievement:XML):void
+					{
+						get_improvement(function(responseImprovement:XML):void
+						{
+							complete(response);
+						});
+					});
 				});
 			});
 		}
@@ -194,7 +200,7 @@ package core
 				GameState.user.key					= response.user_key;
 				GameState.user.username			= response.username;
 				GameState.user.email				= response.email;
-				GameState.user.levelAdventure	= response.level_adventure;
+				GameState.user.level_adventure	= response.level_adventure;
 				GameState.user.metal				= response.metal;
 				GameState.user.crystal				= response.crystal;
 				GameState.user.money				= response.money;
@@ -250,15 +256,15 @@ package core
 		}
 		
 		// POST user/stat
-		public static function post_userStat(metal:int, crystal:int, money:int, score:int, level_adventure:int, complete:Function):void
+		public static function post_userStat(complete:Function):void
 		{
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.metal					= metal;
-			vars.crystal				= crystal;
-			vars.money				= money;
-			vars.score					= score;
-			vars.level_adventure	= level_adventure;
+			vars.metal					= GameState.user.metal;
+			vars.crystal				= GameState.user.crystal;
+			vars.money				= GameState.user.money;
+			vars.score					= GameState.user.score;
+			vars.level_adventure	= GameState.user.level_adventure;
 			
 			// Request
 			basicHTTPRequest(URLRequestMethod.POST, 'user/stat', vars, true,
@@ -379,6 +385,12 @@ package core
 			basicHTTPRequest(URLRequestMethod.GET, 'achievement', vars, true,
 			function(response:XML):void
 			{
+				for each (var achievement:XML in response.achievements.achievement)
+				{
+					GameState.user.achievements[achievement.key]['score']			= achievement.score;
+					GameState.user.achievements[achievement.key]['is_unlock']	= achievement.is_unlock;
+				}
+				
 				complete(response);
 			});
 		}
@@ -413,12 +425,15 @@ package core
 			basicHTTPRequest(URLRequestMethod.GET, 'improvement', vars, true,
 			function(response:XML):void
 			{
+				for each (var improvement:XML in response.improvements.improvement)
+					GameState.user.improvements[improvement.key] = improvement.level;
+				
 				complete(response);
 			});
 		}
 		
 		// POST improvement/key
-		public static function post_improvementKey(key:int, level:int, complete:Function):void
+		public static function post_improvementKey(key:String, level:int, complete:Function):void
 		{
 			// Params
 			var vars:URLVariables = new URLVariables();

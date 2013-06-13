@@ -17,7 +17,8 @@ package core
 		private var _key:String;
 		private var _username:String;
 		private var _email:String;
-		private var _levelAdventure:int;
+		private var _score:int;
+		private var _level_adventure:int;
 		private var _metal:int;
 		private var _crystal:int;
 		private var _money:int;
@@ -43,15 +44,20 @@ package core
 		{
 			isLog = false;
 			
-			_levelAdventure = 0;
+			_score					= 0;
+			_level_adventure	= 0;
+			_metal					= 100;
+			_crystal					= 100;
+			_money				= 100;
 			
 			_improvements = new Array();
-			_improvements[Common.IMPROVEMENT_ARMOR_RESIST]					=
+			_improvements[Common.IMPROVEMENT_ARMOR_RESIST]	=
+			_improvements[Common.IMPROVEMENT_GUN_DAMAGE]		=
+			_improvements[Common.IMPROVEMENT_GUN_CADENCE]	= 1;
+			
 			_improvements[Common.IMPROVEMENT_SHIELD_RESIST]					=
 			_improvements[Common.IMPROVEMENT_SHIELD_REGEN]					=
 			_improvements[Common.IMPROVEMENT_SHIELD_REPOP]					=
-			_improvements[Common.IMPROVEMENT_GUN_DAMAGE]						=
-			_improvements[Common.IMPROVEMENT_GUN_CADENCE]					=
 			_improvements[Common.IMPROVEMENT_LASER_DAMAGE]					=
 			_improvements[Common.IMPROVEMENT_MISSILE_DAMAGE]				=
 			_improvements[Common.IMPROVEMENT_MISSILE_CADENCE]				=
@@ -112,7 +118,13 @@ package core
 		public function get accessTokenExpiredAt	():int			{ return _accessTokenExpiredAt; }
 		public function get key							():String	{ return _key; }
 		public function get username					():String	{ return _username; }
+		public function get metal							():int			{ return _metal; }
+		public function get crystal						():int			{ return _crystal; }
+		public function get money						():int			{ return _money; }
+		public function get score							():int			{ return _score; }
+		public function get level_adventure			():int			{ return _level_adventure; }
 		public function get achievements				():Array	{ return _achievements; }
+		public function get improvements			():Array	{ return _improvements; }
 		
 		/**
 		 * Setters
@@ -123,7 +135,7 @@ package core
 		public function set key							(value:String):void	{ _key								= value; }
 		public function set username					(value:String):void	{ _username						= value; }
 		public function set email							(value:String):void	{ _email							= value; }
-		public function set levelAdventure			(value:int):void		{ _levelAdventure				= value; }
+		public function set level_adventure			(value:int):void		{ _level_adventure			= value; }
 		public function set metal							(value:int):void		{ _metal							= value; }
 		public function set crystal						(value:int):void		{ _crystal							= value; }
 		public function set money						(value:int):void		{ _money							= value; }

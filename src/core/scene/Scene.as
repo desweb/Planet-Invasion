@@ -122,6 +122,16 @@ package core.scene
 			}
 		}
 		
+		public function displayErrorPopup (message:String):void
+		{
+			var error_popup:ErrorPopup = new ErrorPopup();
+			error_popup.setText(message);
+			
+			SceneManager.getInstance().scene.addChild(error_popup);
+			
+			error_popup.display();
+		}
+		
 		/**
 		 * Events
 		 */

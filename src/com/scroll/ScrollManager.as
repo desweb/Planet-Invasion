@@ -43,7 +43,7 @@ package com.scroll
 			
 			// Background
 			_bg = new Sprite();
-			_bg.alpha = 0.5;
+			_bg.alpha = 0.75;
 			_bg.graphics.beginFill(0x000000);
 			_bg.graphics.drawRect(0, 0, _width, _height);
 			_bg.graphics.endFill();

@@ -56,6 +56,8 @@ package core.scene
 		
 		private function destroyOldScene():void
 		{
+			if (!_old_scene) return;
+			
 			_old_scene.destroy();
 			_old_scene = null;
 		}
