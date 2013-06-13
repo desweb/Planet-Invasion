@@ -84,12 +84,13 @@ package core.scene
 			if (GameState.user.isLog)
 			{
 				var username_format:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
-				username_format.bold = true;
+				username_format.bold	= true;
+				username_format.align	= 'right';
 				
 				var username_label:TextField = new TextField();
-				username_label.x							= GameState.stageWidth	* .8;
+				username_label.x							= GameState.stageWidth	* .5;
 				username_label.y							= GameState.stageHeight	* .025;
-				username_label.width						= GameState.stageWidth	* .1;
+				username_label.width						= GameState.stageWidth	* .4;
 				username_label.height					= GameState.stageHeight	* .1;
 				username_label.defaultTextFormat	= username_format;
 				username_label.text						= GameState.user.username;
