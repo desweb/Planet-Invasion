@@ -29,6 +29,8 @@ package core.scene
 		private var _resource_valid_format		:TextFormat;
 		private var _resource_invalid_format	:TextFormat;
 		
+		private var _reinitalize_btn:BtnFlash;
+		
 		private var _scroll			:ScrollManager;
 		private var _content		:Sprite;
 		private var _content_y	:int = 0;
@@ -84,6 +86,16 @@ package core.scene
 			resource_label.text						= 'My resources : ' + GameState.user.metal + ' metal, ' + GameState.user.crystal + ' crystal, ' + GameState.user.money + ' money';
 			resource_label.selectable				= false;
 			addChild(resource_label);
+			
+			// Reinitialize button
+			_reinitalize_btn = generateBtn('Reinitialize');
+			_reinitalize_btn.x = GameState.stageWidth	* .775;
+			_reinitalize_btn.y = GameState.stageHeight	* .025;
+			_reinitalize_btn.scaleX =
+			_reinitalize_btn.scaleY = .8;
+			addChild(_reinitalize_btn);
+			
+			_reinitalize_btn.addEventListener(MouseEvent.CLICK, clickReinitializeBtn);
 			
 			// Format
 			_title_format						= Common.getPolicy('Arial', 0x00FFFF, 15);
@@ -427,6 +439,7 @@ package core.scene
 				GameState.user.metal	< improvement.price[user_improvement + 1]['metal'] || 
 				GameState.user.crystal	< improvement.price[user_improvement + 1]['crystal'] ||
 				GameState.user.money	< improvement.price[user_improvement + 1]['money']? 3: 1);
+			buy_btn.name = key;
 			buy_btn.x = GameState.stageWidth * .725;
 			buy_btn.y = level_bar.y;
 			buy_btn.scaleX =
@@ -481,6 +494,8 @@ package core.scene
 			for each (var buy_btn:BtnFlash in _buy_btns)
 				buy_btn.removeEventListener(MouseEvent.CLICK, clickBuyBtn);
 			
+			_reinitalize_btn.removeEventListener(MouseEvent.CLICK, clickReinitializeBtn);
+			
 			super.destroy();
 		}
 		
@@ -521,15 +536,11 @@ package core.scene
 			else if (e.target.name == Common.IMPROVEMENT_MISSILE_DAMAGE && 
 				GameState.user.improvements[Common.IMPROVEMENT_MISSILE_DAMAGE]		== 1 && 
 				GameState.user.improvements[Common.IMPROVEMENT_MISSILE_CADENCE]	== 0)
-			{
 				GameState.user.improvements[Common.IMPROVEMENT_MISSILE_CADENCE]++;
-			}
 			else if (e.target.name == Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE && 
 				GameState.user.improvements[Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE]	== 1 && 
 				GameState.user.improvements[Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER]	== 0)
-			{
 				GameState.user.improvements[Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER]++;
-			}
 			
 			if (GameState.user.isLog)
 			{
@@ -544,6 +555,77 @@ package core.scene
 				
 				API.post_improvementKey(e.target.name, GameState.user.improvements[e.target.name],
 				function(response:XML):void
+				{
+					API.post_userStat(function(response:XML):void
+					{
+						e.target.parent.removeChild(loader);
+						
+						loader.removeEventListener(Event.ENTER_FRAME, updateLoader);
+						loader = null;
+						
+						SceneManager.getInstance().setCurrentScene(Common.SCENE_IMPROVEMENT, 1);
+					});
+				});
+			}
+			else SceneManager.getInstance().setCurrentScene(Common.SCENE_IMPROVEMENT, 1);
+		}
+		
+		private function clickReinitializeBtn(e:MouseEvent):void
+		{
+			if (_is_loading) return;
+			
+			e.target.visible = false;
+			
+			var metal		:int = 0;
+			var crystal		:int = 0;
+			var money	:int = 0;
+			
+			for (var key:String in GameState.user.improvements)
+			{
+				if (GameState.user.improvements[key] == 0) continue;
+				
+				var limit:int = 0;
+				
+				if (key == Common.IMPROVEMENT_ARMOR_RESIST	|| 
+					key == Common.IMPROVEMENT_GUN_DAMAGE		|| 
+					key == Common.IMPROVEMENT_GUN_CADENCE)
+					limit = 1;
+				
+				while (GameState.user.improvements[key] > limit)
+				{
+					var improvement:Improvement = new Improvement(key);
+					
+					if (improvement.price[GameState.user.improvements[key]])
+					{
+						metal	+= improvement.price[GameState.user.improvements[key]]['metal'];
+						crystal	+= improvement.price[GameState.user.improvements[key]]['crystal'];
+						money	+= improvement.price[GameState.user.improvements[key]]['money'];
+					}
+					
+					GameState.user.improvements[key]--;
+				}
+			}
+			
+			GameState.user.improvements[Common.IMPROVEMENT_ARMOR_RESIST]	=
+			GameState.user.improvements[Common.IMPROVEMENT_GUN_DAMAGE]	=
+			GameState.user.improvements[Common.IMPROVEMENT_GUN_CADENCE]	= 1;
+			
+			GameState.user.metal	+= metal;
+			GameState.user.crystal	+= crystal;
+			GameState.user.money	+= money;
+			
+			if (GameState.user.isLog)
+			{
+				var loader:LoaderFlash = new LoaderFlash();
+				loader.x = e.target.x + (e.target.width		/ 2);
+				loader.y = e.target.y + (e.target.height	/ 2);
+				loader.scaleX = 
+				loader.scaleY = .4;
+				e.target.parent.addChild(loader);
+				
+				loader.addEventListener(Event.ENTER_FRAME, updateLoader);
+				
+				API.post_improvementInititalize(function(response:XML):void
 				{
 					API.post_userStat(function(response:XML):void
 					{

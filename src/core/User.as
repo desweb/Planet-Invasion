@@ -46,15 +46,16 @@ package core
 			
 			_score					= 0;
 			_level_adventure	= 0;
-			_metal					= 100;
-			_crystal					= 100;
-			_money				= 100;
+			_metal					= 1000;
+			_crystal					= 1000;
+			_money				= 1000;
 			
 			_improvements = new Array();
 			_improvements[Common.IMPROVEMENT_ARMOR_RESIST]	=
 			_improvements[Common.IMPROVEMENT_GUN_DAMAGE]		=
 			_improvements[Common.IMPROVEMENT_GUN_CADENCE]	= 1;
 			
+			_improvements[Common.IMPROVEMENT_GUN_DOUBLE]						=
 			_improvements[Common.IMPROVEMENT_SHIELD_RESIST]					=
 			_improvements[Common.IMPROVEMENT_SHIELD_REGEN]					=
 			_improvements[Common.IMPROVEMENT_SHIELD_REPOP]					=
