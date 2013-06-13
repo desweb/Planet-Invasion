@@ -49,6 +49,8 @@ package core.scene
 		{
 			if (Common.IS_DEBUG) trace('create RankScene');
 			
+			var scroll_height:int = GameState.user.isLog? GameState.stageHeight * .65: GameState.stageHeight * .75;
+			
 			/**
 			 * Initialization
 			 */
@@ -123,7 +125,7 @@ package core.scene
 					i++;
 				}
 				
-				_scrollRank = new ScrollManager(_contentRank, GameState.stageWidth * .9, GameState.stageHeight * .65);
+				_scrollRank = new ScrollManager(_contentRank, GameState.stageWidth * .9, scroll_height);
 				_scrollRank.y = GameState.stageHeight * .225;
 				addChild(_scrollRank);
 			});
@@ -141,8 +143,8 @@ package core.scene
 					i++;
 				}
 				
-				_scrollRankAdventure = new ScrollManager(_contentRankAdventure);
-				_scrollRankAdventure.y = GameState.stageHeight * .15;
+				_scrollRankAdventure = new ScrollManager(_contentRankAdventure, GameState.stageWidth * .9, scroll_height);
+				_scrollRankAdventure.y = GameState.stageHeight * .225;
 				_scrollRankAdventure.visible = false;
 				addChild(_scrollRankAdventure);
 			});
@@ -160,8 +162,8 @@ package core.scene
 					i++;
 				}
 				
-				_scrollRankSurvival = new ScrollManager(_contentRankSurvival);
-				_scrollRankSurvival.y = GameState.stageHeight * .15;
+				_scrollRankSurvival = new ScrollManager(_contentRankSurvival, GameState.stageWidth * .9, scroll_height);
+				_scrollRankSurvival.y = GameState.stageHeight * .225;
 				_scrollRankSurvival.visible = false;
 				addChild(_scrollRankSurvival);
 			});
@@ -179,8 +181,8 @@ package core.scene
 					i++;
 				}
 				
-				_scrollRankDuo = new ScrollManager(_contentRankDuo);
-				_scrollRankDuo.y = GameState.stageHeight * .15;
+				_scrollRankDuo = new ScrollManager(_contentRankDuo, GameState.stageWidth * .9, scroll_height);
+				_scrollRankDuo.y = GameState.stageHeight * .225;
 				_scrollRankDuo.visible = false;
 				addChild(_scrollRankDuo);
 			});
