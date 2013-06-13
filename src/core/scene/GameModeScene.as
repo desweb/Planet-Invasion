@@ -5,6 +5,7 @@ package core.scene
 	
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * Select game mode or improvement
@@ -87,21 +88,25 @@ package core.scene
 		
 		private function clickImprovements(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_IMPROVEMENT, 1);
 		}
 		
 		private function clickAdventure(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, 1);
 		}
 		
 		private function clickSurvival(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButtonError();
 			
 		}
 		
 		private function clickDuo(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButtonError();
 			
 		}
 	}

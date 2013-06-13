@@ -1,9 +1,14 @@
 package core.scene 
 {
+	import flash.events.Event;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	
 	import com.greensock.TweenLite;
 	
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * ...
@@ -12,6 +17,9 @@ package core.scene
 	public class SceneManager 
 	{
 		private static var _instance:SceneManager;
+		
+		private var _menu_sound				:Sound;
+		private var _menu_sound_channel	:SoundChannel;
 		
 		private var _current_scene_uid:uint;
 		
@@ -22,6 +30,8 @@ package core.scene
 		{
 			_instance = null;
 			_current_scene_uid = 0;
+			
+			playSound();
 		}
 		
 		/**
@@ -49,7 +59,7 @@ package core.scene
 			
 			TweenLite.to(_current_scene, .5, {alpha:1});
 			
-			if (_old_scene) TweenLite.to(_old_scene, .5, {alpha:0, onComplete:destroyOldScene});
+			if (_old_scene) TweenLite.to(_old_scene, .5, { alpha:0, onComplete:destroyOldScene });
 			
 			_current_scene_uid = scene_uid;
 		}
@@ -81,6 +91,40 @@ package core.scene
 				case Common.SCENE_SELECT_LEVEL			: return new SelectLevelScene();	break;
 				default														: return new MenuScene();
 			}
+		}
+		
+		public function playSound():void
+		{
+			if (SoundManager.getInstance().available == Common.SOUND_ON && _menu_sound_channel) return;
+			
+			SoundManager.getInstance().available = Common.SOUND_ON;
+			
+			_menu_sound = SoundManager.getInstance().menu;
+			_menu_sound_channel = _menu_sound.play();
+			_menu_sound_channel.addEventListener(Event.SOUND_COMPLETE, boucleSound);
+		}
+		
+		public function stopSound():void
+		{
+			if (SoundManager.getInstance().available == Common.SOUND_OFF && !_menu_sound_channel) return;
+			
+			SoundManager.getInstance().available = Common.SOUND_OFF;
+			
+			_menu_sound_channel.stop();
+			_menu_sound_channel.removeEventListener(Event.SOUND_COMPLETE, boucleSound);
+			_menu_sound = null;
+			_menu_sound_channel = null;
+		}
+		
+		/**
+		 * Events
+		 */
+		
+		private function boucleSound(e:Event):void
+		{
+			_menu_sound_channel = _menu_sound.play();
+			_menu_sound_channel.removeEventListener(Event.SOUND_COMPLETE, boucleSound);
+			_menu_sound_channel.addEventListener		(Event.SOUND_COMPLETE, boucleSound);
 		}
 		
 		/**

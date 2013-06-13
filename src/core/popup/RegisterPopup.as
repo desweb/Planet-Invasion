@@ -8,6 +8,7 @@ package core.popup
 	import core.API;
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	import core.scene.SceneManager;
 	import core.utils.Security;
 	
@@ -107,6 +108,8 @@ package core.popup
 		private function clickSubmit(e:MouseEvent):void
 		{
 			if (_is_loading) return;
+			
+			SoundManager.getInstance().playMenuButton();
 			
 			if (!_emailInput.text || !_usernameInput.text || !_passwordInput.text)
 			{

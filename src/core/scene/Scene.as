@@ -11,6 +11,7 @@ package core.scene
 	import core.Common;
 	import core.GameState;
 	import core.Interface;
+	import core.SoundManager;
 	import core.popup.ErrorPopup;
 	import core.popup.LoginPopup;
 	import core.popup.RegisterPopup;
@@ -72,6 +73,8 @@ package core.scene
 			_sound_btn.x = Common.IS_DEBUG? GameState.stageWidth * .2: GameState.stageWidth * .1;
 			_sound_btn.y = GameState.stageHeight * .05;
 			addChild(_sound_btn);
+			
+			_sound_btn.gotoAndStop(SoundManager.getInstance().available == Common.SOUND_ON? 1: 2);
 			
 			_sound_btn.addEventListener(MouseEvent.MOUSE_OVER,	over);
 			_sound_btn.addEventListener(MouseEvent.MOUSE_OUT,	out);
@@ -139,16 +142,29 @@ package core.scene
 		
 		private function clickReturn(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
 			SceneManager.getInstance().setCurrentScene(sceneReturn);
 		}
 		
 		private function clickSound(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
 			
+			if (SoundManager.getInstance().available == Common.SOUND_ON)
+			{
+				_sound_btn.gotoAndStop(Common.FRAME_SOUND_OFF);
+				SceneManager.getInstance().stopSound();
+			}
+			else
+			{
+				_sound_btn.gotoAndStop(Common.FRAME_SOUND_ON);
+				SceneManager.getInstance().playSound();
+			}
 		}
 		
 		private function clickLogin(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
 			var loginPopup:LoginPopup = new LoginPopup();
 			addChild(loginPopup);
 			loginPopup.display();
@@ -156,6 +172,8 @@ package core.scene
 		
 		private function clickLogout(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
 			GameState.user.logout();
 			
 			SceneManager.getInstance().setCurrentScene(SceneManager.getInstance().sceneId);
@@ -163,6 +181,8 @@ package core.scene
 		
 		private function clickRegister(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
 			var registerPopup:RegisterPopup = new RegisterPopup();
 			addChild(registerPopup);
 			registerPopup.display();

@@ -12,6 +12,7 @@ package core.popup
 	import core.Common;
 	import core.GameState;
 	import core.Interface;
+	import core.SoundManager;
 	import core.scene.SceneManager;
 	
 	/**
@@ -115,6 +116,7 @@ package core.popup
 		
 		private function clickClose(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButtonError();
 			destroy();
 		}
 		

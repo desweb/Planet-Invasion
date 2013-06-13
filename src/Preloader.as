@@ -7,12 +7,14 @@ package
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
+	import flash.media.Sound;
 	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.getDefinitionByName;
 	
 	import core.Common;
+	import core.SoundManager;
 	
 	/**
 	 * Preloader class of the application
@@ -63,6 +65,7 @@ package
 			_loader.y = stage.stageHeight / 2;
 			addChild(_loader);
 			
+			SoundManager.getInstance().load();
 		}
 		
 		private function ioError(e:IOErrorEvent):void 

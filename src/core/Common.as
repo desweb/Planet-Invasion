@@ -17,6 +17,13 @@ package core
 		// Debug
 		public static const IS_DEBUG:Boolean = false;
 		
+		// Assets
+		public static const PATH_ASSETS:String = '../assets/';
+		
+		// Sound
+		public static const SOUND_ON	:uint = 1;
+		public static const SOUND_OFF:uint = 2;
+		
 		// Scene id
 		public static const SCENE_ACHIEVEMENT			:uint = 1;
 		public static const SCENE_CREDIT					:uint = 2;
@@ -31,6 +38,10 @@ package core
 		public static const SCENE_RANK						:uint = 11;
 		public static const SCENE_RESEARCH_DUO		:uint = 12;
 		public static const SCENE_SELECT_LEVEL			:uint = 13;
+		
+		// Frame
+		public static const FRAME_SOUND_ON	:uint = 1;
+		public static const FRAME_SOUND_OFF	:uint = 2;
 		
 		// Game security key
 		public static const GAME_ADVENTURE_KEY	:String = '172ae58a586c65c8c4487062c695fe7f';

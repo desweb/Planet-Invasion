@@ -56,7 +56,5 @@ package
 			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 		}
-
 	}
-
 }
