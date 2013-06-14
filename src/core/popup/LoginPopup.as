@@ -31,6 +31,9 @@ package core.popup
 		{
 			if (Common.IS_DEBUG) trace('create LoginPopup');
 			
+			generateBackground();
+			generateContent();
+			
 			setTitleText('Login');
 			setPopupHeight(GameState.stageHeight	* .5);
 			

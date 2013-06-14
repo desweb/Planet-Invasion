@@ -28,6 +28,8 @@ package core
 		{
 			_instance	= this;
 			available	= Common.SOUND_ON;
+			
+			
 		}
 		
 		/**
@@ -75,12 +77,16 @@ package core
 		
 		private function completeMenuButton(e:Event):void
 		{
+			if (!_menu_button_channel) return;
+			
 			_menu_button_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuButton);
 			_menu_button_channel = null;
 		}
 		
 		private function completeMenuButtonError(e:Event):void
 		{
+			if (!_menu_button_error_channel) return;
+			
 			_menu_button_error_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuButtonError);
 			_menu_button_error_channel = null;
 		}

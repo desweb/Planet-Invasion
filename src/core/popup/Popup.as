@@ -28,6 +28,7 @@ package core.popup
 		private var _title:TextField;
 		private var _close:BtnCloseFlash;
 		private var _popup:Sprite;
+		private var _y:int;
 		private var _popupWidth:int			= GameState.stageWidth	* .6;
 		private var _popupHeight:int			= GameState.stageHeight	* .8;
 		private var _popupBorderColor:int	= 0xffffff;
@@ -38,21 +39,6 @@ package core.popup
 		public function Popup() 
 		{
 			alpha = 0;
-			
-			// Background
-			_bg = new Sprite();
-			_bg.alpha = BG_ALPHA;
-			_bg.graphics.beginFill(0x000000);
-			_bg.graphics.drawRect(0, 0, GameState.stageWidth, GameState.stageHeight);
-			_bg.graphics.endFill();
-			addChild(_bg);
-			
-			// Content
-			_popup	= new Sprite();
-			_title		= new TextField();
-			_close	= new BtnCloseFlash();
-			
-			_close.addEventListener(MouseEvent.CLICK, clickClose);
 		}
 		
 		public function display	():void { TweenLite.to(this, ANIM_TIMER, { alpha:1 }); }
@@ -62,11 +48,32 @@ package core.popup
 		 * Generation functions
 		 */
 		
+		// Background
+		protected function generateBackground():void
+		{
+			_bg = new Sprite();
+			_bg.alpha = BG_ALPHA;
+			_bg.graphics.beginFill(0x000000);
+			_bg.graphics.drawRect(0, 0, GameState.stageWidth, GameState.stageHeight);
+			_bg.graphics.endFill();
+			addChild(_bg);
+		}
+		
+		// Content
+		protected function generateContent():void
+		{
+			_popup	= new Sprite();
+			_title		= new TextField();
+			_close	= new BtnCloseFlash();
+			
+			_close.addEventListener(MouseEvent.CLICK, clickClose);
+		}
+		
 		// Popup
-		public function generatePopup():void
+		protected function generatePopup():void
 		{
 			_popup.x = (GameState.stageWidth - _popupWidth) / 2;
-			_popup.y = (GameState.stageHeight - _popupHeight) / 2;
+			_popup.y = _y? _y: (GameState.stageHeight - _popupHeight) / 2;
 			_popup.graphics.lineStyle(1, _popupBorderColor);
 			_popup.graphics.beginFill(0x000000);
 			_popup.graphics.drawRect(0, 0, _popupWidth, _popupHeight);
@@ -130,6 +137,7 @@ package core.popup
 		 * Setters
 		 */
 		
+		public function setPopupY				(value:int)					:void { _y							= value; }
 		public function setPopupWidth			(value:int)					:void { _popupWidth			= value; }
 		public function setPopupHeight		(value:int)					:void { _popupHeight			= value; }
 		public function setPopupBorderColor(value:int)					:void { _popupBorderColor	= value; }

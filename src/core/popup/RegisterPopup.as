@@ -31,6 +31,9 @@ package core.popup
 		{
 			if (Common.IS_DEBUG) trace('create RegisterPopup');
 			
+			generateBackground();
+			generateContent();
+			
 			setTitleText('Register');
 			setPopupHeight(GameState.stageHeight	* .65);
 			

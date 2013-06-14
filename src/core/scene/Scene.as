@@ -8,10 +8,12 @@ package core.scene
 	
 	import com.greensock.TweenLite;
 	
+	import core.Achievement;
 	import core.Common;
 	import core.GameState;
 	import core.Interface;
 	import core.SoundManager;
+	import core.popup.AchievementPopup;
 	import core.popup.ErrorPopup;
 	import core.popup.LoginPopup;
 	import core.popup.RegisterPopup;
@@ -134,6 +136,30 @@ package core.scene
 			SceneManager.getInstance().scene.addChild(error_popup);
 			
 			error_popup.display();
+		}
+		
+		protected function checkAchievement(key:String, value:int):Boolean
+		{
+			var achievement_user:Array = GameState.user.achievements[key];
+			
+			if (achievement_user['is_unlock']) return false;
+			
+			var achievement:Achievement = new Achievement(key);
+			
+			achievement_user['score'] += value;
+			
+			if (achievement.score <= achievement_user['score'])
+			{
+				achievement_user['is_unlock'] = true;
+				
+				var achievement_popup:AchievementPopup = new AchievementPopup(key);
+				
+				addChild(achievement_popup);
+				
+				achievement_popup.display();
+			}
+			
+			return true;
 		}
 		
 		/**

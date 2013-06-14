@@ -15,7 +15,7 @@ package core
 		 */
 		
 		// Debug
-		public static const IS_DEBUG:Boolean = false;
+		public static const IS_DEBUG:Boolean = true;
 		
 		// Assets
 		public static const PATH_ASSETS:String = '../assets/';

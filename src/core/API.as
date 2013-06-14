@@ -396,17 +396,21 @@ package core
 		}
 		
 		// POST achievement/key
-		public static function post_achievementKey(key:int, score:int, is_unlock:Boolean, complete:Function):void
+		public static function post_achievementKey(key:String, complete:Function):void
 		{
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.score			= score;
-			vars.is_unlock	= is_unlock;
+			vars.score			= GameState.user.achievements[key]['score'];
+			vars.is_unlock	= GameState.user.achievements[key]['is_unlock'];
+			
+			trace(key);
 			
 			// Request
 			basicHTTPRequest(URLRequestMethod.POST, 'achievement/' + key, vars, true,
 			function(response:XML):void
 			{
+				trace(response);
+				
 				complete(response);
 			});
 		}

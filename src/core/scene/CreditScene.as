@@ -7,18 +7,9 @@ package core.scene
 	
 	import com.scroll.ScrollManager;
 	
+	import core.API;
 	import core.Common;
 	import core.GameState;
-	
-	/**
-	 * Test scroll
-	 */
-	/*import com.jessamin.controls.*;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-
-	import com.pixelbreaker.ui.osx.MacMouseWheel;
-	import com.spikything.utils.MouseWheelTrap;*/
 	
 	/**
 	 * Credits list
@@ -81,11 +72,15 @@ package core.scene
 			credits_graph.text = 'Graphiste\nCaroline Saillot';
 			_scroll_content.addChild(credits_graph);
 			
-			/**
-			 * Test scroll
-			 */
+			// Scroll
 			_scroll = new ScrollManager(_scroll_content);
 			addChild(_scroll);
+			
+			// Achievement
+			if (checkAchievement(Common.ACHIEVEMENT_CURIOSITY, 1))
+			{
+				if (GameState.user.isLog) API.post_achievementKey(Common.ACHIEVEMENT_CURIOSITY, function(response:XML):void {});
+			}
 		}
 		
 		/**

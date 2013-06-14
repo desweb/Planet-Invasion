@@ -3,7 +3,7 @@ package core
 	import flash.net.URLLoader;
 	import flash.events.Event;
 	
-	//import com.greensock.TweenLite;
+	import core.scene.SceneManager;
 	
 	/**
 	 * Manage user
@@ -14,14 +14,14 @@ package core
 		private var _accessToken				:String;
 		private var _accessTokenExpiredAt	:int;
 		
-		private var _key:String;
-		private var _username:String;
-		private var _email:String;
-		private var _score:int;
-		private var _level_adventure:int;
-		private var _metal:int;
-		private var _crystal:int;
-		private var _money:int;
+		private var _key					:String;
+		private var _username			:String;
+		private var _email					:String;
+		private var _score					:int;
+		private var _level_adventure	:int;
+		private var _metal					:int;
+		private var _crystal				:int;
+		private var _money				:int;
 		
 		private var _improvements	:Array;
 		private var _achievements	:Array;
@@ -70,23 +70,19 @@ package core
 			_improvements[Common.IMPROVEMENT_BOMB]									=
 			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;
 			
-			var achievement:Array = new Array();
-			achievement['score']			= 0;
-			achievement['is_unlock']	= false;
-			
 			_achievements = new Array();
-			_achievements[Common.ACHIEVEMENT_METAL]					=
-			_achievements[Common.ACHIEVEMENT_CRYSTAL]				=
-			_achievements[Common.ACHIEVEMENT_MONEY]					=
-			_achievements[Common.ACHIEVEMENT_SERIAL_KILLER]		=
-			_achievements[Common.ACHIEVEMENT_NATURAL_DEATH]	=
-			_achievements[Common.ACHIEVEMENT_ROADHOG]			=
-			_achievements[Common.ACHIEVEMENT_CONQUEROR]			=
-			_achievements[Common.ACHIEVEMENT_COOPERATION]		=
-			_achievements[Common.ACHIEVEMENT_SURVIVAL]				=
-			_achievements[Common.ACHIEVEMENT_MISTER_BOOSTER]	=
-			_achievements[Common.ACHIEVEMENT_CURIOSITY]			=
-			_achievements[Common.ACHIEVEMENT_ALIEN_BLAST]		= achievement;
+			createAchievement(Common.ACHIEVEMENT_METAL);
+			createAchievement(Common.ACHIEVEMENT_CRYSTAL);
+			createAchievement(Common.ACHIEVEMENT_MONEY);
+			createAchievement(Common.ACHIEVEMENT_SERIAL_KILLER);
+			createAchievement(Common.ACHIEVEMENT_NATURAL_DEATH);
+			createAchievement(Common.ACHIEVEMENT_ROADHOG);
+			createAchievement(Common.ACHIEVEMENT_CONQUEROR);
+			createAchievement(Common.ACHIEVEMENT_COOPERATION);
+			createAchievement(Common.ACHIEVEMENT_SURVIVAL);
+			createAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER);
+			createAchievement(Common.ACHIEVEMENT_CURIOSITY);
+			createAchievement(Common.ACHIEVEMENT_ALIEN_BLAST);
 		}
 		
 		public function login(accessToken:String, expiredAt:int):void
@@ -100,6 +96,13 @@ package core
 		public function logout():void
 		{
 			init();
+		}
+		
+		private function createAchievement(key:String):void
+		{
+			_achievements[key] = new Array();
+			_achievements[key]['score']		= 0;
+			_achievements[key]['is_unlock']	= false;
 		}
 		
 		/**
@@ -136,10 +139,10 @@ package core
 		public function set key							(value:String):void	{ _key								= value; }
 		public function set username					(value:String):void	{ _username						= value; }
 		public function set email							(value:String):void	{ _email							= value; }
-		public function set level_adventure			(value:int):void		{ _level_adventure			= value; }
-		public function set metal							(value:int):void		{ _metal							= value; }
-		public function set crystal						(value:int):void		{ _crystal							= value; }
-		public function set money						(value:int):void		{ _money							= value; }
+		public function set level_adventure			(value:int)		:void { _level_adventure			= value; }
+		public function set metal							(value:int)		:void { _metal							= value; }
+		public function set crystal						(value:int)		:void { _crystal							= value; }
+		public function set money						(value:int)		:void { _money							= value; }
 		
 	}
 }
