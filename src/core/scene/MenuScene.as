@@ -29,6 +29,8 @@ package core.scene
 			 * Initialization
 			 */
 			
+			is_alien_menu = true;
+			
 			generateBg();
 			generateBtnSound();
 			generateLogin();

@@ -123,7 +123,7 @@ package core.popup
 		
 		private function clickClose(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButtonError();
+			SoundManager.getInstance().playMenuButtonClose();
 			destroy();
 		}
 		

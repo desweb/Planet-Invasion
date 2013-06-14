@@ -5,6 +5,7 @@ package core.scene
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.utils.getTimer;
 	
 	import com.greensock.TweenLite;
 	
@@ -26,7 +27,13 @@ package core.scene
 	 */
 	public class Scene extends Interface implements IScene
 	{
+		// Time
+		private var _t:int;
+		protected var _dt:Number;
+		
 		private var _bg:BgFlash;
+		
+		private var _alien_plan:Sprite;
 		
 		private var _return_btn	:BtnReturnFlash;
 		private var _sound_btn	:BtnSoundFlash;
@@ -38,9 +45,15 @@ package core.scene
 		
 		public var sceneReturn:uint;
 		
+		public var is_alien_menu:Boolean = false;
+		private var _alien_create_time	:Number;
+		private var _alien_create_timer	:Number = 10;
+		
 		public function Scene()
 		{
+			_alien_create_time = _alien_create_timer;
 			
+			addEventListener(Event.ENTER_FRAME, update);
 		}
 		
 		/**
@@ -53,6 +66,12 @@ package core.scene
 			_bg = new BgFlash();
 			_bg.gotoAndStop(2);
 			addChild(_bg);
+			
+			if (is_alien_menu)
+			{
+				_alien_plan = new Sprite();
+				addChild(_alien_plan);
+			}
 		}
 		
 		// Return button
@@ -138,7 +157,7 @@ package core.scene
 			error_popup.display();
 		}
 		
-		protected function checkAchievement(key:String, value:int):Boolean
+		public function checkAchievement(key:String, value:int):Boolean
 		{
 			var achievement_user:Array = GameState.user.achievements[key];
 			
@@ -165,6 +184,25 @@ package core.scene
 		/**
 		 * Events
 		 */
+		
+		private function update(e:Event):void
+		{
+			var t:int = getTimer();
+			_dt = (t - _t) * 0.001;
+			_t = t;
+			
+			if (is_alien_menu)
+			{
+				_alien_create_time -= _dt;
+				
+				if (_alien_create_time <= 0)
+				{
+					_alien_plan.addChild(new AlienMenu());
+					
+					_alien_create_time = _alien_create_timer;
+				}
+			}
+		}
 		
 		private function clickReturn(e:MouseEvent):void
 		{
@@ -220,6 +258,8 @@ package core.scene
 		
 		public function destroy():void
 		{
+			removeEventListener(Event.ENTER_FRAME, update);
+			
 			if (_return_btn)
 			{
 				_return_btn.removeEventListener(MouseEvent.MOUSE_OVER,	over);
