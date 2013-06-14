@@ -142,7 +142,7 @@ package core.scene
 		{
 			var achievement_user:Array = GameState.user.achievements[key];
 			
-			if (achievement_user['is_unlock']) return false;
+			if (achievement_user['is_unlock'] == 1) return false;
 			
 			var achievement:Achievement = new Achievement(key);
 			

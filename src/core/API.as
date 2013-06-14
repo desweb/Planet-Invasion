@@ -401,16 +401,12 @@ package core
 			// Params
 			var vars:URLVariables = new URLVariables();
 			vars.score			= GameState.user.achievements[key]['score'];
-			vars.is_unlock	= GameState.user.achievements[key]['is_unlock'];
-			
-			trace(key);
+			vars.is_unlock	= GameState.user.achievements[key]['is_unlock']? 1: 0;
 			
 			// Request
 			basicHTTPRequest(URLRequestMethod.POST, 'achievement/' + key, vars, true,
 			function(response:XML):void
 			{
-				trace(response);
-				
 				complete(response);
 			});
 		}

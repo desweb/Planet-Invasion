@@ -18,11 +18,15 @@ package core.scene
 	{
 		private var _title_label:TextField;
 		
+		private var _scroll:ScrollManager;
 		private var _content:Sprite;
 		
-		private var _scroll:ScrollManager;
-		
-		private var _scrollFormat:TextFormat;
+		private var _title_success_format		:TextFormat;
+		private var _title_lock_format				:TextFormat;
+		private var _content_success_format	:TextFormat;
+		private var _content_lock_format		:TextFormat;
+		private var _score_success_format		:TextFormat;
+		private var _score_lock_format			:TextFormat;
 		
 		public function AchievementScene()
 		{
@@ -49,9 +53,18 @@ package core.scene
 			_title_label.selectable				= false;
 			addChild(_title_label);
 			
-			// Scroll
-			_scrollFormat = Common.getPolicy('Arial', 0x00ffff, 15);
+			// Format
+			_title_success_format			= Common.getPolicy('Arial', 0x00FFFF, 15);
+			_title_lock_format				= Common.getPolicy('Arial', 0xFF0000, 15);
+			_content_success_format	= Common.getPolicy('Arial', 0x00FFFF, 12);
+			_content_lock_format			= Common.getPolicy('Arial', 0xFF0000, 12);
+			_score_success_format		= Common.getPolicy('Arial', 0x00FFFF, 14);
+			_score_lock_format			= Common.getPolicy('Arial', 0xFF0000, 14);
 			
+			_title_success_format	.bold = true;
+			_title_lock_format		.bold = true;
+			
+			// Scroll
 			_content = new Sprite();
 			
 			var achievementUser:Array = GameState.user.achievements;
@@ -94,7 +107,7 @@ package core.scene
 			var nameLabel:TextField = new TextField();
 			nameLabel.x = GameState.stageWidth 	* .05;
 			nameLabel.y = GameState.stageHeight	* .01;
-			nameLabel.defaultTextFormat = _scrollFormat;
+			nameLabel.defaultTextFormat = achievementUser['is_unlock'] == 1? _title_success_format: _title_lock_format;
 			nameLabel.text = achievement.name;
 			nameLabel.selectable = false;
 			lineSprite.addChild(nameLabel);
@@ -104,7 +117,7 @@ package core.scene
 			descriptionLabel.x			= GameState.stageWidth 	* .2;
 			descriptionLabel.y			= GameState.stageHeight	* .01;
 			descriptionLabel.width	= GameState.stageWidth 	* .5;
-			descriptionLabel.defaultTextFormat = _scrollFormat;
+			descriptionLabel.defaultTextFormat = achievementUser['is_unlock'] == 1? _content_success_format: _content_lock_format;
 			descriptionLabel.text = achievement.description;
 			descriptionLabel.selectable = false;
 			lineSprite.addChild(descriptionLabel);
@@ -113,17 +126,10 @@ package core.scene
 			var scoreLabel:TextField = new TextField();
 			scoreLabel.x = GameState.stageWidth		* .7;
 			scoreLabel.y = GameState.stageHeight	* .01;
-			scoreLabel.defaultTextFormat = _scrollFormat;
+			scoreLabel.defaultTextFormat = achievementUser['is_unlock'] == 1? _score_success_format: _score_lock_format;
 			scoreLabel.text = achievementUser['score'] + ' / ' + achievement.score;
 			scoreLabel.selectable = false;
 			lineSprite.addChild(scoreLabel);
-			
-			if (!achievementUser['is_unlock'])
-			{
-				nameLabel		.alpha =
-				descriptionLabel	.alpha =
-				scoreLabel			.alpha = .9;
-			}
 			
 			return lineSprite;
 		}
