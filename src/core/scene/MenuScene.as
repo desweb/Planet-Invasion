@@ -2,9 +2,13 @@ package core.scene
 {
 	import flash.events.MouseEvent;
 	
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	
 	import core.Common;
 	import core.GameState;
 	import core.SoundManager;
+	import core.game.Hero;
 	
 	/**
 	 * First menu

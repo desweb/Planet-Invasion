@@ -43,6 +43,17 @@ package core
 		public static const FRAME_SOUND_ON	:uint = 1;
 		public static const FRAME_SOUND_OFF	:uint = 2;
 		
+		public static const FRAME_BTN_DEFAULT	:uint = 1;
+		public static const FRAME_BTN_LOCK		:uint = 2;
+		
+		public static const FRAME_ENTITY_DEFAULT	:uint = 1;
+		public static const FRAME_ENTITY_SMOKE	:uint = 2;
+		public static const FRAME_ENTITY_FIRE		:uint = 3;
+		public static const FRAME_ENTITY_DEAD		:uint = 4;
+		
+		// Timer
+		public static const TIMER_ANIMATION_DEAD:uint = 2000;
+		
 		// Game security key
 		public static const GAME_ADVENTURE_KEY	:String = '172ae58a586c65c8c4487062c695fe7f';
 		public static const GAME_SURVIVAL_KEY		:String = 'c6acb7315b55571d750dc8fb08c9aa3d';

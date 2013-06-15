@@ -124,8 +124,6 @@ package core.scene
 				_logout_btn = new BtnDisconnectFlash();
 				_logout_btn.x = GameState.stageWidth	* .925;
 				_logout_btn.y = GameState.stageHeight	* .03;
-				_logout_btn.scaleX	=
-				_logout_btn.scaleY	= .3;
 				addChild(_logout_btn);
 				
 				_logout_btn.addEventListener(MouseEvent.MOUSE_OVER,	over);

@@ -3,7 +3,6 @@ package core.game
 	import core.game.weapon.hero.Bombardment;
 	import core.game.weapon.hero.IEM;
 	import core.game.weapon.hero.Reinforcement;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -24,23 +23,30 @@ package core.game
 	 * ...
 	 * @author desweb
 	 */
-	public class Hero extends Sprite
+	public class Hero extends HeroFlash
 	{
+		private static const PROPELLANT_TWEEN_TIMER:Number = .5;
+		
 		private var _keys:Array = new Array();
 		
-		private static const KEY_MACHINE_GUN	:String = 'a';
-		private static const KEY_LAZER			:String = 'z';
-		private static const KEY_MISSILE		:String = 'e';
+		private static const KEY_MACHINE_GUN		:String = 'a';
+		private static const KEY_LAZER					:String = 'z';
+		private static const KEY_MISSILE					:String = 'e';
 		private static const KEY_MISSILE_HOMING	:String = 'r';
-		private static const KEY_IEM			:String = 's';
-		private static const KEY_BOMBARDMENT	:String = 'd';
+		private static const KEY_IEM						:String = 's';
+		private static const KEY_BOMBARDMENT		:String = 'd';
 		private static const KEY_REINFORCEMENT	:String = 'f';
 		
-		private var _fireMachineGunTimer	:Timer = new Timer(100);
-		private var _fireLazerTimer			:Timer = new Timer(1000);
-		private var _fireMissileTimer		:Timer = new Timer(1000);
+		private var _propellant:PropellantFlash;
+		private var _propellant_tween:TweenLite;
+		
+		private var _shield:ShieldFlash;
+		
+		private var _fireMachineGunTimer		:Timer = new Timer(100);
+		private var _fireLazerTimer					:Timer = new Timer(1000);
+		private var _fireMissileTimer				:Timer = new Timer(1000);
 		private var _fireMissileHomingTimer	:Timer = new Timer(1000);
-		private var _fireIEMTimer			:Timer = new Timer(5000);
+		private var _fireIEMTimer					:Timer = new Timer(5000);
 		private var _fireBombardmentTimer	:Timer = new Timer(5000);
 		private var _fireReinforcementTimer	:Timer = new Timer(5000);
 		
@@ -50,10 +56,14 @@ package core.game
 		{
 			if (Common.IS_DEBUG) trace('create Hero');
 			
-			graphics.lineStyle(2, 0x00ffff);
-			graphics.beginFill(0xededed);
-			graphics.drawRect(0, 0, 100, 100);
-			graphics.endFill();
+			_propellant = new PropellantFlash();
+			_propellant.x = -width / 2 + 10;
+			addChild(_propellant);
+			
+			propellantTween();
+			
+			_shield = new ShieldFlash();
+			addChild(_shield);
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -64,16 +74,16 @@ package core.game
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
 			_keys[KEY_MACHINE_GUN]		= new Array();
-			_keys[KEY_LAZER]			= new Array();
-			_keys[KEY_MISSILE]			= new Array();
+			_keys[KEY_LAZER]					= new Array();
+			_keys[KEY_MISSILE]					= new Array();
 			_keys[KEY_MISSILE_HOMING]	= new Array();
-			_keys[KEY_IEM]				= new Array();
+			_keys[KEY_IEM]						= new Array();
 			_keys[KEY_BOMBARDMENT]		= new Array();
-			_keys[KEY_REINFORCEMENT]	= new Array();
+			_keys[KEY_REINFORCEMENT]		= new Array();
 			
 			for (var i:String in _keys)
 			{
-				_keys[i]['is_down']		= false;
+				_keys[i]['is_down']	= false;
 				_keys[i]['is_timer']	= false;
 			}
 			
@@ -101,7 +111,9 @@ package core.game
 		{
 			if (_isPaused) return;
 			
-			var dt:Number = GameState.game.dt;
+			//var dt:Number = GameState.game.dt;
+			
+			if (_shield) _shield.rotation += 10;
 		}
 		
 		public function pause():void
@@ -112,6 +124,21 @@ package core.game
 		public function resume():void
 		{
 			_isPaused = false;
+		}
+		
+		/**
+		 * Tweens
+		 */
+		
+		private function propellantTween(is_mini:Boolean = true):void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			_propellant_tween = new TweenLite(_propellant, PROPELLANT_TWEEN_TIMER, { scaleX : is_mini? .5: 1, scaleY : is_mini? .5: 1, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
 		}
 		
 		/**
@@ -169,7 +196,7 @@ package core.game
 		{
 			if (_isPaused) return;
 			
-			TweenLite.to(this, 0.1, { x:GameState.main.mouseX - (width/2), y:GameState.main.mouseY - (height/2) });
+			TweenLite.to(this, 0.1, { x:GameState.main.mouseX, y:GameState.main.mouseY });
 		}
 		
 		private function enableFireMachineGun(e:TimerEvent):void
@@ -304,21 +331,55 @@ package core.game
 		{
 			if (Common.IS_DEBUG) trace('destroy Hero');
 			
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			if (_propellant)
+			{
+				removeChild(_propellant);
+				_propellant = null;
+			}
+			
+			if (_shield)
+			{
+				removeChild(_shield);
+				_shield = null;
+			}
+			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
-			stage.removeEventListener(KeyboardEvent.KEY_UP,		upKey);
+			stage.removeEventListener(KeyboardEvent.KEY_UP,			upKey);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
-			_fireMachineGunTimer	.removeEventListener(TimerEvent.TIMER, enableFireMachineGun);
-			_fireLazerTimer			.removeEventListener(TimerEvent.TIMER, enableFireLazer);
-			_fireMissileTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissile);
-			_fireMissileHomingTimer	.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
-			_fireIEMTimer			.removeEventListener(TimerEvent.TIMER, enableFireIEM);
-			_fireBombardmentTimer	.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
+			_fireMachineGunTimer		.removeEventListener(TimerEvent.TIMER, enableFireMachineGun);
+			_fireLazerTimer					.removeEventListener(TimerEvent.TIMER, enableFireLazer);
+			_fireMissileTimer				.removeEventListener(TimerEvent.TIMER, enableFireMissile);
+			_fireMissileHomingTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
+			_fireIEMTimer					.removeEventListener(TimerEvent.TIMER, enableFireIEM);
+			_fireBombardmentTimer		.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
 			_fireReinforcementTimer	.removeEventListener(TimerEvent.TIMER, enableFireReinforcement);
 			
-			GameState.game.removeChild(this);
+			gotoAndStop(Common.FRAME_ENTITY_DEAD);
+			
+			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
+			
+			remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
+			{
+				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
+				
+				removeThis();
+			});
+			
+			remove_timer.start();
+		}
+		
+		private function removeThis():void
+		{
+			parent.removeChild(this);
 		}
 	}
 }

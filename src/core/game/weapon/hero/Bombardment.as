@@ -21,7 +21,7 @@ package core.game.weapon.hero
 	{
 		public var isFinish:Boolean = false;
 		
-		private var _timerFinish		:Timer = new Timer(2000);
+		private var _timerFinish					:Timer = new Timer(2000);
 		private var _timerEnemiesDetroy	:Timer = new Timer(500);
 		
 		private var missileTrianglePoints:Vector.<Number> = new Vector.<Number>(6, true);
@@ -47,7 +47,7 @@ package core.game.weapon.hero
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			_timerFinish		.addEventListener(TimerEvent.TIMER, endTimerFinish);
+			_timerFinish				.addEventListener(TimerEvent.TIMER, endTimerFinish);
 			_timerEnemiesDetroy	.addEventListener(TimerEvent.TIMER, endTimerEnemiesDestroy);
 			
 			_timerFinish		.start();

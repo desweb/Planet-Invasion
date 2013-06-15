@@ -1,9 +1,10 @@
 package core.scene 
 {
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
+	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
 	import com.greensock.plugins.TweenPlugin; 
@@ -19,7 +20,7 @@ package core.scene
 	 * ...
 	 * @author desweb
 	 */
-	public class AlienMenu extends Sprite
+	public class AlienMenu extends AlienMenuFlash
 	{
 		private var _life:int = 5;
 		private var _tween:TweenLite;
@@ -27,10 +28,6 @@ package core.scene
 		public function AlienMenu()
 		{
 			if (Common.IS_DEBUG) trace('create AlienMenu');
-			
-			graphics.beginFill(0xededed);
-			graphics.drawRect(0, 0, 50, 20);
-			graphics.endFill();
 			
 			addEventListener(MouseEvent.CLICK, click);
 			
@@ -118,6 +115,26 @@ package core.scene
 				_tween = null;
 			}
 			
+			if (_life > 0) removeThis();
+			else
+			{
+				gotoAndStop(Common.FRAME_ENTITY_DEAD);
+				
+				var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
+				
+				remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
+				{
+					remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
+					
+					removeThis();
+				});
+				
+				remove_timer.start();
+			}
+		}
+		
+		private function removeThis():void
+		{
 			parent.removeChild(this);
 		}
 		
