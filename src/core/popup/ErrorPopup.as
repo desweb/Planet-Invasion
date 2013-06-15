@@ -17,6 +17,9 @@ package core.popup
 		{
 			if (Common.IS_DEBUG) trace('create ErrorPopup');
 			
+			generateBackground();
+			generateContent();
+			
 			setPopupBorderColor(0xff0000);
 			setPopupWidth	(GameState.stageWidth	* .5);
 			setPopupHeight	(GameState.stageHeight	* .1);

@@ -17,6 +17,9 @@ package core.popup
 		{
 			if (Common.IS_DEBUG) trace('create PausePopup');
 			
+			generateBackground();
+			generateContent();
+			
 			setTitleText('Pause');
 			
 			generatePopup();

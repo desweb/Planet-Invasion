@@ -32,10 +32,10 @@ package core.game.weapon
 			// Default position
 			if (owner)
 			{
-				if		(owner is Hero)		x = owner.x + owner.width;
+				if			(owner is Hero)		x = owner.x + owner.width / 2;
 				else if	(owner is Enemy)	x = owner.x - 25;
 				
-				y = owner.y + (owner.height / 2);
+				y = owner.y;
 			}
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
