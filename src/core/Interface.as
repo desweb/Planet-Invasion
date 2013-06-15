@@ -71,7 +71,7 @@ package core
 			label.y							= btn.height * .15;
 			label.width						= btn.width;
 			label.height					= btn.height;
-			label.defaultTextFormat	= frame == 3? btnErrorFormat: btnFormat;
+			label.defaultTextFormat	= frame == Common.FRAME_BTN_LOCK? btnErrorFormat: btnFormat;
 			label.text						= txt;
 			label.selectable				= false;
 			btn.addChild(label);

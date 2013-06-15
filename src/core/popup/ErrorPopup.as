@@ -1,6 +1,7 @@
 package core.popup 
 {
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	import core.Common;
 	import core.GameState;
@@ -11,7 +12,7 @@ package core.popup
 	 */
 	public class ErrorPopup extends Popup implements IPopup
 	{
-		private var _errorLabel:TextField;
+		private var _label:TextField;
 		
 		public function ErrorPopup()
 		{
@@ -26,16 +27,20 @@ package core.popup
 			
 			generatePopup();
 			
+			// Format
+			var format:TextFormat = Common.getPolicy('MyArialPolicy', 0xff0000, 20);
+			format.align = 'center';
+			
 			// Label
-			_errorLabel = new TextField();
-			_errorLabel.x					= GameState.stageWidth	* .15;
-			_errorLabel.y					= GameState.stageHeight	* .025;
-			_errorLabel.width			= GameState.stageWidth	* .3;
-			_errorLabel.height			= GameState.stageHeight	* .05;
-			_errorLabel.selectable	= false;
-			_errorLabel.textColor		= 0xff0000;
-			_errorLabel.setTextFormat(Common.getPolicy('MyArialPolicy', 0xff0000, 20));
-			setPopupContent(_errorLabel);
+			_label = new TextField();
+			_label.x					= 10;
+			_label.y					= GameState.stageHeight	* .025;
+			_label.width			= GameState.stageWidth	* .45;
+			_label.height			= GameState.stageHeight	* .1;
+			_label.selectable	= false;
+			_label.textColor		= 0xFF0000;
+			_label.setTextFormat(format);
+			setPopupContent(_label);
 		}
 		
 		/**
@@ -55,7 +60,7 @@ package core.popup
 		
 		public function setText(value:String):void
 		{
-			_errorLabel.text = value;
+			_label.text = value;
 		}
 	}
 }

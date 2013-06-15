@@ -227,6 +227,7 @@ package core.scene
 		private function clickLogin(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButton();
+			
 			var loginPopup:LoginPopup = new LoginPopup();
 			addChild(loginPopup);
 			loginPopup.display();

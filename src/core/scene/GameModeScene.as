@@ -1,5 +1,6 @@
 package core.scene 
 {
+	import core.popup.ErrorPopup;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
@@ -16,10 +17,10 @@ package core.scene
 		private var _is_survival_restricted	:Boolean = false;
 		private var _is_duo_restricted			:Boolean = false;
 		
-		private var _btnImprovements:BtnFlash;
-		private var _btnAdventure		:BtnFlash;
-		private var _btnSurvival			:BtnFlash;
-		private var _btnDuo				:BtnFlash;
+		private var _improvements_btn	:BtnFlash;
+		private var _adventure_btn			:BtnFlash;
+		private var _survival_btn			:BtnFlash;
+		private var _duo_btn					:BtnFlash;
 		
 		/**
 		 * Constructor
@@ -47,25 +48,26 @@ package core.scene
 			 */
 			
 			// Improvements button
-			_btnImprovements = generateBtn('Improvements');
-			_btnImprovements.y = GameState.stageHeight * 0.3;
+			_improvements_btn = generateBtn('Improvements');
+			_improvements_btn.y = GameState.stageHeight * 0.3;
 			
 			// Adventure button
-			_btnAdventure = generateBtn('Adventure');
-			_btnAdventure.y = GameState.stageHeight * 0.4;
+			_adventure_btn = generateBtn('Adventure');
+			_adventure_btn.y = GameState.stageHeight * 0.4;
 			
 			// Survival button
-			_btnSurvival = generateBtn('Survival', 3);
-			_btnSurvival.y = GameState.stageHeight * 0.5;
+			_survival_btn = generateBtn('Survival', Common.FRAME_BTN_LOCK);
+			_survival_btn.y = GameState.stageHeight * 0.5;
 			
 			// Duo button
-			_btnDuo = generateBtn('Duo', 3);
-			_btnDuo.y = GameState.stageHeight * 0.6;
+			_duo_btn = generateBtn('Duo', Common.FRAME_BTN_LOCK);
+			_duo_btn.y = GameState.stageHeight * 0.6;
 			
-			_btnImprovements	.addEventListener(MouseEvent.CLICK, clickImprovements);
-			_btnAdventure		.addEventListener(MouseEvent.CLICK, clickAdventure);
-			_btnSurvival			.addEventListener(MouseEvent.CLICK, clickSurvival);
-			_btnDuo				.addEventListener(MouseEvent.CLICK, clickDuo);
+			// Events
+			_improvements_btn	.addEventListener(MouseEvent.CLICK, clickImprovements);
+			_adventure_btn			.addEventListener(MouseEvent.CLICK, clickAdventure);
+			_survival_btn				.addEventListener(MouseEvent.CLICK, clickSurvival);
+			_duo_btn					.addEventListener(MouseEvent.CLICK, clickDuo);
 		}
 		
 		/**
@@ -76,10 +78,10 @@ package core.scene
 		{
 			if (Common.IS_DEBUG) trace('destroy GameModeScene');
 			
-			_btnImprovements	.removeEventListener(MouseEvent.CLICK, clickImprovements);
-			_btnAdventure		.removeEventListener(MouseEvent.CLICK, clickAdventure);
-			_btnSurvival			.removeEventListener(MouseEvent.CLICK, clickSurvival);
-			_btnDuo				.removeEventListener(MouseEvent.CLICK, clickDuo);
+			_improvements_btn	.removeEventListener(MouseEvent.CLICK, clickImprovements);
+			_adventure_btn			.removeEventListener(MouseEvent.CLICK, clickAdventure);
+			_survival_btn				.removeEventListener(MouseEvent.CLICK, clickSurvival);
+			_duo_btn					.removeEventListener(MouseEvent.CLICK, clickDuo);
 			
 			super.destroy();
 		}
@@ -91,25 +93,47 @@ package core.scene
 		private function clickImprovements(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButton();
-			SceneManager.getInstance().setCurrentScene(Common.SCENE_IMPROVEMENT, 1);
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_IMPROVEMENT);
 		}
 		
 		private function clickAdventure(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButton();
-			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, 1);
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_SELECT_LEVEL);
 		}
 		
 		private function clickSurvival(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButtonError();
 			
+			if (!GameState.user.isLog || GameState.user.level_adventure < 5)
+			{
+				var error_popup:ErrorPopup = new ErrorPopup();
+				error_popup.setText('You must be logged in & have finished the adventure mode\nto access to survival mode.');
+				addChild(error_popup);
+				error_popup.display();
+				
+				return;
+			}
+			
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
 		}
 		
 		private function clickDuo(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButtonError();
 			
+			if (!GameState.user.isLog)
+			{
+				var error_popup:ErrorPopup = new ErrorPopup();
+				error_popup.setText('You must be logged in to access to survival mode.');
+				addChild(error_popup);
+				error_popup.display();
+				
+				return;
+			}
+			
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_DUO);
 		}
 	}
 }
