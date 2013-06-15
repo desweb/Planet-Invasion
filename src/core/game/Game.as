@@ -1,5 +1,7 @@
 package core.game 
 {
+	import core.game.item.AttackItem;
+	import core.game.item.Item;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.ui.Mouse;
@@ -70,8 +72,6 @@ package core.game
 			
 			// Hero
 			_hero = new Hero();
-			//_hero.x = 550;
-			//_hero.y = 100;
 			heroContainer.addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
@@ -96,6 +96,8 @@ package core.game
 			if (_speedEnemyTimer <= 0)
 			{
 				_speedEnemyTimer = _speedEnemy;
+				
+				new AttackItem();
 				
 				for (var i:int = 0; i < 10; i++)
 				{

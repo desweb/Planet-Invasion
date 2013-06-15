@@ -101,6 +101,14 @@ package core
 		public static const IMPROVEMENT_BOMB									:String = '1b7417bf9151374d7b062a64abd29425';
 		public static const IMPROVEMENT_REINFORCE							:String = 'd724842bf8d7855b964c4018b0484d7d';
 		
+		// Item
+		public static const ITEM_ATTACK		:uint = 1;
+		public static const ITEM_CRYSTAL	:uint = 2;
+		public static const ITEM_DEFENSE	:uint = 3;
+		public static const ITEM_GOLD			:uint = 4;
+		public static const ITEM_METAL		:uint = 5;
+		public static const ITEM_SPEED		:uint = 6;
+		
 		public function Common() {}
 		
 		/**

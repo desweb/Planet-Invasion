@@ -138,6 +138,11 @@ package core.game
 			_isPaused = false;
 		}
 		
+		public function hitItem(type:int):void
+		{
+			
+		}
+		
 		/**
 		 * Tweens
 		 */

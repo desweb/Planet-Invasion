@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'15/06/2013'</value>
+      <value>'16/06/2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -39,8 +39,8 @@
       <path-element>C:\Documents and Settings\Audric\Mes documents\GitHub\Planet-Invasion\lib\greensock.swc</path-element>
       <path-element>C:\Documents and Settings\Audric\Mes documents\GitHub\Planet-Invasion\assets\ennemi.swc</path-element>
       <path-element>C:\Documents and Settings\Audric\Mes documents\GitHub\Planet-Invasion\assets\hero.swc</path-element>
-      <path-element>C:\Documents and Settings\Audric\Mes documents\GitHub\Planet-Invasion\assets\item.swc</path-element>
       <path-element>C:\Documents and Settings\Audric\Mes documents\GitHub\Planet-Invasion\assets\scene.swc</path-element>
+      <path-element>C:\Documents and Settings\Audric\Mes documents\GitHub\Planet-Invasion\assets\item.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>

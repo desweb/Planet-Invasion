@@ -56,7 +56,7 @@ package core.game.weapon
 			
 			if (owner)
 			{
-				if		(owner is Hero)		heroUpdate();
+				if			(owner is Hero)		heroUpdate();
 				else if	(owner is Enemy)	enemyUpdate();
 			}
 		}
