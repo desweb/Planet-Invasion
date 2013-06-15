@@ -27,6 +27,8 @@ package core.game
 	{
 		private static const PROPELLANT_TWEEN_TIMER:Number = .5;
 		
+		private var _is_available_move:Boolean = false;
+		
 		private var _keys:Array = new Array();
 		
 		private static const KEY_MACHINE_GUN		:String = 'a';
@@ -56,6 +58,9 @@ package core.game
 		{
 			if (Common.IS_DEBUG) trace('create Hero');
 			
+			x = -width;
+			y = GameState.stageHeight / 2;
+			
 			_propellant = new PropellantFlash();
 			_propellant.x = -width / 2 + 10;
 			addChild(_propellant);
@@ -64,6 +69,8 @@ package core.game
 			
 			_shield = new ShieldFlash();
 			addChild(_shield);
+			
+			TweenLite.to(this, 1, { x : width / 2 + 50, onComplete:start });
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -114,6 +121,11 @@ package core.game
 			//var dt:Number = GameState.game.dt;
 			
 			if (_shield) _shield.rotation += 10;
+		}
+		
+		private function start():void
+		{
+			_is_available_move = true;
 		}
 		
 		public function pause():void
@@ -181,22 +193,22 @@ package core.game
 			
 			switch (String.fromCharCode(e.charCode))
 			{
-				case KEY_MACHINE_GUN	: _keys[KEY_MACHINE_GUN]['is_down']		= false; break;
-				case KEY_LAZER			: _keys[KEY_LAZER]['is_down']			= false; break;
-				case KEY_MISSILE		: _keys[KEY_MISSILE]['is_down']			= false; break;
-				case KEY_MISSILE_HOMING	: _keys[KEY_MISSILE_HOMING]['is_down']	= false; break;
-				case KEY_IEM			: _keys[KEY_IEM]['is_down']				= false; break;
-				case KEY_BOMBARDMENT	: _keys[KEY_BOMBARDMENT]['is_down']		= false; break;
-				case KEY_REINFORCEMENT	: _keys[KEY_REINFORCEMENT]['is_down']	= false; break;
+				case KEY_MACHINE_GUN		: _keys[KEY_MACHINE_GUN]		['is_down'] = false; break;
+				case KEY_LAZER					: _keys[KEY_LAZER]					['is_down'] = false; break;
+				case KEY_MISSILE					: _keys[KEY_MISSILE]				['is_down'] = false; break;
+				case KEY_MISSILE_HOMING	: _keys[KEY_MISSILE_HOMING]	['is_down'] = false; break;
+				case KEY_IEM						: _keys[KEY_IEM]						['is_down'] = false; break;
+				case KEY_BOMBARDMENT		: _keys[KEY_BOMBARDMENT]		['is_down'] = false; break;
+				case KEY_REINFORCEMENT		: _keys[KEY_REINFORCEMENT]	['is_down'] = false; break;
 				default	: return;
 			}
 		}
 		
 		private function mouseMove(e:MouseEvent):void
 		{
-			if (_isPaused) return;
+			if (!_is_available_move || _isPaused) return;
 			
-			TweenLite.to(this, 0.1, { x:GameState.main.mouseX, y:GameState.main.mouseY });
+			TweenLite.to(this, 1, { x:GameState.main.mouseX, y:GameState.main.mouseY });
 		}
 		
 		private function enableFireMachineGun(e:TimerEvent):void

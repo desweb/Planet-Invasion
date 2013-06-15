@@ -70,8 +70,8 @@ package core.game
 			
 			// Hero
 			_hero = new Hero();
-			_hero.x = 550;
-			_hero.y = 100;
+			//_hero.x = 550;
+			//_hero.y = 100;
 			heroContainer.addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
