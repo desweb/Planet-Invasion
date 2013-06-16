@@ -5,32 +5,40 @@ package core.game.weapon.hero
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
-	import core.game.weapon.MachineGun;
+	import core.game.weapon.Gun;
 	import core.utils.Tools;
 	
 	/**
 	 * ...
 	 * @author desweb
 	 */
-	public class ReinforcementMachineGun extends MachineGun
+	public class ReinforcementGun extends Gun
 	{
-		
-		public function ReinforcementMachineGun()
+		public function ReinforcementGun()
 		{
-			if (Common.IS_DEBUG) trace('create ReinforcementMachineGun');
+			if (Common.IS_DEBUG) trace('create ReinforcementGun');
+			
+			_fire_type = Common.FIRE_MIDDLE_DEFAULT;
 			
 			y = Tools.random(0, GameState.stageHeight);
+			
+			_target_x = x + GameState.stageWidth;
+			_target_y = y;
 		}
 		
-		override public function initialize(e:Event):void
+		/**
+		 * Overrides
+		 */
+		
+		override protected function initialize(e:Event):void
 		{
 			moveSpeed = .5;
-			targetX = GameState.stageWidth + 10;
+			_target_x = GameState.stageWidth + 10;
 			
 			super.initialize(e);
 		}
 		
-		override public function update(e:Event):void 
+		override protected function update(e:Event):void 
 		{
 			super.update(e);
 			
@@ -46,7 +54,7 @@ package core.game.weapon.hero
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy ReinforcementMachineGun');
+			if (Common.IS_DEBUG) trace('destroy ReinforcementGun');
 			
 			super.destroy();
 		}

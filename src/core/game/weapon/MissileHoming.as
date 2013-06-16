@@ -37,7 +37,7 @@ package core.game.weapon
 			graphics.endFill();
 		}
 		
-		override public function initialize(e:Event):void
+		override protected function initialize(e:Event):void
 		{
 			super.initialize(e);
 			
@@ -47,12 +47,12 @@ package core.game.weapon
 				tweenPointTarget();
 				autoRotation();
 				
-				tween = new TweenLite(this, 0.2, { x:_tweenX, y:_tweenY, onComplete:reinitTween } );
+				_tween = new TweenLite(this, 0.2, { x:_tweenX, y:_tweenY, onComplete:reinitTween } );
 			}
-			else tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy } );
+			else _tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy } );
 		}
 		
-		override public function update(e:Event):void
+		override protected function update(e:Event):void
 		{
 			super.update(e);
 			
@@ -74,12 +74,12 @@ package core.game.weapon
 			
 			var duration:Number = target.x > x? 0.1 * ((target.x - x) / 100): 0.1 * ((x - target.x) / 100);
 			
-			tween.pause();
-			tween.kill();
+			_tween.pause();
+			_tween.kill();
 			
 			autoRotation();
 			
-			tween = new TweenLite(this, duration, { x:_tweenX, y:_tweenY, ease:Linear.easeNone, onComplete:reinitTween } );
+			_tween = new TweenLite(this, duration, { x:_tweenX, y:_tweenY, ease:Linear.easeNone, onComplete:reinitTween } );
 		}
 		
 		private function autoRotation():void
@@ -114,7 +114,7 @@ package core.game.weapon
 				var adjacent:Number	= Math.pow(target.x+(target.width/2) - x, 2);
 				
 				if (y < target.y)	rotation = 180 - (180 * Math.cos(adjacent/distMT) / Math.PI);
-				else				rotation = 180 + (180 * Math.cos(adjacent/distMT) / Math.PI);
+				else					rotation = 180 + (180 * Math.cos(adjacent/distMT) / Math.PI);
 			}
 			else rotation = 0;
 		}

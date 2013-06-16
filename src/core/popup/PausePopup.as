@@ -5,6 +5,7 @@ package core.popup
 	import core.scene.GameScene;
 	import core.scene.SceneManager;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * ...
@@ -12,6 +13,7 @@ package core.popup
 	 */
 	public class PausePopup extends Popup implements IPopup 
 	{
+		private var _back_menu_btn:BtnFlash;
 		
 		public function PausePopup()
 		{
@@ -24,7 +26,10 @@ package core.popup
 			
 			generatePopup();
 			
+			_back_menu_btn = generateBtn('Back to menu');
 			
+			// Events
+			_back_menu_btn.addEventListener(MouseEvent.CLICK, clickBackMenuBtn);
 		}
 		
 		/**
@@ -35,9 +40,20 @@ package core.popup
 		{
 			if (Common.IS_DEBUG) trace('destroy PausePopup');
 			
+			_back_menu_btn.removeEventListener(MouseEvent.CLICK, clickBackMenuBtn);
+			
 			stage.dispatchEvent(new Event('resumeGameScene'));
 			
 			super.destroy();
+		}
+		
+		/**
+		 * Events
+		 */
+		
+		private function clickBackMenuBtn(e:MouseEvent):void
+		{
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 	}
 }

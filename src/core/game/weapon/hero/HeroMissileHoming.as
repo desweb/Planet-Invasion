@@ -17,12 +17,16 @@ package core.game.weapon.hero
 		{
 			if (Common.IS_DEBUG) trace('create HeroMissileHoming');
 			
-			owner = GameState.game.hero;
+			_owner = GameState.game.hero;
 			
 			super();
 		}
 		
-		override public function initialize(e:Event):void
+		/**
+		 * Overrides
+		 */
+		
+		override protected function initialize(e:Event):void
 		{
 			// Research target enemy
 			for each(var eTarget:Enemy in GameState.game.enemies)

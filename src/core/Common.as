@@ -51,6 +51,9 @@ package core
 		public static const FRAME_ENTITY_FIRE		:uint = 3;
 		public static const FRAME_ENTITY_DEAD		:uint = 4;
 		
+		public static const FRAME_WEAPON_DEFAULT	:uint = 1;
+		public static const FRAME_WEAPON_DEAD		:uint = 2;
+		
 		// Timer
 		public static const TIMER_ANIMATION_DEAD:uint = 2000;
 		
@@ -108,6 +111,21 @@ package core
 		public static const ITEM_GOLD			:uint = 4;
 		public static const ITEM_METAL		:uint = 5;
 		public static const ITEM_SPEED		:uint = 6;
+		
+		// Owner
+		public static const OWNER_HERO	:uint = 1;
+		public static const OWNER_ENEMY:uint = 2;
+		
+		// Fire
+		public static const FIRE_TOP_DEFAULT			:uint = 1;
+		public static const FIRE_TOP_LEFT				:uint = 2;
+		public static const FIRE_TOP_RIGHT				:uint = 3;
+		public static const FIRE_MIDDLE_DEFAULT	:uint = 4;
+		public static const FIRE_MIDDLE_LEFT			:uint = 5;
+		public static const FIRE_MIDDLE_RIGHT		:uint = 6;
+		public static const FIRE_BOTTOM_DEFAULT	:uint = 7;
+		public static const FIRE_BOTTOM_LEFT			:uint = 8;
+		public static const FIRE_BOTTOM_RIGHT		:uint = 9;
 		
 		public function Common() {}
 		

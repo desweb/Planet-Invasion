@@ -14,7 +14,7 @@ package core.game
 	import core.Common;
 	import core.GameState;
 	import core.game.weapon.hero.HeroLazer;
-	import core.game.weapon.hero.HeroMachineGun;
+	import core.game.weapon.hero.HeroGun;
 	import core.game.weapon.hero.HeroMissile;
 	import core.game.weapon.hero.HeroMissileHoming;
 	import core.scene.Scene;
@@ -31,7 +31,7 @@ package core.game
 		
 		private var _keys:Array = new Array();
 		
-		private static const KEY_MACHINE_GUN		:String = 'a';
+		private static const KEY_GUN						:String = 'a';
 		private static const KEY_LAZER					:String = 'z';
 		private static const KEY_MISSILE					:String = 'e';
 		private static const KEY_MISSILE_HOMING	:String = 'r';
@@ -44,7 +44,7 @@ package core.game
 		
 		private var _shield:ShieldFlash;
 		
-		private var _fireMachineGunTimer		:Timer = new Timer(100);
+		private var _fireGunTimer					:Timer = new Timer(100);
 		private var _fireLazerTimer					:Timer = new Timer(1000);
 		private var _fireMissileTimer				:Timer = new Timer(1000);
 		private var _fireMissileHomingTimer	:Timer = new Timer(1000);
@@ -54,9 +54,22 @@ package core.game
 		
 		private var _isPaused:Boolean = false;
 		
+		// Improvements
+		private var _is_gun_double		:Boolean;
+		private var _is_tri_force			:Boolean;
+		private var _is_iem				:Boolean;
+		private var _is_bombardment	:Boolean;
+		private var _is_reinforcement	:Boolean;
+		
 		public function Hero() 
 		{
 			if (Common.IS_DEBUG) trace('create Hero');
+			
+			_is_gun_double		= GameState.user.improvements[Common.IMPROVEMENT_GUN_DOUBLE]	? true: false;
+			_is_tri_force			= GameState.user.improvements[Common.IMPROVEMENT_TRI_FORCE]	? true: false;
+			_is_iem					= GameState.user.improvements[Common.IMPROVEMENT_IEM]				? true: false;
+			_is_bombardment	= GameState.user.improvements[Common.IMPROVEMENT_BOMB]			? true: false;
+			_is_reinforcement	= GameState.user.improvements[Common.IMPROVEMENT_REINFORCE]	? true: false;
 			
 			x = -width;
 			y = GameState.stageHeight / 2;
@@ -80,7 +93,7 @@ package core.game
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			_keys[KEY_MACHINE_GUN]		= new Array();
+			_keys[KEY_GUN]						= new Array();
 			_keys[KEY_LAZER]					= new Array();
 			_keys[KEY_MISSILE]					= new Array();
 			_keys[KEY_MISSILE_HOMING]	= new Array();
@@ -104,7 +117,7 @@ package core.game
 			stage.addEventListener(KeyboardEvent.KEY_UP,	upKey);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
-			_fireMachineGunTimer	.addEventListener(TimerEvent.TIMER, enableFireMachineGun);
+			_fireGunTimer				.addEventListener(TimerEvent.TIMER, enableFireGun);
 			_fireLazerTimer				.addEventListener(TimerEvent.TIMER, enableFireLazer);
 			_fireMissileTimer			.addEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer	.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
@@ -118,7 +131,7 @@ package core.game
 		{
 			if (_isPaused) return;
 			
-			//var dt:Number = GameState.game.dt;
+			var dt:Number = GameState.game.dt;
 			
 			if (_shield) _shield.rotation += 10;
 		}
@@ -177,7 +190,7 @@ package core.game
 					
 					switch (keyCode)
 					{
-						case KEY_MACHINE_GUN		: fireMachineGun();	break;
+						case KEY_GUN						: fireGun();				break;
 						case KEY_LAZER					: fireLazer();				break;
 						case KEY_MISSILE					: fireMissile();			break;
 						case KEY_MISSILE_HOMING	: fireMissileHoming();	break;
@@ -198,7 +211,7 @@ package core.game
 			
 			switch (String.fromCharCode(e.charCode))
 			{
-				case KEY_MACHINE_GUN		: _keys[KEY_MACHINE_GUN]		['is_down'] = false; break;
+				case KEY_GUN						: _keys[KEY_GUN]						['is_down'] = false; break;
 				case KEY_LAZER					: _keys[KEY_LAZER]					['is_down'] = false; break;
 				case KEY_MISSILE					: _keys[KEY_MISSILE]				['is_down'] = false; break;
 				case KEY_MISSILE_HOMING	: _keys[KEY_MISSILE_HOMING]	['is_down'] = false; break;
@@ -216,13 +229,13 @@ package core.game
 			TweenLite.to(this, 1, { x:GameState.main.mouseX, y:GameState.main.mouseY });
 		}
 		
-		private function enableFireMachineGun(e:TimerEvent):void
+		private function enableFireGun(e:TimerEvent):void
 		{
-			_fireMachineGunTimer.stop();
-			_fireMachineGunTimer.reset();
-			_keys[KEY_MACHINE_GUN]['is_timer'] = false;
+			_fireGunTimer.stop();
+			_fireGunTimer.reset();
+			_keys[KEY_GUN]['is_timer'] = false;
 			
-			if (_keys[KEY_MACHINE_GUN]['is_down']) fireMachineGun();
+			if (_keys[KEY_GUN]['is_down']) fireGun();
 		}
 		
 		private function enableFireLazer(e:TimerEvent):void
@@ -231,7 +244,7 @@ package core.game
 			_fireLazerTimer.reset();
 			_keys[KEY_LAZER]['is_timer'] = false;
 			
-			if (_keys[KEY_LAZER]['is_down']) fireMachineGun();
+			if (_keys[KEY_LAZER]['is_down']) fireGun();
 		}
 		
 		private function enableFireMissile(e:TimerEvent):void
@@ -283,12 +296,35 @@ package core.game
 		 * Fire actions
 		 */
 		
-		private function fireMachineGun():void
+		private function fireGun():void
 		{
-			GameState.game.weaponsContainer.addChild(new HeroMachineGun());
+			if (!_is_gun_double && !_is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
+			}
+			else if (_is_gun_double && _is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_RIGHT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_RIGHT));
+			}
+			else if (_is_gun_double)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
+			}
+			else if (_is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_DEFAULT));
+			}
 			
-			_keys[KEY_MACHINE_GUN]['is_timer'] = true;
-			_fireMachineGunTimer.start();
+			_keys[KEY_GUN]['is_timer'] = true;
+			_fireGunTimer.start();
 		}
 		
 		private function fireLazer():void
@@ -321,6 +357,8 @@ package core.game
 		
 		private function fireIEM():void
 		{
+			if (!_is_iem) return;
+			
 			GameState.game.powersContainer.addChild(new IEM());
 			
 			_keys[KEY_IEM]['is_timer'] = true;
@@ -329,6 +367,8 @@ package core.game
 		
 		private function fireBombardment():void
 		{
+			if (!_is_bombardment) return;
+			
 			GameState.game.powersContainer.addChild(new Bombardment());
 			
 			_keys[KEY_BOMBARDMENT]['is_timer'] = true;
@@ -337,6 +377,8 @@ package core.game
 		
 		private function fireReinforcement():void
 		{
+			if (!_is_reinforcement) return;
+			
 			GameState.game.powersContainer.addChild(new Reinforcement());
 			
 			_keys[KEY_REINFORCEMENT]['is_timer'] = true;
@@ -372,7 +414,7 @@ package core.game
 			stage.removeEventListener(KeyboardEvent.KEY_UP,			upKey);
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
-			_fireMachineGunTimer		.removeEventListener(TimerEvent.TIMER, enableFireMachineGun);
+			_fireGunTimer					.removeEventListener(TimerEvent.TIMER, enableFireGun);
 			_fireLazerTimer					.removeEventListener(TimerEvent.TIMER, enableFireLazer);
 			_fireMissileTimer				.removeEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);

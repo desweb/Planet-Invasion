@@ -65,10 +65,10 @@ package core
 			_improvements[Common.IMPROVEMENT_MISSILE_DOUBLE]					=
 			_improvements[Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE]	=
 			_improvements[Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER]	=
-			_improvements[Common.IMPROVEMENT_TRI_FORCE]							=
-			_improvements[Common.IMPROVEMENT_IEM]										=
-			_improvements[Common.IMPROVEMENT_BOMB]									=
-			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;
+			_improvements[Common.IMPROVEMENT_TRI_FORCE]							= 0;
+			_improvements[Common.IMPROVEMENT_IEM]										=1;
+			_improvements[Common.IMPROVEMENT_BOMB]									= 0;
+			_improvements[Common.IMPROVEMENT_REINFORCE]							= 1;
 			
 			_achievements = new Array();
 			createAchievement(Common.ACHIEVEMENT_METAL);

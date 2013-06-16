@@ -13,7 +13,7 @@ package core.game.weapon.hero
 	 * ...
 	 * @author desweb
 	 */
-	public class IEM extends Sprite
+	public class IEM extends IemFlash
 	{
 		
 		public function IEM()
@@ -23,10 +23,8 @@ package core.game.weapon.hero
 			x = -25;
 			y = GameState.stageHeight / 2;
 			
-			graphics.lineStyle(1, 0xffffff);
-			graphics.beginFill(0x00ffff);
-			graphics.drawCircle(0, 0, 10);
-			graphics.endFill();
+			scaleX =
+			scaleY = .1;
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -36,12 +34,12 @@ package core.game.weapon.hero
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			TweenLite.to(this, 1, { x:GameState.stageWidth/2, onComplete:explosion });
+			TweenLite.to(this, 1, { x:GameState.stageWidth/2, rotation:-360, onComplete:explosion });
 		}
 		
 		private function explosion():void
 		{
-			TweenLite.to(this, 1, { width:GameState.stageWidth, height:GameState.stageWidth, onComplete:stopEnemies });
+			TweenLite.to(this, 1, { scaleX:1, scaleY:1, onComplete:stopEnemies });
 		}
 		
 		private function stopEnemies():void

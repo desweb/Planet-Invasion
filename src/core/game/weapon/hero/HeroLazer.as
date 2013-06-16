@@ -15,10 +15,14 @@ package core.game.weapon.hero
 		{
 			if (Common.IS_DEBUG) trace('create HeroLazer');
 			
-			owner = GameState.game.hero;
+			_owner = GameState.game.hero;
 			
 			super();
 		}
+		
+		/**
+		 * Overrides
+		 */
 		
 		override public function destroy():void 
 		{

@@ -1,10 +1,14 @@
 package core.game.weapon 
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
 	
+	import core.Common;
 	import core.GameState;
 	import core.game.Hero;
 	import core.game.enemy.Enemy;
@@ -15,7 +19,8 @@ package core.game.weapon
 	 */
 	public class Weapon extends Sprite
 	{
-		private var _isKilled:Boolean = false;
+		private var _is_hit		:Boolean = false;
+		private var _isKilled	:Boolean = false;
 		
 		public var dt:Number = 0;
 		
@@ -23,26 +28,102 @@ package core.game.weapon
 		
 		public var moveSpeed:Number = 2;
 		
-		public var tween:TweenLite;
+		protected var _tween:TweenLite;
 		
-		public var owner:Sprite;
+		protected var _owner:Sprite;
+		protected var _owner_type:uint;
+		
+		protected var _fire_type:uint;
+		
+		protected var _graphic:MovieClip;
 		
 		public function Weapon()
 		{
 			// Default position
-			if (owner)
+			switch (_fire_type)
 			{
-				if			(owner is Hero)		x = owner.x + owner.width / 2;
-				else if	(owner is Enemy)	x = owner.x - 25;
-				
-				y = owner.y;
+				case Common.FIRE_TOP_DEFAULT:
+					y = _owner.y - _owner.height * .25;
+					break;
+				case Common.FIRE_TOP_LEFT:
+					y = _owner.y - _owner.height * .3;
+					break;
+				case Common.FIRE_TOP_RIGHT:
+					y = _owner.y - _owner.height * .2;
+					break;
+				case Common.FIRE_MIDDLE_DEFAULT:
+					y = _owner.y;
+					break;
+				case Common.FIRE_MIDDLE_LEFT:
+					y = _owner.y - _owner.height * .05;
+					break;
+				case Common.FIRE_MIDDLE_RIGHT:
+					y = _owner.y + _owner.height * .05;
+					break;
+				case Common.FIRE_BOTTOM_DEFAULT:
+					y = _owner.y + _owner.height * .25;
+					break;
+				case Common.FIRE_BOTTOM_LEFT:
+					y = _owner.y + _owner.height * .2;
+					break;
+				case Common.FIRE_BOTTOM_RIGHT:
+					y = _owner.y + _owner.height * .3;
+					break;
 			}
+			
+			if			(isHero())		constructorHero();
+			else if	(isEnemy())	constructorEnemy();
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
+		private function constructorHero():void
+		{
+			switch (_fire_type)
+			{
+				case Common.FIRE_TOP_DEFAULT:
+					x = _owner.x + _owner.width * .25;
+					rotation = -45;
+					break;
+				case Common.FIRE_TOP_LEFT:
+					x = _owner.x + _owner.width * .2;
+					rotation = -45;
+					break;
+				case Common.FIRE_TOP_RIGHT:
+					x = _owner.x + _owner.width * .3;
+					rotation = -45;
+					break;
+				case Common.FIRE_MIDDLE_DEFAULT:
+					x = _owner.x + _owner.width * .5;
+					break;
+				case Common.FIRE_MIDDLE_LEFT:
+					x = _owner.x + _owner.width * .5;
+					break;
+				case Common.FIRE_MIDDLE_RIGHT:
+					x = _owner.x + _owner.width * .5;
+					break;
+				case Common.FIRE_BOTTOM_DEFAULT:
+					y = _owner.y + _owner.height * .25;
+					rotation = 45;
+					break;
+				case Common.FIRE_BOTTOM_LEFT:
+					x = _owner.x + _owner.width * .3;
+					rotation = 45;
+					break;
+				case Common.FIRE_BOTTOM_RIGHT:
+					x = _owner.x + _owner.width * .2;
+					rotation = 45;
+					break;
+			}
+		}
+		
+		private function constructorEnemy():void
+		{
+			
+		}
+		
 		// Init
-		public function initialize(e:Event):void
+		protected function initialize(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
 			
@@ -50,15 +131,12 @@ package core.game.weapon
 		}
 		
 		// Update
-		public function update(e:Event):void
+		protected function update(e:Event):void
 		{
 			dt = GameState.game.dt;
 			
-			if (owner)
-			{
-				if			(owner is Hero)		heroUpdate();
-				else if	(owner is Enemy)	enemyUpdate();
-			}
+			if			(isHero())		heroUpdate();
+			else if	(isEnemy())	enemyUpdate();
 		}
 		
 		private function heroUpdate():void
@@ -67,6 +145,8 @@ package core.game.weapon
 			for each(var e_hit:Enemy in GameState.game.enemies)
 			{
 				if (e_hit.isKilled || !hitTestObject(e_hit)) continue;
+				
+				_is_hit = true;
 				
 				e_hit.destroy();
 				destroy();
@@ -78,6 +158,8 @@ package core.game.weapon
 			// Hero hit
 			if (hitTestObject(GameState.game.hero))
 			{
+				_is_hit = true;
+				
 				GameState.game.hero.destroy();
 				destroy();
 			}
@@ -92,13 +174,51 @@ package core.game.weapon
 			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
-			if (tween)
+			if (_tween)
 			{
-				tween.pause();
-				tween.kill();
+				_tween.pause();
+				_tween.kill();
 			}
 			
-			GameState.game.weaponsContainer.removeChild(this);
+			//GameState.game.weaponsContainer.removeChild(this);
+			
+			if (!_is_hit)
+			{
+				removeThis();
+				return;
+			}
+			
+			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
+			
+			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
+			
+			remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
+			{
+				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
+				
+				removeThis();
+			});
+			
+			remove_timer.start();
+		}
+		
+		private function removeThis():void
+		{
+			parent.removeChild(this);
+		}
+		
+		/**
+		 * Check
+		 */
+		
+		public function isHero():Boolean
+		{
+			return _owner_type == Common.OWNER_HERO;
+		}
+		
+		public function isEnemy():Boolean
+		{
+			return _owner_type == Common.OWNER_ENEMY;
 		}
 	}
 }

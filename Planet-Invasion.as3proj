@@ -56,6 +56,7 @@
     <element path="assets\hero.swc" />
     <element path="assets\scene.swc" />
     <element path="assets\item.swc" />
+    <element path="assets\weapon.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

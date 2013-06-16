@@ -9,6 +9,7 @@ package core.game.weapon.hero
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
+	import core.utils.Tools;
 	
 	/**
 	 * ...
@@ -21,13 +22,19 @@ package core.game.weapon.hero
 		{
 			if (Common.IS_DEBUG) trace('create Reinforcement');
 			
-			x = -210;
-			y = 0;
+			for (var i:int = 0; i < 4; i++)
+			{
+				for (var i2:int = 0; i2 < 5; i2++)
+				{
+					var ship:ReinforcementFlash = new ReinforcementFlash();
+					ship.x = Tools.random(0, 100);
+					ship.y = Tools.random(GameState.stageHeight * .25 * i, GameState.stageHeight * .25 * (i + 1));
+					addChild(ship);
+				}
+			}
 			
-			graphics.lineStyle(2, 0x00ffff);
-			graphics.beginFill(0xededed);
-			graphics.drawRect(0, 0, 200, GameState.stageHeight);
-			graphics.endFill();
+			x = -width;
+			y = 0;
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -45,9 +52,9 @@ package core.game.weapon.hero
 		// Update
 		public function update(e:Event):void
 		{
-			var mg:ReinforcementMachineGun = new ReinforcementMachineGun();
-			mg.x = this.x;
-			GameState.game.weaponsContainer.addChild(mg);
+			var gun:ReinforcementGun = new ReinforcementGun();
+			gun.x = this.x;
+			GameState.game.weaponsContainer.addChild(gun);
 			
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)

@@ -15,11 +15,15 @@ package core.game.weapon.hero
 		{
 			if (Common.IS_DEBUG) trace('create HeroMissile');
 			
-			owner	= GameState.game.hero;
+			_owner	= GameState.game.hero;
 			targetX	= GameState.stageWidth + 100;
 			
 			super();
 		}
+		
+		/**
+		 * Overrides
+		 */
 		
 		override public function destroy():void 
 		{

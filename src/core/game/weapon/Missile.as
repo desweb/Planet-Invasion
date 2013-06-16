@@ -30,11 +30,11 @@ package core.game.weapon
 			graphics.endFill();
 		}
 		
-		override public function initialize(e:Event):void
+		override protected function initialize(e:Event):void
 		{
 			super.initialize(e);
 			
-			tween = new TweenLite(this, moveSpeed-moveSpeed*(x/targetX), { x:targetX, ease:Linear.easeNone, onComplete:destroy });
+			_tween = new TweenLite(this, moveSpeed-moveSpeed*(x/targetX), { x:targetX, ease:Linear.easeNone, onComplete:destroy });
 		}
 	}
 }

@@ -16,12 +16,12 @@ package core.game.weapon
 			graphics.endFill();
 		}
 		
-		override public function update(e:Event):void 
+		override protected function update(e:Event):void 
 		{
 			super.update(e);
 			
-			x = owner.x + owner.width;
-			y = owner.y + (owner.height / 2);
+			x = _owner.x + _owner.width;
+			y = _owner.y + (_owner.height / 2);
 		}
 	}
 }
