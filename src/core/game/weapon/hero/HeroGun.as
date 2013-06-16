@@ -1,5 +1,7 @@
 package core.game.weapon.hero 
 {
+	import flash.events.Event;
+	
 	import core.Common;
 	import core.GameState;
 	import core.game.weapon.Gun;
@@ -18,22 +20,29 @@ package core.game.weapon.hero
 			_owner			= GameState.game.hero;
 			_owner_type	= Common.OWNER_HERO;
 			
-			_target_x = _owner.x + GameState.stageWidth;
-			
+			super();
+		}
+		
+		/**
+		 * Overrides
+		 */
+		
+		override protected function initialize(e:Event):void
+		{
 			switch (_fire_type)
 			{
-				case Common.FIRE_TOP_DEFAULT			: _target_y = _owner.y - GameState.stageHeight; break;
-				case Common.FIRE_TOP_LEFT				: _target_y = _owner.y - GameState.stageHeight; break;
-				case Common.FIRE_TOP_RIGHT				: _target_y = _owner.y - GameState.stageHeight; break;
-				case Common.FIRE_MIDDLE_DEFAULT	: _target_y = _owner.y; break;
-				case Common.FIRE_MIDDLE_LEFT			: _target_y = _owner.y; break;
-				case Common.FIRE_MIDDLE_RIGHT		: _target_y = _owner.y; break;
-				case Common.FIRE_BOTTOM_DEFAULT	: _target_y = _owner.y + GameState.stageHeight; break;
-				case Common.FIRE_BOTTOM_LEFT			: _target_y = _owner.y + GameState.stageHeight; break;
-				case Common.FIRE_BOTTOM_RIGHT		: _target_y = _owner.y + GameState.stageHeight; break;
+				case Common.FIRE_TOP_DEFAULT			: _target_y = y - GameState.stageHeight; break;
+				case Common.FIRE_TOP_LEFT				: _target_y = y - GameState.stageHeight; break;
+				case Common.FIRE_TOP_RIGHT				: _target_y = y - GameState.stageHeight; break;
+				case Common.FIRE_MIDDLE_DEFAULT	: _target_y = y; break;
+				case Common.FIRE_MIDDLE_LEFT			: _target_y = y; break;
+				case Common.FIRE_MIDDLE_RIGHT		: _target_y = y; break;
+				case Common.FIRE_BOTTOM_DEFAULT	: _target_y = y + GameState.stageHeight; break;
+				case Common.FIRE_BOTTOM_LEFT			: _target_y = y + GameState.stageHeight; break;
+				case Common.FIRE_BOTTOM_RIGHT		: _target_y = y + GameState.stageHeight; break;
 			}
 			
-			super();
+			super.initialize(e);
 		}
 		
 		override public function destroy():void 

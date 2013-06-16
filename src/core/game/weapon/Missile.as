@@ -42,6 +42,8 @@ package core.game.weapon
 		{
 			super.initialize(e);
 			
+			_target_x = x + GameState.stageWidth;
+			
 			_tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}
 		
