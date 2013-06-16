@@ -13,7 +13,7 @@ package core.game
 	
 	import core.Common;
 	import core.GameState;
-	import core.game.weapon.hero.HeroLazer;
+	import core.game.weapon.hero.HeroLaser;
 	import core.game.weapon.hero.HeroGun;
 	import core.game.weapon.hero.HeroMissile;
 	import core.game.weapon.hero.HeroMissileHoming;
@@ -25,8 +25,6 @@ package core.game
 	 */
 	public class Hero extends HeroFlash
 	{
-		private static const PROPELLANT_TWEEN_TIMER:Number = .5;
-		
 		private var _is_available_move:Boolean = false;
 		
 		private var _keys:Array = new Array();
@@ -75,7 +73,7 @@ package core.game
 			y = GameState.stageHeight / 2;
 			
 			_propellant = new PropellantFlash();
-			_propellant.x = -width / 2 + 10;
+			_propellant.x = -width / 2;
 			addChild(_propellant);
 			
 			propellantTween();
@@ -168,7 +166,7 @@ package core.game
 				_propellant_tween = null;
 			}
 			
-			_propellant_tween = new TweenLite(_propellant, PROPELLANT_TWEEN_TIMER, { scaleX : is_mini? .5: 1, scaleY : is_mini? .5: 1, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
+			_propellant_tween = new TweenLite(_propellant, Common.TIMER_TWEEN_PROPELLANT, { scaleX : is_mini? .5: 1, scaleY : is_mini? .5: 1, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
 		}
 		
 		/**
@@ -298,11 +296,7 @@ package core.game
 		
 		private function fireGun():void
 		{
-			if (!_is_gun_double && !_is_tri_force)
-			{
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
-			}
-			else if (_is_gun_double && _is_tri_force)
+			if (_is_gun_double && _is_tri_force)
 			{
 				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_LEFT));
 				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_RIGHT));
@@ -322,6 +316,7 @@ package core.game
 				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_DEFAULT));
 				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_DEFAULT));
 			}
+			else GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_GUN]['is_timer'] = true;
 			_fireGunTimer.start();
@@ -329,7 +324,13 @@ package core.game
 		
 		private function fireLazer():void
 		{
-			GameState.game.weaponsContainer.addChild(new HeroLazer());
+			if (_is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_BOTTOM_DEFAULT));
+			}
+			else GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_LAZER]['is_timer'] = true;
 			_fireLazerTimer.start();

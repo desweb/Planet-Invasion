@@ -2,20 +2,22 @@ package core.game.weapon.hero
 {
 	import core.Common;
 	import core.GameState;
-	import core.game.weapon.Lazer;
+	import core.game.weapon.Laser;
 	
 	/**
 	 * Basic class of weapons of the hero
 	 * @author desweb
 	 */
-	public class HeroLazer extends Lazer
+	public class HeroLaser extends Laser
 	{
 		
-		public function HeroLazer()
+		public function HeroLaser(type:uint)
 		{
 			if (Common.IS_DEBUG) trace('create HeroLazer');
 			
-			_owner = GameState.game.hero;
+			_fire_type		= type;
+			_owner			= GameState.game.hero;
+			_owner_type	= Common.OWNER_HERO;
 			
 			super();
 		}

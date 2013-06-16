@@ -17,6 +17,7 @@ package core.game.weapon.hero
 	 */
 	public class Reinforcement extends Sprite
 	{
+		private var _ships:Vector.<ReinforcementShip> = new Vector.<ReinforcementShip>();
 		
 		public function Reinforcement()
 		{
@@ -26,10 +27,12 @@ package core.game.weapon.hero
 			{
 				for (var i2:int = 0; i2 < 5; i2++)
 				{
-					var ship:ReinforcementFlash = new ReinforcementFlash();
+					var ship:ReinforcementShip = new ReinforcementShip();
 					ship.x = Tools.random(0, 100);
 					ship.y = Tools.random(GameState.stageHeight * .25 * i, GameState.stageHeight * .25 * (i + 1));
 					addChild(ship);
+					
+					_ships.push(ship);
 				}
 			}
 			
@@ -71,6 +74,9 @@ package core.game.weapon.hero
 			if (Common.IS_DEBUG) trace('destroy Reinforcement');
 			
 			removeEventListener(Event.ENTER_FRAME, update);
+			
+			for each (var ship:ReinforcementShip in _ships)
+				ship.destroy();
 			
 			GameState.game.powersContainer.removeChild(this);
 		}

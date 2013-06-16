@@ -21,6 +21,7 @@ package core.game.weapon
 	{
 		private var _is_hit		:Boolean = false;
 		private var _isKilled	:Boolean = false;
+		protected var _is_hit_destroy:Boolean = true;
 		
 		public var dt:Number = 0;
 		
@@ -149,7 +150,7 @@ package core.game.weapon
 				_is_hit = true;
 				
 				e_hit.destroy();
-				destroy();
+				if (_is_hit_destroy) destroy();
 			}
 		}
 		
@@ -161,7 +162,7 @@ package core.game.weapon
 				_is_hit = true;
 				
 				GameState.game.hero.destroy();
-				destroy();
+				if (_is_hit_destroy) destroy();
 			}
 		}
 		
@@ -180,9 +181,7 @@ package core.game.weapon
 				_tween.kill();
 			}
 			
-			//GameState.game.weaponsContainer.removeChild(this);
-			
-			if (!_is_hit)
+			if (!_is_hit || !_is_hit_destroy)
 			{
 				removeThis();
 				return;

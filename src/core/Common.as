@@ -56,6 +56,7 @@ package core
 		
 		// Timer
 		public static const TIMER_ANIMATION_DEAD:uint = 2000;
+		public static const TIMER_TWEEN_PROPELLANT:Number = .5;
 		
 		// Game security key
 		public static const GAME_ADVENTURE_KEY	:String = '172ae58a586c65c8c4487062c695fe7f';
