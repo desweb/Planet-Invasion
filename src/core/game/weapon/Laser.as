@@ -43,7 +43,9 @@ package core.game.weapon
 		
 		override public function destroy():void
 		{
-			_life_timer.removeEventListener(TimerEvent.TIMER_COMPLETE, completeLifeTimer);
+			_life_timer.stop();
+			_life_timer.removeEventListener(TimerEvent.TIMER, completeLifeTimer);
+			_life_timer = null;
 			
 			super.destroy();
 		}

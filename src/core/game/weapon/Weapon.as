@@ -104,7 +104,7 @@ package core.game.weapon
 					x = _owner.x + _owner.width * .5;
 					break;
 				case Common.FIRE_BOTTOM_DEFAULT:
-					y = _owner.y + _owner.height * .25;
+					x = _owner.x + _owner.width * .25;
 					rotation = 45;
 					break;
 				case Common.FIRE_BOTTOM_LEFT:

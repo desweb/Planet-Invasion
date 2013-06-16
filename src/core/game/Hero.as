@@ -53,21 +53,23 @@ package core.game
 		private var _isPaused:Boolean = false;
 		
 		// Improvements
-		private var _is_gun_double		:Boolean;
-		private var _is_tri_force			:Boolean;
-		private var _is_iem				:Boolean;
-		private var _is_bombardment	:Boolean;
-		private var _is_reinforcement	:Boolean;
+		private var _is_gun_double			:Boolean;
+		private var _is_missile_double	:Boolean;
+		private var _is_tri_force				:Boolean;
+		private var _is_iem					:Boolean;
+		private var _is_bombardment		:Boolean;
+		private var _is_reinforcement		:Boolean;
 		
 		public function Hero() 
 		{
 			if (Common.IS_DEBUG) trace('create Hero');
 			
-			_is_gun_double		= GameState.user.improvements[Common.IMPROVEMENT_GUN_DOUBLE]	? true: false;
-			_is_tri_force			= GameState.user.improvements[Common.IMPROVEMENT_TRI_FORCE]	? true: false;
-			_is_iem					= GameState.user.improvements[Common.IMPROVEMENT_IEM]				? true: false;
-			_is_bombardment	= GameState.user.improvements[Common.IMPROVEMENT_BOMB]			? true: false;
-			_is_reinforcement	= GameState.user.improvements[Common.IMPROVEMENT_REINFORCE]	? true: false;
+			_is_gun_double		= GameState.user.improvements[Common.IMPROVEMENT_GUN_DOUBLE]			? true: false;
+			_is_missile_double	= GameState.user.improvements[Common.IMPROVEMENT_MISSILE_DOUBLE]	? true: false;
+			_is_tri_force			= GameState.user.improvements[Common.IMPROVEMENT_TRI_FORCE]			? true: false;
+			_is_iem					= GameState.user.improvements[Common.IMPROVEMENT_IEM]						? true: false;
+			_is_bombardment	= GameState.user.improvements[Common.IMPROVEMENT_BOMB]					? true: false;
+			_is_reinforcement	= GameState.user.improvements[Common.IMPROVEMENT_REINFORCE]			? true: false;
 			
 			x = -width;
 			y = GameState.stageHeight / 2;
@@ -338,7 +340,27 @@ package core.game
 		
 		private function fireMissile():void
 		{
-			GameState.game.weaponsContainer.addChild(new HeroMissile());
+			if (_is_missile_double && _is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_TOP_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_TOP_RIGHT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_BOTTOM_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_BOTTOM_RIGHT));
+			}
+			else if (_is_missile_double)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
+			}
+			else if (_is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_BOTTOM_DEFAULT));
+			}
+			else GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_MISSILE]['is_timer'] = true;
 			_fireMissileTimer.start();
@@ -346,7 +368,13 @@ package core.game
 		
 		private function fireMissileHoming():void
 		{
-			GameState.game.weaponsContainer.addChild(new HeroMissileHoming());
+			if (_is_tri_force)
+			{
+				GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT));
+			}
+			else GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;
 			_fireMissileHomingTimer.start();

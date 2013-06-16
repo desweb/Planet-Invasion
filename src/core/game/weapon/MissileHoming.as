@@ -6,6 +6,7 @@ package core.game.weapon
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
+	import core.Common;
 	import core.GameState;
 	
 	/**
@@ -14,6 +15,9 @@ package core.game.weapon
 	 */
 	public class MissileHoming extends Weapon
 	{
+		protected var _target_x:int;
+		protected var _target_y:int;
+		
 		public var isTraget:Boolean = false;
 		public var target:Sprite;
 		
@@ -22,20 +26,26 @@ package core.game.weapon
 		
 		private var _ratioTouchTarget:Number = 0.1;
 		
+		private var _propellant:PropellantFlash;
+		private var _propellant_tween:TweenLite;
+		
 		public function MissileHoming()
 		{
-			var trianglePoints:Vector.<Number> = new Vector.<Number>(6, true);
-			trianglePoints[0] = 0;
-			trianglePoints[1] = 0;
-			trianglePoints[2] = 15;
-			trianglePoints[3] = 5;
-			trianglePoints[4] = 0;
-			trianglePoints[5] = 10;
+			_graphic = new MissileFlash();
+			addChild(_graphic);
 			
-			graphics.beginFill(0xededed);
-			graphics.drawTriangles(trianglePoints);
-			graphics.endFill();
+			_propellant = new PropellantFlash();
+			_propellant.x = -width / 2;
+			_propellant.scaleX =
+			_propellant.scaleY = .5;
+			addChild(_propellant);
+			
+			propellantTween();
 		}
+		
+		/**
+		 * Overrides
+		 */
 		
 		override protected function initialize(e:Event):void
 		{
@@ -49,7 +59,7 @@ package core.game.weapon
 				
 				_tween = new TweenLite(this, 0.2, { x:_tweenX, y:_tweenY, onComplete:reinitTween } );
 			}
-			else _tween = new TweenLite(this, moveSpeed-moveSpeed*(x/GameState.stageWidth), { x:GameState.stageWidth+100, onComplete:destroy } );
+			else _tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}
 		
 		override protected function update(e:Event):void
@@ -58,6 +68,38 @@ package core.game.weapon
 			
 			// Target killed
 			if (isTraget && !target) destroy();
+		}
+		
+		override public function destroy():void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			if (_propellant)
+			{
+				removeChild(_propellant);
+				_propellant = null;
+			}
+			
+			super.destroy();
+		}
+		
+		/**
+		 * Tweens
+		 */
+		
+		private function propellantTween(is_mini:Boolean = true):void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			_propellant_tween = new TweenLite(_propellant, Common.TIMER_TWEEN_PROPELLANT, { scaleX : is_mini? .25: .5, scaleY : is_mini? .25: .5, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
 		}
 		
 		private function tweenPointTarget():void
@@ -82,6 +124,10 @@ package core.game.weapon
 			_tween = new TweenLite(this, duration, { x:_tweenX, y:_tweenY, ease:Linear.easeNone, onComplete:reinitTween } );
 		}
 		
+		/**
+		 * Functions
+		 */
+		
 		private function autoRotation():void
 		{
 			// Haut/Bas
@@ -104,8 +150,6 @@ package core.game.weapon
 				
 				if (y < target.y)	rotation = 180 * Math.cos(beforeAdjacent/beforeDistMT) / Math.PI;
 				else				rotation = -180 * Math.cos(beforeAdjacent/beforeDistMT) / Math.PI;
-				
-				trace(rotation);
 			}
 			// Arrière-Haut/Arrière-Bas
 			else if	(x > target.x+target.width)

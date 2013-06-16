@@ -13,11 +13,22 @@ package core.game.weapon.hero
 	 */
 	public class HeroMissileHoming extends MissileHoming
 	{
-		public function HeroMissileHoming()
+		public function HeroMissileHoming(type:uint)
 		{
 			if (Common.IS_DEBUG) trace('create HeroMissileHoming');
 			
-			_owner = GameState.game.hero;
+			_fire_type		= type;
+			_owner			= GameState.game.hero;
+			_owner_type	= Common.OWNER_HERO;
+			
+			_target_x = _owner.x + GameState.stageWidth;
+			
+			switch (_fire_type)
+			{
+				case Common.FIRE_TOP_DEFAULT			: _target_y = _owner.y - GameState.stageHeight; break;
+				case Common.FIRE_MIDDLE_DEFAULT	: _target_y = _owner.y; break;
+				case Common.FIRE_BOTTOM_DEFAULT	: _target_y = _owner.y + GameState.stageHeight; break;
+			}
 			
 			super();
 		}

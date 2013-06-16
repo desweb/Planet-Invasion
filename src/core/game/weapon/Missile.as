@@ -5,6 +5,7 @@ package core.game.weapon
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
+	import core.Common;
 	import core.GameState;
 	
 	/**
@@ -13,28 +14,67 @@ package core.game.weapon
 	 */
 	public class Missile extends Weapon
 	{
-		public var targetX:int;
+		protected var _target_x:int;
+		protected var _target_y:int;
+		
+		private var _propellant:PropellantFlash;
+		private var _propellant_tween:TweenLite;
 		
 		public function Missile()
 		{
-			var trianglePoints:Vector.<Number> = new Vector.<Number>(6, true);
-			trianglePoints[0] = 0;
-			trianglePoints[1] = 0;
-			trianglePoints[2] = 15;
-			trianglePoints[3] = 5;
-			trianglePoints[4] = 0;
-			trianglePoints[5] = 10;
+			_graphic = new MissileFlash();
+			addChild(_graphic);
 			
-			graphics.beginFill(0xededed);
-			graphics.drawTriangles(trianglePoints);
-			graphics.endFill();
+			_propellant = new PropellantFlash();
+			_propellant.x = -width / 2;
+			_propellant.scaleX =
+			_propellant.scaleY = .5;
+			addChild(_propellant);
+			
+			propellantTween();
 		}
+		
+		/**
+		 * Overrides
+		 */
 		
 		override protected function initialize(e:Event):void
 		{
 			super.initialize(e);
 			
-			_tween = new TweenLite(this, moveSpeed-moveSpeed*(x/targetX), { x:targetX, ease:Linear.easeNone, onComplete:destroy });
+			_tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
+		}
+		
+		override public function destroy():void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			if (_propellant)
+			{
+				removeChild(_propellant);
+				_propellant = null;
+			}
+			
+			super.destroy();
+		}
+		
+		/**
+		 * Tweens
+		 */
+		
+		private function propellantTween(is_mini:Boolean = true):void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			_propellant_tween = new TweenLite(_propellant, Common.TIMER_TWEEN_PROPELLANT, { scaleX : is_mini? .25: .5, scaleY : is_mini? .25: .5, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
 		}
 	}
 }
