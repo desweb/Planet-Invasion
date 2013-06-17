@@ -52,11 +52,11 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\greensock.swc" />
-    <element path="assets\ennemi.swc" />
     <element path="assets\hero.swc" />
     <element path="assets\scene.swc" />
     <element path="assets\item.swc" />
     <element path="assets\weapon.swc" />
+    <element path="assets\enemy.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

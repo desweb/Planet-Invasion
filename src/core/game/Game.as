@@ -1,7 +1,5 @@
 package core.game 
 {
-	import core.game.item.AttackItem;
-	import core.game.item.Item;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.ui.Mouse;
@@ -9,7 +7,10 @@ package core.game
 	
 	import core.Common;
 	import core.GameState;
+	import core.game.enemy.AsteroidEnemy;
 	import core.game.enemy.Enemy;
+	import core.game.item.AttackItem;
+	import core.game.item.Item;
 	
 	/**
 	 * Container of the game scene
@@ -101,7 +102,7 @@ package core.game
 				
 				for (var i:int = 0; i < 10; i++)
 				{
-					var new_e:Enemy = new Enemy();
+					var new_e:AsteroidEnemy = new AsteroidEnemy();
 					enemiesContainer.addChild(new_e);
 					
 					enemies[enemies.length] = new_e;
