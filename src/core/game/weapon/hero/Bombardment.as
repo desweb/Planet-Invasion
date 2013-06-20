@@ -105,7 +105,7 @@ package core.game.weapon.hero
 			_timerFinish		.removeEventListener(TimerEvent.TIMER, endTimerFinish);
 			_timerEnemiesDetroy	.removeEventListener(TimerEvent.TIMER, endTimerEnemiesDestroy);
 			
-			GameState.game.powersContainer.removeChild(this);
+			GameState.game.powers_container.removeChild(this);
 		}
 	}
 }

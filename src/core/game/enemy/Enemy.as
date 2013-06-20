@@ -19,15 +19,21 @@ package core.game.enemy
 	 */
 	public class Enemy extends Sprite
 	{
-		protected var dt:Number = 0;
+		// Initialize
+		protected	var _life	:int;
+		public		var is_kill	:Boolean = false;
 		
-		public var isKilled:Boolean = false;
+		protected var dt:Number = 0;
 		
 		protected var _graphic:MovieClip;
 		
 		private var _tween:TweenLite;
 		
 		private var _isPaused:Boolean = false;
+		
+		/**
+		 * Constructor
+		 */
 		
 		public function Enemy() 
 		{
@@ -39,7 +45,10 @@ package core.game.enemy
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
-		// Init
+		/**
+		 * Initialize
+		 */
+		
 		protected function initialize(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
@@ -47,15 +56,57 @@ package core.game.enemy
 			addEventListener(Event.ENTER_FRAME, update);
 		}
 		
-		// Update
+		/**
+		 * Update
+		 */
+		
 		protected function update(e:Event):void
 		{
 			dt = GameState.game.dt;
 			
-			if (!hitTestObject(GameState.game.hero)) return;
+			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
 			
 			destroy();
 		}
+		
+		/**
+		 * Destroy
+		 */
+		
+		public function destroy():void
+		{
+			if (is_kill) return;
+			
+			is_kill = true;
+			
+			if (_tween)
+			{
+				_tween.pause();
+				_tween.kill();
+			}
+			
+			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
+			
+			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
+			
+			remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
+			{
+				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
+				
+				removeThis();
+			});
+			
+			remove_timer.start();
+		}
+		
+		private function removeThis():void
+		{
+			GameState.game.destroyElement(this);
+		}
+		
+		/**
+		 * Manage
+		 */
 		
 		public function stop():void
 		{
@@ -81,35 +132,17 @@ package core.game.enemy
 			_tween.resume();
 		}
 		
-		public function destroy():void
-		{
-			if (isKilled) return;
-			
-			isKilled = true;
-			
-			if (_tween)
-			{
-				_tween.pause();
-				_tween.kill();
-			}
-			
-			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
-			
-			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
-			
-			remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
-			{
-				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
-				
-				removeThis();
-			});
-			
-			remove_timer.start();
-		}
+		/**
+		 * Hits
+		 */
 		
-		private function removeThis():void
+		public function hitWeapon(damage:int):void
 		{
-			parent.removeChild(this);
+			if (!_life) return;
+			
+			_life -= damage;
+			
+			if (_life <= 0) destroy();
 		}
 	}
 }

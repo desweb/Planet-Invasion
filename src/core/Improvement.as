@@ -61,6 +61,7 @@ package core
 					name	= 'Shield resistance';
 					type		= 'armor';
 					
+					value[0] = 0;
 					value[1] = 5;
 					value[2] = 10;
 					value[3] = 15;

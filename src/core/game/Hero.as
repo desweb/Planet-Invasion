@@ -1,8 +1,5 @@
 package core.game 
 {
-	import core.game.weapon.hero.Bombardment;
-	import core.game.weapon.hero.IEM;
-	import core.game.weapon.hero.Reinforcement;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -13,10 +10,14 @@ package core.game
 	
 	import core.Common;
 	import core.GameState;
+	import core.Improvement;
+	import core.game.weapon.hero.Bombardment;
 	import core.game.weapon.hero.HeroLaser;
 	import core.game.weapon.hero.HeroGun;
 	import core.game.weapon.hero.HeroMissile;
 	import core.game.weapon.hero.HeroMissileHoming;
+	import core.game.weapon.hero.IEM;
+	import core.game.weapon.hero.Reinforcement;
 	import core.scene.Scene;
 	
 	/**
@@ -25,8 +26,12 @@ package core.game
 	 */
 	public class Hero extends HeroFlash
 	{
-		private var _is_available_move:Boolean = false;
+		// Initialize
+		private	var _life						:int;
+		private	var _is_available_move	:Boolean = false;
+		public	var is_kill						:Boolean = false;
 		
+		// Keys
 		private var _keys:Array = new Array();
 		
 		private static const KEY_GUN						:String = 'a';
@@ -37,11 +42,21 @@ package core.game
 		private static const KEY_BOMBARDMENT		:String = 'd';
 		private static const KEY_REINFORCEMENT	:String = 'f';
 		
-		private var _propellant:PropellantFlash;
-		private var _propellant_tween:TweenLite;
+		// Propellant
+		private var _propellant			:PropellantFlash;
+		private var _propellant_tween	:TweenLite;
 		
-		private var _shield:ShieldFlash;
+		// Shield
+		private var _shield						:ShieldFlash;
+		private var _shield_life				:int;
+		private var _shield_life_init			:int = 0;
+		private var _shield_regen			:int;
+		private var _shield_repop_timer	:Timer;
+		private var _shield_regen_timer	:Timer;
+		private var _shield_tween			:TweenLite;
+		private var _shield_tween_timer	:int = 1;
 		
+		// Timers
 		private var _fireGunTimer					:Timer = new Timer(100);
 		private var _fireLazerTimer					:Timer = new Timer(1000);
 		private var _fireMissileTimer				:Timer = new Timer(1000);
@@ -50,7 +65,10 @@ package core.game
 		private var _fireBombardmentTimer	:Timer = new Timer(5000);
 		private var _fireReinforcementTimer	:Timer = new Timer(5000);
 		
+		
 		private var _isPaused:Boolean = false;
+		
+		// Life
 		
 		// Improvements
 		private var _is_gun_double			:Boolean;
@@ -60,10 +78,38 @@ package core.game
 		private var _is_bombardment		:Boolean;
 		private var _is_reinforcement		:Boolean;
 		
+		/**
+		 * Constructor
+		 */
+		
 		public function Hero() 
 		{
-			if (Common.IS_DEBUG) trace('create Hero');
+			// Life
+			var life_improvement:Improvement = new Improvement(Common.IMPROVEMENT_ARMOR_RESIST);
+			_life = life_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_ARMOR_RESIST]];
 			
+			// Shield
+			var shield_life_improvement:Improvement = new Improvement(Common.IMPROVEMENT_SHIELD_RESIST);
+			_shield_life_init = shield_life_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_SHIELD_RESIST]];
+			
+			if (_shield_life_init)
+			{
+				var shield_regen_improvement:Improvement = new Improvement(Common.IMPROVEMENT_SHIELD_REGEN);
+				_shield_regen = shield_regen_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_SHIELD_REGEN]];
+				
+				var shield_repop_improvement:Improvement = new Improvement(Common.IMPROVEMENT_SHIELD_REPOP);
+				_shield_repop_timer = new Timer(2000);//shield_repop_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_SHIELD_REPOP]] * 1000);
+				
+				_shield_regen_timer = new Timer(1000);
+				_shield_regen_timer.start();
+				
+				displayShield();
+				
+				_shield_regen_timer.addEventListener(TimerEvent.TIMER, completeShieldRegenTimer);
+				_shield_repop_timer.addEventListener(TimerEvent.TIMER, completeShieldRepopTimer);
+			}
+			
+			// Improvements
 			_is_gun_double		= GameState.user.improvements[Common.IMPROVEMENT_GUN_DOUBLE]			? true: false;
 			_is_missile_double	= GameState.user.improvements[Common.IMPROVEMENT_MISSILE_DOUBLE]	? true: false;
 			_is_tri_force			= GameState.user.improvements[Common.IMPROVEMENT_TRI_FORCE]			? true: false;
@@ -71,24 +117,26 @@ package core.game
 			_is_bombardment	= GameState.user.improvements[Common.IMPROVEMENT_BOMB]					? true: false;
 			_is_reinforcement	= GameState.user.improvements[Common.IMPROVEMENT_REINFORCE]			? true: false;
 			
+			// Position
 			x = -width;
 			y = GameState.stageHeight / 2;
 			
+			// Propellant
 			_propellant = new PropellantFlash();
 			_propellant.x = -width / 2;
 			addChild(_propellant);
 			
 			propellantTween();
 			
-			_shield = new ShieldFlash();
-			addChild(_shield);
-			
 			TweenLite.to(this, 1, { x : width / 2 + 50, onComplete:start });
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
-		// Init
+		/**
+		 * Initialize
+		 */
+		
 		private function initialize(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
@@ -107,14 +155,11 @@ package core.game
 				_keys[i]['is_timer']	= false;
 			}
 			
-			/**
-			 * Globals events
-			 */
-			
+			// Events
 			addEventListener(Event.ENTER_FRAME, update);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,	downKey);
-			stage.addEventListener(KeyboardEvent.KEY_UP,	upKey);
+			stage.addEventListener(KeyboardEvent.KEY_UP,		upKey);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
 			_fireGunTimer				.addEventListener(TimerEvent.TIMER, enableFireGun);
@@ -126,7 +171,10 @@ package core.game
 			_fireReinforcementTimer.addEventListener(TimerEvent.TIMER, enableFireReinforcement);
 		}
 		
-		// Update
+		/**
+		 * Update
+		 */
+		
 		private function update(e:Event):void
 		{
 			if (_isPaused) return;
@@ -135,6 +183,71 @@ package core.game
 			
 			if (_shield) _shield.rotation += 10;
 		}
+		
+		/**
+		 * Destroy
+		 */
+		
+		public function destroy():void
+		{
+			if (is_kill) return;
+			
+			is_kill = true;
+			
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			if (_propellant)
+			{
+				removeChild(_propellant);
+				_propellant = null;
+			}
+			
+			if (_shield)
+			{
+				removeChild(_shield);
+				_shield = null;
+			}
+			
+			removeEventListener(Event.ENTER_FRAME, update);
+			
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
+			stage.removeEventListener(KeyboardEvent.KEY_UP,			upKey);
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
+			
+			_fireGunTimer					.removeEventListener(TimerEvent.TIMER, enableFireGun);
+			_fireLazerTimer					.removeEventListener(TimerEvent.TIMER, enableFireLazer);
+			_fireMissileTimer				.removeEventListener(TimerEvent.TIMER, enableFireMissile);
+			_fireMissileHomingTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
+			_fireIEMTimer					.removeEventListener(TimerEvent.TIMER, enableFireIEM);
+			_fireBombardmentTimer		.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
+			_fireReinforcementTimer	.removeEventListener(TimerEvent.TIMER, enableFireReinforcement);
+			
+			gotoAndStop(Common.FRAME_ENTITY_DEAD);
+			
+			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
+			
+			remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
+			{
+				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
+				
+				removeThis();
+			});
+			
+			remove_timer.start();
+		}
+		
+		private function removeThis():void
+		{
+			GameState.game.destroyElement(this);
+		}
+		
+		/**
+		 * Manage
+		 */
 		
 		private function start():void
 		{
@@ -151,9 +264,85 @@ package core.game
 			_isPaused = false;
 		}
 		
+		/**
+		 * Hits
+		 */
+		
 		public function hitItem(type:int):void
 		{
 			
+		}
+		
+		public function hitWeapon(damage:int):void
+		{
+			if (!_life) return;
+			
+			if (_shield_life)
+			{
+				_shield_life -= damage;
+				
+				if (_shield_life <= 0) undisplayShield();
+				
+				return;
+			}
+			
+			_life -= damage;
+			
+			if (_life <= 0) destroy();
+		}
+		
+		/**
+		 * Shield
+		 */
+		
+		private function displayShield():void
+		{
+			_shield_life = _shield_life_init;
+			
+			destroyShield();
+			
+			_shield = new ShieldFlash();
+			_shield.scaleX =
+			_shield.scaleY = 0;
+			addChild(_shield);
+			
+			_shield_tween = new TweenLite(_shield, _shield_tween_timer, { scaleX : 1, scaleY : 1 } );
+			
+			_shield_repop_timer.stop();
+			_shield_regen_timer.start();
+		}
+		
+		private function undisplayShield():void
+		{
+			if (!_shield) return;
+			
+			if (_shield_tween)
+			{
+				_shield_tween.kill();
+				_shield_tween = null;
+			}
+			
+			_shield_life = 0;
+			
+			_shield_tween = new TweenLite(_shield, _shield_tween_timer, { scaleX : 0, scaleY : 0, onComplete : destroyShield });
+		}
+		
+		private function destroyShield():void
+		{
+			if (_shield)
+			{
+				removeChild(_shield);
+				_shield = null;
+			}
+			
+			if (_shield_tween)
+			{
+				_shield_tween.kill();
+				_shield_tween = null;
+			}
+			
+			_shield_regen_timer.stop();
+			_shield_repop_timer.start();
 		}
 		
 		/**
@@ -229,6 +418,30 @@ package core.game
 			TweenLite.to(this, 1, { x:GameState.main.mouseX, y:GameState.main.mouseY });
 		}
 		
+		private function completeShieldRegenTimer(e:TimerEvent):void
+		{
+			_shield_repop_timer.reset();
+			
+			if (!_shield_life || _shield_life == _shield_life_init) return;
+			
+			_shield_life += _shield_regen;
+			
+			if (_shield_life > _shield_life_init) _shield_life = _shield_life_init;
+		}
+		
+		private function completeShieldRepopTimer(e:TimerEvent):void
+		{
+			trace('complete');
+			
+			_shield_repop_timer.stop();
+			
+			displayShield();
+		}
+		
+		/**
+		 * Enable fires
+		 */
+		
 		private function enableFireGun(e:TimerEvent):void
 		{
 			_fireGunTimer.stop();
@@ -300,25 +513,25 @@ package core.game
 		{
 			if (_is_gun_double && _is_tri_force)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_RIGHT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_TOP_LEFT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_TOP_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_BOTTOM_LEFT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_BOTTOM_RIGHT));
 			}
 			else if (_is_gun_double)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
 			}
 			else if (_is_tri_force)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_BOTTOM_DEFAULT));
 			}
-			else GameState.game.weaponsContainer.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_GUN]['is_timer'] = true;
 			_fireGunTimer.start();
@@ -328,11 +541,11 @@ package core.game
 		{
 			if (_is_tri_force)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_BOTTOM_DEFAULT));
 			}
-			else GameState.game.weaponsContainer.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_LAZER]['is_timer'] = true;
 			_fireLazerTimer.start();
@@ -342,25 +555,25 @@ package core.game
 		{
 			if (_is_missile_double && _is_tri_force)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_TOP_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_TOP_RIGHT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_BOTTOM_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_BOTTOM_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_TOP_LEFT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_TOP_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_BOTTOM_LEFT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_BOTTOM_RIGHT));
 			}
 			else if (_is_missile_double)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
 			}
 			else if (_is_tri_force)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_BOTTOM_DEFAULT));
 			}
-			else GameState.game.weaponsContainer.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_MISSILE]['is_timer'] = true;
 			_fireMissileTimer.start();
@@ -370,11 +583,11 @@ package core.game
 		{
 			if (_is_tri_force)
 			{
-				GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_TOP_DEFAULT));
+				GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT));
 			}
-			else GameState.game.weaponsContainer.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
 			
 			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;
 			_fireMissileHomingTimer.start();
@@ -388,7 +601,7 @@ package core.game
 		{
 			if (!_is_iem) return;
 			
-			GameState.game.powersContainer.addChild(new IEM());
+			GameState.game.powers_container.addChild(new IEM());
 			
 			_keys[KEY_IEM]['is_timer'] = true;
 			_fireIEMTimer.start();
@@ -398,7 +611,7 @@ package core.game
 		{
 			if (!_is_bombardment) return;
 			
-			GameState.game.powersContainer.addChild(new Bombardment());
+			GameState.game.powers_container.addChild(new Bombardment());
 			
 			_keys[KEY_BOMBARDMENT]['is_timer'] = true;
 			_fireBombardmentTimer.start();
@@ -408,66 +621,11 @@ package core.game
 		{
 			if (!_is_reinforcement) return;
 			
-			GameState.game.powersContainer.addChild(new Reinforcement());
+			GameState.game.powers_container.addChild(new Reinforcement());
 			
 			_keys[KEY_REINFORCEMENT]['is_timer'] = true;
 			_fireReinforcementTimer.start();
 		}
 		
-		// Destroy
-		public function destroy():void
-		{
-			if (Common.IS_DEBUG) trace('destroy Hero');
-			
-			if (_propellant_tween)
-			{
-				_propellant_tween.kill();
-				_propellant_tween = null;
-			}
-			
-			if (_propellant)
-			{
-				removeChild(_propellant);
-				_propellant = null;
-			}
-			
-			if (_shield)
-			{
-				removeChild(_shield);
-				_shield = null;
-			}
-			
-			removeEventListener(Event.ENTER_FRAME, update);
-			
-			stage.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
-			stage.removeEventListener(KeyboardEvent.KEY_UP,			upKey);
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
-			
-			_fireGunTimer					.removeEventListener(TimerEvent.TIMER, enableFireGun);
-			_fireLazerTimer					.removeEventListener(TimerEvent.TIMER, enableFireLazer);
-			_fireMissileTimer				.removeEventListener(TimerEvent.TIMER, enableFireMissile);
-			_fireMissileHomingTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
-			_fireIEMTimer					.removeEventListener(TimerEvent.TIMER, enableFireIEM);
-			_fireBombardmentTimer		.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
-			_fireReinforcementTimer	.removeEventListener(TimerEvent.TIMER, enableFireReinforcement);
-			
-			gotoAndStop(Common.FRAME_ENTITY_DEAD);
-			
-			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
-			
-			remove_timer.addEventListener(TimerEvent.TIMER, function timerRemove(e:TimerEvent):void
-			{
-				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
-				
-				removeThis();
-			});
-			
-			remove_timer.start();
-		}
-		
-		private function removeThis():void
-		{
-			parent.removeChild(this);
-		}
 	}
 }

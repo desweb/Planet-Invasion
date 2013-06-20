@@ -25,7 +25,7 @@ package core.game.weapon
 		
 		public var dt:Number = 0;
 		
-		public var damage:int = 1;
+		protected var _damage:int = 1;
 		
 		public var moveSpeed:Number = 2;
 		
@@ -120,7 +120,42 @@ package core.game.weapon
 		
 		private function constructorEnemy():void
 		{
-			
+			switch (_fire_type)
+			{
+				case Common.FIRE_TOP_DEFAULT:
+					x = _owner.x - _owner.width * .25;
+					rotation = -45;
+					break;
+				case Common.FIRE_TOP_LEFT:
+					x = _owner.x - _owner.width * .2;
+					rotation = -45;
+					break;
+				case Common.FIRE_TOP_RIGHT:
+					x = _owner.x - _owner.width * .3;
+					rotation = -45;
+					break;
+				case Common.FIRE_MIDDLE_DEFAULT:
+					x = _owner.x - _owner.width * .5;
+					break;
+				case Common.FIRE_MIDDLE_LEFT:
+					x = _owner.x - _owner.width * .5;
+					break;
+				case Common.FIRE_MIDDLE_RIGHT:
+					x = _owner.x - _owner.width * .5;
+					break;
+				case Common.FIRE_BOTTOM_DEFAULT:
+					x = _owner.x - _owner.width * .25;
+					rotation = 45;
+					break;
+				case Common.FIRE_BOTTOM_LEFT:
+					x = _owner.x - _owner.width * .3;
+					rotation = 45;
+					break;
+				case Common.FIRE_BOTTOM_RIGHT:
+					x = _owner.x - _owner.width * .2;
+					rotation = 45;
+					break;
+			}
 		}
 		
 		// Init
@@ -145,11 +180,11 @@ package core.game.weapon
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)
 			{
-				if (e_hit.isKilled || !hitTestObject(e_hit)) continue;
+				if (e_hit.is_kill || !hitTestObject(e_hit)) continue;
 				
 				_is_hit = true;
 				
-				e_hit.destroy();
+				e_hit.hitWeapon(_damage);
 				if (_is_hit_destroy) destroy();
 			}
 		}
@@ -157,13 +192,12 @@ package core.game.weapon
 		private function enemyUpdate():void
 		{
 			// Hero hit
-			if (hitTestObject(GameState.game.hero))
-			{
-				_is_hit = true;
-				
-				GameState.game.hero.destroy();
-				if (_is_hit_destroy) destroy();
-			}
+			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
+			
+			_is_hit = true;
+			
+			GameState.game.hero.hitWeapon(_damage);
+			if (_is_hit_destroy) destroy();
 		}
 		
 		// Destroy

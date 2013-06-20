@@ -42,7 +42,7 @@ package core.game.weapon.hero
 			// Research target enemy
 			for each(var eTarget:Enemy in GameState.game.enemies)
 			{
-				if (eTarget && eTarget.isKilled) continue;
+				if (eTarget && eTarget.is_kill) continue;
 				
 				if (!target || (eTarget.x < target.x && eTarget.x > GameState.game.hero.x + GameState.game.hero.width))
 				{

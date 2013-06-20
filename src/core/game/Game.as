@@ -7,10 +7,7 @@ package core.game
 	
 	import core.Common;
 	import core.GameState;
-	import core.game.enemy.AsteroidEnemy;
 	import core.game.enemy.Enemy;
-	import core.game.item.AttackItem;
-	import core.game.item.Item;
 	
 	/**
 	 * Container of the game scene
@@ -25,13 +22,13 @@ package core.game
 		// Game state
 		protected var _gameState:GameState;
 		
-		// Container
-		public var bgContainer			:Sprite = new Sprite();
-		public var weaponsContainer	:Sprite = new Sprite();
-		public var heroContainer		:Sprite = new Sprite();
-		public var itemsContainer		:Sprite = new Sprite();
-		public var enemiesContainer	:Sprite = new Sprite();
-		public var powersContainer		:Sprite = new Sprite();
+		// Containers
+		public var bg_container			:Sprite = new Sprite();
+		public var hero_container		:Sprite = new Sprite();
+		public var items_container		:Sprite = new Sprite();
+		public var enemies_container	:Sprite = new Sprite();
+		public var weapons_container	:Sprite = new Sprite();
+		public var powers_container	:Sprite = new Sprite();
 		
 		// Enemies
 		public var enemies:Array = new Array();
@@ -43,10 +40,12 @@ package core.game
 		
 		private var _isPaused:Boolean = false;
 		
+		/**
+		 * Constructor
+		 */
+		
 		public function Game() 
 		{
-			if (Common.IS_DEBUG) trace('create Game');
-			
 			GameState.game = this;
 			
 			_gameState = GameState.getInstance();
@@ -64,21 +63,24 @@ package core.game
 			_t = getTimer();
 			
 			// Containers
-			addChild(bgContainer);
-			addChild(weaponsContainer);
-			addChild(heroContainer);
-			addChild(itemsContainer);
-			addChild(enemiesContainer);
-			addChild(powersContainer);
+			addChild(bg_container);
+			addChild(weapons_container);
+			addChild(hero_container);
+			addChild(items_container);
+			addChild(enemies_container);
+			addChild(powers_container);
 			
 			// Hero
 			_hero = new Hero();
-			heroContainer.addChild(_hero);
+			hero_container.addChild(_hero);
 			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
-		// Update
+		/**
+		 * Update
+		 */
+		
 		private function onEnterFrame(e:Event):void
 		{
 			var t:int = getTimer();
@@ -88,27 +90,15 @@ package core.game
 			update();
 		}
 		
-		private function update():void
+		protected function update():void
 		{
 			if (_isPaused) return;
 			
-			if (_speedEnemyTimer > 0) _speedEnemyTimer -= _dt;
-			
-			if (_speedEnemyTimer <= 0)
-			{
-				_speedEnemyTimer = _speedEnemy;
-				
-				new AttackItem();
-				
-				for (var i:int = 0; i < 10; i++)
-				{
-					var new_e:AsteroidEnemy = new AsteroidEnemy();
-					enemiesContainer.addChild(new_e);
-					
-					enemies[enemies.length] = new_e;
-				}
-			}
 		}
+		
+		/**
+		 * Manage
+		 */
 		
 		public function pause():void
 		{
@@ -132,17 +122,25 @@ package core.game
 			for each(var e:Enemy in enemies) e.resume();
 		}
 		
+		/**
+		 * Destroy
+		 */
+		
 		public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy Game');
-			
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+		}
+		
+		public function destroyElement(sprite:Sprite):void
+		{
+			sprite.parent.removeChild(sprite);
+			sprite = null;
 		}
 		
 		protected function generateGameBg():void
 		{
 			var bg:GameBg = new GameBg();
-			bgContainer.addChild(bg);
+			bg_container.addChild(bg);
 		}
 		
 		/**

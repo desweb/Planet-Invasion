@@ -19,7 +19,7 @@ package core.game.weapon
 		
 		public function Gun()
 		{
-			if (Common.IS_DEBUG) trace('create Gun');
+			_damage = 1;
 			
 			_graphic = new GunFlash();
 			addChild(_graphic);
@@ -33,16 +33,9 @@ package core.game.weapon
 		{
 			super.initialize(e);
 			
-			_target_x = x + GameState.stageWidth;
+			_target_x = isHero()? x + GameState.stageWidth: x - GameState.stageWidth;
 			
 			_tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
-		}
-		
-		override public function destroy():void 
-		{
-			if (Common.IS_DEBUG) trace('destroy Gun');
-			
-			super.destroy();
 		}
 		
 		/**

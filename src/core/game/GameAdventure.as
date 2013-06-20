@@ -3,6 +3,8 @@ package core.game
 	import flash.events.Event;
 	
 	import core.Common;
+	import core.utils.Tools;
+	import core.game.enemy.LightFighterEnemy;
 	
 	/**
 	 * ...
@@ -25,6 +27,17 @@ package core.game
 		override public function initialize(e:Event):void
 		{
 			super.initialize(e);
+		}
+		
+		override protected function update():void
+		{
+			if (!Tools.random(0, 10))
+			{
+				var new_e:LightFighterEnemy = new LightFighterEnemy();
+				enemies_container.addChild(new_e);
+				
+				enemies[enemies.length] = new_e;
+			}
 		}
 		
 		override public function pause():void

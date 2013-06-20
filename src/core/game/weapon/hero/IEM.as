@@ -62,7 +62,7 @@ package core.game.weapon.hero
 		{
 			if (Common.IS_DEBUG) trace('destroy IEM');
 			
-			GameState.game.powersContainer.removeChild(this);
+			GameState.game.powers_container.removeChild(this);
 		}
 	}
 }

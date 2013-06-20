@@ -36,9 +36,9 @@ package core.game.enemy
 		
 		override protected function update(e:Event):void
 		{
-			super.update(e);
+			if (is_kill) return;
 			
-			if (isKilled) return;
+			super.update(e);
 			
 			if (isRotation1())	rotation += 10;
 			else						rotation -= 10;

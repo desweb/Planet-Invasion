@@ -1,22 +1,24 @@
-package core.game.weapon.hero 
+package core.game.weapon.enemy 
 {
 	import flash.events.Event;
 	
 	import core.Common;
 	import core.GameState;
+	import core.game.enemy.Enemy;
 	import core.game.weapon.Gun;
 	
 	/**
 	 * ...
 	 * @author desweb
 	 */
-	public class HeroGun extends Gun
+	public class EnemyGun extends Gun
 	{
-		public function HeroGun(type:uint)
+		
+		public function EnemyGun(type:uint, enemy:Enemy) 
 		{
 			_fire_type		= type;
-			_owner			= GameState.game.hero;
-			_owner_type	= Common.OWNER_HERO;
+			_owner			= enemy;
+			_owner_type	= Common.OWNER_ENEMY;
 			
 			super();
 		}
