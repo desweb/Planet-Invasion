@@ -13,15 +13,15 @@ package core.game.enemy
 		private static const ROTATION_1:uint = 1;
 		private static const ROTATION_2:uint = 2;
 		
-		private var _rotation_type		:uint;
-		private var _rotation_speed	:int;
+		private var _rotation_type	:uint;
+		private var _rotation_speed:int;
 		
 		public function AsteroidEnemy() 
 		{
 			_graphic = new AsteroidFlash();
 			addChild(_graphic);
 			
-			_rotation_type	= Tools.random(0, 1)? ROTATION_1: ROTATION_2
+			_rotation_type	= Tools.random(0, 1)? ROTATION_1: ROTATION_2;
 			_rotation_speed	= Tools.random(1, 20);
 			
 			rotation = Tools.random(0, 360);

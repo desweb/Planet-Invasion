@@ -24,7 +24,7 @@ package
 	public class Preloader extends MovieClip
 	{
 		private var _bg:BgFlash;
-		private var _txtLoading:TextField;
+		private var _loading_label:TextField;
 		private var _loader:LoaderFlash;
 		
 		public function Preloader() 
@@ -51,14 +51,14 @@ package
 			format.size		= 24;
 			format.font		= font.fontName;
 			
-			_txtLoading = new TextField();
-			_txtLoading.text = 'Loading...';
-			_txtLoading.selectable = false;
-			_txtLoading.setTextFormat(format);
-			addChild(_txtLoading);
+			_loading_label = new TextField();
+			_loading_label.text = 'Loading...';
+			_loading_label.selectable = false;
+			_loading_label.setTextFormat(format);
+			addChild(_loading_label);
 			
-			_txtLoading.x = stage.stageWidth/2 - _txtLoading.width/2;
-			_txtLoading.y = stage.stageHeight*0.3;
+			_loading_label.x = stage.stageWidth/2 - _loading_label.width/2;
+			_loading_label.y = stage.stageHeight*0.3;
 			
 			_loader = new LoaderFlash();
 			_loader.x = stage.stageWidth / 2;
@@ -112,8 +112,16 @@ package
 		{
 			if (Common.IS_DEBUG) trace('launch project');
 			
-			var mainClass:Class = getDefinitionByName("Main") as Class;
+			var mainClass:Class = getDefinitionByName('Main') as Class;
 			addChild(new mainClass() as DisplayObject);
+			
+			removeChild(_bg);
+			removeChild(_loading_label);
+			removeChild(_loader);
+			
+			_bg					= null;
+			_loading_label	= null;
+			_loader				= null;
 		}
 	}
 }

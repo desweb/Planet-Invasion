@@ -5,6 +5,7 @@ package core.game
 	import core.Common;
 	import core.utils.Tools;
 	import core.game.enemy.LightFighterEnemy;
+	import core.game.enemy.MineEnemy;
 	
 	/**
 	 * ...
@@ -33,7 +34,7 @@ package core.game
 		{
 			if (!Tools.random(0, 10))
 			{
-				var new_e:LightFighterEnemy = new LightFighterEnemy();
+				var new_e:MineEnemy = new MineEnemy();
 				enemies_container.addChild(new_e);
 				
 				enemies[enemies.length] = new_e;

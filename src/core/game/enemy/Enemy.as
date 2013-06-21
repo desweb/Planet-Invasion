@@ -19,6 +19,9 @@ package core.game.enemy
 	 */
 	public class Enemy extends Sprite
 	{
+		protected static const TWEEN_COMPLETE_DETROY_TRUE	:uint = 1;
+		protected static const TWEEN_COMPLETE_DETROY_FALSE	:uint = 2;
+		
 		// Initialize
 		protected	var _life	:int;
 		public		var is_kill	:Boolean = false;
@@ -28,8 +31,13 @@ package core.game.enemy
 		protected var _graphic:MovieClip;
 		
 		private var _tween:TweenLite;
+		protected var _tween_complete_detroy:uint;
 		
 		private var _isPaused:Boolean = false;
+		
+		protected var _collision_damage:int;
+		
+		protected var _target_x:int;
 		
 		/**
 		 * Constructor
@@ -40,7 +48,11 @@ package core.game.enemy
 			x = GameState.stageWidth+50;
 			y = Tools.random(0, GameState.stageHeight-50)
 			
-			_tween = new TweenLite(this, 10, { x:-100, ease:Linear.easeNone, onComplete:destroy });
+			if (!_collision_damage)			_collision_damage				= 5;
+			if (!_target_x)						_target_x							= -100;
+			if (!_tween_complete_detroy)	_tween_complete_detroy	= TWEEN_COMPLETE_DETROY_TRUE;
+			
+			_tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: null } );
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -62,10 +74,13 @@ package core.game.enemy
 		
 		protected function update(e:Event):void
 		{
+			if (is_kill) return;
+			
 			dt = GameState.game.dt;
 			
 			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
 			
+			GameState.game.hero.hitWeapon(_collision_damage);
 			destroy();
 		}
 		
@@ -143,6 +158,15 @@ package core.game.enemy
 			_life -= damage;
 			
 			if (_life <= 0) destroy();
+		}
+		
+		/**
+		 * Checks
+		 */
+		
+		private function isTweenCompleteDestroy():Boolean
+		{
+			return _tween_complete_detroy == TWEEN_COMPLETE_DETROY_TRUE;
 		}
 	}
 }
