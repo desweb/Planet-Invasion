@@ -56,10 +56,10 @@ package core.game.weapon
 					y = _owner.y;
 					break;
 				case Common.FIRE_MIDDLE_LEFT:
-					y = _owner.y - _owner.height * .05;
+					y = _owner.y - 5;
 					break;
 				case Common.FIRE_MIDDLE_RIGHT:
-					y = _owner.y + _owner.height * .05;
+					y = _owner.y + 5;
 					break;
 				case Common.FIRE_BOTTOM_DEFAULT:
 					y = _owner.y + _owner.height * .25;
