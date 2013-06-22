@@ -7,8 +7,8 @@ package core.scene
 	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
-	import com.greensock.plugins.TweenPlugin; 
-	import com.greensock.plugins.BezierPlugin; 
+	import com.greensock.plugins.TweenPlugin;
+	import com.greensock.plugins.BezierPlugin;
 	
 	import core.API;
 	import core.Common;

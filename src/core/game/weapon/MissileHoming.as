@@ -24,7 +24,7 @@ package core.game.weapon
 		private var _tweenX:int;
 		private var _tweenY:int;
 		
-		private var _ratioTouchTarget:Number = 0.1;
+		private var _ratioTouchTarget:Number = .1;
 		
 		private var _propellant:PropellantFlash;
 		private var _propellant_tween:TweenLite;
@@ -134,7 +134,7 @@ package core.game.weapon
 			if	(x < target.x+target.width && x > target.x)
 			{
 				if (y < target.y)	rotation = 90;
-				else				rotation = -90;
+				else					rotation = -90;
 			}
 			// Avant/Arrière
 			else if	(y < target.y+target.height && y > target.y)
@@ -154,8 +154,8 @@ package core.game.weapon
 			// Arrière-Haut/Arrière-Bas
 			else if	(x > target.x+target.width)
 			{
-				var distMT:Number	= Math.pow(target.x+(target.width/2) - x, 2) + Math.pow(target.y+(target.height/2) - y, 2);
-				var adjacent:Number	= Math.pow(target.x+(target.width/2) - x, 2);
+				var distMT		:Number	= Math.pow(target.x+(target.width/2) - x, 2) + Math.pow(target.y+(target.height/2) - y, 2);
+				var adjacent	:Number	= Math.pow(target.x+(target.width/2) - x, 2);
 				
 				if (y < target.y)	rotation = 180 - (180 * Math.cos(adjacent/distMT) / Math.PI);
 				else					rotation = 180 + (180 * Math.cos(adjacent/distMT) / Math.PI);

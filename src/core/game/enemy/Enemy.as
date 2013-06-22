@@ -30,7 +30,7 @@ package core.game.enemy
 		
 		protected var _graphic:MovieClip;
 		
-		private var _tween:TweenLite;
+		protected var _tween:TweenLite;
 		protected var _tween_complete_detroy:uint;
 		
 		private var _isPaused:Boolean = false;
@@ -52,7 +52,7 @@ package core.game.enemy
 			if (!_target_x)						_target_x							= -100;
 			if (!_tween_complete_detroy)	_tween_complete_detroy	= TWEEN_COMPLETE_DETROY_TRUE;
 			
-			_tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: null } );
+			if (!_tween) _tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: null } );
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}

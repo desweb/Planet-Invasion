@@ -1,6 +1,7 @@
 package core.game 
 {
 	import core.game.enemy.HeavyFighterEnemy;
+	import core.game.enemy.KamikazeEnemy;
 	import flash.events.Event;
 	
 	import core.Common;
@@ -35,7 +36,7 @@ package core.game
 		{
 			if (!Tools.random(0, 10))
 			{
-				var new_e:HeavyFighterEnemy = new HeavyFighterEnemy();
+				var new_e:KamikazeEnemy = new KamikazeEnemy();
 				enemies_container.addChild(new_e);
 				
 				enemies[enemies.length] = new_e;
