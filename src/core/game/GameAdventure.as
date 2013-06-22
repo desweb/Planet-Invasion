@@ -2,6 +2,7 @@ package core.game
 {
 	import core.game.enemy.HeavyFighterEnemy;
 	import core.game.enemy.KamikazeEnemy;
+	import core.game.enemy.TurretEnemy;
 	import flash.events.Event;
 	
 	import core.Common;
@@ -24,7 +25,7 @@ package core.game
 		}
 		
 		/**
-		 * Override
+		 * Overrides
 		 */
 		
 		override public function initialize(e:Event):void
@@ -36,7 +37,7 @@ package core.game
 		{
 			if (!Tools.random(0, 10))
 			{
-				var new_e:KamikazeEnemy = new KamikazeEnemy();
+				var new_e:TurretEnemy = new TurretEnemy();
 				enemies_container.addChild(new_e);
 				
 				enemies[enemies.length] = new_e;

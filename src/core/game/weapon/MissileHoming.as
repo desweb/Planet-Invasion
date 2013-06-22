@@ -140,7 +140,7 @@ package core.game.weapon
 			else if	(y < target.y+target.height && y > target.y)
 			{
 				if (x > target.x)	rotation = 180;
-				else				rotation = 0;
+				else					rotation = 0;
 			}
 			// Avant-Haut/Avant-Bas
 			else if (x < target.x)

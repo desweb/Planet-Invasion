@@ -31,7 +31,7 @@ package core.game.enemy
 		protected var _graphic:MovieClip;
 		
 		protected var _tween:TweenLite;
-		protected var _tween_complete_detroy:uint;
+		protected var _tween_complete_destroy:uint;
 		
 		private var _isPaused:Boolean = false;
 		
@@ -48,9 +48,9 @@ package core.game.enemy
 			x = GameState.stageWidth+50;
 			y = Tools.random(0, GameState.stageHeight-50)
 			
-			if (!_collision_damage)			_collision_damage				= 5;
-			if (!_target_x)						_target_x							= -100;
-			if (!_tween_complete_detroy)	_tween_complete_detroy	= TWEEN_COMPLETE_DETROY_TRUE;
+			if (!_collision_damage)				_collision_damage				= 5;
+			if (!_target_x)							_target_x							= -100;
+			if (!_tween_complete_destroy)	_tween_complete_destroy	= TWEEN_COMPLETE_DETROY_TRUE;
 			
 			if (!_tween) _tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: null } );
 			
@@ -166,7 +166,7 @@ package core.game.enemy
 		
 		private function isTweenCompleteDestroy():Boolean
 		{
-			return _tween_complete_detroy == TWEEN_COMPLETE_DETROY_TRUE;
+			return _tween_complete_destroy == TWEEN_COMPLETE_DETROY_TRUE;
 		}
 	}
 }

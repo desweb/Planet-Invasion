@@ -28,7 +28,7 @@ package core.game.enemy
 		{
 			_life = 5;
 			_collision_damage = 20;
-			_tween_complete_detroy = TWEEN_COMPLETE_DETROY_FALSE;
+			_tween_complete_destroy = TWEEN_COMPLETE_DETROY_FALSE;
 			
 			_rotation_type	= Tools.random(0, 1)? ROTATION_1: ROTATION_2;
 			

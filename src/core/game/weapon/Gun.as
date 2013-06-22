@@ -33,6 +33,8 @@ package core.game.weapon
 		{
 			super.initialize(e);
 			
+			if (_tween) return;
+			
 			_target_x = isHero()? x + GameState.stageWidth: x - GameState.stageWidth;
 			
 			_tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
