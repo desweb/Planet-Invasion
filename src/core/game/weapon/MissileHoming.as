@@ -57,7 +57,7 @@ package core.game.weapon
 				tweenPointTarget();
 				autoRotation();
 				
-				_tween = new TweenLite(this, 0.2, { x:_tweenX, y:_tweenY, onComplete:reinitTween } );
+				_tween = new TweenLite(this, .2, { x:_tweenX, y:_tweenY, onComplete:reinitTween } );
 			}
 			else _tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}

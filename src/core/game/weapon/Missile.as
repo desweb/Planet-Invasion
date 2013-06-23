@@ -31,6 +31,8 @@ package core.game.weapon
 			_propellant.scaleY = .5;
 			addChild(_propellant);
 			
+			//if (isEnemy()) rotation = 180;
+			
 			propellantTween();
 		}
 		
@@ -42,7 +44,7 @@ package core.game.weapon
 		{
 			super.initialize(e);
 			
-			_target_x = x + GameState.stageWidth;
+			_target_x = isHero()? x + GameState.stageWidth: x - GameState.stageWidth;
 			
 			_tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}

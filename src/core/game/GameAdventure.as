@@ -1,5 +1,6 @@
 package core.game 
 {
+	import core.game.enemy.DestroyerEnemy;
 	import core.game.enemy.HeavyFighterEnemy;
 	import core.game.enemy.KamikazeEnemy;
 	import core.game.enemy.TurretEnemy;
@@ -31,13 +32,18 @@ package core.game
 		override public function initialize(e:Event):void
 		{
 			super.initialize(e);
+			
+			/*var new_e:DestroyerEnemy = new DestroyerEnemy();
+			enemies_container.addChild(new_e);
+			
+			enemies[enemies.length] = new_e;*/
 		}
 		
 		override protected function update():void
 		{
 			if (!Tools.random(0, 10))
 			{
-				var new_e:TurretEnemy = new TurretEnemy();
+				var new_e:DestroyerEnemy = new DestroyerEnemy();
 				enemies_container.addChild(new_e);
 				
 				enemies[enemies.length] = new_e;

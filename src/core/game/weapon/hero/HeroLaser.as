@@ -1,5 +1,7 @@
 package core.game.weapon.hero 
 {
+	import flash.events.Event;
+	
 	import core.Common;
 	import core.GameState;
 	import core.game.weapon.Laser;
@@ -10,11 +12,8 @@ package core.game.weapon.hero
 	 */
 	public class HeroLaser extends Laser
 	{
-		
 		public function HeroLaser(type:uint)
 		{
-			if (Common.IS_DEBUG) trace('create HeroLazer');
-			
 			_fire_type		= type;
 			_owner			= GameState.game.hero;
 			_owner_type	= Common.OWNER_HERO;
@@ -26,11 +25,11 @@ package core.game.weapon.hero
 		 * Overrides
 		 */
 		
-		override public function destroy():void 
+		override protected function update(e:Event):void 
 		{
-			if (Common.IS_DEBUG) trace('destroy HeroLazer');
+			if (GameState.game.hero.is_kill) destroy();
 			
-			super.destroy();
+			super.update(e);
 		}
 	}
 }

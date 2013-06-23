@@ -14,8 +14,6 @@ package core.game.weapon.hero
 	{
 		public function HeroMissile(type:uint)
 		{
-			if (Common.IS_DEBUG) trace('create HeroMissile');
-			
 			_fire_type		= type;
 			_owner			= GameState.game.hero;
 			_owner_type	= Common.OWNER_HERO;
@@ -43,13 +41,6 @@ package core.game.weapon.hero
 			}
 			
 			super.initialize(e);
-		}
-		
-		override public function destroy():void 
-		{
-			if (Common.IS_DEBUG) trace('destroy HeroMissile');
-			
-			super.destroy();
 		}
 	}
 }

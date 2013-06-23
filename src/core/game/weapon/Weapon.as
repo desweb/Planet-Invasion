@@ -124,36 +124,39 @@ package core.game.weapon
 			{
 				case Common.FIRE_TOP_DEFAULT:
 					x = _owner.x - _owner.width * .25;
-					rotation = -45;
+					rotation = -135;
 					break;
 				case Common.FIRE_TOP_LEFT:
 					x = _owner.x - _owner.width * .2;
-					rotation = -45;
+					rotation = -135;
 					break;
 				case Common.FIRE_TOP_RIGHT:
 					x = _owner.x - _owner.width * .3;
-					rotation = -45;
+					rotation = -135;
 					break;
 				case Common.FIRE_MIDDLE_DEFAULT:
 					x = _owner.x - _owner.width * .5;
+					rotation = 180;
 					break;
 				case Common.FIRE_MIDDLE_LEFT:
 					x = _owner.x - _owner.width * .5;
+					rotation = 180;
 					break;
 				case Common.FIRE_MIDDLE_RIGHT:
 					x = _owner.x - _owner.width * .5;
+					rotation = 180;
 					break;
 				case Common.FIRE_BOTTOM_DEFAULT:
 					x = _owner.x - _owner.width * .25;
-					rotation = 45;
+					rotation = 135;
 					break;
 				case Common.FIRE_BOTTOM_LEFT:
 					x = _owner.x - _owner.width * .3;
-					rotation = 45;
+					rotation = 135;
 					break;
 				case Common.FIRE_BOTTOM_RIGHT:
 					x = _owner.x - _owner.width * .2;
-					rotation = 45;
+					rotation = 135;
 					break;
 			}
 		}

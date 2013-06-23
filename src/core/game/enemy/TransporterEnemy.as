@@ -4,10 +4,10 @@ package core.game.enemy
 	 * ...
 	 * @author desweb
 	 */
-	public class ConveyerEnemy 
+	public class TransporterEnemy 
 	{
 		
-		public function ConveyerEnemy() 
+		public function TransporterEnemy() 
 		{
 			
 		}
