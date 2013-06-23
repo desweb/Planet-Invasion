@@ -26,6 +26,8 @@ package core.game.enemy
 			addChild(_graphic);
 			
 			launchFireTimer();
+			
+			super();
 		}
 		
 		/**

@@ -37,6 +37,8 @@ package core.game.enemy
 			
 			target = GameState.game.hero;
 			
+			super();
+			
 			launchTween();
 		}
 		

@@ -28,6 +28,8 @@ package core.game.enemy
 			_graphic = new FighterLightFlash();
 			addChild(_graphic);
 			
+			super();
+			
 			launchFireTimer();
 			
 			if (!is_transporter) return;
