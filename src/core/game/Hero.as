@@ -29,7 +29,9 @@ package core.game
 		// Initialize
 		private	var _life						:int;
 		private	var _is_available_move	:Boolean = false;
+		private var _isPaused					:Boolean = false;
 		public	var is_kill						:Boolean = false;
+		private var _mobility					:Number = 1;
 		
 		// Keys
 		private var _keys:Array = new Array();
@@ -65,10 +67,19 @@ package core.game
 		private var _fireBombardmentTimer	:Timer = new Timer(5000);
 		private var _fireReinforcementTimer	:Timer = new Timer(5000);
 		
-		
-		private var _isPaused:Boolean = false;
-		
-		// Life
+		// Items
+		public	var is_attack_item		:Boolean = false;
+		public	var is_crystal_item		:Boolean = false;
+		public	var is_defense_item	:Boolean = false;
+		public	var is_gold_item		:Boolean = false;
+		public	var is_metal_item		:Boolean = false;
+		public	var is_speed_item		:Boolean = false;
+		private	var _attack_item_timer	:Timer = new Timer(5000);
+		private	var _crystal_item_timer	:Timer = new Timer(5000);
+		private	var _defense_item_timer:Timer = new Timer(5000);
+		private	var _gold_item_timer		:Timer = new Timer(5000);
+		private	var _metal_item_timer	:Timer = new Timer(5000);
+		private	var _speed_item_timer	:Timer = new Timer(5000);
 		
 		// Improvements
 		private var _is_gun_double			:Boolean;
@@ -162,13 +173,20 @@ package core.game
 			stage.addEventListener(KeyboardEvent.KEY_UP,		upKey);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,	mouseMove);
 			
-			_fireGunTimer				.addEventListener(TimerEvent.TIMER, enableFireGun);
-			_fireLazerTimer				.addEventListener(TimerEvent.TIMER, enableFireLazer);
-			_fireMissileTimer			.addEventListener(TimerEvent.TIMER, enableFireMissile);
-			_fireMissileHomingTimer	.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
-			_fireIEMTimer				.addEventListener(TimerEvent.TIMER, enableFireIEM);
-			_fireBombardmentTimer	.addEventListener(TimerEvent.TIMER, enableFireBombardment);
-			_fireReinforcementTimer.addEventListener(TimerEvent.TIMER, enableFireReinforcement);
+			_fireGunTimer					.addEventListener(TimerEvent.TIMER, enableFireGun);
+			_fireLazerTimer					.addEventListener(TimerEvent.TIMER, enableFireLazer);
+			_fireMissileTimer				.addEventListener(TimerEvent.TIMER, enableFireMissile);
+			_fireMissileHomingTimer		.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
+			_fireIEMTimer					.addEventListener(TimerEvent.TIMER, enableFireIEM);
+			_fireBombardmentTimer		.addEventListener(TimerEvent.TIMER, enableFireBombardment);
+			_fireReinforcementTimer	.addEventListener(TimerEvent.TIMER, enableFireReinforcement);
+			
+			_attack_item_timer	.addEventListener(TimerEvent.TIMER, completeAttackItemTimer);
+			_crystal_item_timer	.addEventListener(TimerEvent.TIMER, completeCrystalItemTimer);
+			_defense_item_timer	.addEventListener(TimerEvent.TIMER, completeDefenseItemTimer);
+			_gold_item_timer		.addEventListener(TimerEvent.TIMER, completeGoldItemTimer);
+			_metal_item_timer		.addEventListener(TimerEvent.TIMER, completeMetalItemTimer);
+			_speed_item_timer	.addEventListener(TimerEvent.TIMER, completeSpeedItemTimer);
 		}
 		
 		/**
@@ -226,6 +244,13 @@ package core.game
 			_fireBombardmentTimer		.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
 			_fireReinforcementTimer	.removeEventListener(TimerEvent.TIMER, enableFireReinforcement);
 			
+			_attack_item_timer	.removeEventListener(TimerEvent.TIMER, completeAttackItemTimer);
+			_crystal_item_timer	.removeEventListener(TimerEvent.TIMER, completeCrystalItemTimer);
+			_defense_item_timer	.removeEventListener(TimerEvent.TIMER, completeDefenseItemTimer);
+			_gold_item_timer		.removeEventListener(TimerEvent.TIMER, completeGoldItemTimer);
+			_metal_item_timer		.removeEventListener(TimerEvent.TIMER, completeMetalItemTimer);
+			_speed_item_timer	.removeEventListener(TimerEvent.TIMER, completeSpeedItemTimer);
+			
 			gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
@@ -272,7 +297,15 @@ package core.game
 		
 		public function hitItem(type:int):void
 		{
-			
+			switch(type)
+			{
+				case Common.ITEM_ATTACK		: launchAttackItem		(); break;
+				case Common.ITEM_CRYSTAL	: launchCrystalItem	(); break;
+				case Common.ITEM_DEFENSE		: launchDefenseItem	(); break;
+				case Common.ITEM_GOLD			: launchGoldItem		(); break;
+				case Common.ITEM_METAL		: launchMetalItem		(); break;
+				case Common.ITEM_SPEED		: launchSpeedItem		(); break;
+			}
 		}
 		
 		public function hitWeapon(damage:int):void
@@ -422,7 +455,7 @@ package core.game
 		{
 			if (!_is_available_move || _isPaused) return;
 			
-			TweenLite.to(this, 1, { x:GameState.main.mouseX, y:GameState.main.mouseY });
+			TweenLite.to(this, _mobility, { x:GameState.main.mouseX, y:GameState.main.mouseY });
 		}
 		
 		private function completeShieldRegenTimer(e:TimerEvent):void
@@ -441,6 +474,126 @@ package core.game
 			_shield_repop_timer.stop();
 			
 			displayShield();
+		}
+		
+		/**
+		 * Items
+		 */
+		
+		private function launchAttackItem():void
+		{
+			if (is_attack_item)
+			{
+				_attack_item_timer.reset();
+				return;
+			}
+			
+			is_attack_item = true;
+			_attack_item_timer.start();
+		}
+		
+		private function launchCrystalItem():void
+		{
+			if (is_crystal_item)
+			{
+				_crystal_item_timer.reset();
+				return;
+			}
+			
+			is_crystal_item = true;
+			_crystal_item_timer.start();
+		}
+		
+		private function launchDefenseItem():void
+		{
+			if (is_defense_item)
+			{
+				_defense_item_timer.reset();
+				return;
+			}
+			
+			is_defense_item = true;
+			_defense_item_timer.start();
+			
+			_life *= 2;
+		}
+		
+		private function launchGoldItem():void
+		{
+			if (is_gold_item)
+			{
+				_gold_item_timer.reset();
+				return;
+			}
+			
+			is_gold_item = true;
+			_gold_item_timer.start();
+		}
+		
+		private function launchMetalItem():void
+		{
+			if (is_metal_item)
+			{
+				_metal_item_timer.reset();
+				return;
+			}
+			
+			is_metal_item = true;
+			_metal_item_timer.start();
+		}
+		
+		private function launchSpeedItem():void
+		{
+			if (is_speed_item)
+			{
+				_speed_item_timer.reset();
+				return;
+			}
+			
+			is_speed_item = true;
+			_speed_item_timer.start();
+			
+			_mobility /= 2;
+		}
+		
+		private function completeAttackItemTimer(e:TimerEvent):void
+		{
+			is_attack_item = false;
+			_attack_item_timer.stop();
+		}
+		
+		private function completeCrystalItemTimer(e:TimerEvent):void
+		{
+			is_crystal_item = false;
+			_crystal_item_timer.stop();
+		}
+		
+		private function completeDefenseItemTimer(e:TimerEvent):void
+		{
+			is_defense_item = false;
+			_defense_item_timer.stop();
+			
+			_life /= 2;
+		}
+		
+		private function completeGoldItemTimer(e:TimerEvent):void
+		{
+			is_gold_item = false;
+			_gold_item_timer.stop();
+		}
+		
+		private function completeMetalItemTimer(e:TimerEvent):void
+		{
+			is_metal_item = false;
+			_metal_item_timer.stop();
+		}
+		
+		private function completeSpeedItemTimer(e:TimerEvent):void
+		{
+			is_speed_item = false;
+			_speed_item_timer.stop();
+			
+			_mobility *= 2;
 		}
 		
 		/**

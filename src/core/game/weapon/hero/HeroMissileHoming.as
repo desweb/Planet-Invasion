@@ -29,6 +29,8 @@ package core.game.weapon.hero
 			}
 			
 			super();
+			
+			if (GameState.game.hero.is_attack_item) _damage *= 2;
 		}
 		
 		/**

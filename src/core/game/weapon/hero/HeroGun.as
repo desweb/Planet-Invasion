@@ -19,6 +19,8 @@ package core.game.weapon.hero
 			_owner_type	= Common.OWNER_HERO;
 			
 			super();
+			
+			if (GameState.game.hero.is_attack_item) _damage *= 2;
 		}
 		
 		/**

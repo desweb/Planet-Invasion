@@ -6,7 +6,7 @@ package core.game.item
 	 * ...
 	 * @author desweb
 	 */
-	public class GoldItem 
+	public class GoldItem extends Item
 	{
 		public function GoldItem() 
 		{

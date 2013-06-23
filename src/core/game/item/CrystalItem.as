@@ -6,7 +6,7 @@ package core.game.item
 	 * ...
 	 * @author desweb
 	 */
-	public class CrystalItem 
+	public class CrystalItem extends Item
 	{
 		public function CrystalItem() 
 		{

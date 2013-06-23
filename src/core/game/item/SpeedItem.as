@@ -6,7 +6,7 @@ package core.game.item
 	 * ...
 	 * @author desweb
 	 */
-	public class SpeedItem 
+	public class SpeedItem extends Item
 	{
 		public function SpeedItem() 
 		{

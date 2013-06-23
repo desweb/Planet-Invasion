@@ -189,9 +189,9 @@ package core.game.enemy
 			
 			if (_life <= 0)
 			{
-				GameState.game.metal		= _metal;
-				GameState.game.crystal	= _crystal;
-				GameState.game.money	= _money;
+				GameState.game.metal		= GameState.game.hero.is_metal_item	? _metal	* 2 :_metal;
+				GameState.game.crystal	= GameState.game.hero.is_crystal_item	? _crystal	* 2 :_crystal;
+				GameState.game.money	= GameState.game.hero.is_gold_item		? _money	* 2 :_money;
 				
 				destroy();
 			}

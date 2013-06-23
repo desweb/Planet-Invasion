@@ -1,22 +1,31 @@
 package core.game 
 {
-	import core.game.enemy.TransporterEnemy;
-	import core.game.item.Item;
+	import core.game.item.AttackItem;
+	import core.game.item.CrystalItem;
+	import core.game.item.DefenseItem;
+	import core.game.item.GoldItem;
+	import core.game.item.MetalItem;
+	import core.game.item.SpeedItem;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.ui.Mouse;
 	import flash.utils.getTimer;
+	import flash.utils.Timer;
 	
 	import core.Common;
 	import core.GameState;
-	import core.game.weapon.Weapon;
 	import core.game.enemy.Enemy;
+	import core.game.enemy.TransporterEnemy;
+	import core.game.item.Item;
+	import core.game.weapon.Weapon;
 	import core.popup.LoosePopup;
 	import core.popup.VictoryPopup;
 	import core.scene.SceneManager;
+	import core.utils.Tools;
 	
 	/**
 	 * Container of the game scene
@@ -25,8 +34,9 @@ package core.game
 	public class Game extends Sprite
 	{
 		// Time
-		private var _t:int;
-		protected var _dt:Number;
+		private		var _t	:int;
+		protected	var _dt	:Number;
+		private		var _timer:Timer = new Timer(1000);
 		
 		// Game state
 		protected var _gameState:GameState;
@@ -127,6 +137,9 @@ package core.game
 			_hero = new Hero();
 			hero_container = _hero;
 			
+			_timer.start();
+			_timer.addEventListener(TimerEvent.TIMER, completeTimer);
+			
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
@@ -146,7 +159,6 @@ package core.game
 		protected function update():void
 		{
 			if (_isPaused) return;
-			
 		}
 		
 		/**
@@ -219,6 +231,10 @@ package core.game
 		{
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
+			_timer.removeEventListener(TimerEvent.TIMER, completeTimer);
+			_timer.stop();
+			_timer = null;
+			
 			_hero.destroy();
 			
 			for each(var e:Enemy in enemies) e.destroy();
@@ -228,6 +244,25 @@ package core.game
 		{
 			s.parent.removeChild(s);
 			s = null;
+		}
+		
+		/**
+		 * Events
+		 */
+		
+		private function completeTimer(e:TimerEvent):void
+		{
+			if (Tools.random(0, 10)) return;
+			
+			switch (Tools.random(0, 5))
+			{
+				case 0: items_container = new AttackItem		(); break;
+				case 1: items_container = new CrystalItem		(); break;
+				case 2: items_container = new DefenseItem	(); break;
+				case 3: items_container = new GoldItem			(); break;
+				case 4: items_container = new MetalItem		(); break;
+				case 5: items_container = new SpeedItem		(); break;
+			}
 		}
 		
 		/**
