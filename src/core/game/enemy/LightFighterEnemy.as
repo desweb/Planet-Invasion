@@ -3,9 +3,15 @@ package core.game.enemy
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import com.greensock.TweenLite;
+	import com.greensock.easing.Linear;
+	import com.greensock.plugins.TweenPlugin;
+	import com.greensock.plugins.BezierThroughPlugin;
+	
 	import core.Common;
 	import core.GameState;
 	import core.game.weapon.enemy.EnemyGun;
+	import core.utils.Tools;
 	
 	/**
 	 * ...
@@ -14,16 +20,32 @@ package core.game.enemy
 	public class LightFighterEnemy extends Enemy
 	{
 		private var _fire_gun_timer:Timer = new Timer(1000);
+		private var _is_fire:Boolean = true;
 		
-		public function LightFighterEnemy() 
+		public function LightFighterEnemy(is_transporter:Boolean = false, transporter:TransporterEnemy = null)
 		{
 			_life = 10;
 			
 			_graphic = new FighterLightFlash();
 			addChild(_graphic);
 			
-			_fire_gun_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
 			_fire_gun_timer.start();
+			_fire_gun_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
+			
+			if (!is_transporter) return;
+			
+			TweenPlugin.activate([BezierThroughPlugin]);
+			
+			x = transporter.x;
+			y = transporter.y;
+			
+			_is_fire = false;
+			
+			var is_top:Boolean = Tools.random(0, 1)? true: false;
+			
+			var target_y:int = is_top? Tools.random(y - transporter.deployement_area, y - 50): Tools.random(y + 50, y + transporter.deployement_area);
+			
+			_tween = new TweenLite(this, 1, { bezierThrough:[ { x:transporter.x, y:transporter.y + 50 * (is_top? -1: 1) }, { x:transporter.x - 50, y:target_y } ], orientToBezier:true, ease:Linear.easeNone, onComplete:launchTween } );
 		}
 		
 		/**
@@ -47,7 +69,24 @@ package core.game.enemy
 		
 		private function completeFireTimer(e:TimerEvent):void
 		{
+			if (!_is_fire) return;
+			
 			GameState.game.weapons_container.addChild(new EnemyGun(Common.FIRE_MIDDLE_DEFAULT, this));
+		}
+		
+		/**
+		 * Tweens
+		 */
+		
+		private function launchTween():void
+		{
+			rotation = 0;
+			_is_fire = true;
+			
+			_tween.kill();
+			_tween = null;
+			
+			_tween = new TweenLite(this, 1, { x : _target_x, ease:Linear.easeNone, onComplete:destroy } );
 		}
 	}
 }

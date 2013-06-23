@@ -3,6 +3,7 @@ package core.game
 	import core.game.enemy.DestroyerEnemy;
 	import core.game.enemy.HeavyFighterEnemy;
 	import core.game.enemy.KamikazeEnemy;
+	import core.game.enemy.TransporterEnemy;
 	import core.game.enemy.TurretEnemy;
 	import flash.events.Event;
 	
@@ -33,21 +34,21 @@ package core.game
 		{
 			super.initialize(e);
 			
-			/*var new_e:DestroyerEnemy = new DestroyerEnemy();
-			enemies_container.addChild(new_e);
+			var new_e:TransporterEnemy = new TransporterEnemy();
+			transporters_container.addChild(new_e);
 			
-			enemies[enemies.length] = new_e;*/
+			enemies[enemies.length] = new_e;
 		}
 		
 		override protected function update():void
 		{
-			if (!Tools.random(0, 10))
+			/*if (!Tools.random(0, 10))
 			{
 				var new_e:DestroyerEnemy = new DestroyerEnemy();
 				enemies_container.addChild(new_e);
 				
 				enemies[enemies.length] = new_e;
-			}
+			}*/
 		}
 		
 		override public function pause():void

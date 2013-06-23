@@ -23,12 +23,13 @@ package core.game
 		protected var _gameState:GameState;
 		
 		// Containers
-		public var bg_container			:Sprite = new Sprite();
-		public var hero_container		:Sprite = new Sprite();
-		public var items_container		:Sprite = new Sprite();
-		public var enemies_container	:Sprite = new Sprite();
-		public var weapons_container	:Sprite = new Sprite();
-		public var powers_container	:Sprite = new Sprite();
+		public var bg_container					:Sprite = new Sprite();
+		public var hero_container				:Sprite = new Sprite();
+		public var items_container				:Sprite = new Sprite();
+		public var enemies_container			:Sprite = new Sprite();
+		public var transporters_container	:Sprite = new Sprite();
+		public var weapons_container			:Sprite = new Sprite();
+		public var powers_container			:Sprite = new Sprite();
 		
 		// Enemies
 		public var enemies:Array = new Array();
@@ -68,6 +69,7 @@ package core.game
 			addChild(hero_container);
 			addChild(items_container);
 			addChild(enemies_container);
+			addChild(transporters_container);
 			addChild(powers_container);
 			
 			// Hero
