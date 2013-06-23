@@ -290,7 +290,12 @@ package core.game
 			
 			_life -= damage;
 			
-			if (_life <= 0) destroy();
+			if (_life <= 0)
+			{
+				_life = 0;
+				
+				destroy();
+			}
 		}
 		
 		/**

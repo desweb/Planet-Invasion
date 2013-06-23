@@ -22,11 +22,10 @@ package core.scene
 		
 		public function CreditScene() 
 		{
-			if (Common.IS_DEBUG) trace('create CreditScene');
-			
 			/**
 			 * Initialization
 			 */
+			
 			generateBg();
 			generateBtnReturn();
 			
@@ -69,7 +68,7 @@ package core.scene
 			credits_graph.width = 560;
 			credits_graph.height = 560;
 			credits_graph.defaultTextFormat = format;
-			credits_graph.text = 'Graphiste\nCaroline Saillot';
+			credits_graph.text = 'Graphiste\nEstelle Poitevin';
 			_scroll_content.addChild(credits_graph);
 			
 			// Scroll
@@ -81,17 +80,6 @@ package core.scene
 			{
 				if (GameState.user.isLog) API.post_achievementKey(Common.ACHIEVEMENT_CURIOSITY, function(response:XML):void {});
 			}
-		}
-		
-		/**
-		 * Override
-		 */
-		
-		override public function destroy():void
-		{
-			if (Common.IS_DEBUG) trace('destroy CreditScene');
-			
-			super.destroy();
 		}
 	}
 }
