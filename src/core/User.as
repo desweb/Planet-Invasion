@@ -45,7 +45,7 @@ package core
 			isLog = false;
 			
 			_score					= 0;
-			_level_adventure	= 0;
+			_level_adventure	= 5;
 			_metal					= 1000;
 			_crystal					= 1000;
 			_money				= 1000;

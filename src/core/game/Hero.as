@@ -28,6 +28,7 @@ package core.game
 	{
 		// Initialize
 		private	var _life						:int;
+		private	var _life_init					:int;
 		private	var _is_available_move	:Boolean = false;
 		private var _isPaused					:Boolean = false;
 		public	var is_kill						:Boolean = false;
@@ -97,7 +98,9 @@ package core.game
 		{
 			// Life
 			var life_improvement:Improvement = new Improvement(Common.IMPROVEMENT_ARMOR_RESIST);
-			_life = life_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_ARMOR_RESIST]];
+			_life_init = life_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_ARMOR_RESIST]];
+			
+			_life = _life_init;
 			
 			// Shield
 			var shield_life_improvement:Improvement = new Improvement(Common.IMPROVEMENT_SHIELD_RESIST);
@@ -316,12 +319,16 @@ package core.game
 			{
 				_shield_life -= damage;
 				
+				GameState.game.shield_life_bar = _shield_life;
+				
 				if (_shield_life <= 0) undisplayShield();
 				
 				return;
 			}
 			
 			_life -= damage;
+			
+			GameState.game.life_bar = _life;
 			
 			if (_life <= 0)
 			{
@@ -490,6 +497,8 @@ package core.game
 			
 			is_attack_item = true;
 			_attack_item_timer.start();
+			
+			GameState.game.attack_item = is_attack_item;
 		}
 		
 		private function launchCrystalItem():void
@@ -502,6 +511,8 @@ package core.game
 			
 			is_crystal_item = true;
 			_crystal_item_timer.start();
+			
+			GameState.game.crystal_item = is_crystal_item;
 		}
 		
 		private function launchDefenseItem():void
@@ -516,6 +527,8 @@ package core.game
 			_defense_item_timer.start();
 			
 			_life *= 2;
+			
+			GameState.game.defense_item = is_defense_item;
 		}
 		
 		private function launchGoldItem():void
@@ -528,6 +541,8 @@ package core.game
 			
 			is_gold_item = true;
 			_gold_item_timer.start();
+			
+			GameState.game.gold_item = is_gold_item;
 		}
 		
 		private function launchMetalItem():void
@@ -540,6 +555,8 @@ package core.game
 			
 			is_metal_item = true;
 			_metal_item_timer.start();
+			
+			GameState.game.metal_item = is_metal_item;
 		}
 		
 		private function launchSpeedItem():void
@@ -554,18 +571,24 @@ package core.game
 			_speed_item_timer.start();
 			
 			_mobility /= 2;
+			
+			GameState.game.speed_item = is_speed_item;
 		}
 		
 		private function completeAttackItemTimer(e:TimerEvent):void
 		{
 			is_attack_item = false;
 			_attack_item_timer.stop();
+			
+			GameState.game.attack_item = is_attack_item;
 		}
 		
 		private function completeCrystalItemTimer(e:TimerEvent):void
 		{
 			is_crystal_item = false;
 			_crystal_item_timer.stop();
+			
+			GameState.game.crystal_item = is_crystal_item;
 		}
 		
 		private function completeDefenseItemTimer(e:TimerEvent):void
@@ -574,18 +597,24 @@ package core.game
 			_defense_item_timer.stop();
 			
 			_life /= 2;
+			
+			GameState.game.defense_item = is_defense_item;
 		}
 		
 		private function completeGoldItemTimer(e:TimerEvent):void
 		{
 			is_gold_item = false;
 			_gold_item_timer.stop();
+			
+			GameState.game.gold_item = is_gold_item;
 		}
 		
 		private function completeMetalItemTimer(e:TimerEvent):void
 		{
 			is_metal_item = false;
 			_metal_item_timer.stop();
+			
+			GameState.game.metal_item = is_metal_item;
 		}
 		
 		private function completeSpeedItemTimer(e:TimerEvent):void
@@ -594,6 +623,8 @@ package core.game
 			_speed_item_timer.stop();
 			
 			_mobility *= 2;
+			
+			GameState.game.speed_item = is_speed_item;
 		}
 		
 		/**
@@ -785,5 +816,11 @@ package core.game
 			_fireReinforcementTimer.start();
 		}
 		
+		/**
+		 * Getters
+		 */
+		
+		public function get life_init			():int { return _life_init; }
+		public function get shield_life_init	():int { return _shield_life_init; }
 	}
 }

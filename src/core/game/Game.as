@@ -1,11 +1,5 @@
 package core.game 
 {
-	import core.game.item.AttackItem;
-	import core.game.item.CrystalItem;
-	import core.game.item.DefenseItem;
-	import core.game.item.GoldItem;
-	import core.game.item.MetalItem;
-	import core.game.item.SpeedItem;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -16,11 +10,19 @@ package core.game
 	import flash.utils.getTimer;
 	import flash.utils.Timer;
 	
+	import com.greensock.TweenLite;
+	
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
 	import core.game.enemy.TransporterEnemy;
+	import core.game.item.AttackItem;
+	import core.game.item.CrystalItem;
+	import core.game.item.DefenseItem;
+	import core.game.item.GoldItem;
 	import core.game.item.Item;
+	import core.game.item.MetalItem;
+	import core.game.item.SpeedItem;
 	import core.game.weapon.Weapon;
 	import core.popup.LoosePopup;
 	import core.popup.VictoryPopup;
@@ -51,12 +53,22 @@ package core.game
 		private var _interface_container		:Sprite = new Sprite();
 		
 		// Interface
-		private var _total_metal		:int;
-		private var _total_crystal	:int;
-		private var _total_money	:int;
-		private var _metal_label		:TextField;
-		private var _crystal_label	:TextField;
-		private var _money_label	:TextField;
+		private var _total_metal			:int;
+		private var _total_crystal		:int;
+		private var _total_money		:int;
+		private var _metal_label			:TextField;
+		private var _crystal_label		:TextField;
+		private var _money_label		:TextField;
+		private var _life_bar				:LifeBarFlash;
+		private var _life_bar_mask		:LifeBarFlash;
+		private var _shield_bar			:ShieldBarFlash;
+		private var _shield_bar_mask	:ShieldBarFlash;
+		private var _attack_item_light		:ItemAttackLightFlash;
+		private var _crystal_item_light	:ItemCrystalLightFlash;
+		private var _defense_item_light	:ItemDefenseLightFlash;
+		private var _gold_item_light		:ItemGoldLightFlash;
+		private var _metal_item_light		:ItemMetalLightFlash;
+		private var _speed_item_light		:ItemSpeedLightFlash;
 		
 		// Enemies
 		public var enemies:Array = new Array();
@@ -99,11 +111,15 @@ package core.game
 			addChild(_powers_container);
 			addChild(_interface_container);
 			
+			// Hero
+			_hero = new Hero();
+			hero_container = _hero;
+			
 			// Interface
 			var interface_format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 10);
 			
 			_metal_label = new TextField();
-			_metal_label.x							= 10;
+			_metal_label.x							= 110;
 			_metal_label.y							= 10;
 			_metal_label.width						= 80;
 			_metal_label.height					= 30;
@@ -112,7 +128,7 @@ package core.game
 			interface_container = _metal_label;
 			
 			_crystal_label = new TextField();
-			_crystal_label.x							= 100;
+			_crystal_label.x							= 200;
 			_crystal_label.y							= _metal_label.y;
 			_crystal_label.width					= _metal_label.width;
 			_crystal_label.height					= _metal_label.height;
@@ -121,7 +137,7 @@ package core.game
 			interface_container = _crystal_label;
 			
 			_money_label = new TextField();
-			_money_label.x							= 200;
+			_money_label.x							= 300;
 			_money_label.y							= _metal_label.y;
 			_money_label.width					= _metal_label.width;
 			_money_label.height					= _metal_label.height;
@@ -133,10 +149,70 @@ package core.game
 			crystal	= 0;
 			money	= 0;
 			
-			// Hero
-			_hero = new Hero();
-			hero_container = _hero;
+			// Life bars
+			_life_bar_mask = new LifeBarFlash();
+			_life_bar_mask.x = 10;
+			_life_bar_mask.y = 10;
+			interface_container = _life_bar_mask;
 			
+			_life_bar = new LifeBarFlash();
+			_life_bar.x = _life_bar_mask.x;
+			_life_bar.y = _life_bar_mask.y;
+			_life_bar.mask = _life_bar_mask;
+			interface_container = _life_bar;
+			
+			if (GameState.game.hero.shield_life_init)
+			{
+				_shield_bar_mask = new ShieldBarFlash();
+				_shield_bar_mask.x = 10;
+				_shield_bar_mask.y = 30;
+				interface_container = _shield_bar_mask;
+				
+				_shield_bar = new ShieldBarFlash();
+				_shield_bar.x = _shield_bar_mask.x;
+				_shield_bar.y = _shield_bar_mask.y;
+				_shield_bar.mask = _shield_bar_mask;
+				interface_container = _shield_bar;
+			}
+			
+			// Item lighter
+			_attack_item_light = new ItemAttackLightFlash();
+			_attack_item_light.alpha = 0;
+			_attack_item_light.x = 120;
+			_attack_item_light.y = 30;
+			interface_container = _attack_item_light;
+			
+			_crystal_item_light = new ItemCrystalLightFlash();
+			_crystal_item_light.alpha = 0;
+			_crystal_item_light.x = 140;
+			_crystal_item_light.y = _attack_item_light.y;
+			interface_container = _crystal_item_light;
+			
+			_defense_item_light = new ItemDefenseLightFlash();
+			_defense_item_light.alpha = 0;
+			_defense_item_light.x = 160;
+			_defense_item_light.y = _attack_item_light.y;
+			interface_container = _defense_item_light;
+			
+			_gold_item_light = new ItemGoldLightFlash();
+			_gold_item_light.alpha = 0;
+			_gold_item_light.x = 180;
+			_gold_item_light.y = _attack_item_light.y;
+			interface_container = _gold_item_light;
+			
+			_metal_item_light = new ItemMetalLightFlash();
+			_metal_item_light.alpha = 0;
+			_metal_item_light.x = 200;
+			_metal_item_light.y = _attack_item_light.y;
+			interface_container = _metal_item_light;
+			
+			_speed_item_light = new ItemSpeedLightFlash();
+			_speed_item_light.alpha = 0;
+			_speed_item_light.x = 220;
+			_speed_item_light.y = _attack_item_light.y;
+			interface_container = _speed_item_light;
+			
+			// Timer
 			_timer.start();
 			_timer.addEventListener(TimerEvent.TIMER, completeTimer);
 			
@@ -294,6 +370,13 @@ package core.game
 		public function set powers_container		(value:Sprite)					:void { _powers_container			.addChild(value); }
 		public function set interface_container		(value:DisplayObject)			:void { _interface_container		.addChild(value); }
 		
+		public function set attack_item	(value:Boolean) :void { TweenLite.to(_attack_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set crystal_item	(value:Boolean) :void { TweenLite.to(_crystal_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set defense_item	(value:Boolean) :void { TweenLite.to(_defense_item_light,.2, { alpha : value?1 : 0 }); }
+		public function set gold_item		(value:Boolean) :void { TweenLite.to(_gold_item_light,		.2, { alpha : value?1 : 0 }); }
+		public function set metal_item		(value:Boolean) :void { TweenLite.to(_metal_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set speed_item		(value:Boolean) :void { TweenLite.to(_speed_item_light,	.2, { alpha : value?1 : 0 }); }
+		
 		public function set metal(value:int):void
 		{
 			_total_metal += value;
@@ -310,6 +393,16 @@ package core.game
 		{
 			_total_money += value;
 			_money_label.text = 'Money : ' + _total_money;
+		}
+		
+		public function set life_bar(value:int):void
+		{
+			TweenLite.to(_life_bar_mask, .2, { scaleX : value / (GameState.game.hero.is_defense_item? GameState.game.hero.life_init * 2: GameState.game.hero.life_init) });
+		}
+		
+		public function set shield_life_bar(value:int):void
+		{
+			TweenLite.to(_shield_bar_mask, .2, { scaleX : value / (GameState.game.hero.is_defense_item? GameState.game.hero.shield_life_init * 2: GameState.game.hero.shield_life_init) });
 		}
 	}
 }

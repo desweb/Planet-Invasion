@@ -72,8 +72,11 @@ package core.game.enemy
 				_detonator_tween = null;
 			}
 			
-			removeChild(_detonator);
-			_detonator = null;
+			if (_detonator)
+			{
+				removeChild(_detonator);
+				_detonator = null;
+			}
 			
 			super.destroy();
 		}

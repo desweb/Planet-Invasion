@@ -117,6 +117,12 @@ package core.game.enemy
 				_fire_timer = null
 			}
 			
+			if (_life)
+			{
+				removeThis();
+				return;
+			}
+			
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
