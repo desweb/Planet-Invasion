@@ -18,6 +18,8 @@ package core.game.enemy
 		
 		public function AsteroidEnemy() 
 		{
+			_life = 5;
+			
 			_graphic = new AsteroidFlash();
 			addChild(_graphic);
 			

@@ -57,7 +57,7 @@ package core.game.weapon.hero
 		{
 			var gun:ReinforcementGun = new ReinforcementGun();
 			gun.x = this.x;
-			GameState.game.weapons_container.addChild(gun);
+			GameState.game.weapons_container = gun;
 			
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)
@@ -78,7 +78,7 @@ package core.game.weapon.hero
 			for each (var ship:ReinforcementShip in _ships)
 				ship.destroy();
 			
-			GameState.game.powers_container.removeChild(this);
+			parent.removeChild(this);
 		}
 	}
 }

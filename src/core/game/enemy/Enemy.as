@@ -19,12 +19,17 @@ package core.game.enemy
 	 */
 	public class Enemy extends Sprite
 	{
+		// Const
 		protected static const TWEEN_COMPLETE_DETROY_TRUE	:uint = 1;
 		protected static const TWEEN_COMPLETE_DETROY_FALSE	:uint = 2;
 		
 		// Initialize
-		protected	var _life	:int;
-		public		var is_kill	:Boolean = false;
+		protected	var _life					:int;
+		protected	var _collision_damage:int;
+		protected	var _metal				:int;
+		protected	var _crystal				:int;
+		protected	var _money				:int;
+		public		var is_kill					:Boolean = false;
 		
 		protected var dt:Number = 0;
 		
@@ -36,7 +41,7 @@ package core.game.enemy
 		
 		private var _isPaused:Boolean = false;
 		
-		protected var _collision_damage:int;
+		private var _fire_timer:Timer;
 		
 		protected var _target_x:int;
 		
@@ -46,12 +51,16 @@ package core.game.enemy
 		
 		public function Enemy() 
 		{
+			if (!_life)									_life									= 1;
+			if (!_collision_damage)				_collision_damage				= 5;
+			if (!_metal)								_metal								= 1;
+			if (!_crystal)								_crystal								= 1;
+			if (!_money)								_money							= 1;
+			if (!_target_x)							_target_x							= -width;
+			if (!_tween_complete_destroy)	_tween_complete_destroy	= TWEEN_COMPLETE_DETROY_TRUE;
+			
 			x = GameState.stageWidth+50;
 			if (!y) y = Tools.random(0, GameState.stageHeight - 50);
-			
-			if (!_collision_damage)				_collision_damage				= 5;
-			if (!_target_x)							_target_x							= -100;
-			if (!_tween_complete_destroy)	_tween_complete_destroy	= TWEEN_COMPLETE_DETROY_TRUE;
 			
 			if (!_tween) _tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: completeTween } );
 			
@@ -99,6 +108,13 @@ package core.game.enemy
 			{
 				_tween.pause();
 				_tween.kill();
+			}
+			
+			if (_fire_timer)
+			{
+				_fire_timer.removeEventListener(TimerEvent.TIMER, completeFireTimer);
+				_fire_timer.stop();
+				_fire_timer = null
 			}
 			
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
@@ -149,6 +165,19 @@ package core.game.enemy
 		}
 		
 		/**
+		 * Fires
+		 */
+		
+		protected function launchFireTimer():void
+		{
+			_fire_timer = new Timer(1000);
+			_fire_timer.start();
+			_fire_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
+		}
+		
+		protected function completeFireTimer(e:TimerEvent):void {}
+		
+		/**
 		 * Hits
 		 */
 		
@@ -158,7 +187,14 @@ package core.game.enemy
 			
 			_life -= damage;
 			
-			if (_life <= 0) destroy();
+			if (_life <= 0)
+			{
+				GameState.game.metal		= _metal;
+				GameState.game.crystal	= _crystal;
+				GameState.game.money	= _money;
+				
+				destroy();
+			}
 		}
 		
 		/**

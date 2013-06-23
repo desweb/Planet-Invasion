@@ -15,8 +15,6 @@ package core.game.enemy
 	 */
 	public class TurretEnemy extends Enemy
 	{
-		private var _fire_gun_timer:Timer = new Timer(1000);
-		
 		public function TurretEnemy() 
 		{
 			_life = 10;
@@ -30,8 +28,7 @@ package core.game.enemy
 			
 			super();
 			
-			_fire_gun_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
-			_fire_gun_timer.start();
+			launchFireTimer();
 		}
 		
 		/**
@@ -45,24 +42,13 @@ package core.game.enemy
 			super.update(e);
 		}
 		
-		override public function destroy():void
-		{
-			if (is_kill) return;
-			
-			_fire_gun_timer.stop();
-			_fire_gun_timer.removeEventListener(TimerEvent.TIMER, completeFireTimer);
-			_fire_gun_timer = null;
-			
-			super.destroy();
-		}
-		
 		/**
 		 * Events
 		 */
 		
-		private function completeFireTimer(e:TimerEvent):void
+		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container.addChild(new GunTurretEnemy(this));
+			GameState.game.weapons_container = new GunTurretEnemy(this);
 		}
 	}
 }

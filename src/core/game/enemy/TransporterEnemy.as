@@ -15,8 +15,6 @@ package core.game.enemy
 	 */
 	public class TransporterEnemy extends Enemy
 	{
-		private var _fire_gun_timer:Timer = new Timer(1000);
-		
 		private var _fighter_timer		:Number;
 		private var _fighter_timer_init	:uint = 5;
 		
@@ -37,8 +35,7 @@ package core.game.enemy
 			
 			super();
 			
-			_fire_gun_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
-			_fire_gun_timer.start();
+			launchFireTimer();
 		}
 		
 		/**
@@ -60,25 +57,14 @@ package core.game.enemy
 			_fighter_timer = _fighter_timer_init;
 		}
 		
-		override public function destroy():void
-		{
-			if (is_kill) return;
-			
-			_fire_gun_timer.stop();
-			_fire_gun_timer.removeEventListener(TimerEvent.TIMER, completeFireTimer);
-			_fire_gun_timer = null;
-			
-			super.destroy();
-		}
-		
 		/**
 		 * Events
 		 */
 		
-		private function completeFireTimer(e:TimerEvent):void
+		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container.addChild(new EnemyGun(Common.FIRE_MIDDLE_LEFT,		this));
-			GameState.game.weapons_container.addChild(new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this));
+			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_LEFT,	this);
+			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this);
 		}
 		
 		/**
@@ -87,8 +73,8 @@ package core.game.enemy
 		
 		private function launchFighter():void
 		{
-			GameState.game.enemies_container.addChild(new LightFighterEnemy(true, this));
-			GameState.game.enemies_container.addChild(new LightFighterEnemy(true, this));
+			GameState.game.enemies_container = new LightFighterEnemy(true, this);
+			GameState.game.enemies_container = new LightFighterEnemy(true, this);
 		}
 	}
 }

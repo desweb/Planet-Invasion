@@ -18,7 +18,7 @@ package core.game
 	import core.game.weapon.hero.HeroMissileHoming;
 	import core.game.weapon.hero.IEM;
 	import core.game.weapon.hero.Reinforcement;
-	import core.scene.Scene;
+	import core.scene.GameScene;
 	
 	/**
 	 * ...
@@ -243,6 +243,8 @@ package core.game
 		private function removeThis():void
 		{
 			GameState.game.destroyElement(this);
+			
+			if (!_life) GameState.game.loose();
 		}
 		
 		/**
@@ -431,8 +433,6 @@ package core.game
 		
 		private function completeShieldRepopTimer(e:TimerEvent):void
 		{
-			trace('complete');
-			
 			_shield_repop_timer.stop();
 			
 			displayShield();
@@ -513,25 +513,25 @@ package core.game
 		{
 			if (_is_gun_double && _is_tri_force)
 			{
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_TOP_LEFT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_TOP_RIGHT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_BOTTOM_LEFT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_BOTTOM_RIGHT));
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_TOP_LEFT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_TOP_RIGHT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_RIGHT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_BOTTOM_LEFT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_BOTTOM_RIGHT);
 			}
 			else if (_is_gun_double)
 			{
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_RIGHT);
 			}
 			else if (_is_tri_force)
 			{
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_DEFAULT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_TOP_DEFAULT);
+				GameState.game.weapons_container = new HeroGun(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container.addChild(new HeroGun(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_GUN]['is_timer'] = true;
 			_fireGunTimer.start();
@@ -541,11 +541,11 @@ package core.game
 		{
 			if (_is_tri_force)
 			{
-				GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container = new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
+				GameState.game.weapons_container = new HeroLaser(Common.FIRE_TOP_DEFAULT);
+				GameState.game.weapons_container = new HeroLaser(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container.addChild(new HeroLaser(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container = new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_LAZER]['is_timer'] = true;
 			_fireLazerTimer.start();
@@ -555,25 +555,25 @@ package core.game
 		{
 			if (_is_missile_double && _is_tri_force)
 			{
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_TOP_LEFT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_TOP_RIGHT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_BOTTOM_LEFT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_BOTTOM_RIGHT));
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_LEFT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_RIGHT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_RIGHT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_BOTTOM_LEFT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_BOTTOM_RIGHT);
 			}
 			else if (_is_missile_double)
 			{
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_LEFT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_RIGHT));
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_RIGHT);
 			}
 			else if (_is_tri_force)
 			{
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_DEFAULT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_DEFAULT);
+				GameState.game.weapons_container = new HeroMissile(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container.addChild(new HeroMissile(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_MISSILE]['is_timer'] = true;
 			_fireMissileTimer.start();
@@ -583,11 +583,11 @@ package core.game
 		{
 			if (_is_tri_force)
 			{
-				GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_TOP_DEFAULT));
-				GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT));
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_DEFAULT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container.addChild(new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT));
+			else GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;
 			_fireMissileHomingTimer.start();
@@ -601,7 +601,7 @@ package core.game
 		{
 			if (!_is_iem) return;
 			
-			GameState.game.powers_container.addChild(new IEM());
+			GameState.game.powers_container = new IEM();
 			
 			_keys[KEY_IEM]['is_timer'] = true;
 			_fireIEMTimer.start();
@@ -611,7 +611,7 @@ package core.game
 		{
 			if (!_is_bombardment) return;
 			
-			GameState.game.powers_container.addChild(new Bombardment());
+			GameState.game.powers_container = new Bombardment();
 			
 			_keys[KEY_BOMBARDMENT]['is_timer'] = true;
 			_fireBombardmentTimer.start();
@@ -621,7 +621,7 @@ package core.game
 		{
 			if (!_is_reinforcement) return;
 			
-			GameState.game.powers_container.addChild(new Reinforcement());
+			GameState.game.powers_container = new Reinforcement();
 			
 			_keys[KEY_REINFORCEMENT]['is_timer'] = true;
 			_fireReinforcementTimer.start();

@@ -17,7 +17,6 @@ package core.game.enemy
 	 */
 	public class DestroyerEnemy extends Enemy
 	{
-		private var _fire_timer								:Timer = new Timer(1000);
 		private var _fire_laser_timer						:uint;
 		private var _fire_missile_timer					:uint;
 		private var _fire_missile_homing_timer		:uint;
@@ -42,31 +41,17 @@ package core.game.enemy
 			
 			super();
 			
-			_fire_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
-			_fire_timer.start();
-		}
-		
-		/**
-		 * Overrides
-		 */
-		
-		override public function destroy():void 
-		{
-			_fire_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
-			_fire_timer.stop();
-			_fire_timer = null;
-			
-			super.destroy();
+			launchFireTimer();
 		}
 		
 		/**
 		 * Events
 		 */
 		
-		private function completeFireTimer(e:TimerEvent):void
+		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container.addChild(new EnemyGun(Common.FIRE_MIDDLE_LEFT,		this));
-			GameState.game.weapons_container.addChild(new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this));
+			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_LEFT,	this);
+			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this);
 			
 			_fire_laser_timer--;
 			_fire_missile_timer--;
@@ -74,23 +59,23 @@ package core.game.enemy
 			
 			if (_fire_laser_timer < 1)
 			{
-				GameState.game.weapons_container.addChild(new EnemyLaser(Common.FIRE_MIDDLE_DEFAULT, this));
+				GameState.game.weapons_container = new EnemyLaser(Common.FIRE_MIDDLE_DEFAULT, this);
 				
 				_fire_laser_timer = _fire_laser_timer_init;
 			}
 			
 			if (_fire_missile_timer < 1)
 			{
-				GameState.game.weapons_container.addChild(new EnemyMissile(Common.FIRE_TOP_DEFAULT,			this));
-				GameState.game.weapons_container.addChild(new EnemyMissile(Common.FIRE_BOTTOM_DEFAULT,	this));
+				GameState.game.weapons_container = new EnemyMissile(Common.FIRE_TOP_DEFAULT,		this);
+				GameState.game.weapons_container = new EnemyMissile(Common.FIRE_BOTTOM_DEFAULT,	this);
 				
 				_fire_missile_timer = _fire_missile_timer_init;
 			}
 			
 			if (_fire_missile_homing_timer < 1)
 			{
-				GameState.game.weapons_container.addChild(new EnemyMissileHoming(Common.FIRE_TOP_DEFAULT,			this));
-				GameState.game.weapons_container.addChild(new EnemyMissileHoming(Common.FIRE_BOTTOM_DEFAULT,	this));
+				GameState.game.weapons_container = new EnemyMissileHoming(Common.FIRE_TOP_DEFAULT,			this);
+				GameState.game.weapons_container = new EnemyMissileHoming(Common.FIRE_BOTTOM_DEFAULT,	this);
 				
 				_fire_missile_homing_timer = _fire_missile_homing_timer_init;
 			}

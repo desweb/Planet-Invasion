@@ -8,7 +8,7 @@ package core.game.weapon.enemy
 	
 	import core.Common;
 	import core.GameState;
-	import core.game.enemy.TurretEnemy;
+	import core.game.enemy.AlienEnemy;
 	import core.game.weapon.Gun;
 	import core.utils.Tools;
 	
@@ -16,18 +16,16 @@ package core.game.weapon.enemy
 	 * ...
 	 * @author desweb
 	 */
-	public class GunTurretEnemy extends Gun
+	public class GunAlienEnemy extends Gun
 	{
 		
-		public function GunTurretEnemy(enemy:TurretEnemy) 
+		public function GunAlienEnemy(enemy:AlienEnemy) 
 		{
 			_owner			= enemy;
 			_owner_type	= Common.OWNER_ENEMY;
 			
-			var pos:Point = Tools.pointOnCirclePerimeter(new Point(_owner.x, _owner.y), _owner.rotation - 180, 20);
-			
-			x = pos.x;
-			y = pos.y;
+			x = enemy.x;
+			y = enemy.y;
 			
 			super();
 			

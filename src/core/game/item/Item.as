@@ -33,7 +33,7 @@ package core.game.item
 			
 			_tween = new TweenLite(this, Tools.random(SPEED_MIN, SPEED_MAX), { x : -100, onComplete:destroy } );
 			
-			GameState.game.itemsContainer.addChild(this);
+			GameState.game.items_container = this;
 			
 			addEventListener(Event.ENTER_FRAME, update);
 		}

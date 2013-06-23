@@ -25,8 +25,6 @@ package core.scene
 		
 		public function GameScene(type:uint, level:uint = 0) 
 		{
-			if (Common.IS_DEBUG) trace('create GameScene ' + type);
-			
 			switch (type)
 			{
 				case Common.SCENE_GAME_ADVENTURE	: _game = new GameAdventure(level);	break;
@@ -75,8 +73,6 @@ package core.scene
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy GameScene');
-			
 			_game.destroy();
 			
 			super.destroy();

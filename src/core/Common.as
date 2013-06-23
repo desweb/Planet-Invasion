@@ -113,6 +113,18 @@ package core
 		public static const ITEM_METAL		:uint = 5;
 		public static const ITEM_SPEED		:uint = 6;
 		
+		// Enemies
+		public static const ALIEN_ENEMY					:uint = 1;
+		public static const ASTEROID_ENEMY			:uint = 2;
+		public static const CRUISER_ENEMY				:uint = 3;
+		public static const DESTROYER_ENEMY			:uint = 4;
+		public static const HEAVY_FIGHTER_ENEMY	:uint = 5;
+		public static const KAMIKAZE_ENEMY			:uint = 6;
+		public static const LIGHT_FIGHTER_ENEMY	:uint = 7;
+		public static const MINE_ENEMY					:uint = 8;
+		public static const TRANSPORTER_ENEMY		:uint = 9;
+		public static const TURRET_ENEMY				:uint = 10;
+		
 		// Owner
 		public static const OWNER_HERO	:uint = 1;
 		public static const OWNER_ENEMY:uint = 2;
