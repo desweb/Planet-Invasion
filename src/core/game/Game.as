@@ -12,6 +12,7 @@ package core.game
 	
 	import com.greensock.TweenLite;
 	
+	import core.API;
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
@@ -70,8 +71,11 @@ package core.game
 		private var _metal_item_light		:ItemMetalLightFlash;
 		private var _speed_item_light		:ItemSpeedLightFlash;
 		
+		public var total_boost_pick:int = 0;
+		
 		// Enemies
 		public var enemies:Array = new Array();
+		public var total_enemy_kill			:int			= 0;
 		private var _speedEnemy			:int			= 5;
 		private var _speedEnemyTimer	:Number	= 2;
 		
@@ -276,10 +280,24 @@ package core.game
 			GameState.user.metal	+= _total_metal;
 			GameState.user.crystal	+= _total_crystal;
 			GameState.user.money	+= _total_money;
+			GameState.user.score	+= _total_metal + _total_crystal + _total_money;
 			
+			// Metal, crystal & money achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_METAL,		_total_metal);
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_CRYSTAL,	_total_crystal);
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MONEY,		_total_money);
+			
+			API.post_userStat(function(response:XML):void { } );
+			
+			// Natural death achievement
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_NATURAL_DEATH, 1);
+			
+			// Serial killer achievement
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);
+			
+			// Mister booster achievement
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER, total_boost_pick);
+			
 		}
 		
 		protected function win():void
@@ -293,10 +311,20 @@ package core.game
 			GameState.user.metal	+= _total_metal;
 			GameState.user.crystal	+= _total_crystal;
 			GameState.user.money	+= _total_money;
+			GameState.user.score	+= _total_metal + _total_crystal + _total_money;
 			
+			// Metal, crystal & money achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_METAL,		_total_metal);
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_CRYSTAL,	_total_crystal);
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MONEY,		_total_money);
+			
+			API.post_userStat(function(response:XML):void { } );
+			
+			// Serial killer achievement
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);
+			
+			// Mister booster achievement
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER, total_boost_pick);
 		}
 		
 		/**

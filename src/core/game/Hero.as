@@ -300,6 +300,8 @@ package core.game
 		
 		public function hitItem(type:int):void
 		{
+			GameState.game.total_boost_pick++;
+			
 			switch(type)
 			{
 				case Common.ITEM_ATTACK		: launchAttackItem		(); break;

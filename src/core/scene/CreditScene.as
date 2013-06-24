@@ -7,7 +7,6 @@ package core.scene
 	
 	import com.scroll.ScrollManager;
 	
-	import core.API;
 	import core.Common;
 	import core.GameState;
 	
@@ -76,10 +75,7 @@ package core.scene
 			addChild(_scroll);
 			
 			// Achievement
-			if (checkAchievement(Common.ACHIEVEMENT_CURIOSITY, 1))
-			{
-				if (GameState.user.isLog) API.post_achievementKey(Common.ACHIEVEMENT_CURIOSITY, function(response:XML):void {});
-			}
+			checkAchievement(Common.ACHIEVEMENT_CURIOSITY, 1);
 		}
 	}
 }

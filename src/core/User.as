@@ -139,6 +139,7 @@ package core
 		public function set key							(value:String):void	{ _key								= value; }
 		public function set username					(value:String):void	{ _username						= value; }
 		public function set email							(value:String):void	{ _email							= value; }
+		public function set score							(value:int)		:void	{ _score							= value; }
 		public function set level_adventure			(value:int)		:void { _level_adventure			= value; }
 		public function set metal							(value:int)		:void { _metal							= value; }
 		public function set crystal						(value:int)		:void { _crystal							= value; }

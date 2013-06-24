@@ -10,6 +10,7 @@ package core.scene
 	import com.greensock.TweenLite;
 	
 	import core.Achievement;
+	import core.API;
 	import core.Common;
 	import core.GameState;
 	import core.Interface;
@@ -167,7 +168,10 @@ package core.scene
 			
 			if (achievement.score <= achievement_user['score'])
 			{
-				achievement_user['is_unlock'] = true;
+				achievement_user['score']			= achievement.score;
+				achievement_user['is_unlock']	= true;
+				
+				if (GameState.user.isLog) API.post_achievementKey(key, function(response:XML):void {});
 				
 				var achievement_popup:AchievementPopup = new AchievementPopup(key);
 				

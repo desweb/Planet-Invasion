@@ -11,6 +11,7 @@ package core.game.enemy
 	
 	import core.Common;
 	import core.GameState;
+	import core.scene.SceneManager;
 	import core.utils.Tools;
 	
 	/**
@@ -90,6 +91,9 @@ package core.game.enemy
 			
 			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
 			
+			// Roadhog achievement
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_ROADHOG, 1);
+			
 			GameState.game.hero.hitWeapon(_collision_damage);
 			destroy();
 		}
@@ -122,6 +126,8 @@ package core.game.enemy
 				removeThis();
 				return;
 			}
+			
+			GameState.game.total_enemy_kill++;
 			
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			

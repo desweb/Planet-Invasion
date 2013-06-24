@@ -17,6 +17,7 @@ package core.game
 	import core.GameState;
 	import core.game.enemy.LightFighterEnemy;
 	import core.game.enemy.MineEnemy;
+	import core.scene.SceneManager;
 	import core.utils.Tools;
 	
 	/**
@@ -151,6 +152,9 @@ package core.game
 		override protected function win():void
 		{
 			_is_win = true;
+			
+			// Conqueror achievement
+			if (GameState.user.level_adventure == 4 && _current_level == 5) SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_CONQUEROR, 1);
 			
 			if (GameState.user.level_adventure < _current_level) GameState.user.level_adventure = _current_level;
 			
