@@ -95,6 +95,9 @@ package core.game.enemy
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_ROADHOG, 1);
 			
 			GameState.game.hero.hitWeapon(_collision_damage);
+			
+			_life = 0;
+			
 			destroy();
 		}
 		
