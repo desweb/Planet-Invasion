@@ -1,6 +1,8 @@
 package core.popup 
 {
+	import flash.events.TimerEvent;
 	import flash.text.TextField;
+	import flash.utils.Timer;
 	
 	import core.Achievement;
 	import core.Common;
@@ -12,6 +14,8 @@ package core.popup
 	 */
 	public class AchievementPopup extends Popup implements IPopup
 	{
+		private var _destroy_timer:Timer = new Timer(5000);
+		
 		public function AchievementPopup(key:String) 
 		{
 			if (Common.IS_DEBUG) trace('create AchievementPopup');
@@ -38,17 +42,31 @@ package core.popup
 			label.setTextFormat(Common.getPolicy('MyArialPolicy', 0x00FF00, 20));
 			label.text			= 'Achievement unlocked : ' + achievement.name;
 			setPopupContent(label);
+			
+			_destroy_timer.start();
+			_destroy_timer.addEventListener(TimerEvent.TIMER, completeDestroyTimer);
 		}
 		
 		/**
-		 * Override
+		 * Overrides
 		 */
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy AchievementPopup');
+			_destroy_timer.removeEventListener(TimerEvent.TIMER, completeDestroyTimer);
+			_destroy_timer.stop();
+			_destroy_timer = null;
 			
 			super.destroy();
+		}
+		
+		/**
+		 * Events
+		 */
+		
+		private function completeDestroyTimer(e:TimerEvent):void
+		{
+			destroy();
 		}
 	}
 }

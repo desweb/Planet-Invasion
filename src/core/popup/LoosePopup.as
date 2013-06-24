@@ -17,7 +17,7 @@ package core.popup
 		public function LoosePopup() 
 		{
 			generateBackground();
-			generateContent();
+			generateContent(false);
 			
 			setTitleText('Loose');
 			

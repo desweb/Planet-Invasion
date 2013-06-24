@@ -60,12 +60,14 @@ package core.popup
 		}
 		
 		// Content
-		protected function generateContent():void
+		protected function generateContent(is_close:Boolean = true):void
 		{
 			_popup	= new Sprite();
 			_title		= new TextField();
-			_close	= new BtnCloseFlash();
 			
+			if (!is_close) return;
+			
+			_close	= new BtnCloseFlash();
 			_close.addEventListener(MouseEvent.CLICK, clickClose);
 		}
 		
@@ -88,6 +90,8 @@ package core.popup
 			_title.selectable = false;
 			_title.setTextFormat(Common.getPolicy('Arial', 0x00ffff, 20, 'left'));
 			_popup.addChild(_title);
+			
+			if (!_close) return;
 			
 			// Close
 			_close.y = 5;
@@ -150,9 +154,12 @@ package core.popup
 		
 		public function destroy():void
 		{
-			_close.removeEventListener(MouseEvent.CLICK,				clickClose);
-			_close.removeEventListener(MouseEvent.MOUSE_OVER,	over);
-			_close.removeEventListener(MouseEvent.MOUSE_OUT,		out);
+			if (_close)
+			{
+				_close.removeEventListener(MouseEvent.CLICK,				clickClose);
+				_close.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+				_close.removeEventListener(MouseEvent.MOUSE_OUT,		out);
+			}
 			
 			TweenLite.to(this, ANIM_TIMER, {alpha:0, onComplete:SceneManager.getInstance().scene.removeChild, onCompleteParams:[this]});
 		}

@@ -17,7 +17,7 @@ package core.popup
 		public function VictoryPopup() 
 		{
 			generateBackground();
-			generateContent();
+			generateContent(false);
 			
 			setTitleText('Victory');
 			
