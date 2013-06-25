@@ -15,7 +15,7 @@ package core.game
 		{
 			if (Common.IS_DEBUG) trace('create GameSurvival');
 			
-			
+			super(Common.GAME_SURVIVAL_KEY);
 		}
 		
 		/**

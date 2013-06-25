@@ -48,7 +48,7 @@ package core.scene
 		
 		public var is_alien_menu:Boolean = false;
 		private var _alien_create_time	:Number;
-		private var _alien_create_timer	:Number = 2;
+		private var _alien_create_timer	:Number = 10;
 		
 		public function Scene()
 		{

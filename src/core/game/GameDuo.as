@@ -15,7 +15,7 @@ package core.game
 		{
 			if (Common.IS_DEBUG) trace('create GameDuo');
 			
-			
+			super(Common.GAME_DUO_KEY);
 		}
 		
 		/**

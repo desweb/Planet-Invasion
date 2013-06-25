@@ -156,7 +156,10 @@ package core
 					{
 						get_improvement(function(responseImprovement:XML):void
 						{
-							complete(response);
+							get_game(function(responseGame:XML):void
+							{
+								complete(response);
+							});
 						});
 					});
 				});
@@ -426,7 +429,7 @@ package core
 			function(response:XML):void
 			{
 				for each (var improvement:XML in response.improvements.improvement)
-					GameState.user.improvements[improvement.key] = improvement.level;
+					GameState.user.improvements[improvement.key] = int(improvement.level);
 				
 				complete(response);
 			});
@@ -475,29 +478,44 @@ package core
 			basicHTTPRequest(URLRequestMethod.GET, 'game', vars, true,
 			function(response:XML):void
 			{
+				for each(var game:XML in response.games.game)
+				{
+					GameState.user.games[game.key]['total_metal']					= int(game.total_metal);
+					GameState.user.games[game.key]['total_crystal']				= int(game.total_crystal);
+					GameState.user.games[game.key]['total_money']				= int(game.total_money);
+					GameState.user.games[game.key]['score']							= int(game.score);
+					GameState.user.games[game.key]['total_time']					= int(game.total_time);
+					GameState.user.games[game.key]['best_time']					= int(game.best_time);
+					GameState.user.games[game.key]['total_boost_attack']		= int(game.total_boost_attack);
+					GameState.user.games[game.key]['total_boost_speed']		= int(game.total_boost_speed);
+					GameState.user.games[game.key]['total_boost_resistance']	= int(game.total_boost_resistance);
+				}
+				
 				complete(response);
 			});
 		}
 		
 		// POST game/key
-		public static function post_gameKey(key:String, total_metal:int, total_crystal:int, total_money:int, score:int, total_time:int, best_time:int, total_boost_attack:int, total_boost_speed:int, total_boost_resistance:int, complete:Function):void
+		public static function post_gameKey(key:String, complete:Function):void
 		{
 			// Params
 			var vars:URLVariables = new URLVariables();
-			vars.total_metal					= total_metal;
-			vars.total_crystal				= total_crystal;
-			vars.total_money				= total_money;
-			vars.score							= score;
-			vars.total_time					= total_time;
-			vars.best_time					= best_time;
-			vars.total_boost_attack		= total_boost_attack;
-			vars.total_boost_speed		= total_boost_speed;
-			vars.total_boost_resistance	= total_boost_resistance;
+			vars.total_metal					= GameState.user.games[key]['total_metal'];
+			vars.total_crystal				= GameState.user.games[key]['total_crystal'];
+			vars.total_money				= GameState.user.games[key]['total_money'];
+			vars.score							= GameState.user.games[key]['score'];
+			vars.total_time					= GameState.user.games[key]['total_time'];
+			vars.best_time					= GameState.user.games[key]['best_time'];
+			vars.total_boost_attack		= GameState.user.games[key]['total_boost_attack'];
+			vars.total_boost_speed		= GameState.user.games[key]['total_boost_speed'];
+			vars.total_boost_resistance	= GameState.user.games[key]['total_boost_resistance'];
 			
 			// Request
 			basicHTTPRequest(URLRequestMethod.POST, 'game/' + key, vars, true,
 			function(response:XML):void
 			{
+				trace(response);
+				
 				complete(response);
 			});
 		}

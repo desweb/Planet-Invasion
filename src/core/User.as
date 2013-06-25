@@ -23,8 +23,9 @@ package core
 		private var _crystal				:int;
 		private var _money				:int;
 		
-		private var _improvements	:Array;
-		private var _achievements	:Array;
+		private	var _improvements:Array;
+		private	var _achievements	:Array;
+		public	var games				:Array;
 		
 		public var isLog:Boolean;
 		
@@ -83,6 +84,24 @@ package core
 			createAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER);
 			createAchievement(Common.ACHIEVEMENT_CURIOSITY);
 			createAchievement(Common.ACHIEVEMENT_ALIEN_BLAST);
+			
+			games = new Array();
+			games[Common.GAME_ADVENTURE_KEY]	= new Array();
+			games[Common.GAME_SURVIVAL_KEY]		= new Array();
+			games[Common.GAME_DUO_KEY]				= new Array();
+			
+			for each (var game:Array in games)
+			{
+				game['total_metal']					= 0;
+				game['total_crystal']					= 0;
+				game['total_money']					= 0;
+				game['score']							= 0;
+				game['total_time']						= 0;
+				game['best_time']						= 0;
+				game['total_boost_attack']			= 0;
+				game['total_boost_speed']			= 0;
+				game['total_boost_resistance']	= 0;
+			}
 		}
 		
 		public function login(accessToken:String, expiredAt:int):void

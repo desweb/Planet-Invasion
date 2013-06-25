@@ -38,12 +38,14 @@ package core.game
 	{
 		// Init
 		protected var _is_pause:Boolean = false;
+		private var _current_game_key:String;
 		protected var _current_level:int;
 		
 		// Time
 		private		var _t	:int;
 		protected	var _dt	:Number;
 		private		var _timer:Timer = new Timer(1000);
+		protected	var _total_time:Number = 0;
 		
 		// Containers
 		private var _hero_container			:Sprite = new Sprite();
@@ -55,9 +57,9 @@ package core.game
 		private var _interface_container		:Sprite = new Sprite();
 		
 		// Interface
-		private var _total_metal			:int;
-		private var _total_crystal		:int;
-		private var _total_money		:int;
+		protected var _total_metal			:int;
+		protected var _total_crystal		:int;
+		protected var _total_money		:int;
 		private var _metal_label			:TextField;
 		private var _crystal_label		:TextField;
 		private var _money_label		:TextField;
@@ -72,7 +74,10 @@ package core.game
 		private var _metal_item_light		:ItemMetalLightFlash;
 		private var _speed_item_light		:ItemSpeedLightFlash;
 		
-		public var total_boost_pick:int = 0;
+		public var total_boost_pick			:int = 0;
+		public var total_boost_attack		:int = 0;
+		public var total_boost_speed		:int = 0;
+		public var total_boost_resistance	:int = 0;
 		
 		// Enemies
 		public var enemies:Array = new Array();
@@ -88,8 +93,10 @@ package core.game
 		 * Constructor
 		 */
 		
-		public function Game() 
+		public function Game(game_key:String) 
 		{
+			_current_game_key = game_key;
+			
 			GameState.game = this;
 			
 			Mouse.hide();
@@ -237,6 +244,8 @@ package core.game
 		protected function update():void
 		{
 			if (_is_pause) return;
+			
+			_total_time += _dt;
 		}
 		
 		/**
@@ -277,27 +286,10 @@ package core.game
 			parent.addChild(loose_popup);
 			loose_popup.display();
 			
-			GameState.user.metal	+= _total_metal;
-			GameState.user.crystal	+= _total_crystal;
-			GameState.user.money	+= _total_money;
-			GameState.user.score	+= _total_metal + _total_crystal + _total_money;
-			
-			// Metal, crystal & money achievement
-			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_METAL,		_total_metal);
-			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_CRYSTAL,	_total_crystal);
-			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MONEY,		_total_money);
-			
-			API.post_userStat(function(response:XML):void { } );
-			
 			// Natural death achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_NATURAL_DEATH, 1);
 			
-			// Serial killer achievement
-			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);
-			
-			// Mister booster achievement
-			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER, total_boost_pick);
-			
+			end();
 		}
 		
 		protected function win():void
@@ -308,6 +300,11 @@ package core.game
 			parent.addChild(victory_popup);
 			victory_popup.display();
 			
+			end();
+		}
+		
+		protected function end():void
+		{
 			GameState.user.metal	+= _total_metal;
 			GameState.user.crystal	+= _total_crystal;
 			GameState.user.money	+= _total_money;
@@ -319,6 +316,22 @@ package core.game
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MONEY,		_total_money);
 			
 			API.post_userStat(function(response:XML):void { } );
+			
+			var score:int = _total_metal + _total_crystal + _total_money;
+			
+			GameState.user.games[_current_game_key]['total_metal']					+= _total_metal;
+			GameState.user.games[_current_game_key]['total_crystal']					+= _total_crystal;
+			GameState.user.games[_current_game_key]['total_money']					+= _total_money;
+			GameState.user.games[_current_game_key]['score']							+= score;
+			GameState.user.games[_current_game_key]['total_time']						+= int(_total_time);
+			GameState.user.games[_current_game_key]['total_boost_attack']			+= total_boost_attack;
+			GameState.user.games[_current_game_key]['total_boost_speed']			+= total_boost_speed;
+			GameState.user.games[_current_game_key]['total_boost_resistance']	+= total_boost_resistance;
+			
+			if (GameState.user.games[_current_game_key]['best_time'] > _total_time || 
+				GameState.user.games[_current_game_key]['best_time'] == 0) GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
+			
+			API.post_gameKey(_current_game_key, function(response:XML):void { } );
 			
 			// Serial killer achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);

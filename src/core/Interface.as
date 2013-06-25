@@ -58,7 +58,7 @@ package core
 			return tab;
 		}
 		
-		protected function generateBtn(txt:String, frame:int = 1):BtnFlash
+		protected function generateBtn(txt:String, frame:int = Common.FRAME_BTN_DEFAULT):BtnFlash
 		{
 			var btn:BtnFlash = new BtnFlash();
 			btn.mouseChildren = false;

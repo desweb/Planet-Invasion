@@ -498,6 +498,8 @@ package core.game
 		
 		private function launchAttackItem():void
 		{
+			GameState.game.total_boost_attack++;
+			
 			if (is_attack_item)
 			{
 				_attack_item_timer.reset();
@@ -526,6 +528,8 @@ package core.game
 		
 		private function launchDefenseItem():void
 		{
+			GameState.game.total_boost_resistance++;
+			
 			if (is_defense_item)
 			{
 				_defense_item_timer.reset();
@@ -570,6 +574,8 @@ package core.game
 		
 		private function launchSpeedItem():void
 		{
+			GameState.game.total_boost_speed++;
+			
 			if (is_speed_item)
 			{
 				_speed_item_timer.reset();

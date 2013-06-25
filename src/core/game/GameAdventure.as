@@ -13,6 +13,7 @@ package core.game
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import core.API;
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.LightFighterEnemy;
@@ -52,6 +53,8 @@ package core.game
 			
 			_timer.start();
 			_timer.addEventListener(TimerEvent.TIMER, completeTimer);
+			
+			super(Common.GAME_ADVENTURE_KEY);
 		}
 		
 		/**

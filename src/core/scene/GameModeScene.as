@@ -28,8 +28,6 @@ package core.scene
 		
 		public function GameModeScene() 
 		{
-			if (Common.IS_DEBUG) trace('create GameModeScene');
-			
 			/**
 			 * Initialization
 			 */
@@ -76,8 +74,6 @@ package core.scene
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy GameModeScene');
-			
 			_improvements_btn	.removeEventListener(MouseEvent.CLICK, clickImprovements);
 			_adventure_btn			.removeEventListener(MouseEvent.CLICK, clickAdventure);
 			_survival_btn				.removeEventListener(MouseEvent.CLICK, clickSurvival);
