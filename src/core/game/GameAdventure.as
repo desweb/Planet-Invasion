@@ -26,7 +26,6 @@ package core.game
 	 */
 	public class GameAdventure extends Game implements IGame
 	{
-		private var _current_level:int;
 		private var _is_win:Boolean = false;
 		private var _timer:Timer = new Timer(1000);
 		

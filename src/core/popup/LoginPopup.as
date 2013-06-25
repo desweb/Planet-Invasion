@@ -29,13 +29,11 @@ package core.popup
 		
 		public function LoginPopup() 
 		{
-			if (Common.IS_DEBUG) trace('create LoginPopup');
-			
 			generateBackground();
 			generateContent();
 			
 			setTitleText('Login');
-			setPopupHeight(GameState.stageHeight	* .5);
+			setPopupHeight(GameState.stageHeight * .5);
 			
 			generatePopup();
 			
@@ -86,8 +84,6 @@ package core.popup
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy LoginPopup');
-			
 			_submitBtn.removeEventListener(MouseEvent.CLICK, clickSubmit);
 			
 			super.destroy();

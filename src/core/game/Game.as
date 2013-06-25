@@ -38,6 +38,7 @@ package core.game
 	{
 		// Init
 		protected var _is_pause:Boolean = false;
+		protected var _current_level:int;
 		
 		// Time
 		private		var _t	:int;
@@ -382,8 +383,12 @@ package core.game
 		 * Getters
 		 */
 		
-		public function get dt		():Number	{ return _dt; }
-		public function get hero	():Hero		{ return _hero; }
+		public function get dt					():Number	{ return _dt; }
+		public function get hero				():Hero		{ return _hero; }
+		public function get current_level	():int			{ return _current_level; }
+		public function get metal				():int			{ return _total_metal; }
+		public function get crystal			():int			{ return _total_crystal; }
+		public function get money			():int			{ return _total_money; }
 		
 		/**
 		 * Setters
