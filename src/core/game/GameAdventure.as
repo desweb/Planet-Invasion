@@ -138,6 +138,15 @@ package core.game
 		override public function pause():void
 		{
 			super.pause();
+			
+			_timer.stop();
+		}
+		
+		override public function resume():void
+		{
+			super.resume();
+			
+			_timer.reset();
 		}
 		
 		override public function destroy():void

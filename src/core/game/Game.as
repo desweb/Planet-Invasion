@@ -36,13 +36,13 @@ package core.game
 	 */
 	public class Game extends Sprite
 	{
+		// Init
+		protected var _is_pause:Boolean = false;
+		
 		// Time
 		private		var _t	:int;
 		protected	var _dt	:Number;
 		private		var _timer:Timer = new Timer(1000);
-		
-		// Game state
-		protected var _gameState:GameState;
 		
 		// Containers
 		private var _hero_container			:Sprite = new Sprite();
@@ -82,7 +82,6 @@ package core.game
 		// Hero
 		protected var _hero:Hero;
 		
-		private var _isPaused:Boolean = false;
 		
 		/**
 		 * Constructor
@@ -91,8 +90,6 @@ package core.game
 		public function Game() 
 		{
 			GameState.game = this;
-			
-			_gameState = GameState.getInstance();
 			
 			Mouse.hide();
 			
@@ -238,7 +235,7 @@ package core.game
 		
 		protected function update():void
 		{
-			if (_isPaused) return;
+			if (_is_pause) return;
 		}
 		
 		/**
@@ -247,22 +244,24 @@ package core.game
 		
 		public function pause():void
 		{
-			_isPaused = true;
+			_is_pause = true;
 			
 			Mouse.show();
 			
 			_hero.pause();
+			_timer.stop();
 			
 			for each(var e:Enemy in enemies) e.pause();
 		}
 		
 		public function resume():void
 		{
-			_isPaused = false;
+			_is_pause = false;
 			
 			Mouse.hide();
 			
 			_hero.resume();
+			_timer.reset();
 			
 			for each(var e:Enemy in enemies) e.resume();
 		}

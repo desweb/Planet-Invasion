@@ -7,6 +7,7 @@ package core.game.item
 	import com.greensock.TweenLite;
 	
 	import core.GameState;
+	import core.SoundManager;
 	import core.utils.Tools;
 	
 	/**
@@ -68,6 +69,8 @@ package core.game.item
 				removeThis();
 				return;
 			}
+			
+			SoundManager.getInstance().play('item');
 			
 			_tween = new TweenLite(this, .5, { scaleX : 2, scaleY : 2, alpha : 0, onComplete:removeThis });
 		}

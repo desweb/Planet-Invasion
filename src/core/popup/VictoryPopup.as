@@ -4,6 +4,7 @@ package core.popup
 	import flash.events.MouseEvent;
 	
 	import core.Common;
+	import core.SoundManager;
 	import core.scene.SceneManager;
 	
 	/**
@@ -24,6 +25,8 @@ package core.popup
 			generatePopup();
 			
 			_back_menu_btn = generateBtn('Back to menu');
+			
+			SoundManager.getInstance().play('win');
 			
 			// Events
 			_back_menu_btn.addEventListener(MouseEvent.CLICK, clickBackMenuBtn);

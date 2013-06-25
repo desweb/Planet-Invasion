@@ -7,6 +7,7 @@ package core.game.weapon
 	
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * ...
@@ -34,6 +35,8 @@ package core.game.weapon
 			//if (isEnemy()) rotation = 180;
 			
 			propellantTween();
+			
+			SoundManager.getInstance().play('missile');
 		}
 		
 		/**

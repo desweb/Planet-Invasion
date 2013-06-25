@@ -18,8 +18,7 @@ package core.scene
 	{
 		private static var _instance:SceneManager;
 		
-		private var _menu_sound				:Sound;
-		private var _menu_sound_channel	:SoundChannel;
+		private var _menu_sound_channel:SoundChannel;
 		
 		private var _current_scene_uid:uint;
 		
@@ -52,6 +51,12 @@ package core.scene
 		public function setCurrentScene(scene_uid:uint, level:uint = 0):void
 		{
 			if (_current_scene_uid) _old_scene = _current_scene;
+			
+			if (scene_uid == Common.SCENE_GAME_ADVENTURE || 
+				scene_uid == Common.SCENE_GAME_SURVIVAL || 
+				scene_uid == Common.SCENE_GAME_DUO)
+					stopSound();
+			else	playSound();
 			
 			_current_scene = checkNewScene(scene_uid, level);
 			_current_scene.alpha = 0;
@@ -99,8 +104,7 @@ package core.scene
 			
 			SoundManager.getInstance().available = Common.SOUND_ON;
 			
-			_menu_sound = SoundManager.getInstance().menu;
-			_menu_sound_channel = _menu_sound.play();
+			_menu_sound_channel = SoundManager.getInstance().menu.play();
 			_menu_sound_channel.addEventListener(Event.SOUND_COMPLETE, boucleSound);
 		}
 		
@@ -112,8 +116,6 @@ package core.scene
 			
 			_menu_sound_channel.stop();
 			_menu_sound_channel.removeEventListener(Event.SOUND_COMPLETE, boucleSound);
-			_menu_sound = null;
-			_menu_sound_channel = null;
 		}
 		
 		/**
@@ -122,7 +124,12 @@ package core.scene
 		
 		private function boucleSound(e:Event):void
 		{
-			_menu_sound_channel = _menu_sound.play();
+			if (!_menu_sound_channel) return;
+			
+			_menu_sound_channel = SoundManager.getInstance().menu.play();
+			
+			if (!_menu_sound_channel) return;
+			
 			_menu_sound_channel.removeEventListener(Event.SOUND_COMPLETE, boucleSound);
 			_menu_sound_channel.addEventListener		(Event.SOUND_COMPLETE, boucleSound);
 		}

@@ -4,6 +4,8 @@ package core.game.weapon
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import core.SoundManager;
+	
 	/**
 	 * ...
 	 * @author desweb
@@ -22,6 +24,8 @@ package core.game.weapon
 			_life_timer.addEventListener(TimerEvent.TIMER, completeLifeTimer);
 			
 			_life_timer.start();
+			
+			SoundManager.getInstance().play('laser');
 		}
 		
 		/**

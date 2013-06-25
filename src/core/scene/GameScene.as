@@ -4,6 +4,7 @@ package core.scene
 	import flash.events.KeyboardEvent;
 	
 	import core.Common;
+	import core.GameState;
 	import core.game.Game;
 	import core.game.GameAdventure;
 	import core.game.GameDuo;
@@ -21,7 +22,7 @@ package core.scene
 		
 		private var _game:Game;
 		
-		private var _isPaused:Boolean = false;
+		private var _is_pause:Boolean = false;
 		
 		public function GameScene(type:uint, level:uint = 0) 
 		{
@@ -49,9 +50,9 @@ package core.scene
 		
 		public function pause():void
 		{
-			if (_isPaused) return;
+			if (_is_pause) return;
 			
-			_isPaused = true;
+			_is_pause = true;
 			
 			_game.pause();
 			
@@ -62,7 +63,7 @@ package core.scene
 		
 		public function resume(e:Event):void
 		{
-			_isPaused = false;
+			_is_pause = false;
 			
 			_game.resume();
 		}
@@ -84,7 +85,7 @@ package core.scene
 		
 		private function downKey(e:KeyboardEvent):void
 		{
-			if (String.fromCharCode(e.charCode) != KEY_PAUSE) return;
+			if (String.fromCharCode(e.charCode) != KEY_PAUSE || GameState.game.hero.is_kill) return;
 			
 			pause();
 		}

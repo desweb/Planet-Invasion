@@ -11,6 +11,7 @@ package core.game
 	import core.Common;
 	import core.GameState;
 	import core.Improvement;
+	import core.SoundManager;
 	import core.game.weapon.hero.Bombardment;
 	import core.game.weapon.hero.HeroLaser;
 	import core.game.weapon.hero.HeroGun;
@@ -144,6 +145,8 @@ package core.game
 			
 			TweenLite.to(this, 1, { x : width / 2 + 50, onComplete:start });
 			
+			SoundManager.getInstance().play('propellant');
+			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
@@ -255,6 +258,8 @@ package core.game
 			_speed_item_timer	.removeEventListener(TimerEvent.TIMER, completeSpeedItemTimer);
 			
 			gotoAndStop(Common.FRAME_ENTITY_DEAD);
+			
+			SoundManager.getInstance().play('explosion');
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
 			
@@ -476,6 +481,8 @@ package core.game
 			_shield_life += _shield_regen;
 			
 			if (_shield_life > _shield_life_init) _shield_life = _shield_life_init;
+			
+			GameState.game.shield_life_bar = _shield_life;
 		}
 		
 		private function completeShieldRepopTimer(e:TimerEvent):void

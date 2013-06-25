@@ -27,8 +27,6 @@ package core.scene
 		
 		public function AlienMenu()
 		{
-			if (Common.IS_DEBUG) trace('create AlienMenu');
-			
 			addEventListener(MouseEvent.CLICK, click);
 			
 			TweenPlugin.activate([BezierPlugin]);
@@ -104,8 +102,6 @@ package core.scene
 		
 		private function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy AlienMenu');
-			
 			removeEventListener(MouseEvent.CLICK, click);
 			
 			if (_tween)
@@ -144,8 +140,6 @@ package core.scene
 		
 		private function click(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuAlienHit();
-			
 			_life--;
 			
 			if (_life > 0) return;
@@ -153,10 +147,7 @@ package core.scene
 			SoundManager.getInstance().playMenuAlienDead();
 			
 			// Achievement
-			if (SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_ALIEN_BLAST, 1))
-			{
-				if (GameState.user.isLog) API.post_achievementKey(Common.ACHIEVEMENT_ALIEN_BLAST, function(response:XML):void {});
-			}
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_ALIEN_BLAST, 1);
 			
 			destroy();
 		}

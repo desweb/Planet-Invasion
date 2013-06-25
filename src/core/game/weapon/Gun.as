@@ -6,6 +6,7 @@ package core.game.weapon
 	import com.greensock.easing.Linear;
 	
 	import core.Common;
+	import core.SoundManager;
 	import core.GameState;
 	
 	/**
@@ -23,6 +24,8 @@ package core.game.weapon
 			
 			_graphic = new GunFlash();
 			addChild(_graphic);
+			
+			SoundManager.getInstance().play('gun');
 		}
 		
 		/**
@@ -39,10 +42,5 @@ package core.game.weapon
 			
 			_tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}
-		
-		/**
-		 * Functions
-		 */
-		
 	}
 }

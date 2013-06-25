@@ -8,6 +8,7 @@ package core.game.weapon
 	
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * ...
@@ -41,6 +42,8 @@ package core.game.weapon
 			addChild(_propellant);
 			
 			propellantTween();
+			
+			SoundManager.getInstance().play('missile');
 		}
 		
 		/**

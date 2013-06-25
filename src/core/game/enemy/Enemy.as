@@ -3,7 +3,7 @@ package core.game.enemy
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.TimerEvent
+	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
@@ -11,6 +11,7 @@ package core.game.enemy
 	
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	import core.scene.SceneManager;
 	import core.utils.Tools;
 	
@@ -64,6 +65,8 @@ package core.game.enemy
 			if (!y) y = Tools.random(0, GameState.stageHeight - 50);
 			
 			if (!_tween) _tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: completeTween } );
+			
+			SoundManager.getInstance().play('propellant');
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -133,6 +136,8 @@ package core.game.enemy
 			GameState.game.total_enemy_kill++;
 			
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
+			
+			SoundManager.getInstance().play('explosion');
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
 			
