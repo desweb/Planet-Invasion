@@ -24,8 +24,6 @@ package core.scene
 		
 		private var _is_pause:Boolean = false;
 		
-		private var _pause_popup:PausePopup;
-		
 		public function GameScene(type:uint, level:uint = 0) 
 		{
 			switch (type)
@@ -62,14 +60,11 @@ package core.scene
 			addChild(pause_popup);
 			pause_popup.display();
 			
-			//_pause_popup = pause_popup;
 		}
 		
 		public function resume(e:Event):void
 		{
 			_is_pause = false;
-			
-			//_pause_popup.close();
 			
 			_game.resume();
 		}

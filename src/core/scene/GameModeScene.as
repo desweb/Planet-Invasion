@@ -100,10 +100,10 @@ package core.scene
 		
 		private function clickSurvival(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButtonError();
-			
 			if (!GameState.user.isLog || GameState.user.level_adventure < 5)
 			{
+				SoundManager.getInstance().playMenuButtonError();
+				
 				var error_popup:ErrorPopup = new ErrorPopup();
 				error_popup.setText('You must be logged in & have finished the adventure mode\nto access to survival mode.');
 				addChild(error_popup);
@@ -112,6 +112,7 @@ package core.scene
 				return;
 			}
 			
+			SoundManager.getInstance().playMenuButton();
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
 		}
 		

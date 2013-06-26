@@ -47,9 +47,9 @@ package core
 			
 			_score					= 0;
 			_level_adventure	= 0;
-			_metal					= 1000;
-			_crystal					= 1000;
-			_money				= 1000;
+			_metal					= 100;
+			_crystal					= 100;
+			_money				= 100;
 			
 			_improvements = new Array();
 			_improvements[Common.IMPROVEMENT_ARMOR_RESIST]	=

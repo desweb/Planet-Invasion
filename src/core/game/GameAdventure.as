@@ -1,5 +1,11 @@
 package core.game 
 {
+	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	
+	import core.Common;
+	import core.GameState;
 	import core.game.enemy.AlienEnemy;
 	import core.game.enemy.AsteroidEnemy;
 	import core.game.enemy.CruiserEnemy;
@@ -7,17 +13,10 @@ package core.game
 	import core.game.enemy.Enemy;
 	import core.game.enemy.HeavyFighterEnemy;
 	import core.game.enemy.KamikazeEnemy;
-	import core.game.enemy.TransporterEnemy;
-	import core.game.enemy.TurretEnemy;
-	import flash.events.Event;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	
-	import core.API;
-	import core.Common;
-	import core.GameState;
 	import core.game.enemy.LightFighterEnemy;
 	import core.game.enemy.MineEnemy;
+	import core.game.enemy.TransporterEnemy;
+	import core.game.enemy.TurretEnemy;
 	import core.scene.SceneManager;
 	import core.utils.Tools;
 	
@@ -126,16 +125,6 @@ package core.game
 		/**
 		 * Overrides
 		 */
-		
-		override public function initialize(e:Event):void
-		{
-			super.initialize(e);
-		}
-		
-		override protected function update():void
-		{
-			super.update();
-		}
 		
 		override public function pause():void
 		{

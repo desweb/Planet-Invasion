@@ -299,6 +299,7 @@ package core.game
 			Mouse.show();
 			
 			var loose_popup:LoosePopup = new LoosePopup();
+			loose_popup.current_game_key = _current_game_key;
 			parent.addChild(loose_popup);
 			loose_popup.display();
 			
@@ -335,7 +336,7 @@ package core.game
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_CRYSTAL,	_total_crystal);
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MONEY,		_total_money);
 			
-			API.post_userStat(function(response:XML):void { } );
+			if (GameState.user.isLog) API.post_userStat(function(response:XML):void { } );
 			
 			var score:int = _total_metal + _total_crystal + _total_money;
 			
@@ -351,7 +352,7 @@ package core.game
 			if (GameState.user.games[_current_game_key]['best_time'] > _total_time || 
 				GameState.user.games[_current_game_key]['best_time'] == 0) GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
 			
-			API.post_gameKey(_current_game_key, function(response:XML):void { } );
+			if (GameState.user.isLog) API.post_gameKey(_current_game_key, function(response:XML):void { } );
 			
 			// Serial killer achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);

@@ -62,9 +62,18 @@ package core.scene
 			_current_scene.alpha = 0;
 			GameState.main.addChild(_current_scene);
 			
-			TweenLite.to(_current_scene, .5, {alpha:1});
-			
-			if (_old_scene) TweenLite.to(_old_scene, .5, { alpha:0, onComplete:destroyOldScene });
+			// Hack cause multiple click on improvement scene = unremove children
+			if (_current_scene_uid == Common.SCENE_IMPROVEMENT && scene_uid == Common.SCENE_IMPROVEMENT)
+			{
+				destroyOldScene();
+				_current_scene.alpha = 1;
+			}
+			else
+			{
+				TweenLite.to(_current_scene, .25, { alpha:1 });
+				
+				if (_old_scene) TweenLite.to(_old_scene, .25, { alpha:0, onComplete:destroyOldScene });
+			}
 			
 			_current_scene_uid = scene_uid;
 		}
@@ -105,6 +114,9 @@ package core.scene
 			SoundManager.getInstance().available = Common.SOUND_ON;
 			
 			_menu_sound_channel = SoundManager.getInstance().menu.play();
+			
+			if (!_menu_sound_channel) return;
+			
 			_menu_sound_channel.addEventListener(Event.SOUND_COMPLETE, boucleSound);
 		}
 		
