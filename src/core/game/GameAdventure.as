@@ -66,8 +66,8 @@ package core.game
 			switch(_current_level)
 			{
 				case 1:
-					_total_wave_init			= 1;
-					_wave_timer_init		= 10;
+					_total_wave_init			= 3;
+					_wave_timer_init		= 30;
 					_wave_launch_timer	= 3;
 					
 					_nb_enemies[Common.ALIEN_ENEMY]			= 2;
@@ -148,7 +148,7 @@ package core.game
 		{
 			super.resume();
 			
-			_timer.reset();
+			_timer.start();
 		}
 		
 		override public function destroy():void

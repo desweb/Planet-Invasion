@@ -31,7 +31,7 @@ package core.game
 		private	var _life						:int;
 		private	var _life_init					:int;
 		private	var _is_available_move	:Boolean = false;
-		private var _isPaused					:Boolean = false;
+		private var _is_pause					:Boolean = false;
 		public	var is_kill						:Boolean = false;
 		private var _mobility					:Number = 1;
 		
@@ -201,7 +201,7 @@ package core.game
 		
 		private function update(e:Event):void
 		{
-			if (_isPaused) return;
+			if (_is_pause) return;
 			
 			var dt:Number = GameState.game.dt;
 			
@@ -291,12 +291,15 @@ package core.game
 		
 		public function pause():void
 		{
-			_isPaused = true;
+			_is_pause = true;
+			
+			for each(var key:Array in _keys)
+				key['is_down'] = false;
 		}
 		
 		public function resume():void
 		{
-			_isPaused = false;
+			_is_pause = false;
 		}
 		
 		/**
@@ -420,7 +423,7 @@ package core.game
 		
 		private function downKey(e:KeyboardEvent):void
 		{
-			if (_isPaused) return;
+			if (_is_pause || GameState.game.is_finish) return;
 			
 			var keyCode:String = String.fromCharCode(e.charCode);
 			
@@ -450,7 +453,7 @@ package core.game
 		
 		private function upKey(e:KeyboardEvent):void
 		{
-			if (_isPaused) return;
+			if (_is_pause) return;
 			
 			switch (String.fromCharCode(e.charCode))
 			{
@@ -467,7 +470,7 @@ package core.game
 		
 		private function mouseMove(e:MouseEvent):void
 		{
-			if (!_is_available_move || _isPaused) return;
+			if (!_is_available_move || _is_pause || GameState.game.is_finish) return;
 			
 			TweenLite.to(this, _mobility, { x:GameState.main.mouseX, y:GameState.main.mouseY });
 		}

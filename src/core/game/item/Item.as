@@ -19,6 +19,7 @@ package core.game.item
 		private static const SPEED_MIN:uint = 10;
 		private static const SPEED_MAX:uint = 2;
 		
+		private var _is_pause:Boolean = false;
 		private var _is_hit:Boolean = false;
 		
 		protected var _type:uint;
@@ -29,6 +30,8 @@ package core.game.item
 		
 		public function Item() 
 		{
+			GameState.game.items[GameState.game.items.length] = this;
+			
 			x = GameState.stageWidth + 100;
 			y = Tools.random(100 / 2, GameState.stageHeight - 100 / 2);
 			
@@ -41,7 +44,7 @@ package core.game.item
 		
 		private function update(e:Event):void
 		{
-			if (_is_hit) return;
+			if (_is_hit || _is_pause) return;
 			
 			// Hero hit
 			if (hitTestObject(GameState.game.hero))
@@ -85,5 +88,28 @@ package core.game.item
 			
 			parent.removeChild(this);
 		}
+		
+		/**
+		 * Manage
+		 */
+		
+		public function pause():void
+		{
+			if (_is_pause) return;
+			
+			_is_pause = true;
+			
+			_tween.pause();
+		}
+		
+		public function resume():void
+		{
+			if (!_is_pause) return;
+			
+			_is_pause = false;
+			
+			_tween.resume();
+		}
+		
 	}
 }

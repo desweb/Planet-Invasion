@@ -21,6 +21,7 @@ package core.game.weapon
 	{
 		private var _is_hit		:Boolean = false;
 		private var _isKilled	:Boolean = false;
+		protected var _is_pause:Boolean = false;
 		protected var _is_hit_destroy:Boolean = true;
 		
 		public var dt:Number = 0;
@@ -40,6 +41,8 @@ package core.game.weapon
 		
 		public function Weapon()
 		{
+			GameState.game.weapons[GameState.game.weapons.length] = this;
+			
 			// Default position
 			switch (_fire_type)
 			{
@@ -172,6 +175,8 @@ package core.game.weapon
 		// Update
 		protected function update(e:Event):void
 		{
+			if (_is_pause) return;
+			
 			dt = GameState.game.dt;
 			
 			if			(isHero())		heroUpdate();
@@ -241,6 +246,24 @@ package core.game.weapon
 		private function removeThis():void
 		{
 			parent.removeChild(this);
+		}
+		
+		/**
+		 * Manage
+		 */
+		
+		public function pause():void
+		{
+			_is_pause = true;
+			
+			if (_tween) _tween.pause();
+		}
+		
+		public function resume():void
+		{
+			_is_pause = false;
+			
+			if (_tween) _tween.resume();
 		}
 		
 		/**

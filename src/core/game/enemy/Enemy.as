@@ -32,6 +32,7 @@ package core.game.enemy
 		protected	var _crystal				:int;
 		protected	var _money				:int;
 		public		var is_kill					:Boolean = false;
+		protected var _is_pause				:Boolean = false;
 		
 		protected var dt:Number = 0;
 		
@@ -41,7 +42,6 @@ package core.game.enemy
 		protected var _tween_complete_destroy:uint;
 		protected var _is_tween_finish:Boolean = false;
 		
-		private var _isPaused:Boolean = false;
 		
 		private var _fire_timer:Timer;
 		
@@ -172,14 +172,18 @@ package core.game.enemy
 		
 		public function pause():void
 		{
-			_isPaused = true;
+			_is_pause = true;
+			
+			if (_fire_timer) _fire_timer.stop();
 			
 			_tween.pause();
 		}
 		
 		public function resume():void
 		{
-			_isPaused = false;
+			_is_pause = false;
+			
+			if (_fire_timer) _fire_timer.start();
 			
 			_tween.resume();
 		}

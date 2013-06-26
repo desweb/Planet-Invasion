@@ -122,13 +122,22 @@ package core.popup
 		}
 		
 		/**
+		 * Manage
+		 */
+		
+		public function close():void
+		{
+			SoundManager.getInstance().playMenuButtonClose();
+			destroy();
+		}
+		
+		/**
 		 * Events
 		 */
 		
 		private function clickClose(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButtonClose();
-			destroy();
+			close();
 		}
 		
 		/**

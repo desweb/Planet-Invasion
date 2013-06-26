@@ -54,6 +54,20 @@ package core.game.weapon
 			super.destroy();
 		}
 		
+		override public function pause():void 
+		{
+			_life_timer.stop();
+			
+			super.pause();
+		}
+		
+		override public function resume():void 
+		{
+			_life_timer.start();
+			
+			super.resume();
+		}
+		
 		/**
 		 * Events
 		 */

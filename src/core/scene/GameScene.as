@@ -18,11 +18,13 @@ package core.scene
 	public class GameScene extends Scene
 	{
 		// Const
-		private static const KEY_PAUSE:String = 'p';
+		public static const KEY_PAUSE:String = 'p';
 		
 		private var _game:Game;
 		
 		private var _is_pause:Boolean = false;
+		
+		private var _pause_popup:PausePopup;
 		
 		public function GameScene(type:uint, level:uint = 0) 
 		{
@@ -56,14 +58,18 @@ package core.scene
 			
 			_game.pause();
 			
-			var pausePopup:PausePopup = new PausePopup();
-			addChild(pausePopup);
-			pausePopup.display();
+			var pause_popup:PausePopup = new PausePopup();
+			addChild(pause_popup);
+			pause_popup.display();
+			
+			//_pause_popup = pause_popup;
 		}
 		
 		public function resume(e:Event):void
 		{
 			_is_pause = false;
+			
+			//_pause_popup.close();
 			
 			_game.resume();
 		}
@@ -87,7 +93,8 @@ package core.scene
 		{
 			if (String.fromCharCode(e.charCode) != KEY_PAUSE || GameState.game.hero.is_kill) return;
 			
-			pause();
+			if (!_is_pause)	pause();
+			else					resume(null);
 		}
 	}
 }

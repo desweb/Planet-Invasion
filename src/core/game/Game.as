@@ -40,6 +40,7 @@ package core.game
 		protected var _is_pause:Boolean = false;
 		private var _current_game_key:String;
 		protected var _current_level:int;
+		protected var _is_finish:Boolean = false;
 		
 		// Time
 		private		var _t	:int;
@@ -79,15 +80,18 @@ package core.game
 		public var total_boost_speed		:int = 0;
 		public var total_boost_resistance	:int = 0;
 		
+		// Entities
+		public var enemies		:Array = new Array();
+		public var weapons	:Array = new Array();
+		public var items			:Array = new Array();
+		
 		// Enemies
-		public var enemies:Array = new Array();
 		public var total_enemy_kill			:int			= 0;
 		private var _speedEnemy			:int			= 5;
 		private var _speedEnemyTimer	:Number	= 2;
 		
 		// Hero
 		protected var _hero:Hero;
-		
 		
 		/**
 		 * Constructor
@@ -254,33 +258,45 @@ package core.game
 		
 		public function pause():void
 		{
+			if (_is_pause) return;
+			
 			_is_pause = true;
 			
 			Mouse.show();
 			
 			_hero.pause();
-			_timer.stop();
 			
-			for each(var e:Enemy in enemies) e.pause();
+			if (_timer) _timer.stop();
+			
+			for each(var e:Enemy	in enemies) e.pause();
+			for each(var w:Weapon	in weapons) w.pause();
+			for each(var i:Item		in items) i.pause();
 		}
 		
 		public function resume():void
 		{
+			if (!_is_pause) return;
+			
 			_is_pause = false;
 			
 			Mouse.hide();
 			
 			_hero.resume();
-			_timer.reset();
 			
-			for each(var e:Enemy in enemies) e.resume();
+			if (_timer) _timer.start();
+			
+			for each(var e:Enemy	in enemies) e.resume();
+			for each(var w:Weapon	in weapons) w.resume();
+			for each(var i:Item		in items) i.resume();
 		}
 		
 		public function loose():void
 		{
-			Mouse.show();
+			if (_is_finish) return;
 			
-			for each(var e:Enemy in enemies) e.pause();
+			_is_finish = true;
+			
+			Mouse.show();
 			
 			var loose_popup:LoosePopup = new LoosePopup();
 			parent.addChild(loose_popup);
@@ -294,6 +310,10 @@ package core.game
 		
 		protected function win():void
 		{
+			if (_is_finish) return;
+			
+			_is_finish = true;
+			
 			Mouse.show();
 			
 			var victory_popup:VictoryPopup = new VictoryPopup();
@@ -397,6 +417,7 @@ package core.game
 		 */
 		
 		public function get dt					():Number	{ return _dt; }
+		public function get is_finish			():Boolean	{ return _is_finish; }
 		public function get hero				():Hero		{ return _hero; }
 		public function get current_level	():int			{ return _current_level; }
 		public function get metal				():int			{ return _total_metal; }
