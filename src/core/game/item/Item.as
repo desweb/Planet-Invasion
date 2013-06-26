@@ -99,7 +99,7 @@ package core.game.item
 			
 			_is_pause = true;
 			
-			_tween.pause();
+			if (_tween) _tween.pause();
 		}
 		
 		public function resume():void
@@ -108,7 +108,7 @@ package core.game.item
 			
 			_is_pause = false;
 			
-			_tween.resume();
+			if (_tween) _tween.resume();
 		}
 		
 	}

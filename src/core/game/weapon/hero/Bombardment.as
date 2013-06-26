@@ -30,8 +30,6 @@ package core.game.weapon.hero
 		
 		public function Bombardment()
 		{
-			if (Common.IS_DEBUG) trace('create Bombardment');
-			
 			missileTrianglePoints[0] = 0;
 			missileTrianglePoints[1] = 0;
 			missileTrianglePoints[2] = 15;
@@ -60,15 +58,17 @@ package core.game.weapon.hero
 		{
 			if (!isFinish && Tools.random(1, 3) == 1)
 			{
-				var new_m:Sprite = new Sprite();
+				var new_m:MissileFlash = new MissileFlash();
+				
+				var missile_propellant:PropellantFlash = new PropellantFlash();
+				missile_propellant.x = -new_m.width / 2;
+				missile_propellant.scaleX =
+				missile_propellant.scaleY = .5;
+				new_m.addChild(missile_propellant);
+				
 				new_m.x = Tools.random(0, GameState.stageWidth);
 				new_m.y = -20;
 				new_m.rotation = 60;
-				
-				new_m.graphics.beginFill(0xededed);
-				new_m.graphics.drawTriangles(missileTrianglePoints);
-				new_m.graphics.endFill();
-				
 				addChild(new_m);
 				
 				_lastMissile = new_m;
@@ -96,8 +96,6 @@ package core.game.weapon.hero
 		
 		public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy Bombardment');
-			
 			_timerEnemiesDetroy.stop();
 			
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);

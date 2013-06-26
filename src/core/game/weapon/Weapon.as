@@ -26,7 +26,10 @@ package core.game.weapon
 		
 		public var dt:Number = 0;
 		
-		protected var _damage:int = 1;
+		protected var _damage:int;
+		
+		protected var _damage_timer:Number = 0;
+		protected var _damage_timer_init:Number;
 		
 		public var moveSpeed:Number = 2;
 		
@@ -179,6 +182,14 @@ package core.game.weapon
 			
 			dt = GameState.game.dt;
 			
+			if (_damage_timer_init)
+			{
+				_damage_timer -= dt;
+				
+				if (_damage_timer > 0)	return;
+				else								_damage_timer = _damage_timer_init;
+			}
+			
 			if			(isHero())		heroUpdate();
 			else if	(isEnemy())	enemyUpdate();
 		}
@@ -193,6 +204,7 @@ package core.game.weapon
 				_is_hit = true;
 				
 				e_hit.hitWeapon(_damage);
+				
 				if (_is_hit_destroy) destroy();
 			}
 		}
@@ -205,6 +217,7 @@ package core.game.weapon
 			_is_hit = true;
 			
 			GameState.game.hero.hitWeapon(_damage);
+			
 			if (_is_hit_destroy) destroy();
 		}
 		

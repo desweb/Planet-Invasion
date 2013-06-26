@@ -16,14 +16,16 @@ package core.game.weapon.hero
 	{
 		public function ReinforcementGun()
 		{
-			if (Common.IS_DEBUG) trace('create ReinforcementGun');
-			
-			_fire_type = Common.FIRE_MIDDLE_DEFAULT;
+			_fire_type		= Common.FIRE_MIDDLE_DEFAULT;
+			_owner			= GameState.game.hero;
+			_owner_type	= Common.OWNER_HERO;
 			
 			y = Tools.random(0, GameState.stageHeight);
 			
 			_target_x = x + GameState.stageWidth;
 			_target_y = y;
+			
+			//super();
 		}
 		
 		/**
@@ -50,13 +52,6 @@ package core.game.weapon.hero
 				e_hit.destroy();
 				destroy();
 			}
-		}
-		
-		override public function destroy():void
-		{
-			if (Common.IS_DEBUG) trace('destroy ReinforcementGun');
-			
-			super.destroy();
 		}
 	}
 }

@@ -21,6 +21,8 @@ package core.game.weapon.enemy
 		
 		public function GunAlienEnemy(enemy:AlienEnemy) 
 		{
+			_damage = 1;
+			
 			_owner			= enemy;
 			_owner_type	= Common.OWNER_ENEMY;
 			

@@ -113,7 +113,7 @@ package core.game
 				_shield_regen = shield_regen_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_SHIELD_REGEN]];
 				
 				var shield_repop_improvement:Improvement = new Improvement(Common.IMPROVEMENT_SHIELD_REPOP);
-				_shield_repop_timer = new Timer(2000);//shield_repop_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_SHIELD_REPOP]] * 1000);
+				_shield_repop_timer = new Timer(shield_repop_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_SHIELD_REPOP]] * 1000);
 				
 				_shield_regen_timer = new Timer(1000);
 				_shield_regen_timer.start();
@@ -354,6 +354,8 @@ package core.game
 		
 		private function displayShield():void
 		{
+			if (is_kill) return;
+			
 			_shield_life = _shield_life_init;
 			
 			destroyShield();

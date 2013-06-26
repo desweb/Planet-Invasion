@@ -16,6 +16,8 @@ package core.game.weapon.enemy
 		
 		public function EnemyGun(type:uint, enemy:Enemy) 
 		{
+			_damage = 1;
+			
 			_fire_type		= type;
 			_owner			= enemy;
 			_owner_type	= Common.OWNER_ENEMY;

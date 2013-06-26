@@ -21,8 +21,6 @@ package core.game.weapon.hero
 		
 		public function Reinforcement()
 		{
-			if (Common.IS_DEBUG) trace('create Reinforcement');
-			
 			for (var i:int = 0; i < 4; i++)
 			{
 				for (var i2:int = 0; i2 < 5; i2++)
@@ -56,7 +54,7 @@ package core.game.weapon.hero
 		public function update(e:Event):void
 		{
 			var gun:ReinforcementGun = new ReinforcementGun();
-			gun.x = this.x;
+			gun.x = x + 50;
 			GameState.game.weapons_container = gun;
 			
 			// Enemy hit
@@ -71,8 +69,6 @@ package core.game.weapon.hero
 		// Destroy
 		public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy Reinforcement');
-			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
 			for each (var ship:ReinforcementShip in _ships)

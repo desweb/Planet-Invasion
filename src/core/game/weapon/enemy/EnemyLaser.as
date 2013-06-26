@@ -17,6 +17,9 @@ package core.game.weapon.enemy
 		
 		public function EnemyLaser(type:uint, enemy:Enemy) 
 		{
+			_damage = 5;
+			_damage_timer_init = .25;
+			
 			_fire_type				= type;
 			_owner					= enemy;
 			_override_owner	= enemy;
