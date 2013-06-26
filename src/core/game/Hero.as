@@ -633,7 +633,7 @@ package core.game
 			is_defense_item = false;
 			_defense_item_timer.stop();
 			
-			_life /= 2;
+			_life = int(_life / 2);
 			
 			GameState.game.defense_item = is_defense_item;
 		}
