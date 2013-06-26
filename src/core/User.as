@@ -46,7 +46,7 @@ package core
 			isLog = false;
 			
 			_score					= 0;
-			_level_adventure	= 5;
+			_level_adventure	= 0;
 			_metal					= 1000;
 			_crystal					= 1000;
 			_money				= 1000;
@@ -56,17 +56,17 @@ package core
 			_improvements[Common.IMPROVEMENT_GUN_DAMAGE]		=
 			_improvements[Common.IMPROVEMENT_GUN_CADENCE]	= 1;
 			
-			_improvements[Common.IMPROVEMENT_GUN_DOUBLE]						= 1;
+			_improvements[Common.IMPROVEMENT_GUN_DOUBLE]						=
 			_improvements[Common.IMPROVEMENT_SHIELD_RESIST]					=
 			_improvements[Common.IMPROVEMENT_SHIELD_REGEN]					=
 			_improvements[Common.IMPROVEMENT_SHIELD_REPOP]					=
 			_improvements[Common.IMPROVEMENT_LASER_DAMAGE]					=
 			_improvements[Common.IMPROVEMENT_MISSILE_DAMAGE]				=
-			_improvements[Common.IMPROVEMENT_MISSILE_CADENCE]				= 0;
-			_improvements[Common.IMPROVEMENT_MISSILE_DOUBLE]					= 1;
+			_improvements[Common.IMPROVEMENT_MISSILE_CADENCE]				=
+			_improvements[Common.IMPROVEMENT_MISSILE_DOUBLE]					=
 			_improvements[Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE]	=
-			_improvements[Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER]	= 0;
-			_improvements[Common.IMPROVEMENT_TRI_FORCE]							= 1;
+			_improvements[Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER]	=
+			_improvements[Common.IMPROVEMENT_TRI_FORCE]							=
 			_improvements[Common.IMPROVEMENT_IEM]										=
 			_improvements[Common.IMPROVEMENT_BOMB]									=
 			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;

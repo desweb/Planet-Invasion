@@ -61,13 +61,13 @@ package core.game
 		private var _shield_tween_timer	:int = 1;
 		
 		// Timers
-		private var _fireGunTimer					:Timer = new Timer(100);
-		private var _fireLazerTimer					:Timer = new Timer(1000);
-		private var _fireMissileTimer				:Timer = new Timer(1000);
-		private var _fireMissileHomingTimer	:Timer = new Timer(1000);
-		private var _fireIEMTimer					:Timer = new Timer(5000);
-		private var _fireBombardmentTimer	:Timer = new Timer(5000);
-		private var _fireReinforcementTimer	:Timer = new Timer(5000);
+		private var _fireGunTimer					:Timer;
+		private var _fireLazerTimer					:Timer = new Timer(5000);
+		private var _fireMissileTimer				:Timer;
+		private var _fireMissileHomingTimer	:Timer = new Timer(5000);
+		private var _fireIEMTimer					:Timer = new Timer(30000);
+		private var _fireBombardmentTimer	:Timer = new Timer(30000);
+		private var _fireReinforcementTimer	:Timer = new Timer(30000);
 		
 		// Items
 		public	var is_attack_item		:Boolean = false;
@@ -90,6 +90,9 @@ package core.game
 		private var _is_iem					:Boolean;
 		private var _is_bombardment		:Boolean;
 		private var _is_reinforcement		:Boolean;
+		
+		private var _total_missile_homing:int;
+		private var _laser:int;
 		
 		/**
 		 * Constructor
@@ -131,6 +134,20 @@ package core.game
 			_is_iem					= GameState.user.improvements[Common.IMPROVEMENT_IEM]						? true: false;
 			_is_bombardment	= GameState.user.improvements[Common.IMPROVEMENT_BOMB]					? true: false;
 			_is_reinforcement	= GameState.user.improvements[Common.IMPROVEMENT_REINFORCE]			? true: false;
+			
+			var gun_cadence_improvement:Improvement = new Improvement(Common.IMPROVEMENT_GUN_CADENCE);
+			_fireGunTimer = new Timer(gun_cadence_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_GUN_CADENCE]] * 1000);
+			
+			var missile_cadence_improvement:Improvement = new Improvement(Common.IMPROVEMENT_MISSILE_CADENCE);
+			
+			if (missile_cadence_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_MISSILE_CADENCE]])
+				_fireMissileTimer = new Timer(missile_cadence_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_MISSILE_CADENCE]] * 1000);
+			
+			var missile_search_number_improvement:Improvement = new Improvement(Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER);
+			_total_missile_homing = missile_search_number_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_MISSILE_SEARCH_NUMBER]];
+			
+			var laser_damage_improvement:Improvement = new Improvement(Common.IMPROVEMENT_LASER_DAMAGE);
+			_laser = laser_damage_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_LASER_DAMAGE]];
 			
 			// Position
 			x = -width;
@@ -181,7 +198,7 @@ package core.game
 			
 			_fireGunTimer					.addEventListener(TimerEvent.TIMER, enableFireGun);
 			_fireLazerTimer					.addEventListener(TimerEvent.TIMER, enableFireLazer);
-			_fireMissileTimer				.addEventListener(TimerEvent.TIMER, enableFireMissile);
+			if (_fireMissileTimer) _fireMissileTimer				.addEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer		.addEventListener(TimerEvent.TIMER, enableFireMissileHoming);
 			_fireIEMTimer					.addEventListener(TimerEvent.TIMER, enableFireIEM);
 			_fireBombardmentTimer		.addEventListener(TimerEvent.TIMER, enableFireBombardment);
@@ -244,7 +261,7 @@ package core.game
 			
 			_fireGunTimer					.removeEventListener(TimerEvent.TIMER, enableFireGun);
 			_fireLazerTimer					.removeEventListener(TimerEvent.TIMER, enableFireLazer);
-			_fireMissileTimer				.removeEventListener(TimerEvent.TIMER, enableFireMissile);
+			if (_fireMissileTimer) _fireMissileTimer				.removeEventListener(TimerEvent.TIMER, enableFireMissile);
 			_fireMissileHomingTimer		.removeEventListener(TimerEvent.TIMER, enableFireMissileHoming);
 			_fireIEMTimer					.removeEventListener(TimerEvent.TIMER, enableFireIEM);
 			_fireBombardmentTimer		.removeEventListener(TimerEvent.TIMER, enableFireBombardment);
@@ -748,6 +765,8 @@ package core.game
 		
 		private function fireLazer():void
 		{
+			if (!_laser) return;
+			
 			if (_is_tri_force)
 			{
 				GameState.game.weapons_container = new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
@@ -762,6 +781,8 @@ package core.game
 		
 		private function fireMissile():void
 		{
+			if (!_fireMissileTimer) return;
+			
 			if (_is_missile_double && _is_tri_force)
 			{
 				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_LEFT);
@@ -790,13 +811,41 @@ package core.game
 		
 		private function fireMissileHoming():void
 		{
-			if (_is_tri_force)
+			if (!_total_missile_homing) return;
+			
+			if			(_total_missile_homing == 1) GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
+			else if	(_total_missile_homing == 2)
 			{
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_DEFAULT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
 			}
-			else GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
+			else if	(_total_missile_homing == 4)
+			{
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
+			}
+			else if	(_total_missile_homing == 6)
+			{
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
+			}
+			else if	(_total_missile_homing == 8)
+			{
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_DEFAULT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT);
+				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
+			}
 			
 			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;
 			_fireMissileHomingTimer.start();

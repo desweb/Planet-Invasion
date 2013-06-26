@@ -141,14 +141,14 @@ package core.game
 		{
 			super.pause();
 			
-			_timer.stop();
+			if (_timer) _timer.stop();
 		}
 		
 		override public function resume():void
 		{
 			super.resume();
 			
-			_timer.start();
+			if (_timer) _timer.start();
 		}
 		
 		override public function destroy():void

@@ -4,6 +4,7 @@ package core.game.weapon.hero
 	
 	import core.Common;
 	import core.GameState;
+	import core.Improvement;
 	import core.game.enemy.Enemy;
 	import core.game.weapon.MissileHoming;
 	
@@ -27,6 +28,9 @@ package core.game.weapon.hero
 				case Common.FIRE_MIDDLE_DEFAULT	: _target_y = _owner.y; break;
 				case Common.FIRE_BOTTOM_DEFAULT	: _target_y = _owner.y + GameState.stageHeight; break;
 			}
+			
+			var missile_search_damage_improvement:Improvement = new Improvement(Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE);
+			_damage = missile_search_damage_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE]];
 			
 			super();
 			

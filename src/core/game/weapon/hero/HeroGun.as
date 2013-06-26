@@ -4,6 +4,7 @@ package core.game.weapon.hero
 	
 	import core.Common;
 	import core.GameState;
+	import core.Improvement;
 	import core.game.weapon.Gun;
 	
 	/**
@@ -17,6 +18,9 @@ package core.game.weapon.hero
 			_fire_type		= type;
 			_owner			= GameState.game.hero;
 			_owner_type	= Common.OWNER_HERO;
+			
+			var gun_damage_improvement:Improvement = new Improvement(Common.IMPROVEMENT_GUN_DAMAGE);
+			_damage = gun_damage_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_GUN_DAMAGE]];
 			
 			super();
 			

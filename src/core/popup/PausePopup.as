@@ -14,6 +14,7 @@ package core.popup
 	public class PausePopup extends Popup implements IPopup 
 	{
 		private var _back_menu_btn:BtnFlash;
+		private var _is_kill:Boolean = false;
 		
 		public function PausePopup()
 		{
@@ -46,6 +47,10 @@ package core.popup
 		
 		override public function destroy():void
 		{
+			if (_is_kill) return;
+			
+			_is_kill = true;
+			
 			_back_menu_btn	.removeEventListener(MouseEvent.CLICK, clickBackMenuBtn);
 			stage					.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
 			
