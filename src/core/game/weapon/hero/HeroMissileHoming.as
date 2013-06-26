@@ -44,10 +44,11 @@ package core.game.weapon.hero
 			{
 				if (eTarget && eTarget.is_kill) continue;
 				
-				if (!target || (eTarget.x < target.x && eTarget.x > GameState.game.hero.x + GameState.game.hero.width))
+				if (eTarget.x > GameState.game.hero.x)
 				{
 					isTraget = true;
 					target = eTarget;
+					break;
 				}
 			}
 			

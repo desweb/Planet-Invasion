@@ -1,5 +1,6 @@
 package core.game.weapon 
 {
+	import core.game.Hero;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -65,16 +66,14 @@ package core.game.weapon
 			else _tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}
 		
-		override protected function update(e:Event):void
-		{
-			super.update(e);
-			
-			// Target killed
-			if (isTraget && !target) destroy();
-		}
-		
 		override public function destroy():void
 		{
+			if (_tween)
+			{
+				_tween.kill();
+				_tween = null;
+			}
+			
 			if (_propellant_tween)
 			{
 				_propellant_tween.kill();
@@ -107,17 +106,28 @@ package core.game.weapon
 		
 		private function tweenPointTarget():void
 		{
-			_tweenX = x + ((target.x - x + (target.width/2)) * _ratioTouchTarget);
-			_tweenY = y + ((target.y - y + (target.height/2)) * _ratioTouchTarget);
+			var new_tween_x:int = x + ((target.x - x) * _ratioTouchTarget);
+			var new_tween_y:int = y + ((target.y - y) * _ratioTouchTarget);
 			
-			if (_ratioTouchTarget < 1) _ratioTouchTarget += 0.1;
+			if (new_tween_x == _tweenX && new_tween_y == _tweenY)
+			{
+				destroy();
+				return;
+			}
+			
+			_tweenX = new_tween_x;
+			_tweenY = new_tween_y;
+			
+			if (_ratioTouchTarget < 1) _ratioTouchTarget += .1;
 		}
 		
 		private function reinitTween():void
 		{
 			tweenPointTarget();
 			
-			var duration:Number = target.x > x? 0.1 * ((target.x - x) / 100): 0.1 * ((x - target.x) / 100);
+			if (!_tween) return;
+			
+			var duration:Number = target.x > x? .1 * ((target.x - x) / 100): .1 * ((x - target.x) / 100);
 			
 			_tween.pause();
 			_tween.kill();
