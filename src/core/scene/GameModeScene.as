@@ -17,6 +17,7 @@ package core.scene
 		private var _is_survival_restricted	:Boolean = false;
 		private var _is_duo_restricted			:Boolean = false;
 		
+		private var _tutorial_btn				:BtnFlash;
 		private var _improvements_btn	:BtnFlash;
 		private var _adventure_btn			:BtnFlash;
 		private var _survival_btn			:BtnFlash;
@@ -45,23 +46,28 @@ package core.scene
 			 * Menu
 			 */
 			
+			// Tutorial button
+			_tutorial_btn = generateBtn('Tutorial');
+			_tutorial_btn.y = GameState.stageHeight * .3;
+			
 			// Improvements button
 			_improvements_btn = generateBtn('Improvements');
-			_improvements_btn.y = GameState.stageHeight * 0.3;
+			_improvements_btn.y = GameState.stageHeight * .4;
 			
 			// Adventure button
 			_adventure_btn = generateBtn('Adventure');
-			_adventure_btn.y = GameState.stageHeight * 0.4;
+			_adventure_btn.y = GameState.stageHeight * .5;
 			
 			// Survival button
 			_survival_btn = generateBtn('Survival', Common.FRAME_BTN_LOCK);
-			_survival_btn.y = GameState.stageHeight * 0.5;
+			_survival_btn.y = GameState.stageHeight * .6;
 			
 			// Duo button
 			_duo_btn = generateBtn('Duo', Common.FRAME_BTN_LOCK);
-			_duo_btn.y = GameState.stageHeight * 0.6;
+			_duo_btn.y = GameState.stageHeight * .7;
 			
 			// Events
+			_tutorial_btn				.addEventListener(MouseEvent.CLICK, clickTutorial);
 			_improvements_btn	.addEventListener(MouseEvent.CLICK, clickImprovements);
 			_adventure_btn			.addEventListener(MouseEvent.CLICK, clickAdventure);
 			_survival_btn				.addEventListener(MouseEvent.CLICK, clickSurvival);
@@ -85,6 +91,12 @@ package core.scene
 		/**
 		 * Events
 		 */
+		
+		private function clickTutorial(e:MouseEvent):void
+		{
+			SoundManager.getInstance().playMenuButton();
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_TOTURIAL);
+		}
 		
 		private function clickImprovements(e:MouseEvent):void
 		{
@@ -123,7 +135,7 @@ package core.scene
 			if (!GameState.user.isLog)
 			{
 				var error_popup:ErrorPopup = new ErrorPopup();
-				error_popup.setText('You must be logged in to access to survival mode.');
+				error_popup.setText('You must be logged in to access to duo mode.');
 				addChild(error_popup);
 				error_popup.display();
 				

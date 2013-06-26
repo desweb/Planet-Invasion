@@ -309,7 +309,7 @@ package core.game
 			end();
 		}
 		
-		protected function win():void
+		protected function win(is_popup:Boolean = true):void
 		{
 			if (_is_finish) return;
 			
@@ -317,9 +317,12 @@ package core.game
 			
 			Mouse.show();
 			
-			var victory_popup:VictoryPopup = new VictoryPopup();
-			parent.addChild(victory_popup);
-			victory_popup.display();
+			if (is_popup)
+			{
+				var victory_popup:VictoryPopup = new VictoryPopup();
+				parent.addChild(victory_popup);
+				victory_popup.display();
+			}
 			
 			end();
 		}

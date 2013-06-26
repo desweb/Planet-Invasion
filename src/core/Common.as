@@ -38,6 +38,7 @@ package core
 		public static const SCENE_RANK						:uint = 11;
 		public static const SCENE_RESEARCH_DUO		:uint = 12;
 		public static const SCENE_SELECT_LEVEL			:uint = 13;
+		public static const SCENE_TOTURIAL				:uint = 14;
 		
 		// Frame
 		public static const FRAME_SOUND_ON	:uint = 1;

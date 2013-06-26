@@ -34,7 +34,6 @@ package core.game
 		private var _total_wave_init		:uint;
 		private var _wave_timer				:uint;
 		private var _wave_timer_init		:uint;
-		private var _wave_launch_timer	:uint;
 		private var _is_last_wave			:Boolean = false;
 		
 		// Enemies
@@ -67,7 +66,6 @@ package core.game
 				case 1:
 					_total_wave_init			= 3;
 					_wave_timer_init		= 30;
-					_wave_launch_timer	= 3;
 					
 					_nb_enemies[Common.ALIEN_ENEMY]			= 2;
 					_nb_enemies[Common.ASTEROID_ENEMY]	= 5;
@@ -75,7 +73,6 @@ package core.game
 				case 2:
 					_total_wave_init			= 4;
 					_wave_timer_init		= 30;
-					_wave_launch_timer	= 4;
 					
 					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
 					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
@@ -84,7 +81,6 @@ package core.game
 				case 3:
 					_total_wave_init			= 6;
 					_wave_timer_init		= 25;
-					_wave_launch_timer	= 5;
 					
 					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
 					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
@@ -95,7 +91,6 @@ package core.game
 				case 4:
 					_total_wave_init			= 8;
 					_wave_timer_init		= 25;
-					_wave_launch_timer	= 6;
 					
 					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
 					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
@@ -106,18 +101,18 @@ package core.game
 					_nb_enemies[Common.TURRET_ENEMY]				= 3;
 					break;
 				case 5:
-					_total_wave_init			= 10;
-					_wave_timer_init		= 20;
-					_wave_launch_timer	= 8;
+					_total_wave_init			= 1;
+					_wave_timer_init		= 5;
 					
-					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
+					_nb_enemies[Common.ASTEROID_ENEMY]	= 1;
+					/*_nb_enemies[Common.CRUISER_ENEMY]			= 5;
 					_nb_enemies[Common.DESTROYER_ENEMY]		= 2;
 					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
 					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 5;
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 5;
 					_nb_enemies[Common.MINE_ENEMY]					= 5;
 					_nb_enemies[Common.TRANSPORTER_ENEMY]	= 2;
-					_nb_enemies[Common.TURRET_ENEMY]				= 3;
+					_nb_enemies[Common.TURRET_ENEMY]				= 3;*/
 					break;
 			}
 		}
@@ -149,16 +144,18 @@ package core.game
 			super.destroy();
 		}
 		
-		override protected function win():void
+		override protected function win(is_popup:Boolean = true):void
 		{
 			_is_win = true;
 			
-			// Conqueror achievement
-			if (GameState.user.level_adventure == 4 && _current_level == 5) SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_CONQUEROR, 1);
+			if (GameState.user.level_adventure == 4 && _current_level == 5)
+			{
+				super.win(false);
+				SceneManager.getInstance().setCurrentScene(Common.SCENE_FINAL);
+			}
+			else super.win();
 			
 			if (GameState.user.level_adventure < _current_level) GameState.user.level_adventure = _current_level;
-			
-			super.win();
 		}
 		
 		/**

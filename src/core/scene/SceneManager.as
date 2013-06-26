@@ -90,19 +90,20 @@ package core.scene
 		{
 			switch (scene_uid)
 			{
-				case Common.SCENE_ACHIEVEMENT			: return new AchievementScene();	break;
-				case Common.SCENE_CREDIT					: return new CreditScene();			break;
-				case Common.SCENE_DIALOG					: return new DialogScene();			break;
-				case Common.SCENE_FINAL						: return new FinalScene();				break;
+				case Common.SCENE_ACHIEVEMENT			: return new AchievementScene();				break;
+				case Common.SCENE_CREDIT					: return new CreditScene();						break;
+				case Common.SCENE_DIALOG					: return new DialogScene();						break;
+				case Common.SCENE_FINAL						: return new FinalScene();							break;
 				case Common.SCENE_GAME_ADVENTURE	: return new GameScene(scene_uid, level);	break;
 				case Common.SCENE_GAME_SURVIVAL		: return new GameScene(scene_uid);			break;
 				case Common.SCENE_GAME_DUO				: return new GameScene(scene_uid);			break;
-				case Common.SCENE_GAME_MODE			: return new GameModeScene();		break;
-				case Common.SCENE_IMPROVEMENT			: return new ImprovementScene();	break;
-				case Common.SCENE_MENU						: return new MenuScene();				break;
-				case Common.SCENE_RANK						: return new RankScene();				break;
-				case Common.SCENE_RESEARCH_DUO		: return new ResearchDuoScene();	break;
-				case Common.SCENE_SELECT_LEVEL			: return new SelectLevelScene();	break;
+				case Common.SCENE_GAME_MODE			: return new GameModeScene();					break;
+				case Common.SCENE_IMPROVEMENT			: return new ImprovementScene();				break;
+				case Common.SCENE_MENU						: return new MenuScene();							break;
+				case Common.SCENE_RANK						: return new RankScene();							break;
+				case Common.SCENE_RESEARCH_DUO		: return new ResearchDuoScene();				break;
+				case Common.SCENE_SELECT_LEVEL			: return new SelectLevelScene();				break;
+				case Common.SCENE_TOTURIAL				: return new TutorialScene();						break;
 				default														: return new MenuScene();
 			}
 		}
