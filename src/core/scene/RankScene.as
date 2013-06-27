@@ -11,6 +11,7 @@ package core.scene
 	import core.API;
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * General ranking & ranking of adventure, survival & duo mode
@@ -214,6 +215,8 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRank.visible) return;
 			
+			SoundManager.getInstance().playMenuButton();
+			
 			_title_label.text = 'General ranking';
 			
 			_scrollRank				.visible = true;
@@ -233,6 +236,8 @@ package core.scene
 		private function clickTabRankAdventure(e:Event):void
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankAdventure.visible) return;
+			
+			SoundManager.getInstance().playMenuButton();
 			
 			_title_label.text = 'Adventure ranking';
 			
@@ -254,6 +259,8 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankSurvival.visible) return;
 			
+			SoundManager.getInstance().playMenuButton();
+			
 			_title_label.text = 'Survival ranking';
 			
 			_scrollRank				.visible = false;
@@ -273,6 +280,8 @@ package core.scene
 		private function clickTabRankDuo(e:Event):void
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankDuo.visible) return;
+			
+			SoundManager.getInstance().playMenuButton();
 			
 			_title_label.text = 'Duo ranking';
 			

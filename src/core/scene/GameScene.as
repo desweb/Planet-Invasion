@@ -21,6 +21,7 @@ package core.scene
 		public static const KEY_PAUSE:String = 'p';
 		
 		private var _game:Game;
+		private var _current_game_key:String;
 		
 		private var _is_pause:Boolean = false;
 		
@@ -28,9 +29,9 @@ package core.scene
 		{
 			switch (type)
 			{
-				case Common.SCENE_GAME_ADVENTURE	: _game = new GameAdventure(level);	break;
-				case Common.SCENE_GAME_SURVIVAL		: _game = new GameSurvival();				break;
-				case Common.SCENE_GAME_DUO				: _game = new GameDuo();					break;
+				case Common.SCENE_GAME_ADVENTURE	: _game = new GameAdventure(level);	_current_game_key = Common.GAME_ADVENTURE_KEY;	break;
+				case Common.SCENE_GAME_SURVIVAL		: _game = new GameSurvival();				_current_game_key = Common.GAME_SURVIVAL_KEY;	break;
+				case Common.SCENE_GAME_DUO				: _game = new GameDuo();					_current_game_key = Common.GAME_DUO_KEY;			break;
 				default														: _game = new GameAdventure(level);
 			}
 			
@@ -57,6 +58,7 @@ package core.scene
 			_game.pause();
 			
 			var pause_popup:PausePopup = new PausePopup();
+			pause_popup.current_game_key = _current_game_key;
 			addChild(pause_popup);
 			pause_popup.display();
 			

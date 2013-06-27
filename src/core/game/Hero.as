@@ -33,7 +33,7 @@ package core.game
 		private	var _is_available_move	:Boolean = false;
 		private var _is_pause					:Boolean = false;
 		public	var is_kill						:Boolean = false;
-		private var _mobility					:Number = 1;
+		private var _mobility					:Number = .75;
 		
 		// Keys
 		private var _keys:Array = new Array();

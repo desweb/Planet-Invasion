@@ -18,7 +18,7 @@ package core.popup
 	{
 		private var _restart_btn			:BtnFlash;
 		private var _back_menu_btn	:BtnFlash;
-		public var current_game_key:String;
+		public var current_game_key	:String;
 		
 		public function LoosePopup() 
 		{
@@ -135,12 +135,20 @@ package core.popup
 		
 		private function clickRestartBtn(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
+			destroy();
+			
 			if			(current_game_key == Common.GAME_ADVENTURE_KEY)	SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, GameState.game.current_level);
 			else if	(current_game_key == Common.GAME_SURVIVAL_KEY)		SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
 		}
 		
 		private function clickBackMenuBtn(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
+			destroy();
+			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 	}

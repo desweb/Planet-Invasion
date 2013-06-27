@@ -5,6 +5,8 @@ package core.popup
 	import flash.events.MouseEvent;
 	
 	import core.Common;
+	import core.GameState;
+	import core.SoundManager;
 	import core.scene.SceneManager;
 	
 	/**
@@ -13,8 +15,11 @@ package core.popup
 	 */
 	public class PausePopup extends Popup implements IPopup 
 	{
-		private var _back_menu_btn:BtnFlash;
 		private var _is_kill:Boolean = false;
+		
+		private	var _restart_btn				:BtnFlash;
+		private	var _back_menu_btn		:BtnFlash;
+		public	var current_game_key	:String;
 		
 		public function PausePopup()
 		{
@@ -22,13 +27,19 @@ package core.popup
 			generateContent();
 			
 			setTitleText('Pause');
+			setPopupHeight(GameState.stageHeight * .3);
 			
 			generatePopup();
 			
-			_back_menu_btn = generateBtn('Back to menu');
+			_restart_btn		= generateBtn('Restart');
+			_restart_btn.y	= GameState.stageHeight * .45;
+			
+			_back_menu_btn	= generateBtn('Back to menu');
+			_back_menu_btn.y	= GameState.stageHeight * .55;
 			
 			// Events
-			_back_menu_btn.addEventListener(MouseEvent.CLICK, clickBackMenuBtn);
+			_restart_btn			.addEventListener(MouseEvent.CLICK, clickRestartBtn);
+			_back_menu_btn	.addEventListener(MouseEvent.CLICK, clickBackMenuBtn);
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -51,7 +62,8 @@ package core.popup
 			
 			_is_kill = true;
 			
-			_back_menu_btn	.removeEventListener(MouseEvent.CLICK, clickBackMenuBtn);
+			_restart_btn			.removeEventListener(MouseEvent.CLICK,				clickRestartBtn);
+			_back_menu_btn	.removeEventListener(MouseEvent.CLICK,				clickBackMenuBtn);
 			stage					.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
 			
 			stage.dispatchEvent(new Event('resumeGameScene'));
@@ -63,14 +75,30 @@ package core.popup
 		 * Events
 		 */
 		
+		private function clickRestartBtn(e:MouseEvent):void
+		{
+			SoundManager.getInstance().playMenuButton();
+			
+			destroy();
+			
+			if			(current_game_key == Common.GAME_ADVENTURE_KEY)	SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, GameState.game.current_level);
+			else if	(current_game_key == Common.GAME_SURVIVAL_KEY)		SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
+		}
+		
 		private function clickBackMenuBtn(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
+			destroy();
+			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 		
 		private function downKey(e:KeyboardEvent):void
 		{
 			if (String.fromCharCode(e.charCode) != 'p') return;
+			
+			SoundManager.getInstance().playMenuButtonClose();
 			
 			destroy();
 		}

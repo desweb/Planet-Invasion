@@ -138,11 +138,19 @@ package core.popup
 		
 		private function clickNextLevelBtn(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
+			destroy();
+			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, GameState.game.current_level + 1);
 		}
 		
 		private function clickBackMenuBtn(e:MouseEvent):void
 		{
+			SoundManager.getInstance().playMenuButton();
+			
+			destroy();
+			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 	}

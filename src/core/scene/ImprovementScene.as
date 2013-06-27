@@ -12,6 +12,7 @@ package core.scene
 	import core.Common;
 	import core.GameState;
 	import core.Improvement;
+	import core.SoundManager;
 	
 	/**
 	 * Manage user improvements
@@ -503,6 +504,8 @@ package core.scene
 		{
 			if (_is_loading) return;
 			
+			SoundManager.getInstance().playMenuButton();
+			
 			var improvement:Improvement = new Improvement(e.target.name);
 			var user_improvement:int = GameState.user.improvements[e.target.name];
 			
@@ -569,6 +572,8 @@ package core.scene
 		private function clickReinitializeBtn(e:MouseEvent):void
 		{
 			if (_is_loading) return;
+			
+			SoundManager.getInstance().playMenuButton();
 			
 			e.target.visible = false;
 			
