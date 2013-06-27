@@ -127,7 +127,7 @@ package core.game.enemy
 				_fire_timer = null
 			}
 			
-			if (_life)
+			if (_life > 0)
 			{
 				removeThis();
 				return;
@@ -194,7 +194,7 @@ package core.game.enemy
 		
 		protected function launchFireTimer():void
 		{
-			_fire_timer = new Timer(1000);
+			_fire_timer = new Timer(2000);
 			_fire_timer.start();
 			_fire_timer.addEventListener(TimerEvent.TIMER, completeFireTimer);
 		}

@@ -18,7 +18,10 @@ package core.game.enemy
 		
 		public function AsteroidEnemy() 
 		{
-			_life = 5;
+			_life			= 3;
+			_metal		= 5;
+			_crystal		= 0;
+			_money	= 2;
 			
 			_graphic = new AsteroidFlash();
 			addChild(_graphic);

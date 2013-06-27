@@ -64,54 +64,55 @@ package core.game
 			switch(_current_level)
 			{
 				case 1:
-					_total_wave_init			= 1;
-					_wave_timer_init		= 5;
+					_total_wave_init		= 2;
+					_wave_timer_init	= 30;
 					
-					_nb_enemies[Common.ALIEN_ENEMY]			= 2;
-					_nb_enemies[Common.ASTEROID_ENEMY]	= 1;
+					_nb_enemies[Common.ASTEROID_ENEMY]			= 5;
+					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 1;
 					break;
 				case 2:
 					_total_wave_init		= 4;
 					_wave_timer_init	= 30;
 					
-					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
-					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
+					_nb_enemies[Common.ALIEN_ENEMY]					= 2;
+					_nb_enemies[Common.CRUISER_ENEMY]			= 1;
+					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 3;
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 5;
 					break;
 				case 3:
 					_total_wave_init		= 6;
 					_wave_timer_init	= 25;
 					
-					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
-					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
-					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 5;
+					_nb_enemies[Common.CRUISER_ENEMY]			= 2;
+					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 3;
+					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 1;
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 5;
-					_nb_enemies[Common.MINE_ENEMY]					= 5;
+					_nb_enemies[Common.MINE_ENEMY]					= 2;
 					break;
 				case 4:
 					_total_wave_init		= 8;
 					_wave_timer_init	= 25;
 					
-					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
+					_nb_enemies[Common.CRUISER_ENEMY]			= 2;
 					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
-					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 5;
+					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 3;
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 5;
-					_nb_enemies[Common.MINE_ENEMY]					= 5;
-					_nb_enemies[Common.TRANSPORTER_ENEMY]	= 2;
-					_nb_enemies[Common.TURRET_ENEMY]				= 3;
+					_nb_enemies[Common.MINE_ENEMY]					= 2;
+					_nb_enemies[Common.TRANSPORTER_ENEMY]	= 1;
+					_nb_enemies[Common.TURRET_ENEMY]				= 2;
 					break;
 				case 5:
-					_total_wave_init		= 1;
-					_wave_timer_init	= 5;
+					_total_wave_init		= 10;
+					_wave_timer_init	= 20;
 					
-					_nb_enemies[Common.CRUISER_ENEMY]			= 5;
-					_nb_enemies[Common.DESTROYER_ENEMY]		= 2;
-					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 5;
-					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 5;
+					_nb_enemies[Common.CRUISER_ENEMY]			= 3;
+					_nb_enemies[Common.DESTROYER_ENEMY]		= 1;
+					_nb_enemies[Common.HEAVY_FIGHTER_ENEMY]	= 4;
+					_nb_enemies[Common.KAMIKAZE_ENEMY]			= 3;
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 5;
-					_nb_enemies[Common.MINE_ENEMY]					= 5;
-					_nb_enemies[Common.TRANSPORTER_ENEMY]	= 2;
-					_nb_enemies[Common.TURRET_ENEMY]				= 3;
+					_nb_enemies[Common.MINE_ENEMY]					= 3;
+					_nb_enemies[Common.TRANSPORTER_ENEMY]	= 1;
+					_nb_enemies[Common.TURRET_ENEMY]				= 2;
 					break;
 			}
 		}

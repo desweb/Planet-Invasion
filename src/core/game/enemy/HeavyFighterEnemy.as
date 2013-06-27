@@ -15,7 +15,10 @@ package core.game.enemy
 	{
 		public function HeavyFighterEnemy() 
 		{
-			_life = 20;
+			_life			= 10;
+			_metal		= 15;
+			_crystal		= 5;
+			_money	= 10;
 			
 			_graphic = new FighterHeavyFlash();
 			addChild(_graphic);

@@ -20,8 +20,6 @@ package core.game.weapon
 		
 		public function Gun()
 		{
-			_damage = 1;
-			
 			_graphic = new GunFlash();
 			addChild(_graphic);
 			

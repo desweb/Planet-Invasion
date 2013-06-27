@@ -327,7 +327,7 @@ package core.scene
 			var buy_btn:BtnFlash = generateBtn('Buy',
 				GameState.user.metal	< improvement.price[user_improvement + 1]['metal'] || 
 				GameState.user.crystal	< improvement.price[user_improvement + 1]['crystal'] ||
-				GameState.user.money	< improvement.price[user_improvement + 1]['money']? 3: 1);
+				GameState.user.money	< improvement.price[user_improvement + 1]['money']? Common.FRAME_BTN_LOCK: Common.FRAME_BTN_DEFAULT);
 			buy_btn.name = key;
 			buy_btn.x = GameState.stageWidth * .725;
 			buy_btn.y = level_bar.y;

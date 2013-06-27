@@ -274,6 +274,12 @@ package core.game
 			_metal_item_timer		.removeEventListener(TimerEvent.TIMER, completeMetalItemTimer);
 			_speed_item_timer	.removeEventListener(TimerEvent.TIMER, completeSpeedItemTimer);
 			
+			if (_life > 0)
+			{
+				removeThis();
+				return;
+			}
+			
 			gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
 			SoundManager.getInstance().play('explosion');

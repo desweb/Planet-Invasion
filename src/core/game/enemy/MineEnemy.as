@@ -26,8 +26,11 @@ package core.game.enemy
 		
 		public function MineEnemy() 
 		{
-			_life = 5;
-			_collision_damage = 20;
+			_life						= 5;
+			_collision_damage	= 20;
+			_metal					= 5;
+			_crystal					= 5;
+			_money				= 5;
 			_tween_complete_destroy = TWEEN_COMPLETE_DETROY_FALSE;
 			
 			_rotation_type	= Tools.random(0, 1)? ROTATION_1: ROTATION_2;

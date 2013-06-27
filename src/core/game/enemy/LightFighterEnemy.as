@@ -23,7 +23,10 @@ package core.game.enemy
 		
 		public function LightFighterEnemy(is_transporter:Boolean = false, transporter:TransporterEnemy = null)
 		{
-			_life = 10;
+			_life			= 5;
+			_metal		= 10;
+			_crystal		= 0;
+			_money	= 5;
 			
 			_graphic = new FighterLightFlash();
 			addChild(_graphic);

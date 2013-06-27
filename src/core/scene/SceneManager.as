@@ -63,7 +63,10 @@ package core.scene
 			GameState.main.addChild(_current_scene);
 			
 			// Hack cause multiple click on improvement scene = unremove children
-			if (_current_scene_uid == Common.SCENE_IMPROVEMENT && scene_uid == Common.SCENE_IMPROVEMENT)
+			if (_current_scene_uid == Common.SCENE_IMPROVEMENT && scene_uid == Common.SCENE_IMPROVEMENT || 
+				_current_scene_uid == Common.SCENE_GAME_ADVENTURE || 
+				_current_scene_uid == Common.SCENE_GAME_SURVIVAL || 
+				_current_scene_uid == Common.SCENE_GAME_DUO)
 			{
 				destroyOldScene();
 				_current_scene.alpha = 1;
@@ -110,8 +113,6 @@ package core.scene
 		
 		public function playSound():void
 		{
-			trace('play sound : ' + SoundManager.getInstance().available + ' ' + _menu_sound_channel);
-			
 			if (SoundManager.getInstance().available == Common.SOUND_ON && _menu_sound_channel) return;
 			
 			SoundManager.getInstance().available = Common.SOUND_ON;

@@ -17,8 +17,11 @@ package core.game.enemy
 	{
 		public function TurretEnemy() 
 		{
-			_life = 10;
-			_collision_damage = 5;
+			_life						= 10;
+			_collision_damage	= 5;
+			_metal					= 5;
+			_crystal					= 10;
+			_money				= 10;
 			_tween_complete_destroy = TWEEN_COMPLETE_DETROY_FALSE;
 			
 			_graphic = new TurretFlash();

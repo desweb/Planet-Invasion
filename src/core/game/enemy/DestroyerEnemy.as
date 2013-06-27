@@ -26,8 +26,11 @@ package core.game.enemy
 		
 		public function DestroyerEnemy() 
 		{
-			_life = 30;
-			_collision_damage = 20;
+			_life						= 30;
+			_collision_damage	= 20;
+			_metal					= 30;
+			_crystal					= 10;
+			_money				= 10;
 			_tween_complete_destroy = TWEEN_COMPLETE_DETROY_FALSE;
 			
 			_graphic = new DestroyerFlash();
