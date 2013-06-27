@@ -55,8 +55,8 @@ package core.scene
 			if (scene_uid == Common.SCENE_GAME_ADVENTURE || 
 				scene_uid == Common.SCENE_GAME_SURVIVAL || 
 				scene_uid == Common.SCENE_GAME_DUO)
-					stopSound();
-			else	playSound();
+				stopSound();
+			else if (SoundManager.getInstance().available == Common.SOUND_ON) playSound();
 			
 			_current_scene = checkNewScene(scene_uid, level);
 			_current_scene.alpha = 0;
@@ -110,6 +110,8 @@ package core.scene
 		
 		public function playSound():void
 		{
+			trace('play sound : ' + SoundManager.getInstance().available + ' ' + _menu_sound_channel);
+			
 			if (SoundManager.getInstance().available == Common.SOUND_ON && _menu_sound_channel) return;
 			
 			SoundManager.getInstance().available = Common.SOUND_ON;
@@ -123,9 +125,11 @@ package core.scene
 		
 		public function stopSound():void
 		{
-			if (SoundManager.getInstance().available == Common.SOUND_OFF && !_menu_sound_channel) return;
+			if (SoundManager.getInstance().available == Common.SOUND_OFF) return;
 			
 			SoundManager.getInstance().available = Common.SOUND_OFF;
+			
+			if (!_menu_sound_channel) return;
 			
 			_menu_sound_channel.stop();
 			_menu_sound_channel.removeEventListener(Event.SOUND_COMPLETE, boucleSound);
