@@ -29,6 +29,9 @@ package core.game.weapon.enemy
 			x = enemy.x;
 			y = enemy.y;
 			
+			_graphic = new GunEnemyFlash();
+			addChild(_graphic);
+			
 			super();
 			
 			rotation = Math.atan2(GameState.game.hero.y - y, GameState.game.hero.x - x) / (Math.PI / 180) - 180;

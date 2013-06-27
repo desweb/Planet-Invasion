@@ -34,7 +34,7 @@ package core.game.enemy
 			scaleX = 
 			scaleY = Tools.random(1, 10) * .1;
 			
-			super();
+			super(false);
 		}
 		
 		/**

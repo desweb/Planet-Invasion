@@ -47,11 +47,16 @@ package core.game.enemy
 		
 		protected var _target_x:int;
 		
+		// Propellant
+		protected var _propellant_scale:Number = 1;
+		protected var _propellant			:PropellantEnemyFlash;
+		private var _propellant_tween	:TweenLite;
+		
 		/**
 		 * Constructor
 		 */
 		
-		public function Enemy() 
+		public function Enemy(is_propellant:Boolean = true) 
 		{
 			if (!_life)									_life									= 1;
 			if (!_collision_damage)				_collision_damage				= 5;
@@ -66,7 +71,15 @@ package core.game.enemy
 			
 			if (!_tween) _tween = new TweenLite(this, 10, { x:_target_x, ease:Linear.easeNone, onComplete:isTweenCompleteDestroy()? destroy: completeTween } );
 			
-			SoundManager.getInstance().play('propellant');
+			// Propellant
+			if (is_propellant)
+			{
+				_propellant = new PropellantEnemyFlash();
+				_propellant.x = -width / 2;
+				addChild(_propellant);
+				
+				propellantTween();
+			}
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -125,6 +138,18 @@ package core.game.enemy
 				_fire_timer.removeEventListener(TimerEvent.TIMER, completeFireTimer);
 				_fire_timer.stop();
 				_fire_timer = null
+			}
+			
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			if (_propellant)
+			{
+				removeChild(_propellant);
+				_propellant = null;
 			}
 			
 			if (_life > 0)
@@ -225,9 +250,20 @@ package core.game.enemy
 		 * Tweens
 		 */
 		
-		private function completeTween():void
+		protected function completeTween():void
 		{
 			_is_tween_finish = true;
+		}
+		
+		private function propellantTween(is_mini:Boolean = true):void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			_propellant_tween = new TweenLite(_propellant, Common.TIMER_TWEEN_PROPELLANT, { scaleX : is_mini? _propellant_scale / 2: _propellant_scale, scaleY : is_mini? _propellant_scale / 2: _propellant_scale, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
 		}
 		
 		/**

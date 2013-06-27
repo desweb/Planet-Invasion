@@ -50,7 +50,7 @@ package core.game.enemy
 			
 			_detonator_tween = new TweenLite(_detonator, 1, { alpha : .25, onComplete:completeDetonatorTween });
 			
-			super();
+			super(false);
 		}
 		
 		/**

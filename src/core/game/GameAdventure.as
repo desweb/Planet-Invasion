@@ -244,15 +244,21 @@ package core.game
 				case Common.KAMIKAZE_ENEMY			: addEnemy(new KamikazeEnemy());		break;
 				case Common.LIGHT_FIGHTER_ENEMY	: addEnemy(new LightFighterEnemy());	break;
 				case Common.MINE_ENEMY					: addEnemy(new MineEnemy());				break;
-				case Common.TRANSPORTER_ENEMY		: addEnemy(new TransporterEnemy());	break;
+				case Common.TRANSPORTER_ENEMY		: addTransporterEnemy(new TransporterEnemy());	break;
 				case Common.TURRET_ENEMY				: addEnemy(new TurretEnemy());			break;
 			}
 		}
 		
 		private function addEnemy(e:Enemy):void
 		{
-			enemies_container = e;
-			enemies[enemies.length] = e;
+			enemies_container				= e;
+			enemies[enemies.length]	= e;
+		}
+		
+		private function addTransporterEnemy(e:TransporterEnemy):void
+		{
+			transporters_container		= e;
+			enemies[enemies.length]	= e;
 		}
 	}
 }

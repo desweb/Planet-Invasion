@@ -20,9 +20,6 @@ package core.game.weapon
 		
 		public function Gun()
 		{
-			_graphic = new GunFlash();
-			addChild(_graphic);
-			
 			SoundManager.getInstance().play('gun');
 		}
 		

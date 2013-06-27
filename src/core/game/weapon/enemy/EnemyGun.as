@@ -22,6 +22,9 @@ package core.game.weapon.enemy
 			_owner			= enemy;
 			_owner_type	= Common.OWNER_ENEMY;
 			
+			_graphic = new GunEnemyFlash();
+			addChild(_graphic);
+			
 			super();
 		}
 		

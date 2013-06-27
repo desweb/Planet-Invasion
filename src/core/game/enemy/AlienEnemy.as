@@ -30,7 +30,7 @@ package core.game.enemy
 			
 			launchFireTimer();
 			
-			super();
+			super(false);
 		}
 		
 		/**

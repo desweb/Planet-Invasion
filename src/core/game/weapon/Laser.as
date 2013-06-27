@@ -18,9 +18,6 @@ package core.game.weapon
 		{
 			_is_hit_destroy = false;
 			
-			_graphic = new LaserFlash();
-			addChild(_graphic);
-			
 			_life_timer.addEventListener(TimerEvent.TIMER, completeLifeTimer);
 			
 			_life_timer.start();

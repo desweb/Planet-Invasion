@@ -35,12 +35,14 @@ package core.game.enemy
 			_money				= 10;
 			
 			_graphic = new KamikazeFlash();
-			_graphic.rotation = 180;
 			addChild(_graphic);
 			
 			target = GameState.game.hero;
 			
 			super();
+			
+			_propellant.x += 3;
+			_propellant_scale = .5;
 			
 			launchTween();
 		}

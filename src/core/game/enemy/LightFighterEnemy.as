@@ -33,9 +33,16 @@ package core.game.enemy
 			
 			super();
 			
+			_propellant.x += 3;
+			_propellant_scale = .5;
+			
 			launchFireTimer();
 			
+			rotation = 180;
+			
 			if (!is_transporter) return;
+			
+			rotation = 0;
 			
 			TweenPlugin.activate([BezierThroughPlugin]);
 			
@@ -68,13 +75,13 @@ package core.game.enemy
 		
 		private function launchTween():void
 		{
-			rotation = 0;
+			rotation = 180;
 			_is_fire = true;
 			
 			_tween.kill();
 			_tween = null;
 			
-			_tween = new TweenLite(this, 1, { x : _target_x, ease:Linear.easeNone, onComplete:destroy } );
+			_tween = new TweenLite(this, 2, { x : _target_x, ease:Linear.easeNone, onComplete:destroy } );
 		}
 	}
 }

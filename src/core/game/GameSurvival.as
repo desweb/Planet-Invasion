@@ -124,15 +124,21 @@ package core.game
 				case 5: addEnemy(new KamikazeEnemy());		break;
 				case 6: addEnemy(new LightFighterEnemy());	break;
 				case 7: addEnemy(new MineEnemy());			break;
-				case 8: addEnemy(new TransporterEnemy());	break;
+				case 8: addTransporterEnemy(new TransporterEnemy());	break;
 				case 9: addEnemy(new TurretEnemy());			break;
 			}
 		}
 		
 		private function addEnemy(e:Enemy):void
 		{
-			enemies_container = e;
-			enemies[enemies.length] = e;
+			enemies_container				= e;
+			enemies[enemies.length]	= e;
+		}
+		
+		private function addTransporterEnemy(e:TransporterEnemy):void
+		{
+			transporters_container		= e;
+			enemies[enemies.length]	= e;
 		}
 	}
 }

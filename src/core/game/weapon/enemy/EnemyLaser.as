@@ -25,6 +25,9 @@ package core.game.weapon.enemy
 			_override_owner	= enemy;
 			_owner_type			= Common.OWNER_ENEMY;
 			
+			_graphic = new LaserEnemyFlash();
+			addChild(_graphic);
+			
 			super();
 		}
 		

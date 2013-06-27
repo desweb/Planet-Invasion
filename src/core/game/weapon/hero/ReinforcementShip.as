@@ -10,14 +10,12 @@ package core.game.weapon.hero
 	 */
 	public class ReinforcementShip extends ReinforcementFlash
 	{
-		private var _propellant:PropellantFlash;
+		private var _propellant:PropellantHeroFlash;
 		private var _propellant_tween:TweenLite;
 		
 		public function ReinforcementShip() 
 		{
-			if (Common.IS_DEBUG) trace('create ReinforcementShip');
-			
-			_propellant = new PropellantFlash();
+			_propellant = new PropellantHeroFlash();
 			_propellant.x = -width / 2;
 			addChild(_propellant);
 			
@@ -26,8 +24,6 @@ package core.game.weapon.hero
 		
 		public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy ReinforcementShip');
-			
 			if (_propellant_tween)
 			{
 				_propellant_tween.pause();

@@ -2,6 +2,8 @@ package core.game.weapon.enemy
 {
 	import flash.events.Event;
 	
+	import com.greensock.TweenLite;
+	
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
@@ -13,6 +15,8 @@ package core.game.weapon.enemy
 	 */
 	public class EnemyMissileHoming extends MissileHoming
 	{
+		private var _propellant:PropellantEnemyFlash;
+		private var _propellant_tween:TweenLite;
 		
 		public function EnemyMissileHoming(type:uint, enemy:Enemy) 
 		{
@@ -35,6 +39,50 @@ package core.game.weapon.enemy
 			}
 			
 			super();
+			
+			_propellant = new PropellantEnemyFlash();
+			_propellant.x = -width / 2;
+			_propellant.scaleX =
+			_propellant.scaleY = .5;
+			addChild(_propellant);
+			
+			propellantTween();
+		}
+		
+		/**
+		 * Overrides
+		 */
+		
+		override public function destroy():void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			if (_propellant)
+			{
+				removeChild(_propellant);
+				_propellant = null;
+			}
+			
+			super.destroy();
+		}
+		
+		/**
+		 * Tweens
+		 */
+		
+		private function propellantTween(is_mini:Boolean = true):void
+		{
+			if (_propellant_tween)
+			{
+				_propellant_tween.kill();
+				_propellant_tween = null;
+			}
+			
+			_propellant_tween = new TweenLite(_propellant, Common.TIMER_TWEEN_PROPELLANT, { scaleX : is_mini? .25: .5, scaleY : is_mini? .25: .5, onComplete : propellantTween, onCompleteParams:[!is_mini] } );		
 		}
 	}
 }

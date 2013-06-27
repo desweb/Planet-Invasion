@@ -39,6 +39,8 @@ package core.game.enemy
 			super();
 			
 			launchFireTimer();
+			
+			rotation = 180;
 		}
 		
 		/**
@@ -76,8 +78,12 @@ package core.game.enemy
 		
 		private function launchFighter():void
 		{
-			GameState.game.enemies_container = new LightFighterEnemy(true, this);
-			GameState.game.enemies_container = new LightFighterEnemy(true, this);
+			for (var i:int = 0; i < 2; i++)
+			{
+				var e:LightFighterEnemy = new LightFighterEnemy(true, this);
+				GameState.game.enemies_container = e;
+				GameState.game.enemies[GameState.game.enemies.length] = e;
+			}
 		}
 	}
 }

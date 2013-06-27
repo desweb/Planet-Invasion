@@ -18,7 +18,6 @@ package core.game.weapon.enemy
 	 */
 	public class GunTurretEnemy extends Gun
 	{
-		
 		public function GunTurretEnemy(enemy:TurretEnemy) 
 		{
 			_damage = 1;
@@ -26,14 +25,17 @@ package core.game.weapon.enemy
 			_owner			= enemy;
 			_owner_type	= Common.OWNER_ENEMY;
 			
-			var pos:Point = Tools.pointOnCirclePerimeter(new Point(_owner.x, _owner.y), _owner.rotation - 180, 20);
+			var pos:Point = Tools.pointOnCirclePerimeter(new Point(_owner.x, _owner.y), _owner.rotation, 20);
 			
 			x = pos.x;
 			y = pos.y;
 			
+			_graphic = new GunEnemyFlash();
+			addChild(_graphic);
+			
 			super();
 			
-			rotation = Math.atan2(GameState.game.hero.y - y, GameState.game.hero.x - x) / (Math.PI / 180) - 180;
+			rotation = Math.atan2(GameState.game.hero.y - y, GameState.game.hero.x - x) / (Math.PI / 180);
 		}
 		
 		/**

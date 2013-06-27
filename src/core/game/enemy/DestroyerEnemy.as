@@ -44,7 +44,11 @@ package core.game.enemy
 			
 			super();
 			
+			//_propellant.x += 3;
+			
 			launchFireTimer();
+			
+			rotation = 180;
 		}
 		
 		/**

@@ -22,6 +22,9 @@ package core.game.weapon.hero
 			var laser_damage_improvement:Improvement = new Improvement(Common.IMPROVEMENT_LASER_DAMAGE);
 			_damage = laser_damage_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_LASER_DAMAGE]];
 			
+			_graphic = new LaserHeroFlash();
+			addChild(_graphic);
+			
 			super();
 			
 			if (GameState.game.hero.is_attack_item) _damage *= 2;

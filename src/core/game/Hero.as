@@ -47,11 +47,11 @@ package core.game
 		private static const KEY_REINFORCEMENT	:String = 'f';
 		
 		// Propellant
-		private var _propellant			:PropellantFlash;
+		private var _propellant			:PropellantHeroFlash;
 		private var _propellant_tween	:TweenLite;
 		
 		// Shield
-		private var _shield						:ShieldFlash;
+		private var _shield						:ShieldHeroFlash;
 		private var _shield_life				:int;
 		private var _shield_life_init			:int = 0;
 		private var _shield_regen			:int;
@@ -154,7 +154,7 @@ package core.game
 			y = GameState.stageHeight / 2;
 			
 			// Propellant
-			_propellant = new PropellantFlash();
+			_propellant = new PropellantHeroFlash();
 			_propellant.x = -width / 2;
 			addChild(_propellant);
 			
@@ -383,7 +383,7 @@ package core.game
 			
 			destroyShield();
 			
-			_shield = new ShieldFlash();
+			_shield = new ShieldHeroFlash();
 			_shield.scaleX =
 			_shield.scaleY = 0;
 			addChild(_shield);

@@ -60,7 +60,7 @@ package core.game.weapon.hero
 			{
 				var new_m:MissileFlash = new MissileFlash();
 				
-				var missile_propellant:PropellantFlash = new PropellantFlash();
+				var missile_propellant:PropellantHeroFlash = new PropellantHeroFlash();
 				missile_propellant.x = -new_m.width / 2;
 				missile_propellant.scaleX =
 				missile_propellant.scaleY = .5;

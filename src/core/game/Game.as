@@ -268,9 +268,9 @@ package core.game
 			
 			if (_timer) _timer.stop();
 			
-			for each(var e:Enemy	in enemies) e.pause();
-			for each(var w:Weapon	in weapons) w.pause();
-			for each(var i:Item		in items) i.pause();
+			for each(var e:Enemy	in enemies)	e.pause();
+			for each(var w:Weapon	in weapons)	w.pause();
+			for each(var i:Item		in items)		i.pause();
 		}
 		
 		public function resume():void
@@ -285,9 +285,9 @@ package core.game
 			
 			if (_timer) _timer.start();
 			
-			for each(var e:Enemy	in enemies) e.resume();
-			for each(var w:Weapon	in weapons) w.resume();
-			for each(var i:Item		in items) i.resume();
+			for each(var e:Enemy	in enemies)	e.resume();
+			for each(var w:Weapon	in weapons)	w.resume();
+			for each(var i:Item		in items)		i.resume();
 		}
 		
 		public function loose():void
