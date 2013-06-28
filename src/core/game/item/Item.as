@@ -19,14 +19,14 @@ package core.game.item
 		private static const SPEED_MIN:uint = 10;
 		private static const SPEED_MAX:uint = 2;
 		
-		private var _is_pause:Boolean = false;
-		private var _is_hit:Boolean = false;
+		protected var _is_pause:Boolean = false;
+		protected var _is_hit:Boolean = false;
 		
 		protected var _type:uint;
 		
 		protected var _item:MovieClip;
 		
-		private var _tween:TweenLite;
+		protected var _tween:TweenLite;
 		
 		public function Item() 
 		{
@@ -42,7 +42,7 @@ package core.game.item
 			addEventListener(Event.ENTER_FRAME, update);
 		}
 		
-		private function update(e:Event):void
+		protected function update(e:Event):void
 		{
 			if (_is_hit || _is_pause) return;
 			
@@ -60,7 +60,7 @@ package core.game.item
 		 * Destroy
 		 */
 		
-		private function destroy(is_anim:Boolean = false):void
+		protected function destroy(is_anim:Boolean = false):void
 		{
 			_tween.kill();
 			_tween = null;

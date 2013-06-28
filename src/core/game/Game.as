@@ -1,5 +1,6 @@
 package core.game 
 {
+	import core.game.item.SpecialItem;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -104,6 +105,8 @@ package core.game
 			GameState.game = this;
 			
 			Mouse.hide();
+			
+			new SpecialItem();
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}

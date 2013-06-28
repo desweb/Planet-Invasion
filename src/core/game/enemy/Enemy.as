@@ -36,12 +36,11 @@ package core.game.enemy
 		
 		protected var dt:Number = 0;
 		
-		protected var _graphic:MovieClip;
+		public var _graphic:MovieClip;
 		
 		protected var _tween:TweenLite;
 		protected var _tween_complete_destroy:uint;
 		protected var _is_tween_finish:Boolean = false;
-		
 		
 		private var _fire_timer:Timer;
 		

@@ -1,6 +1,12 @@
 package core.utils 
 {
+	import flash.display.BitmapData;
+	import flash.display.BlendMode;
+	import flash.display.DisplayObject;
+	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * ...

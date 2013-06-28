@@ -12,6 +12,7 @@ package core.game.weapon
 	import core.GameState;
 	import core.game.Hero;
 	import core.game.enemy.Enemy;
+	import core.utils.Tools;
 	
 	/**
 	 * Class of weapons
@@ -44,7 +45,9 @@ package core.game.weapon
 		
 		public function Weapon()
 		{
-			GameState.game.weapons[GameState.game.weapons.length] = this;
+			//GameState.game.weapons[GameState.game.weapons.length] = this;
+			
+			GameState.game.addChild(this);
 			
 			// Default position
 			switch (_fire_type)
@@ -199,7 +202,7 @@ package core.game.weapon
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)
 			{
-				if (e_hit.is_kill || !hitTestObject(e_hit)) continue;
+				if (e_hit.is_kill || !e_hit._graphic.hitTestPoint(x + 10, y, true)) continue;
 				
 				_is_hit = true;
 				
@@ -212,7 +215,7 @@ package core.game.weapon
 		private function enemyUpdate():void
 		{
 			// Hero hit
-			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
+			if (GameState.game.hero.is_kill || !GameState.game.hero.hitTestPoint(x - 10, y, true)) return;
 			
 			_is_hit = true;
 			

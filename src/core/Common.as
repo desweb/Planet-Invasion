@@ -113,6 +113,7 @@ package core
 		public static const ITEM_GOLD			:uint = 4;
 		public static const ITEM_METAL		:uint = 5;
 		public static const ITEM_SPEED		:uint = 6;
+		public static const ITEM_SPECIAL	:uint = 7;
 		
 		// Enemies
 		public static const ALIEN_ENEMY					:uint = 1;

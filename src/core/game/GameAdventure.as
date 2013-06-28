@@ -30,14 +30,17 @@ package core.game
 		private var _timer:Timer = new Timer(1000);
 		
 		// Waves
-		private var _total_wave				:uint = 0;
-		private var _total_wave_init		:uint;
-		private var _wave_timer				:uint;
-		private var _wave_timer_init		:uint;
-		private var _is_last_wave			:Boolean = false;
+		private var _total_wave			:uint = 0;
+		private var _total_wave_init	:uint;
+		private var _wave_timer			:uint;
+		private var _wave_timer_init	:uint;
+		private var _is_last_wave		:Boolean = false;
 		
 		// Enemies
 		private var _nb_enemies:Array = new Array();
+		
+		// Boss
+		private var _is_boss:Boolean = false;
 		
 		public function GameAdventure(level:int)
 		{
@@ -52,6 +55,8 @@ package core.game
 			_timer.start();
 			_timer.addEventListener(TimerEvent.TIMER, completeTimer);
 			
+			_is_boss = true;
+			
 			super(Common.GAME_ADVENTURE_KEY);
 		}
 		
@@ -64,11 +69,11 @@ package core.game
 			switch(_current_level)
 			{
 				case 1:
-					_total_wave_init		= 2;
-					_wave_timer_init	= 30;
+					_total_wave_init		= 1;
+					_wave_timer_init	= 5;
 					
 					_nb_enemies[Common.ASTEROID_ENEMY]			= 5;
-					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 1;
+					//_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 1;
 					break;
 				case 2:
 					_total_wave_init		= 4;
@@ -146,6 +151,14 @@ package core.game
 		
 		override protected function win(is_popup:Boolean = true):void
 		{
+			if (_is_boss)
+			{
+				launchBossEnemy();
+				
+				_is_boss = false;
+				return;
+			}
+			
 			_is_win = true;
 			
 			if (GameState.user.level_adventure == 4 && _current_level == 5)
@@ -217,6 +230,11 @@ package core.game
 			launchEnemy(Common.TURRET_ENEMY);
 			
 			if (_total_wave == _total_wave_init) _is_last_wave = true;
+		}
+		
+		private function launchBossEnemy():void
+		{
+			for (var i:int = 0; i < 10; i++) addEnemy(new DestroyerEnemy());
 		}
 		
 		private function launchEnemy(type:uint, is_wave:Boolean = false):void
