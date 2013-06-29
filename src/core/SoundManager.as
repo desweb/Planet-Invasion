@@ -21,6 +21,8 @@ package core
 		private static var _menu_button_error	:Sound;
 		private static var _menu_alien			:Sound;
 		private static var _menu_alien_dead	:Sound;
+		private static var _achievement			:Sound;
+		private static var _buy						:Sound;
 		private static var _explosion				:Sound;
 		private static var _game_over				:Sound;
 		private static var _gun						:Sound;
@@ -80,6 +82,12 @@ package core
 			
 			_menu_alien_dead = new Sound();
 			_menu_alien_dead.load(new URLRequest(Common.PATH_ASSETS + 'sound/menu-alien-dead.mp3'));
+			
+			_achievement = new Sound();
+			_achievement.load(new URLRequest(Common.PATH_ASSETS + 'sound/achievement.mp3'));
+			
+			_buy = new Sound();
+			_buy.load(new URLRequest(Common.PATH_ASSETS + 'sound/buy.mp3'));
 			
 			_explosion = new Sound();
 			_explosion.load(new URLRequest(Common.PATH_ASSETS + 'sound/explosion.mp3'));
@@ -157,6 +165,8 @@ package core
 			
 			switch (title)
 			{
+				case 'achievement'	: channel = _achievement	.play(); break;
+				case 'buy'				: channel = _buy				.play(); break;
 				case 'explosion'		: channel = _explosion		.play(); break;
 				case 'game-over'	: channel = _game_over	.play(); break;
 				case 'gun'				: channel = _gun				.play(); break;

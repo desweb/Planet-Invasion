@@ -26,7 +26,7 @@ package core.game.enemy
 		
 		public function DestroyerEnemy() 
 		{
-			_life						= 30;
+			_life						= 100;
 			_collision_damage	= 20;
 			_metal					= 30;
 			_crystal					= 10;

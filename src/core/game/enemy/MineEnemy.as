@@ -26,7 +26,7 @@ package core.game.enemy
 		
 		public function MineEnemy() 
 		{
-			_life						= 5;
+			_life						= 10;
 			_collision_damage	= 20;
 			_metal					= 5;
 			_crystal					= 5;

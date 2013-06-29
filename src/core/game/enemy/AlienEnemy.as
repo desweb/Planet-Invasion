@@ -19,7 +19,7 @@ package core.game.enemy
 		
 		public function AlienEnemy() 
 		{
-			_life						= 5;
+			_life						= 10;
 			_collision_damage	= 5;
 			_metal					= 10;
 			_crystal					= 5;

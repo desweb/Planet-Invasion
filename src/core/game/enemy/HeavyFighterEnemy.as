@@ -15,7 +15,7 @@ package core.game.enemy
 	{
 		public function HeavyFighterEnemy() 
 		{
-			_life			= 10;
+			_life			= 20;
 			_metal		= 15;
 			_crystal		= 5;
 			_money	= 10;

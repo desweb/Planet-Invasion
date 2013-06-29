@@ -28,7 +28,7 @@ package core.game.enemy
 		{
 			TweenPlugin.activate([BezierPlugin]);
 			
-			_life						= 5;
+			_life						= 10;
 			_collision_damage	= 20;
 			_metal					= 10;
 			_crystal					= 10;

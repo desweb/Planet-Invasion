@@ -7,6 +7,7 @@ package core.popup
 	import core.Achievement;
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * ...
@@ -18,7 +19,7 @@ package core.popup
 		
 		public function AchievementPopup(key:String) 
 		{
-			if (Common.IS_DEBUG) trace('create AchievementPopup');
+			SoundManager.getInstance().play('achievement');
 			
 			generateContent();
 			

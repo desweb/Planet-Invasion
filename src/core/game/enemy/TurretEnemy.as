@@ -23,7 +23,7 @@ package core.game.enemy
 		
 		public function TurretEnemy() 
 		{
-			_life						= 10;
+			_life						= 20;
 			_collision_damage	= 5;
 			_metal					= 5;
 			_crystal					= 10;

@@ -158,6 +158,8 @@ package core.scene
 			generateSpecialImprovementRow(Common.IMPROVEMENT_BOMB);
 			generateSpecialImprovementRow(Common.IMPROVEMENT_REINFORCE);
 			
+			_content.x = -200;
+			
 			_scroll = new ScrollManager(_content);
 			addChild(_scroll);
 		}
@@ -504,7 +506,7 @@ package core.scene
 		{
 			if (_is_loading) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play('buy');
 			
 			var improvement:Improvement = new Improvement(e.target.name);
 			var user_improvement:int = GameState.user.improvements[e.target.name];
@@ -573,7 +575,7 @@ package core.scene
 		{
 			if (_is_loading) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play('buy');
 			
 			e.target.visible = false;
 			

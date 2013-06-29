@@ -47,9 +47,9 @@ package core
 			
 			_score					= 0;
 			_level_adventure	= 0;
-			_metal					= 100;
-			_crystal					= 100;
-			_money				= 100;
+			_metal					= 150;
+			_crystal					= 150;
+			_money				= 150;
 			
 			_improvements = new Array();
 			_improvements[Common.IMPROVEMENT_ARMOR_RESIST]	=
@@ -69,7 +69,7 @@ package core
 			_improvements[Common.IMPROVEMENT_TRI_FORCE]							=
 			_improvements[Common.IMPROVEMENT_IEM]										=
 			_improvements[Common.IMPROVEMENT_BOMB]									=
-			_improvements[Common.IMPROVEMENT_REINFORCE]							= 1;
+			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;
 			
 			_achievements = new Array();
 			createAchievement(Common.ACHIEVEMENT_METAL);

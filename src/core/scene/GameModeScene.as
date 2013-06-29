@@ -56,15 +56,15 @@ package core.scene
 			
 			// Adventure button
 			_adventure_btn = generateBtn('Adventure');
-			_adventure_btn.y = GameState.stageHeight * .5;
+			_adventure_btn.y = GameState.stageHeight * .55;
 			
 			// Survival button
 			_survival_btn = generateBtn('Survival', Common.FRAME_BTN_LOCK);
-			_survival_btn.y = GameState.stageHeight * .6;
+			_survival_btn.y = GameState.stageHeight * .65;
 			
 			// Duo button
 			_duo_btn = generateBtn('Duo', Common.FRAME_BTN_LOCK);
-			_duo_btn.y = GameState.stageHeight * .7;
+			_duo_btn.y = GameState.stageHeight * .75;
 			
 			// Events
 			_tutorial_btn				.addEventListener(MouseEvent.CLICK, clickTutorial);

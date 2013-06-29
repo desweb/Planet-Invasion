@@ -20,7 +20,7 @@ package core.game.enemy
 		
 		public function CruiserEnemy()
 		{
-			_life						= 15;
+			_life						= 30;
 			_collision_damage	= 20;
 			_metal					= 25;
 			_crystal					= 15;

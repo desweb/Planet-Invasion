@@ -22,7 +22,7 @@ package core.game.enemy
 		
 		public function TransporterEnemy()
 		{
-			_life						= 30;
+			_life						= 60;
 			_collision_damage	= 20;
 			_metal					= 20;
 			_crystal					= 10;
