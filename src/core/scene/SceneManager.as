@@ -107,6 +107,7 @@ package core.scene
 				case Common.SCENE_RESEARCH_DUO		: return new ResearchDuoScene();				break;
 				case Common.SCENE_SELECT_LEVEL			: return new SelectLevelScene();				break;
 				case Common.SCENE_TOTURIAL				: return new TutorialScene();						break;
+				case Common.SCENE_PROFILE					: return new ProfileScene();						break;
 				default														: return new MenuScene();
 			}
 		}

@@ -7,6 +7,7 @@ package core.utils
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.text.TextField;
 	
 	/**
 	 * ...
@@ -43,6 +44,15 @@ package core.utils
 		public static function convertRadiansToDegrees(r:Number):Number
 		{
 			return r * 180 / Math.PI;
+		}
+		
+		public static function convertTimeToLabel(t:uint):String
+		{
+			var h	:uint = int(t / 3600);
+			var m	:uint = int((t - h * 3600) / 60);
+			var s		:uint = t - m * 60;
+			
+			return h > 0? h + 'h ' + m + 'min ' + s + 's': (m > 0? m + 'min ' + s + 's': s + 's');
 		}
 	}
 }

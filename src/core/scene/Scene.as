@@ -42,6 +42,8 @@ package core.scene
 		private var _register_btn:BtnRightFlash;
 		private var _logout_btn	:BtnDisconnectFlash;
 		
+		private var _username_icon:ProfileFlash;
+		
 		private var _txtUsername:TextField;
 		
 		public var sceneReturn:uint;
@@ -68,11 +70,10 @@ package core.scene
 			_bg.gotoAndStop(2);
 			addChild(_bg);
 			
-			if (is_alien_menu)
-			{
-				_alien_plan = new Sprite();
-				addChild(_alien_plan);
-			}
+			if (!is_alien_menu) return;
+			
+			_alien_plan = new Sprite();
+			addChild(_alien_plan);
 		}
 		
 		// Return button
@@ -112,8 +113,8 @@ package core.scene
 				username_format.bold	= true;
 				username_format.align	= 'right';
 				
-				var username_label:TextField = new TextField();
-				username_label.x							= GameState.stageWidth	* .5;
+				var username_label:TextField			= new TextField();
+				username_label.x							= GameState.stageWidth	* .45;
 				username_label.y							= GameState.stageHeight	* .025;
 				username_label.width						= GameState.stageWidth	* .4;
 				username_label.height					= GameState.stageHeight	* .1;
@@ -122,14 +123,22 @@ package core.scene
 				username_label.selectable				= false;
 				addChild(username_label);
 				
+				_username_icon = new ProfileFlash();
+				_username_icon.x	= GameState.stageWidth	* .875;
+				_username_icon.y	= GameState.stageHeight	* .025;
+				addChild(_username_icon);
+				
 				_logout_btn = new BtnDisconnectFlash();
 				_logout_btn.x = GameState.stageWidth	* .925;
 				_logout_btn.y = GameState.stageHeight	* .03;
 				addChild(_logout_btn);
 				
-				_logout_btn.addEventListener(MouseEvent.MOUSE_OVER,	over);
-				_logout_btn.addEventListener(MouseEvent.MOUSE_OUT,	out);
-				_logout_btn.addEventListener(MouseEvent.CLICK,			clickLogout);
+				_username_icon	.addEventListener(MouseEvent.MOUSE_OVER,	over);
+				_username_icon	.addEventListener(MouseEvent.MOUSE_OUT,	out);
+				_username_icon	.addEventListener(MouseEvent.CLICK,				clickProfile);
+				_logout_btn			.addEventListener(MouseEvent.MOUSE_OVER,	over);
+				_logout_btn			.addEventListener(MouseEvent.MOUSE_OUT,	out);
+				_logout_btn			.addEventListener(MouseEvent.CLICK,				clickLogout);
 			}
 			else
 			{
@@ -237,6 +246,12 @@ package core.scene
 			loginPopup.display();
 		}
 		
+		private function clickProfile(e:MouseEvent):void
+		{
+			SoundManager.getInstance().playMenuButton();
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_PROFILE);
+		}
+		
 		private function clickLogout(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButton();
@@ -278,6 +293,13 @@ package core.scene
 			}
 			
 			if (_login_btn) _login_btn.removeEventListener(MouseEvent.CLICK, clickLogin);
+			
+			if (_username_icon)
+			{
+				_username_icon.removeEventListener(MouseEvent.MOUSE_OVER,	over);
+				_username_icon.removeEventListener(MouseEvent.MOUSE_OUT,	out);
+				_username_icon.removeEventListener(MouseEvent.CLICK,			clickProfile);
+			}
 			
 			if (_logout_btn)
 			{

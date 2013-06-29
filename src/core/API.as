@@ -63,8 +63,6 @@ package core
 			{
 				var loader_response:URLLoader = URLLoader(e.target);
 				
-				if (Common.IS_DEBUG) trace(httpHeader + ' : ' + url + ' => ' + loader_response.data);
-				
 				var xml:XML;
 				xml = new XML(loader_response.data);
 				
@@ -207,6 +205,7 @@ package core
 				GameState.user.metal				= response.metal;
 				GameState.user.crystal				= response.crystal;
 				GameState.user.money				= response.money;
+				GameState.user.score				= response.score;
 				
 				complete(response);
 			});
@@ -514,8 +513,6 @@ package core
 			basicHTTPRequest(URLRequestMethod.POST, 'game/' + key, vars, true,
 			function(response:XML):void
 			{
-				trace(response);
-				
 				complete(response);
 			});
 		}
