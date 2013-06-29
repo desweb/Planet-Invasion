@@ -93,6 +93,14 @@ package core.game
 		// Hero
 		protected var _hero:Hero;
 		
+		// Combo
+		private var _current_combo		:uint;
+		private var _combo_timer			:uint;
+		private var _combo_timer_init		:uint = 5;
+		private var _combo_enemy		:uint;
+		private var _combo_enemy_init	:uint = 10;
+		private var _combo_label			:TextField;
+		
 		/**
 		 * Constructor
 		 */
@@ -129,7 +137,10 @@ package core.game
 			
 			// Interface
 			var interface_format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 10);
+			interface_format.bold		= true;
+			interface_format.align	= 'center';
 			
+			// Metal
 			_metal_label = new TextField();
 			_metal_label.x							= 110;
 			_metal_label.y							= 10;
@@ -139,6 +150,7 @@ package core.game
 			_metal_label.selectable				= false;
 			interface_container = _metal_label;
 			
+			// Crytal
 			_crystal_label = new TextField();
 			_crystal_label.x							= 200;
 			_crystal_label.y							= _metal_label.y;
@@ -148,6 +160,7 @@ package core.game
 			_crystal_label.selectable				= false;
 			interface_container = _crystal_label;
 			
+			// Money
 			_money_label = new TextField();
 			_money_label.x							= 300;
 			_money_label.y							= _metal_label.y;
@@ -160,6 +173,22 @@ package core.game
 			metal	= 0;
 			crystal	= 0;
 			money	= 0;
+			
+			// Combo
+			var combo_format:TextFormat = Common.getPolicy('Arial', 0xFFFF00, 10);
+			combo_format.bold	= true;
+			combo_format.align	= 'center';
+			
+			_combo_label = new TextField();
+			_combo_label.x							= 400;
+			_combo_label.y							= _metal_label.y;
+			_combo_label.width					= _metal_label.width;
+			_combo_label.height					= _metal_label.height;
+			_combo_label.defaultTextFormat	= combo_format;
+			_combo_label.selectable				= false;
+			interface_container = _combo_label;
+			
+			initCombo();
 			
 			// Life bars
 			_life_bar_mask = new LifeBarFlash();
@@ -378,6 +407,8 @@ package core.game
 			_hero.destroy();
 			
 			for each(var e:Enemy in enemies) e.destroy();
+			
+			initCombo();
 		}
 		
 		public function destroyElement(s:Sprite):void
@@ -392,6 +423,12 @@ package core.game
 		
 		private function completeTimer(e:TimerEvent):void
 		{
+			// Combo timer
+			_combo_timer--;
+			
+			if (_combo_timer <= 0) initCombo();
+			
+			// Random item
 			if (Tools.random(0, 10)) return;
 			
 			switch (Tools.random(0, 5))
@@ -406,6 +443,43 @@ package core.game
 		}
 		
 		/**
+		 * Combo
+		 */
+		
+		public function incrementationComboEnemy():void
+		{
+			_combo_enemy++;
+			
+			if (_combo_enemy < _combo_enemy_init) return;
+			
+			_combo_enemy	= 0;
+			_combo_timer	= _combo_timer_init;
+			
+			incrementationCombo();
+		}
+		
+		private function incrementationCombo():void
+		{
+			_current_combo ++;
+			_combo_label.text = 'Combo : x' + _current_combo;
+			
+			interfaceEffect(_combo_label);
+		}
+		
+		private function initCombo():void
+		{
+			metal	*= _current_combo;
+			crystal	*= _current_combo;
+			money	*= _current_combo;
+			
+			_current_combo	= 0;
+			_combo_enemy	= 0;
+			_combo_timer	= _combo_timer_init;
+			
+			_combo_label.text = 'Combo : x' + _current_combo;
+		}
+		
+		/**
 		 * Functions
 		 */
 		
@@ -413,6 +487,16 @@ package core.game
 		{
 			var bg:GameBg = new GameBg();
 			addChild(bg);
+		}
+		
+		private function interfaceEffect(label:TextField):void
+		{
+			TweenLite.to(label, .1, { scaleX : 1.2, scaleY : 1.2, onComplete:interfaceEffectEnd, onCompleteParams:[label] });
+		}
+		
+		private function interfaceEffectEnd(label:TextField):void
+		{
+			TweenLite.to(label, .1, { scaleX : 1, scaleY : 1 });
 		}
 		
 		/**
@@ -450,18 +534,24 @@ package core.game
 		{
 			_total_metal += value;
 			_metal_label.text = 'Metal : ' + _total_metal;
+			
+			if (value > 0) interfaceEffect(_metal_label);
 		}
 		
 		public function set crystal(value:int):void
 		{
 			_total_crystal += value;
 			_crystal_label.text = 'Crystal : ' + _total_crystal;
+			
+			if (value > 0) interfaceEffect(_crystal_label);
 		}
 		
 		public function set money(value:int):void
 		{
 			_total_money += value;
 			_money_label.text = 'Money : ' + _total_money;
+			
+			if (value > 0) interfaceEffect(_money_label);
 		}
 		
 		public function set life_bar(value:int):void

@@ -69,7 +69,7 @@ package core
 			_improvements[Common.IMPROVEMENT_TRI_FORCE]							=
 			_improvements[Common.IMPROVEMENT_IEM]										=
 			_improvements[Common.IMPROVEMENT_BOMB]									=
-			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;
+			_improvements[Common.IMPROVEMENT_REINFORCE]							= 1;
 			
 			_achievements = new Array();
 			createAchievement(Common.ACHIEVEMENT_METAL);

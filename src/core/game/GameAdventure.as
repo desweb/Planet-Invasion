@@ -162,7 +162,7 @@ package core.game
 			
 			_is_win = true;
 			
-			if (GameState.user.level_adventure == 4 && _current_level == 5)
+			if (GameState.user.level_adventure == Common.TOTAL_LEVEL-1 && _current_level == Common.TOTAL_LEVEL)
 			{
 				super.win(false);
 				SceneManager.getInstance().setCurrentScene(Common.SCENE_FINAL);

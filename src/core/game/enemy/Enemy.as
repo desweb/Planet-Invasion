@@ -162,6 +162,7 @@ package core.game.enemy
 			}
 			
 			GameState.game.total_enemy_kill++;
+			GameState.game.incrementationComboEnemy();
 			
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
