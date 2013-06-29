@@ -3,6 +3,7 @@ package core.popup
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Mouse;
 	
 	import core.Common;
 	import core.GameState;
@@ -91,6 +92,7 @@ package core.popup
 			
 			destroy();
 			
+			Mouse.show();
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 		

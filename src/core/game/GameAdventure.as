@@ -56,7 +56,7 @@ package core.game
 			_timer.start();
 			_timer.addEventListener(TimerEvent.TIMER, completeTimer);
 			
-			_is_boss = true;
+			if (_current_level == Common.TOTAL_LEVEL) _is_boss = true;
 			
 			super(Common.GAME_ADVENTURE_KEY);
 		}
