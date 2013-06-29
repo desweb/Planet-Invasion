@@ -41,6 +41,8 @@ package core.game.enemy
 			launchFireTimer();
 			
 			rotation = 180;
+			
+			GameState.game.transporters_container	= this;
 		}
 		
 		/**

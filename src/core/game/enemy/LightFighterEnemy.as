@@ -1,5 +1,6 @@
 package core.game.enemy 
 {
+	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	

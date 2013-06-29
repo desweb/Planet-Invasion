@@ -30,13 +30,12 @@ package core.game.item
 		
 		public function Item() 
 		{
-			GameState.game.items[GameState.game.items.length] = this;
-			
 			x = GameState.stageWidth + 100;
 			y = Tools.random(100 / 2, GameState.stageHeight - 100 / 2);
 			
 			_tween = new TweenLite(this, Tools.random(SPEED_MIN, SPEED_MAX), { x : -100, onComplete:destroy } );
 			
+			GameState.game.items[GameState.game.items.length] = this;
 			GameState.game.items_container = this;
 			
 			addEventListener(Event.ENTER_FRAME, update);

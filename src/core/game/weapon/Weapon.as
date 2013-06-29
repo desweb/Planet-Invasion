@@ -202,7 +202,7 @@ package core.game.weapon
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)
 			{
-				if (e_hit.is_kill || !e_hit._graphic.hitTestPoint(x + 10, y, true)) continue;
+				if (e_hit.is_kill || !hitTestObject(e_hit)) continue;
 				
 				_is_hit = true;
 				

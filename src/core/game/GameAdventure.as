@@ -1,5 +1,6 @@
 package core.game 
 {
+	import core.game.item.SpecialItem;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -69,11 +70,11 @@ package core.game
 			switch(_current_level)
 			{
 				case 1:
-					_total_wave_init		= 1;
-					_wave_timer_init	= 5;
+					_total_wave_init		= 3;
+					_wave_timer_init	= 30;
 					
 					_nb_enemies[Common.ASTEROID_ENEMY]			= 5;
-					//_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 1;
+					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 1;
 					break;
 				case 2:
 					_total_wave_init		= 4;
@@ -201,6 +202,8 @@ package core.game
 			if (Tools.random(0, 1)) launchEnemy(Common.TRANSPORTER_ENEMY);
 			if (Tools.random(0, 1)) launchEnemy(Common.TURRET_ENEMY);
 			
+			if (_current_level == Common.TOTAL_LEVEL && _timer.currentCount == _total_wave_init * _wave_timer_init - 55) new SpecialItem();
+			
 			_wave_timer--;
 			
 			if (_wave_timer) return;
@@ -234,7 +237,7 @@ package core.game
 		
 		private function launchBossEnemy():void
 		{
-			for (var i:int = 0; i < 10; i++) addEnemy(new DestroyerEnemy());
+			for (var i:int = 0; i < 20; i++) new DestroyerEnemy();
 		}
 		
 		private function launchEnemy(type:uint, is_wave:Boolean = false):void
@@ -254,29 +257,17 @@ package core.game
 		{
 			switch (type)
 			{
-				case Common.ALIEN_ENEMY					: addEnemy(new AlienEnemy());				break;
-				case Common.ASTEROID_ENEMY			: addEnemy(new AsteroidEnemy());		break;
-				case Common.CRUISER_ENEMY				: addEnemy(new CruiserEnemy());			break;
-				case Common.DESTROYER_ENEMY			: addEnemy(new DestroyerEnemy());		break;
-				case Common.HEAVY_FIGHTER_ENEMY	: addEnemy(new HeavyFighterEnemy());	break;
-				case Common.KAMIKAZE_ENEMY			: addEnemy(new KamikazeEnemy());		break;
-				case Common.LIGHT_FIGHTER_ENEMY	: addEnemy(new LightFighterEnemy());	break;
-				case Common.MINE_ENEMY					: addEnemy(new MineEnemy());				break;
-				case Common.TRANSPORTER_ENEMY		: addTransporterEnemy(new TransporterEnemy());	break;
-				case Common.TURRET_ENEMY				: addEnemy(new TurretEnemy());			break;
+				case Common.ALIEN_ENEMY					: new AlienEnemy();				break;
+				case Common.ASTEROID_ENEMY			: new AsteroidEnemy();			break;
+				case Common.CRUISER_ENEMY				: new CruiserEnemy();			break;
+				case Common.DESTROYER_ENEMY			: new DestroyerEnemy();		break;
+				case Common.HEAVY_FIGHTER_ENEMY	: new HeavyFighterEnemy();	break;
+				case Common.KAMIKAZE_ENEMY			: new KamikazeEnemy();		break;
+				case Common.LIGHT_FIGHTER_ENEMY	: new LightFighterEnemy();		break;
+				case Common.MINE_ENEMY					: new MineEnemy();				break;
+				case Common.TRANSPORTER_ENEMY		: new TransporterEnemy();		break;
+				case Common.TURRET_ENEMY				: new TurretEnemy();				break;
 			}
-		}
-		
-		private function addEnemy(e:Enemy):void
-		{
-			enemies_container				= e;
-			enemies[enemies.length]	= e;
-		}
-		
-		private function addTransporterEnemy(e:TransporterEnemy):void
-		{
-			transporters_container		= e;
-			enemies[enemies.length]	= e;
 		}
 	}
 }

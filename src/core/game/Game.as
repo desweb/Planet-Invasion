@@ -1,6 +1,5 @@
 package core.game 
 {
-	import core.game.item.SpecialItem;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -62,13 +61,13 @@ package core.game
 		protected var _total_metal			:int;
 		protected var _total_crystal		:int;
 		protected var _total_money		:int;
-		private var _metal_label			:TextField;
-		private var _crystal_label		:TextField;
-		private var _money_label		:TextField;
-		private var _life_bar				:LifeBarFlash;
-		private var _life_bar_mask		:LifeBarFlash;
-		private var _shield_bar			:ShieldBarFlash;
-		private var _shield_bar_mask	:ShieldBarFlash;
+		private var _metal_label				:TextField;
+		private var _crystal_label			:TextField;
+		private var _money_label			:TextField;
+		private var _life_bar					:LifeBarFlash;
+		private var _life_bar_mask			:LifeBarFlash;
+		private var _shield_bar				:ShieldBarFlash;
+		private var _shield_bar_mask		:ShieldBarFlash;
 		private var _attack_item_light		:ItemAttackLightFlash;
 		private var _crystal_item_light	:ItemCrystalLightFlash;
 		private var _defense_item_light	:ItemDefenseLightFlash;
@@ -106,8 +105,6 @@ package core.game
 			
 			Mouse.hide();
 			
-			new SpecialItem();
-			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
@@ -129,7 +126,6 @@ package core.game
 			
 			// Hero
 			_hero = new Hero();
-			hero_container = _hero;
 			
 			// Interface
 			var interface_format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 10);

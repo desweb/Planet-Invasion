@@ -73,6 +73,8 @@ package core
 		public static const GAME_SURVIVAL	:uint = 6;
 		public static const GAME_DUO			:uint = 7;
 		
+		public static const TOTAL_LEVEL:uint = 5;
+		
 		// Achievement security key
 		public static const ACHIEVEMENT_METAL						:String = '74108a89672c573afee1fae6de8e4e0b';
 		public static const ACHIEVEMENT_CRYSTAL					:String = '37fdc56efd7bfd2cf16bf2a7dbef8495';

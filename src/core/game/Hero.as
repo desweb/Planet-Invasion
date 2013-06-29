@@ -162,6 +162,8 @@ package core.game
 			
 			TweenLite.to(this, 1, { x : width / 2 + 50, onComplete:start });
 			
+			GameState.game.hero_container = this;
+			
 			SoundManager.getInstance().play('propellant');
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
@@ -366,6 +368,7 @@ package core.game
 			if (_life <= 0)
 			{
 				_life = 0;
+				GameState.game.life_bar = 0;
 				
 				destroy();
 			}
