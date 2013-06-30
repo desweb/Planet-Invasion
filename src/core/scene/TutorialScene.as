@@ -21,8 +21,6 @@ package core.scene
 			generateBg();
 			generateBtnReturn();
 			
-			sceneReturn = Common.SCENE_GAME_MODE;
-			
 			var tutorial:TutorialSceneFlash = new TutorialSceneFlash();
 			tutorial.x = GameState.stageWidth	* .1;
 			tutorial.y = GameState.stageHeight	* .3;

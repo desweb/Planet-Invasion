@@ -19,7 +19,8 @@ package core.scene
 		
 		private var _menu_sound_channel:SoundChannel;
 		
-		private var _current_scene_uid:uint;
+		private var _current_scene_uid	:uint;
+		private var _old_scene_uid			:uint;
 		
 		private var _current_scene	:Scene;
 		private var _old_scene		:Scene;
@@ -76,6 +77,12 @@ package core.scene
 				
 				if (_old_scene) TweenLite.to(_old_scene, .25, { alpha:0, onComplete:destroyOldScene });
 			}
+			
+			if (_current_scene_uid == Common.SCENE_GAME_ADVENTURE || 
+				_current_scene_uid == Common.SCENE_GAME_SURVIVAL || 
+				_current_scene_uid == Common.SCENE_GAME_DUO)
+				_old_scene_uid = 0;
+			else _old_scene_uid = _current_scene_uid;
 			
 			_current_scene_uid = scene_uid;
 		}
@@ -156,7 +163,8 @@ package core.scene
 		 * Getters
 		 */
 		
-		public function get sceneId()	:uint		{ return _current_scene_uid; }
-		public function get scene()		:Scene	{ return _current_scene; }
+		public function get scene						():Scene	{ return _current_scene; }
+		public function get current_scene_id	():uint		{ return _current_scene_uid; }
+		public function get old_scene_uid			():uint		{ return _old_scene_uid; }
 	}
 }

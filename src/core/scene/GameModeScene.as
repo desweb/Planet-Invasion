@@ -39,7 +39,7 @@ package core.scene
 			generateBtnSound();
 			generateLogin();
 			
-			sceneReturn = Common.SCENE_MENU;
+			_return_scene_uid = Common.SCENE_MENU;
 			
 			/**
 			 * Menu

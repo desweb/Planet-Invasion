@@ -21,7 +21,7 @@ package core.scene
 			generateBg();
 			generateBtnReturn();
 			
-			sceneReturn = Common.SCENE_GAME_MODE;
+			_return_scene_uid = Common.SCENE_GAME_MODE;
 			
 			var format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 30);
 			format.align	= 'center';

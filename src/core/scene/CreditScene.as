@@ -27,8 +27,6 @@ package core.scene
 			generateBg();
 			generateBtnReturn();
 			
-			sceneReturn = Common.SCENE_MENU;
-			
 			var credits_title_format		:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 20);
 			var credits_content_format	:TextFormat = Common.getPolicy('Arial', 0xFFFFFF, 15);
 			

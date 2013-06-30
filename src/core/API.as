@@ -2,6 +2,7 @@ package core
 {
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
+	import flash.net.*;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;

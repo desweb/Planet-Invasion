@@ -44,7 +44,7 @@ package core.scene
 		
 		private var _txtUsername:TextField;
 		
-		public var sceneReturn:uint;
+		protected var _return_scene_uid:uint;
 		
 		public var is_alien_menu:Boolean = false;
 		private var _alien_create_time	:Number;
@@ -216,7 +216,7 @@ package core.scene
 		private function clickReturn(e:MouseEvent):void
 		{
 			SoundManager.getInstance().playMenuButton();
-			SceneManager.getInstance().setCurrentScene(sceneReturn);
+			SceneManager.getInstance().setCurrentScene(_return_scene_uid? _return_scene_uid: SceneManager.getInstance().old_scene_uid);
 		}
 		
 		private function clickSound(e:MouseEvent):void
@@ -256,7 +256,7 @@ package core.scene
 			
 			GameState.user.logout();
 			
-			SceneManager.getInstance().setCurrentScene(SceneManager.getInstance().sceneId);
+			SceneManager.getInstance().setCurrentScene(SceneManager.getInstance().current_scene_id);
 		}
 		
 		private function clickRegister(e:MouseEvent):void
@@ -308,7 +308,7 @@ package core.scene
 			
 			if (_register_btn) _register_btn.removeEventListener(MouseEvent.CLICK, clickRegister);
 			
-			GameState.main.removeChild(this);
+			parent.removeChild(this);
 		}
 	}
 }

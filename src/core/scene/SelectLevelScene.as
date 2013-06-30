@@ -33,7 +33,7 @@ package core.scene
 			generateBtnReturn();
 			generateBtnSound();
 			
-			sceneReturn = Common.SCENE_GAME_MODE;
+			_return_scene_uid = Common.SCENE_GAME_MODE;
 			
 			/**
 			 * Levels

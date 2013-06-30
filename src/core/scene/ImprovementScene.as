@@ -47,8 +47,6 @@ package core.scene
 			generateBg();
 			generateBtnReturn();
 			
-			sceneReturn = Common.SCENE_GAME_MODE;
-			
 			// Title format
 			var format_title:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
 			format_title.bold = true;

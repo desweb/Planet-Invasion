@@ -110,6 +110,8 @@ package core.scene
 			API.get_rank(1, 50,
 			function(response:XML):void
 			{
+				trace(response);
+				
 				removeEventListener(Event.ENTER_FRAME, updateLoader);
 				removeChild(_loader);
 				_loader = null;
