@@ -2,7 +2,7 @@ package core
 {
 	import flash.events.IOErrorEvent;
 	import flash.events.Event;
-	import flash.net.*;
+	import flash.net.NetConnection;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
@@ -57,24 +57,9 @@ package core
 			// URL Loader
 			var loader:URLLoader = new URLLoader();
 			
-			// Complete URL Loader
-			loader.addEventListener(Event.COMPLETE,
-			function(e:Event):void
-			{
-				var loader_response:URLLoader = URLLoader(e.target);
-				
-				var xml:XML;
-				xml = new XML(loader_response.data);
-				
-				complete(xml);
-			});
-			
-			
-			loader.addEventListener(IOErrorEvent.IO_ERROR,
-			function(e:IOErrorEvent):void
-			{
-				complete(new XML('<?xml version="1.0" encoding="ISO-8859-1"?><planet_invasion><error><description>No internet connection</description></error></planet_invasion>'));
-			});
+			// Event URL Loader
+			loader.addEventListener(Event.COMPLETE, completeLoader);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, errorLoader);
 			
 			// Launch URL Loader
 			if (isAccessToken)
@@ -93,6 +78,28 @@ package core
 				request.data = vars;
 				
 				loader.load(request);
+			}
+			
+			/**
+			 * Loader events
+			 */
+			
+			function completeLoader(e:Event):void
+			{
+				loader.removeEventListener(Event.COMPLETE, completeLoader);
+				loader.removeEventListener(IOErrorEvent.IO_ERROR, errorLoader);
+				
+				var loader_response:URLLoader = URLLoader(e.target);
+				
+				complete(new XML(loader_response.data));
+			}
+			
+			function errorLoader(e:IOErrorEvent):void
+			{
+				loader.removeEventListener(Event.COMPLETE, completeLoader);
+				loader.removeEventListener(IOErrorEvent.IO_ERROR, errorLoader);
+				
+				complete(new XML('<?xml version="1.0" encoding="ISO-8859-1"?><planet_invasion><error><description>An error occurred</description></error></planet_invasion>'));
 			}
 		}
 		
