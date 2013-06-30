@@ -30,7 +30,7 @@ package core.game.weapon
 			_graphic = new MissileFlash();
 			addChild(_graphic);
 			
-			SoundManager.getInstance().play('missile');
+			SoundManager.getInstance().play(SoundManager.MISSILE);
 		}
 		
 		/**

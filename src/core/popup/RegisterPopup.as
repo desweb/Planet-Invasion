@@ -108,7 +108,7 @@ package core.popup
 		{
 			if (_is_loading) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			if (!_emailInput.text || !_usernameInput.text || !_passwordInput.text)
 			{

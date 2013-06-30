@@ -163,7 +163,7 @@ package core.game
 			
 			GameState.game.hero_container = this;
 			
-			SoundManager.getInstance().play('propellant');
+			SoundManager.getInstance().play(SoundManager.PROPELLANT);
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
@@ -283,7 +283,7 @@ package core.game
 			
 			gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
-			SoundManager.getInstance().play('explosion');
+			SoundManager.getInstance().play(SoundManager.EXPLOSION);
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
 			

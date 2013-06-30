@@ -109,7 +109,7 @@ package core.popup
 			_back_menu_btn = generateBtn('Back to menu');
 			_back_menu_btn.y	= GameState.stageHeight * .6;
 			
-			SoundManager.getInstance().play('win');
+			SoundManager.getInstance().play(SoundManager.WIN);
 			
 			// Events
 			if (_next_level_btn) _next_level_btn.addEventListener(MouseEvent.CLICK, clickNextLevelBtn);
@@ -138,7 +138,7 @@ package core.popup
 		
 		private function clickNextLevelBtn(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			destroy();
 			
@@ -147,7 +147,7 @@ package core.popup
 		
 		private function clickBackMenuBtn(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			destroy();
 			

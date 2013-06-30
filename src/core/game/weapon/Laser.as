@@ -22,7 +22,7 @@ package core.game.weapon
 			
 			_life_timer.start();
 			
-			SoundManager.getInstance().play('laser');
+			SoundManager.getInstance().play(SoundManager.LASER);
 		}
 		
 		/**

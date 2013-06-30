@@ -93,7 +93,7 @@ package core.scene
 		
 		private function clickLevel(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			var level:int = parseInt(e.target.name);
 			

@@ -91,7 +91,7 @@ package core.scene
 			
 			_tween = new TweenLite(this, 5, { bezier:coord, onComplete:destroy });
 			
-			SoundManager.getInstance().playMenuAlien();
+			SoundManager.getInstance().play(SoundManager.MENU_ALIEN);
 		}
 		
 		/**
@@ -142,7 +142,7 @@ package core.scene
 			
 			if (_life > 0) return;
 			
-			SoundManager.getInstance().playMenuAlienDead();
+			SoundManager.getInstance().play(SoundManager.MENU_ALIEN_DEAD);
 			
 			// Achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_ALIEN_BLAST, 1);

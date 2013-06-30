@@ -504,7 +504,7 @@ package core.scene
 		{
 			if (_is_loading) return;
 			
-			SoundManager.getInstance().play('buy');
+			SoundManager.getInstance().play(SoundManager.BUY);
 			
 			var improvement:Improvement = new Improvement(e.target.name);
 			var user_improvement:int = GameState.user.improvements[e.target.name];
@@ -573,7 +573,7 @@ package core.scene
 		{
 			if (_is_loading) return;
 			
-			SoundManager.getInstance().play('buy');
+			SoundManager.getInstance().play(SoundManager.BUY);
 			
 			e.target.visible = false;
 			

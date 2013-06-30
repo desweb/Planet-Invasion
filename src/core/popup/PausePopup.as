@@ -78,7 +78,7 @@ package core.popup
 		
 		private function clickRestartBtn(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			destroy();
 			
@@ -88,7 +88,7 @@ package core.popup
 		
 		private function clickBackMenuBtn(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			destroy();
 			
@@ -100,7 +100,7 @@ package core.popup
 		{
 			if (String.fromCharCode(e.charCode) != 'p') return;
 			
-			SoundManager.getInstance().playMenuButtonClose();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_CLOSE);
 			
 			destroy();
 		}

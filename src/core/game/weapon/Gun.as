@@ -19,7 +19,7 @@ package core.game.weapon
 		
 		public function Gun()
 		{
-			SoundManager.getInstance().play('gun');
+			SoundManager.getInstance().play(SoundManager.GUN);
 		}
 		
 		/**

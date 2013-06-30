@@ -215,7 +215,7 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRank.visible) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			_title_label.text = 'General ranking';
 			
@@ -237,7 +237,7 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankAdventure.visible) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			_title_label.text = 'Adventure ranking';
 			
@@ -259,7 +259,7 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankSurvival.visible) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			_title_label.text = 'Survival ranking';
 			
@@ -281,7 +281,7 @@ package core.scene
 		{
 			if (!_scrollRank || !_scrollRankAdventure || !_scrollRankSurvival || !_scrollRankDuo || _scrollRankDuo.visible) return;
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			_title_label.text = 'Duo ranking';
 			

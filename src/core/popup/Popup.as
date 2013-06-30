@@ -125,7 +125,7 @@ package core.popup
 		
 		public function close():void
 		{
-			SoundManager.getInstance().playMenuButtonClose();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_CLOSE);
 			destroy();
 		}
 		

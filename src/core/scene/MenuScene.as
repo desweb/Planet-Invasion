@@ -94,25 +94,25 @@ package core.scene
 		
 		private function clickPlay(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 		
 		private function clickRanking(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_RANK);
 		}
 		
 		private function clickAchievements(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_ACHIEVEMENT);
 		}
 		
 		private function clickCredits(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_CREDIT);
 		}
 	}

@@ -166,7 +166,7 @@ package core.game.enemy
 			
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
-			SoundManager.getInstance().play('explosion');
+			SoundManager.getInstance().play(SoundManager.EXPLOSION);
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);
 			

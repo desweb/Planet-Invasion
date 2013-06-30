@@ -19,7 +19,7 @@ package core.popup
 		
 		public function AchievementPopup(key:String) 
 		{
-			SoundManager.getInstance().play('achievement');
+			SoundManager.getInstance().play(SoundManager.ACHIEVEMENT);
 			
 			generateContent();
 			

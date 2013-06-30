@@ -93,19 +93,19 @@ package core.scene
 		
 		private function clickTutorial(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_TOTURIAL);
 		}
 		
 		private function clickImprovements(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_IMPROVEMENT);
 		}
 		
 		private function clickAdventure(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_SELECT_LEVEL);
 		}
 		
@@ -113,7 +113,7 @@ package core.scene
 		{
 			if (!GameState.user.isLog || GameState.user.level_adventure < 5)
 			{
-				SoundManager.getInstance().playMenuButtonError();
+				SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
 				
 				var error_popup:ErrorPopup = new ErrorPopup();
 				error_popup.setText('You must be logged in & have finished the adventure mode\nto access to survival mode.');
@@ -123,13 +123,13 @@ package core.scene
 				return;
 			}
 			
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
 		}
 		
 		private function clickDuo(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButtonError();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
 			
 			if (!GameState.user.isLog)
 			{

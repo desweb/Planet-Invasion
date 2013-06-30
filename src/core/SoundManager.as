@@ -13,6 +13,22 @@ package core
 	{
 		private static var _instance:SoundManager;
 		
+		public static const ACHIEVEMENT					:uint = 1;
+		public static const BUY								:uint = 2;
+		public static const EXPLOSION						:uint = 3;
+		public static const GAME_OVER					:uint = 4;
+		public static const GUN								:uint = 5;
+		public static const ITEM								:uint = 6;
+		public static const LASER							:uint = 7;
+		public static const MENU_ALIEN					:uint = 8;
+		public static const MENU_ALIEN_DEAD			:uint = 9;
+		public static const MENU_BUTTON				:uint = 10;
+		public static const MENU_BUTTON_CLOSE		:uint = 11;
+		public static const MENU_BUTTON_ERROR	:uint = 12;
+		public static const MISSILE							:uint = 13;
+		public static const PROPELLANT					:uint = 14;
+		public static const WIN								:uint = 15;
+		
 		private static var _menu						:Sound;
 		private static var _menu_button			:Sound;
 		private static var _menu_button_close	:Sound;
@@ -42,8 +58,6 @@ package core
 		{
 			_instance	= this;
 			available	= Common.SOUND_ON;
-			
-			
 		}
 		
 		/**
@@ -112,125 +126,47 @@ package core
 			_win.load(new URLRequest(Common.PATH_ASSETS + 'sound/win.mp3'));
 		}
 		
-		public function playMenuButton():void
+		public function play(sound_uid:uint):void
 		{
-			_menu_button_channel = _menu_button.play();
+			var s:Sound;
 			
-			if (!_menu_button_channel) return;
-			
-			_menu_button_channel.addEventListener(Event.SOUND_COMPLETE, completeMenuButton);
-		}
-		
-		public function playMenuButtonClose():void
-		{
-			_menu_button_close_channel = _menu_button_close.play();
-			
-			if (!_menu_button_close_channel) return;
-			
-			_menu_button_close_channel.addEventListener(Event.SOUND_COMPLETE, completeMenuButtonClose);
-		}
-		
-		public function playMenuButtonError():void
-		{
-			_menu_button_error_channel = _menu_button_error.play();
-			
-			if (!_menu_button_error_channel) return;
-			
-			_menu_button_error_channel.addEventListener(Event.SOUND_COMPLETE, completeMenuButtonError);
-		}
-		
-		public function playMenuAlien():void
-		{
-			_menu_alien_channel = _menu_alien.play();
-			
-			if (!_menu_alien_channel) return;
-			
-			_menu_alien_channel.addEventListener(Event.SOUND_COMPLETE, completeMenuAlien);
-		}
-		
-		public function playMenuAlienDead():void
-		{
-			_menu_alien_dead_channel = _menu_alien_dead.play();
-			
-			if (!_menu_alien_dead_channel) return;
-			
-			_menu_alien_dead_channel.addEventListener(Event.SOUND_COMPLETE, completeMenuAlienDead);
-		}
-		
-		public function play(title:String):void
-		{
-			var channel:SoundChannel;
-			
-			switch (title)
+			switch (sound_uid)
 			{
-				case 'achievement'	: channel = _achievement	.play(); break;
-				case 'buy'				: channel = _buy				.play(); break;
-				case 'explosion'		: channel = _explosion		.play(); break;
-				case 'game-over'	: channel = _game_over	.play(); break;
-				case 'gun'				: channel = _gun				.play(); break;
-				case 'item'				: channel = _item				.play(); break;
-				case 'laser'			: channel = _laser				.play(); break;
-				case 'missile'			: channel = _missile			.play(); break;
-				case 'propellant'		: channel = _propellant		.play(); break;
-				case 'win'				: channel = _win				.play(); break;
+				case ACHIEVEMENT				: s = _achievement;			break;
+				case BUY								: s = _buy;						break;
+				case EXPLOSION					: s = _explosion;				break;
+				case GAME_OVER					: s = _game_over;				break;
+				case GUN								: s = _gun;						break;
+				case ITEM								: s = _item;						break;
+				case LASER							: s = _laser;						break;
+				case MENU_ALIEN					: s = _menu_alien;			break;
+				case MENU_ALIEN_DEAD		: s = _menu_alien_dead;	break;
+				case MENU_BUTTON				: s = _menu_button;			break;
+				case MENU_BUTTON_CLOSE	: s = _menu_button_close;	break;
+				case MENU_BUTTON_ERROR	: s = _menu_button_error;	break;
+				case MISSILE						: s = _missile;					break;
+				case PROPELLANT					: s = _propellant;				break;
+				case WIN								: s = _win;						break;
 				default: return;
 			}
 			
-			if (!channel) return;
+			var c:SoundChannel = s.play();
 			
-			channel.addEventListener(Event.SOUND_COMPLETE,
+			if (!c) return;
+			
+			c.addEventListener(Event.SOUND_COMPLETE,
 			function completeChannel(e:Event):void
 			{
-				channel.removeEventListener(Event.SOUND_COMPLETE, completeChannel);
-				channel.stop();
-				channel = null;
+				c.removeEventListener(Event.SOUND_COMPLETE, completeChannel);
+				c.stop();
+				c = null;
 			});
-		}
-		
-		/**
-		 * Events
-		 */
-		
-		private function completeMenuButton(e:Event):void
-		{
-			if (!_menu_button_channel) return;
-			
-			_menu_button_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuButton);
-		}
-		
-		private function completeMenuButtonClose(e:Event):void
-		{
-			if (!_menu_button_close_channel) return;
-			
-			_menu_button_close_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuButtonClose);
-		}
-		
-		private function completeMenuButtonError(e:Event):void
-		{
-			if (!_menu_button_error_channel) return;
-			
-			_menu_button_error_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuButtonError);
-		}
-		
-		private function completeMenuAlien(e:Event):void
-		{
-			if (!_menu_alien_channel) return;
-			
-			_menu_alien_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuAlien);
-		}
-		
-		private function completeMenuAlienDead(e:Event):void
-		{
-			if (!_menu_alien_dead_channel) return;
-			
-			_menu_alien_dead_channel.removeEventListener(Event.SOUND_COMPLETE, completeMenuAlienDead);
 		}
 		
 		/**
 		 * Getters
 		 */
 		
-		public function get menu				():Sound { return _menu; }
-		public function get menu_button	():Sound { return _menu_button; }
+		public function get menu():Sound { return _menu; }
 	}
 }

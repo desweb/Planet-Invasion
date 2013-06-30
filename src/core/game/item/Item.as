@@ -72,7 +72,7 @@ package core.game.item
 				return;
 			}
 			
-			SoundManager.getInstance().play('item');
+			SoundManager.getInstance().play(SoundManager.ITEM);
 			
 			_tween = new TweenLite(this, .5, { scaleX : 2, scaleY : 2, alpha : 0, onComplete:removeThis });
 		}

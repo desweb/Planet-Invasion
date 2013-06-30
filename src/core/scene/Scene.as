@@ -215,13 +215,13 @@ package core.scene
 		
 		private function clickReturn(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(_return_scene_uid? _return_scene_uid: SceneManager.getInstance().old_scene_uid);
 		}
 		
 		private function clickSound(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			if (SoundManager.getInstance().available == Common.SOUND_ON)
 			{
@@ -237,7 +237,7 @@ package core.scene
 		
 		private function clickLogin(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			var loginPopup:LoginPopup = new LoginPopup();
 			addChild(loginPopup);
@@ -246,13 +246,13 @@ package core.scene
 		
 		private function clickProfile(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_PROFILE);
 		}
 		
 		private function clickLogout(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			GameState.user.logout();
 			
@@ -261,7 +261,7 @@ package core.scene
 		
 		private function clickRegister(e:MouseEvent):void
 		{
-			SoundManager.getInstance().playMenuButton();
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			var registerPopup:RegisterPopup = new RegisterPopup();
 			addChild(registerPopup);
