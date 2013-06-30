@@ -78,6 +78,8 @@ package core.scene
 				if (_old_scene) TweenLite.to(_old_scene, .25, { alpha:0, onComplete:destroyOldScene });
 			}
 			
+			if (_current_scene_uid == scene_uid) return;
+			
 			if (_current_scene_uid == Common.SCENE_GAME_ADVENTURE || 
 				_current_scene_uid == Common.SCENE_GAME_SURVIVAL || 
 				_current_scene_uid == Common.SCENE_GAME_DUO)
