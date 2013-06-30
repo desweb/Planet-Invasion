@@ -16,8 +16,6 @@ package core.popup
 		
 		public function ErrorPopup()
 		{
-			if (Common.IS_DEBUG) trace('create ErrorPopup');
-			
 			generateBackground();
 			generateContent();
 			
@@ -41,17 +39,6 @@ package core.popup
 			_label.textColor		= 0xFF0000;
 			_label.setTextFormat(format);
 			setPopupContent(_label);
-		}
-		
-		/**
-		 * Override
-		 */
-		
-		override public function destroy():void
-		{
-			if (Common.IS_DEBUG) trace('destroy ErrorPopup');
-			
-			super.destroy();
 		}
 		
 		/**

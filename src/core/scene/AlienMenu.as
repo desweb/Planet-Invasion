@@ -2,7 +2,6 @@ package core.scene
 {
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
-	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	
@@ -10,7 +9,6 @@ package core.scene
 	import com.greensock.plugins.TweenPlugin;
 	import com.greensock.plugins.BezierPlugin;
 	
-	import core.API;
 	import core.Common;
 	import core.GameState;
 	import core.SoundManager;

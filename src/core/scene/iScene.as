@@ -19,7 +19,7 @@ package core.scene
 		/**
 		 * Events
 		 */
-		function over(e:MouseEvent):void;
-		function out(e:MouseEvent):void;
+		function over	(e:MouseEvent):void;
+		function out	(e:MouseEvent):void;
 	}
 }

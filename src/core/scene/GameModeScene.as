@@ -1,12 +1,11 @@
 package core.scene 
 {
-	import core.popup.ErrorPopup;
 	import flash.events.MouseEvent;
-	import flash.text.TextField;
 	
 	import core.Common;
 	import core.GameState;
 	import core.SoundManager;
+	import core.popup.ErrorPopup;
 	
 	/**
 	 * Select game mode or improvement

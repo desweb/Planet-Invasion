@@ -8,7 +8,6 @@ package core.game.weapon.hero
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
-	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
 	import core.utils.Tools;

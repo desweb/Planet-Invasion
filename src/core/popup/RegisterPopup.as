@@ -21,16 +21,14 @@ package core.popup
 		private var _is_loading:Boolean = false;
 		private var _loader:URLLoader;
 		
-		private var _emailInput:TextField;
-		private var _usernameInput:TextField;
-		private var _passwordInput:TextField;
-		private var _submitLoader:LoaderFlash;
-		private var _submitBtn:BtnFlash;
+		private var _emailInput			:TextField;
+		private var _usernameInput	:TextField;
+		private var _passwordInput	:TextField;
+		private var _submitLoader		:LoaderFlash;
+		private var _submitBtn			:BtnFlash;
 		
 		public function RegisterPopup()
 		{
-			if (Common.IS_DEBUG) trace('create RegisterPopup');
-			
 			generateBackground();
 			generateContent();
 			
@@ -97,8 +95,6 @@ package core.popup
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy RegisterPopup');
-			
 			_submitBtn.removeEventListener(MouseEvent.CLICK, clickSubmit);
 			
 			super.destroy();

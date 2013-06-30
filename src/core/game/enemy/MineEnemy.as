@@ -1,8 +1,9 @@
 package core.game.enemy 
 {
-	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	
+	import com.greensock.TweenLite;
 	
 	import core.GameState;
 	import core.utils.Tools;

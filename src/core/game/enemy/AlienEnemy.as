@@ -1,13 +1,9 @@
 package core.game.enemy 
 {
-	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import core.GameState;
-	import core.game.Hero;
 	import core.game.weapon.enemy.GunAlienEnemy;
-	import core.utils.Tools;
 	
 	/**
 	 * ...
@@ -39,7 +35,7 @@ package core.game.enemy
 		
 		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container = new GunAlienEnemy(this);
+			new GunAlienEnemy(this);
 		}
 	}
 }

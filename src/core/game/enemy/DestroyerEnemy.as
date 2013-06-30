@@ -1,12 +1,11 @@
 package core.game.enemy 
 {
-	import core.game.weapon.enemy.EnemyLaser;
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	
 	import core.Common;
 	import core.GameState;
 	import core.game.weapon.enemy.EnemyGun;
+	import core.game.weapon.enemy.EnemyLaser;
 	import core.game.weapon.enemy.EnemyMissile;
 	import core.game.weapon.enemy.EnemyMissileHoming;
 	import core.utils.Tools;
@@ -55,8 +54,8 @@ package core.game.enemy
 		
 		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_LEFT,	this);
-			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this);
+			new EnemyGun(Common.FIRE_MIDDLE_LEFT,	this);
+			new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this);
 			
 			_fire_laser_timer--;
 			_fire_missile_timer--;
@@ -64,23 +63,23 @@ package core.game.enemy
 			
 			if (_fire_laser_timer < 1)
 			{
-				GameState.game.weapons_container = new EnemyLaser(Common.FIRE_MIDDLE_DEFAULT, this);
+				new EnemyLaser(Common.FIRE_MIDDLE_DEFAULT, this);
 				
 				_fire_laser_timer = _fire_laser_timer_init;
 			}
 			
 			if (_fire_missile_timer < 1)
 			{
-				GameState.game.weapons_container = new EnemyMissile(Common.FIRE_TOP_DEFAULT,		this);
-				GameState.game.weapons_container = new EnemyMissile(Common.FIRE_BOTTOM_DEFAULT,	this);
+				new EnemyMissile(Common.FIRE_TOP_DEFAULT,		this);
+				new EnemyMissile(Common.FIRE_BOTTOM_DEFAULT,	this);
 				
 				_fire_missile_timer = _fire_missile_timer_init;
 			}
 			
 			if (_fire_missile_homing_timer < 1)
 			{
-				GameState.game.weapons_container = new EnemyMissileHoming(Common.FIRE_TOP_DEFAULT,			this);
-				GameState.game.weapons_container = new EnemyMissileHoming(Common.FIRE_BOTTOM_DEFAULT,	this);
+				new EnemyMissileHoming(Common.FIRE_TOP_DEFAULT,			this);
+				new EnemyMissileHoming(Common.FIRE_BOTTOM_DEFAULT,	this);
 				
 				_fire_missile_homing_timer = _fire_missile_homing_timer_init;
 			}

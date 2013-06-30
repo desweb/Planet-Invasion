@@ -1,9 +1,6 @@
 package core 
 {
 	import flash.net.URLLoader;
-	import flash.events.Event;
-	
-	import core.scene.SceneManager;
 	
 	/**
 	 * Manage user

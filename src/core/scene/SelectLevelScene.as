@@ -25,8 +25,6 @@ package core.scene
 		
 		public function SelectLevelScene() 
 		{
-			if (Common.IS_DEBUG) trace('create SelectLevelScene');
-			
 			/**
 			 * Initialization
 			 */
@@ -80,8 +78,6 @@ package core.scene
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy SelectLevelScene');
-			
 			_level_1_btn.removeEventListener(MouseEvent.CLICK, clickLevel);
 			_level_2_btn.removeEventListener(MouseEvent.CLICK, clickLevel);
 			_level_3_btn.removeEventListener(MouseEvent.CLICK, clickLevel);

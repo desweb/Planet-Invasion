@@ -1,14 +1,11 @@
 package core.game.weapon 
 {
-	import core.game.Hero;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
-	import core.Common;
-	import core.GameState;
 	import core.SoundManager;
 	
 	/**

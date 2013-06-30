@@ -7,7 +7,6 @@ package
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
-	import flash.media.Sound;
 	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -29,12 +28,12 @@ package
 		
 		public function Preloader() 
 		{
-			if (Common.IS_DEBUG) trace('create Preloader');
-			
-			if (stage) {
+			if (stage)
+			{
 				stage.scaleMode = StageScaleMode.NO_SCALE;
 				stage.align = StageAlign.TOP_LEFT;
 			}
+			
 			addEventListener(Event.ENTER_FRAME, checkFrame);
 			loaderInfo.addEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioError);
@@ -48,8 +47,8 @@ package
 			
 			var format:TextFormat = new TextFormat();
 			format.color	= 0x00ffff;
-			format.size		= 24;
-			format.font		= font.fontName;
+			format.size	= 24;
+			format.font	= font.fontName;
 			
 			_loading_label = new TextField();
 			_loading_label.text = 'Loading...';
@@ -97,8 +96,6 @@ package
 		
 		private function loadingFinished():void 
 		{
-			if (Common.IS_DEBUG) trace('loading finished');
-			
 			removeEventListener(Event.ENTER_FRAME, checkFrame);
 			loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioError);
@@ -110,8 +107,6 @@ package
 		
 		private function startup():void 
 		{
-			if (Common.IS_DEBUG) trace('launch project');
-			
 			var mainClass:Class = getDefinitionByName('Main') as Class;
 			addChild(new mainClass() as DisplayObject);
 			

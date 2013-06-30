@@ -2,10 +2,8 @@ package core.popup
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
-	import flash.text.TextFormat;
 	
 	import com.greensock.TweenLite;
 	
@@ -139,12 +137,6 @@ package core.popup
 		{
 			close();
 		}
-		
-		/**
-		 * Getters
-		 */
-		
-		
 		
 		/**
 		 * Setters

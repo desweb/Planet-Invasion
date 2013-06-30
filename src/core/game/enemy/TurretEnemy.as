@@ -2,12 +2,10 @@ package core.game.enemy
 {
 	import flash.events.Event;
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
 	
 	import core.GameState;
-	import core.game.Hero;
 	import core.game.weapon.enemy.GunTurretEnemy;
 	import core.utils.Tools;
 	
@@ -79,7 +77,7 @@ package core.game.enemy
 		
 		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container = new GunTurretEnemy(this);
+			new GunTurretEnemy(this);
 		}
 		
 		/**

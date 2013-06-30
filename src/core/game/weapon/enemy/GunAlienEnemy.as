@@ -1,7 +1,6 @@
 package core.game.weapon.enemy 
 {
 	import flash.events.Event;
-	import flash.geom.Point;
 	
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
@@ -10,7 +9,6 @@ package core.game.weapon.enemy
 	import core.GameState;
 	import core.game.enemy.AlienEnemy;
 	import core.game.weapon.Gun;
-	import core.utils.Tools;
 	
 	/**
 	 * ...

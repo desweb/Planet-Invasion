@@ -19,7 +19,6 @@ package core.game
 	import core.game.weapon.hero.HeroMissileHoming;
 	import core.game.weapon.hero.IEM;
 	import core.game.weapon.hero.Reinforcement;
-	import core.scene.GameScene;
 	
 	/**
 	 * ...
@@ -748,25 +747,25 @@ package core.game
 		{
 			if (_is_gun_double && _is_tri_force)
 			{
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_TOP_LEFT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_TOP_RIGHT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_RIGHT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_BOTTOM_LEFT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_BOTTOM_RIGHT);
+				new HeroGun(Common.FIRE_TOP_LEFT);
+				new HeroGun(Common.FIRE_TOP_RIGHT);
+				new HeroGun(Common.FIRE_MIDDLE_LEFT);
+				new HeroGun(Common.FIRE_MIDDLE_RIGHT);
+				new HeroGun(Common.FIRE_BOTTOM_LEFT);
+				new HeroGun(Common.FIRE_BOTTOM_RIGHT);
 			}
 			else if (_is_gun_double)
 			{
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_RIGHT);
+				new HeroGun(Common.FIRE_MIDDLE_LEFT);
+				new HeroGun(Common.FIRE_MIDDLE_RIGHT);
 			}
 			else if (_is_tri_force)
 			{
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_DEFAULT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_TOP_DEFAULT);
-				GameState.game.weapons_container = new HeroGun(Common.FIRE_BOTTOM_DEFAULT);
+				new HeroGun(Common.FIRE_MIDDLE_DEFAULT);
+				new HeroGun(Common.FIRE_TOP_DEFAULT);
+				new HeroGun(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container = new HeroGun(Common.FIRE_MIDDLE_DEFAULT);
+			else new HeroGun(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_GUN]['is_timer'] = true;
 			_fireGunTimer.start();
@@ -778,11 +777,11 @@ package core.game
 			
 			if (_is_tri_force)
 			{
-				GameState.game.weapons_container = new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
-				GameState.game.weapons_container = new HeroLaser(Common.FIRE_TOP_DEFAULT);
-				GameState.game.weapons_container = new HeroLaser(Common.FIRE_BOTTOM_DEFAULT);
+				new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
+				new HeroLaser(Common.FIRE_TOP_DEFAULT);
+				new HeroLaser(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container = new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
+			else new HeroLaser(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_LAZER]['is_timer'] = true;
 			_fireLazerTimer.start();
@@ -794,25 +793,25 @@ package core.game
 			
 			if (_is_missile_double && _is_tri_force)
 			{
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_LEFT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_RIGHT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_RIGHT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_BOTTOM_LEFT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_BOTTOM_RIGHT);
+				new HeroMissile(Common.FIRE_TOP_LEFT);
+				new HeroMissile(Common.FIRE_TOP_RIGHT);
+				new HeroMissile(Common.FIRE_MIDDLE_LEFT);
+				new HeroMissile(Common.FIRE_MIDDLE_RIGHT);
+				new HeroMissile(Common.FIRE_BOTTOM_LEFT);
+				new HeroMissile(Common.FIRE_BOTTOM_RIGHT);
 			}
 			else if (_is_missile_double)
 			{
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_RIGHT);
+				new HeroMissile(Common.FIRE_MIDDLE_LEFT);
+				new HeroMissile(Common.FIRE_MIDDLE_RIGHT);
 			}
 			else if (_is_tri_force)
 			{
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_DEFAULT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_TOP_DEFAULT);
-				GameState.game.weapons_container = new HeroMissile(Common.FIRE_BOTTOM_DEFAULT);
+				new HeroMissile(Common.FIRE_MIDDLE_DEFAULT);
+				new HeroMissile(Common.FIRE_TOP_DEFAULT);
+				new HeroMissile(Common.FIRE_BOTTOM_DEFAULT);
 			}
-			else GameState.game.weapons_container = new HeroMissile(Common.FIRE_MIDDLE_DEFAULT);
+			else new HeroMissile(Common.FIRE_MIDDLE_DEFAULT);
 			
 			_keys[KEY_MISSILE]['is_timer'] = true;
 			_fireMissileTimer.start();
@@ -822,38 +821,38 @@ package core.game
 		{
 			if (!_total_missile_homing) return;
 			
-			if			(_total_missile_homing == 1) GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
+			if			(_total_missile_homing == 1) new HeroMissileHoming(Common.FIRE_MIDDLE_DEFAULT);
 			else if	(_total_missile_homing == 2)
 			{
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
+				new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
+				new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
 			}
 			else if	(_total_missile_homing == 4)
 			{
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
+				new HeroMissileHoming(Common.FIRE_TOP_LEFT);
+				new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
 			}
 			else if	(_total_missile_homing == 6)
 			{
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
+				new HeroMissileHoming(Common.FIRE_TOP_LEFT);
+				new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
+				new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
+				new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
 			}
 			else if	(_total_missile_homing == 8)
 			{
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_DEFAULT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT);
-				GameState.game.weapons_container = new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
+				new HeroMissileHoming(Common.FIRE_TOP_LEFT);
+				new HeroMissileHoming(Common.FIRE_TOP_DEFAULT);
+				new HeroMissileHoming(Common.FIRE_TOP_RIGHT);
+				new HeroMissileHoming(Common.FIRE_MIDDLE_RIGHT);
+				new HeroMissileHoming(Common.FIRE_MIDDLE_LEFT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_LEFT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_DEFAULT);
+				new HeroMissileHoming(Common.FIRE_BOTTOM_RIGHT);
 			}
 			
 			_keys[KEY_MISSILE_HOMING]['is_timer'] = true;

@@ -1,11 +1,9 @@
 package core.game 
 {
-	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
 	import core.Common;
-	import core.scene.SceneManager;
 	import core.game.enemy.AlienEnemy;
 	import core.game.enemy.AsteroidEnemy;
 	import core.game.enemy.CruiserEnemy;
@@ -17,6 +15,7 @@ package core.game
 	import core.game.enemy.MineEnemy;
 	import core.game.enemy.TransporterEnemy;
 	import core.game.enemy.TurretEnemy;
+	import core.scene.SceneManager;
 	import core.utils.Tools;
 	
 	/**

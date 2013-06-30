@@ -2,13 +2,9 @@ package core.scene
 {
 	import flash.events.MouseEvent;
 	
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	
 	import core.Common;
 	import core.GameState;
 	import core.SoundManager;
-	import core.game.Hero;
 	
 	/**
 	 * First menu
@@ -27,8 +23,6 @@ package core.scene
 		
 		public function MenuScene()
 		{
-			if (Common.IS_DEBUG) trace('create MenuScene');
-			
 			/**
 			 * Initialization
 			 */
@@ -75,8 +69,6 @@ package core.scene
 		
 		override public function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy MenuScene');
-			
 			_btnPlay.removeEventListener(MouseEvent.MOUSE_OVER, over);
 			_btnPlay.removeEventListener(MouseEvent.MOUSE_OUT, out);
 			_btnPlay.removeEventListener(MouseEvent.CLICK, clickPlay);

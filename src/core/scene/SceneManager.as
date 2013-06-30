@@ -1,7 +1,6 @@
 package core.scene 
 {
 	import flash.events.Event;
-	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	
 	import com.greensock.TweenLite;

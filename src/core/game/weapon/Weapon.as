@@ -10,9 +10,7 @@ package core.game.weapon
 	
 	import core.Common;
 	import core.GameState;
-	import core.game.Hero;
 	import core.game.enemy.Enemy;
-	import core.utils.Tools;
 	
 	/**
 	 * Class of weapons
@@ -45,10 +43,6 @@ package core.game.weapon
 		
 		public function Weapon()
 		{
-			//GameState.game.weapons[GameState.game.weapons.length] = this;
-			
-			GameState.game.addChild(this);
-			
 			// Default position
 			switch (_fire_type)
 			{
@@ -85,6 +79,9 @@ package core.game.weapon
 			else if	(isEnemy())	constructorEnemy();
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
+			
+			GameState.game.weapons[GameState.game.weapons.length] = this;
+			GameState.game.weapons_container = this;
 		}
 		
 		private function constructorHero():void

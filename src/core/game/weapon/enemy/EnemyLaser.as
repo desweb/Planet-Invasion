@@ -3,7 +3,6 @@ package core.game.weapon.enemy
 	import flash.events.Event;
 	
 	import core.Common;
-	import core.GameState;
 	import core.game.enemy.Enemy;
 	import core.game.weapon.Laser;
 	

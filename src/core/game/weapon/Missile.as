@@ -5,7 +5,6 @@ package core.game.weapon
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
-	import core.Common;
 	import core.GameState;
 	import core.SoundManager;
 	
@@ -22,8 +21,6 @@ package core.game.weapon
 		{
 			_graphic = new MissileFlash();
 			addChild(_graphic);
-			
-			//if (isEnemy()) rotation = 180;
 			
 			SoundManager.getInstance().play('missile');
 		}

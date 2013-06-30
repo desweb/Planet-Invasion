@@ -1,11 +1,9 @@
 package core.popup 
 {
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
 	import flash.text.TextField;
-	import flash.text.TextFormat;
 	
 	import core.API;
 	import core.Common;

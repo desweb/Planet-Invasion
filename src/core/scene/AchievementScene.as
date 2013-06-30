@@ -30,8 +30,6 @@ package core.scene
 		
 		public function AchievementScene()
 		{
-			if (Common.IS_DEBUG) trace('create AchievementScene');
-			
 			/**
 			 * Initialization
 			 */

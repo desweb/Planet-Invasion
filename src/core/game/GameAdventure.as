@@ -1,7 +1,5 @@
 package core.game 
 {
-	import core.game.item.SpecialItem;
-	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
@@ -18,6 +16,7 @@ package core.game
 	import core.game.enemy.MineEnemy;
 	import core.game.enemy.TransporterEnemy;
 	import core.game.enemy.TurretEnemy;
+	import core.game.item.SpecialItem;
 	import core.scene.SceneManager;
 	import core.utils.Tools;
 	

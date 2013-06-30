@@ -18,8 +18,6 @@ package core.game.weapon.hero
 		
 		public function IEM()
 		{
-			if (Common.IS_DEBUG) trace('create IEM');
-			
 			x = -25;
 			y = GameState.stageHeight / 2;
 			
@@ -60,8 +58,6 @@ package core.game.weapon.hero
 		
 		private function destroy():void
 		{
-			if (Common.IS_DEBUG) trace('destroy IEM');
-			
 			parent.removeChild(this);
 		}
 	}

@@ -6,11 +6,7 @@ package core.utils
 	 */
 	public class Security 
 	{
-		
-		public function Security() 
-		{
-			
-		}
+		public function Security() {}
 		
 		public static function isValidEmail(email:String):Boolean
 		{

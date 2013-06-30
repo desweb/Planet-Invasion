@@ -5,8 +5,6 @@ package core
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
 	
-	import core.Common;
-	
 	/**
 	 * Manage sounds & musics
 	 * @author desweb

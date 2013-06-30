@@ -48,8 +48,6 @@ package core.scene
 		
 		public function RankScene()
 		{
-			if (Common.IS_DEBUG) trace('create RankScene');
-			
 			var scroll_height:int = GameState.user.isLog? GameState.stageHeight * .65: GameState.stageHeight * .75;
 			
 			/**

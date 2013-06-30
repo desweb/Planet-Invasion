@@ -5,9 +5,8 @@ package core.game.weapon
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
-	import core.Common;
-	import core.SoundManager;
 	import core.GameState;
+	import core.SoundManager;
 	
 	/**
 	 * ...

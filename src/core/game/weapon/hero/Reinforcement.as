@@ -6,7 +6,6 @@ package core.game.weapon.hero
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	
-	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
 	import core.utils.Tools;
@@ -55,7 +54,6 @@ package core.game.weapon.hero
 		{
 			var gun:ReinforcementGun = new ReinforcementGun();
 			gun.x = x + 50;
-			GameState.game.weapons_container = gun;
 			
 			// Enemy hit
 			for each(var e_hit:Enemy in GameState.game.enemies)

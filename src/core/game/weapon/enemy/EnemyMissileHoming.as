@@ -1,7 +1,5 @@
 package core.game.weapon.enemy 
 {
-	import flash.events.Event;
-	
 	import com.greensock.TweenLite;
 	
 	import core.Common;

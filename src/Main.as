@@ -6,7 +6,6 @@ package
 	import core.Common;
 	import core.GameState;
 	import core.User;
-	import core.scene.MenuScene;
 	import core.scene.SceneManager;
 	import core.utils.Stats;
 	import core.utils.StatsMonitor;
@@ -16,8 +15,8 @@ package
 	 * @author desweb
 	 */
 	
-	[SWF(backgroundColor="#000", frameRate="60", width="640", height="480")]
-	[Frame(factoryClass = "Preloader")]
+	[SWF(backgroundColor='#000', frameRate='60', width='640', height='480')]
+	[Frame(factoryClass='Preloader')]
 	
 	public class Main extends Sprite
 	{
@@ -28,16 +27,12 @@ package
 		
 		public function Main():void 
 		{
-			if (Common.IS_DEBUG) trace('create Main');
-			
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			if (stage)	init();
+			else			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
 		private function init(e:Event = null):void 
 		{
-			if (Common.IS_DEBUG) trace('init Main');
-			
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			

@@ -1,8 +1,9 @@
 package core.scene 
 {
+	import flash.display.Sprite;
+	
 	import core.Common;
 	import core.GameState;
-	import flash.display.Sprite;
 	
 	/**
 	 * ...

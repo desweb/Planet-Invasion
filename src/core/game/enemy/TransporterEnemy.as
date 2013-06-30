@@ -2,7 +2,6 @@ package core.game.enemy
 {
 	import flash.events.Event;
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	
 	import core.Common;
 	import core.GameState;
@@ -70,8 +69,8 @@ package core.game.enemy
 		
 		override protected function completeFireTimer(e:TimerEvent):void
 		{
-			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_LEFT,	this);
-			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this);
+			new EnemyGun(Common.FIRE_MIDDLE_LEFT,	this);
+			new EnemyGun(Common.FIRE_MIDDLE_RIGHT,	this);
 		}
 		
 		/**
@@ -80,12 +79,7 @@ package core.game.enemy
 		
 		private function launchFighter():void
 		{
-			for (var i:int = 0; i < 2; i++)
-			{
-				var e:LightFighterEnemy = new LightFighterEnemy(true, this);
-				GameState.game.enemies_container = e;
-				GameState.game.enemies[GameState.game.enemies.length] = e;
-			}
+			for (var i:int = 0; i < 2; i++) new LightFighterEnemy(true, this);
 		}
 	}
 }

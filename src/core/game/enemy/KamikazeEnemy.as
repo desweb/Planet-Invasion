@@ -1,7 +1,5 @@
 package core.game.enemy 
 {
-	import flash.utils.Dictionary;
-	
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
 	import com.greensock.plugins.TweenPlugin;

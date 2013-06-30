@@ -1,6 +1,5 @@
 package core.scene 
 {
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFormat;

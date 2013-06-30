@@ -11,7 +11,5 @@ package core.scene
 		{
 			
 		}
-		
 	}
-
 }

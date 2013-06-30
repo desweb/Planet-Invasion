@@ -1,8 +1,6 @@
 package core.game.enemy 
 {
-	import flash.events.Event;
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Linear;
@@ -10,7 +8,6 @@ package core.game.enemy
 	import com.greensock.plugins.BezierThroughPlugin;
 	
 	import core.Common;
-	import core.GameState;
 	import core.game.weapon.enemy.EnemyGun;
 	import core.utils.Tools;
 	
@@ -67,7 +64,7 @@ package core.game.enemy
 		{
 			if (!_is_fire) return;
 			
-			GameState.game.weapons_container = new EnemyGun(Common.FIRE_MIDDLE_DEFAULT, this);
+			new EnemyGun(Common.FIRE_MIDDLE_DEFAULT, this);
 		}
 		
 		/**

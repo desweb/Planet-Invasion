@@ -1,8 +1,9 @@
 package core.game.item 
 {
-	import com.greensock.TweenLite;
 	import flash.events.Event;
 	import flash.geom.Point;
+	
+	import com.greensock.TweenLite;
 	
 	import core.Common;
 	import core.GameState;

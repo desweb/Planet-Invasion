@@ -7,8 +7,6 @@ package core.scene
 	import flash.text.TextFormat;
 	import flash.utils.getTimer;
 	
-	import com.greensock.TweenLite;
-	
 	import core.Achievement;
 	import core.API;
 	import core.Common;
