@@ -82,7 +82,7 @@ package core.game.enemy
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			GameState.game.enemies[GameState.game.enemies.length] = this;
+			GameState.game.enemies.push(this);
 			
 			if (!(_graphic is TransporterFlash)) GameState.game.enemies_container = this;
 		}

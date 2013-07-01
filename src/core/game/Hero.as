@@ -58,6 +58,7 @@ package core.game
 		private var _shield_regen_timer	:Timer;
 		private var _shield_tween			:TweenLite;
 		private var _shield_tween_timer	:int = 1;
+		private var _is_shield_init			:Boolean = true;
 		
 		// Timers
 		private var _fireGunTimer					:Timer;
@@ -394,6 +395,12 @@ package core.game
 			
 			_shield_repop_timer.stop();
 			_shield_regen_timer.start();
+			
+			if (_is_shield_init)
+			{
+				_is_shield_init = false;
+				return;
+			}
 			
 			GameState.game.shield_life_bar = _shield_life;
 		}

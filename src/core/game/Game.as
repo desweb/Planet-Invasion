@@ -81,9 +81,9 @@ package core.game
 		public var total_boost_resistance	:int = 0;
 		
 		// Entities
-		public var enemies		:Array = new Array();
-		public var weapons	:Array = new Array();
-		public var items			:Array = new Array();
+		public var enemies		:Vector.<Enemy>		= new Vector.<Enemy>();
+		public var weapons	:Vector.<Weapon>	= new Vector.<Weapon>();
+		public var items			:Vector.<Item>			= new Vector.<Item>();
 		
 		// Enemies
 		public var total_enemy_kill			:int			= 0;
@@ -131,9 +131,6 @@ package core.game
 			addChild(_transporters_container);
 			addChild(_powers_container);
 			addChild(_interface_container);
-			
-			// Hero
-			_hero = new Hero();
 			
 			// Interface
 			var interface_format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 10);
@@ -201,6 +198,9 @@ package core.game
 			_life_bar.y = _life_bar_mask.y;
 			_life_bar.mask = _life_bar_mask;
 			interface_container = _life_bar;
+			
+			// Hero
+			_hero = new Hero();
 			
 			if (GameState.game.hero.shield_life_init)
 			{
@@ -413,6 +413,10 @@ package core.game
 		
 		public function destroyElement(s:Sprite):void
 		{
+			if			(s is Weapon)	weapons	.splice(weapons	.indexOf(s), 1);
+			else if	(s is Enemy)		enemies	.splice(enemies	.indexOf(s), 1);
+			else if	(s is Item)			items		.splice(items		.indexOf(s), 1);
+			
 			s.parent.removeChild(s);
 			s = null;
 		}
@@ -523,12 +527,12 @@ package core.game
 		public function set powers_container		(value:Sprite)					:void { _powers_container			.addChild(value); }
 		public function set interface_container		(value:DisplayObject)			:void { _interface_container		.addChild(value); }
 		
-		public function set attack_item	(value:Boolean) :void { TweenLite.to(_attack_item_light,	.2, { alpha : value?1 : 0 }); }
-		public function set crystal_item	(value:Boolean) :void { TweenLite.to(_crystal_item_light,	.2, { alpha : value?1 : 0 }); }
-		public function set defense_item	(value:Boolean) :void { TweenLite.to(_defense_item_light,.2, { alpha : value?1 : 0 }); }
-		public function set gold_item		(value:Boolean) :void { TweenLite.to(_gold_item_light,		.2, { alpha : value?1 : 0 }); }
-		public function set metal_item		(value:Boolean) :void { TweenLite.to(_metal_item_light,	.2, { alpha : value?1 : 0 }); }
-		public function set speed_item		(value:Boolean) :void { TweenLite.to(_speed_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set attack_item	(value:Boolean):void { TweenLite.to(_attack_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set crystal_item	(value:Boolean):void { TweenLite.to(_crystal_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set defense_item	(value:Boolean):void { TweenLite.to(_defense_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set gold_item		(value:Boolean):void { TweenLite.to(_gold_item_light,		.2, { alpha : value?1 : 0 }); }
+		public function set metal_item		(value:Boolean):void { TweenLite.to(_metal_item_light,	.2, { alpha : value?1 : 0 }); }
+		public function set speed_item		(value:Boolean):void { TweenLite.to(_speed_item_light,	.2, { alpha : value?1 : 0 }); }
 		
 		public function set metal(value:int):void
 		{
