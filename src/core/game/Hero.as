@@ -51,9 +51,9 @@ package core.game
 		
 		// Shield
 		private var _shield						:ShieldHeroFlash;
-		private var _shield_life				:int;
+		private var _shield_life				:Number;
 		private var _shield_life_init			:int = 0;
-		private var _shield_regen			:int;
+		private var _shield_regen			:Number;
 		private var _shield_repop_timer	:Timer;
 		private var _shield_regen_timer	:Timer;
 		private var _shield_tween			:TweenLite;
@@ -347,7 +347,7 @@ package core.game
 		
 		public function hitWeapon(damage:int):void
 		{
-			if (!_life) return;
+			if (_life <= 0) return;
 			
 			if (_shield_life)
 			{
@@ -394,6 +394,8 @@ package core.game
 			
 			_shield_repop_timer.stop();
 			_shield_regen_timer.start();
+			
+			GameState.game.shield_life_bar = _shield_life;
 		}
 		
 		private function undisplayShield():void
@@ -506,7 +508,7 @@ package core.game
 		{
 			_shield_repop_timer.reset();
 			
-			if (!_shield_life || _shield_life == _shield_life_init) return;
+			if (_shield_life <= 0 || _shield_life == _shield_life_init) return;
 			
 			_shield_life += _shield_regen;
 			

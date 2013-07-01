@@ -93,11 +93,11 @@ package core
 					name	= 'Shield regeneration';
 					type		= 'armor / s';
 					
-					value[1] = 2;
-					value[2] = 1.5;
-					value[3] = 1;
-					value[4] = .5;
-					value[5] = .3;
+					value[1] = .25;
+					value[2] = .5;
+					value[3] = .75;
+					value[4] = 1;
+					value[5] = 2;
 					
 					price[2]['metal']		= 0;
 					price[2]['crystal']	= 30;
