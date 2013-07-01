@@ -1,6 +1,8 @@
 package core.game 
 {
 	import flash.events.TimerEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.Timer;
 	
 	import core.Common;
@@ -30,11 +32,13 @@ package core.game
 		private var _timer:Timer = new Timer(1000);
 		
 		// Waves
-		private var _total_wave			:uint = 0;
-		private var _total_wave_init	:uint;
-		private var _wave_timer			:uint;
-		private var _wave_timer_init	:uint;
-		private var _is_last_wave		:Boolean = false;
+		private var _total_wave				:uint = 0;
+		private var _total_wave_init		:uint;
+		private var _remaining_waves	:uint;
+		private var _wave_timer				:uint;
+		private var _wave_timer_init		:uint;
+		private var _is_last_wave			:Boolean = false;
+		private var _wave_label				:TextField;
 		
 		// Enemies
 		private var _nb_enemies:Array = new Array();
@@ -48,6 +52,11 @@ package core.game
 			
 			generateGameBg();
 			
+			// Interface
+			var interface_format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 12);
+			interface_format.bold		= true;
+			interface_format.align	= 'center';
+			
 			initializeLevel();
 			
 			_wave_timer = _wave_timer_init;
@@ -58,6 +67,16 @@ package core.game
 			if (_current_level == Common.TOTAL_LEVEL) _is_boss = true;
 			
 			super(Common.GAME_ADVENTURE_KEY);
+			
+			_wave_label = new TextField();
+			_wave_label.x							= GameState.stageWidth * .4;
+			_wave_label.y							= GameState.stageHeight * .95;
+			_wave_label.width						= GameState.stageWidth * .2;
+			_wave_label.defaultTextFormat	= interface_format;
+			_wave_label.selectable				= false;
+			interface_container = _wave_label;
+			
+			updateWaveLabel();
 		}
 		
 		/**
@@ -220,6 +239,8 @@ package core.game
 		{
 			_total_wave++;
 			
+			updateWaveLabel();
+			
 			launchEnemy(Common.ALIEN_ENEMY);
 			launchEnemy(Common.ASTEROID_ENEMY);
 			launchEnemy(Common.CRUISER_ENEMY);
@@ -267,6 +288,13 @@ package core.game
 				case Common.TRANSPORTER_ENEMY		: new TransporterEnemy();		break;
 				case Common.TURRET_ENEMY				: new TurretEnemy();				break;
 			}
+		}
+		
+		public function updateWaveLabel():void
+		{
+			_wave_label.text = 'Remaining waves : ' + (_total_wave_init - _total_wave);
+			
+			interfaceEffect(_wave_label);
 		}
 	}
 }

@@ -489,7 +489,7 @@ package core.game
 			addChild(bg);
 		}
 		
-		private function interfaceEffect(label:TextField):void
+		protected function interfaceEffect(label:TextField):void
 		{
 			TweenLite.to(label, .1, { scaleX : 1.2, scaleY : 1.2, onComplete:interfaceEffectEnd, onCompleteParams:[label] });
 		}
