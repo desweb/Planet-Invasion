@@ -292,7 +292,7 @@ package core.scene
 			var improvement_label:TextField = new TextField();
 			improvement_label.x			= GameState.stageWidth	* .01;
 			improvement_label.y			= GameState.stageHeight	* 0;
-			improvement_label.width	= GameState.stageWidth	* .2;
+			improvement_label.width	= GameState.stageWidth	* .4;
 			improvement_label.height	= GameState.stageHeight	* .05;
 			improvement_label.defaultTextFormat = _improvement_format;
 			improvement_label.text = improvement.name;

@@ -38,7 +38,7 @@ package core.scene
 			generateBtnReturn();
 			
 			// Title
-			var format_title:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 20);
 			format_title.bold = true;
 			
 			_title_label = new TextField();
@@ -103,8 +103,9 @@ package core.scene
 			
 			// Name
 			var nameLabel:TextField = new TextField();
-			nameLabel.x = GameState.stageWidth 	* .05;
-			nameLabel.y = GameState.stageHeight	* .01;
+			nameLabel.x			= GameState.stageWidth 	* .05;
+			nameLabel.y			= GameState.stageHeight	* .01;
+			nameLabel.width	= GameState.stageWidth	* .2;
 			nameLabel.defaultTextFormat = achievementUser['is_unlock'] == 1? _title_success_format: _title_lock_format;
 			nameLabel.text = achievement.name;
 			nameLabel.selectable = false;
