@@ -100,7 +100,7 @@ package core.popup
 			point_label.text						= 'Point : ' + point;
 			setPopupContent(point_label);
 			
-			if (GameState.game.current_level < 5)
+			if (GameState.game.current_game_key == Common.GAME_ADVENTURE_KEY && GameState.game.current_level < 5)
 			{
 				_next_level_btn		= generateBtn('Next level');
 				_next_level_btn.y	= GameState.stageHeight * .5;

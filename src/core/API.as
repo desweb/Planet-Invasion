@@ -523,5 +523,43 @@ package core
 				complete(response);
 			});
 		}
+		
+		 /**
+		  * Level
+		  */
+		 
+		// GET level
+		public static function get_level(complete:Function):void
+		{
+			// Request
+			basicHTTPRequest(URLRequestMethod.GET, 'level', new URLVariables(), false,
+			function(response:XML):void
+			{
+				var i:uint = 0;
+				
+				for each(var level:XML in response.levels.level)
+				{
+					GameState.user.levels[i] = new Array();
+					GameState.user.levels[i]['key']							= i;
+					GameState.user.levels[i]['name']						= level.name;
+					GameState.user.levels[i]['total_wave']					= int(level.total_wave);
+					GameState.user.levels[i]['time_between_wave']	= int(level.time_between_wave);
+					GameState.user.levels[i]['alien']							= int(level.alien);
+					GameState.user.levels[i]['asteroid']						= int(level.asteroid);
+					GameState.user.levels[i]['cruiser']						= int(level.cruiser);
+					GameState.user.levels[i]['destroyer']					= int(level.destroyer);
+					GameState.user.levels[i]['heavy_fighter']			= int(level.heavy_fighter);
+					GameState.user.levels[i]['kamikaze']					= int(level.kamikaze);
+					GameState.user.levels[i]['light_fighter']				= int(level.light_fighter);
+					GameState.user.levels[i]['mine']							= int(level.mine);
+					GameState.user.levels[i]['transporter']				= int(level.transporter);
+					GameState.user.levels[i]['turret']						= int(level.turret);
+					
+					i++;
+				}
+				
+				complete(response);
+			});
+		}
 	}
 }

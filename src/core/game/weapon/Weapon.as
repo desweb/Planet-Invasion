@@ -81,7 +81,6 @@ package core.game.weapon
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			GameState.game.weapons.push(this);
 			GameState.game.weapons_container = this;
 		}
 		

@@ -1,5 +1,6 @@
 package core.game.enemy 
 {
+	import flash.events.Event;
 	import flash.events.TimerEvent;
 	
 	import core.Common;
@@ -51,7 +52,7 @@ package core.game.enemy
 		}
 		
 		/**
-		 * Events
+		 * Override
 		 */
 		
 		override protected function completeFireTimer(e:TimerEvent):void

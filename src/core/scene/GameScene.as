@@ -8,6 +8,7 @@ package core.scene
 	import core.game.Game;
 	import core.game.GameAdventure;
 	import core.game.GameDuo;
+	import core.game.GameSpecial;
 	import core.game.GameSurvival;
 	import core.popup.PausePopup;
 	
@@ -32,7 +33,7 @@ package core.scene
 				case Common.SCENE_GAME_ADVENTURE	: _game = new GameAdventure(level);	_current_game_key = Common.GAME_ADVENTURE_KEY;	break;
 				case Common.SCENE_GAME_SURVIVAL		: _game = new GameSurvival();				_current_game_key = Common.GAME_SURVIVAL_KEY;	break;
 				case Common.SCENE_GAME_DUO				: _game = new GameDuo();					_current_game_key = Common.GAME_DUO_KEY;			break;
-				default														: _game = new GameAdventure(level);
+				case Common.SCENE_GAME_SPECIAL		: _game = new GameSpecial(level);		_current_game_key = Common.GAME_SPECIAL_KEY;		break;
 			}
 			
 			addChild(_game);

@@ -81,9 +81,12 @@ package core.game
 		public var total_boost_resistance	:int = 0;
 		
 		// Entities
-		public var enemies		:Vector.<Enemy>		= new Vector.<Enemy>();
+		/*public var enemies		:Vector.<Enemy>		= new Vector.<Enemy>();
 		public var weapons	:Vector.<Weapon>	= new Vector.<Weapon>();
-		public var items			:Vector.<Item>			= new Vector.<Item>();
+		public var items			:Vector.<Item>			= new Vector.<Item>();*/
+		public var enemies		:Array = new Array();
+		public var weapons	:Array = new Array();
+		public var items			:Array = new Array();
 		
 		// Enemies
 		public var total_enemy_kill			:int			= 0;
@@ -386,7 +389,7 @@ package core.game
 			if (GameState.user.games[_current_game_key]['best_time'] > _total_time || 
 				GameState.user.games[_current_game_key]['best_time'] == 0) GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
 			
-			if (GameState.user.isLog) API.post_gameKey(_current_game_key, function(response:XML):void { } );
+			if (GameState.user.isLog && _current_game_key != Common.GAME_SPECIAL_KEY) API.post_gameKey(_current_game_key, function(response:XML):void { } );
 			
 			// Serial killer achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);
@@ -401,6 +404,8 @@ package core.game
 		
 		public function destroy():void
 		{
+			pause();
+			
 			removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
 			_timer.removeEventListener(TimerEvent.TIMER, completeTimer);
@@ -409,7 +414,17 @@ package core.game
 			
 			_hero.destroy();
 			
-			for each(var e:Enemy in enemies) e.destroy();
+			for each(var e:Enemy	in enemies)	e.destroy();
+			for each(var w:Weapon	in weapons)	w.destroy();
+			for each(var i:Item		in items)		i.destroy();
+			
+			enemies	.splice(0);
+			weapons	.splice(0);
+			items		.splice(0);
+			
+			enemies	= null;
+			weapons	= null;
+			items		= null;
 			
 			initCombo();
 		}
@@ -513,23 +528,24 @@ package core.game
 		 * Getters
 		 */
 		
-		public function get dt					():Number	{ return _dt; }
-		public function get is_finish			():Boolean	{ return _is_finish; }
-		public function get hero				():Hero		{ return _hero; }
-		public function get current_level	():int			{ return _current_level; }
-		public function get metal				():int			{ return _total_metal; }
-		public function get crystal			():int			{ return _total_crystal; }
-		public function get money			():int			{ return _total_money; }
+		public function get dt							():Number	{ return _dt; }
+		public function get is_finish					():Boolean	{ return _is_finish; }
+		public function get hero						():Hero		{ return _hero; }
+		public function get current_level			():int			{ return _current_level; }
+		public function get current_game_key	():String	{ return _current_game_key; }
+		public function get metal						():int			{ return _total_metal; }
+		public function get crystal					():int			{ return _total_crystal; }
+		public function get money					():int			{ return _total_money; }
 		
 		/**
 		 * Setters
 		 */
 		
-		public function set weapons_container		(value:Weapon)					:void { _weapons_container		.addChild(value); }
+		public function set weapons_container		(value:Weapon)					:void { _weapons_container		.addChild(value); weapons.push(value); }
 		public function set hero_container			(value:Hero)						:void { _hero_container				.addChild(value); }
-		public function set items_container			(value:Item)						:void { _items_container			.addChild(value); }
-		public function set enemies_container		(value:Enemy)					:void { _enemies_container		.addChild(value); }
-		public function set transporters_container	(value:TransporterEnemy)	:void { _transporters_container	.addChild(value); }
+		public function set items_container			(value:Item)						:void { _items_container			.addChild(value); items.push(value); }
+		public function set enemies_container		(value:Enemy)					:void { _enemies_container		.addChild(value); enemies.push(value); }
+		public function set transporters_container	(value:TransporterEnemy)	:void { _transporters_container	.addChild(value); enemies.push(value); }
 		public function set powers_container		(value:Sprite)					:void { _powers_container			.addChild(value); }
 		public function set interface_container		(value:DisplayObject)			:void { _interface_container		.addChild(value); }
 		

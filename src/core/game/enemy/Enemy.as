@@ -82,8 +82,6 @@ package core.game.enemy
 			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 			
-			GameState.game.enemies.push(this);
-			
 			if (!(_graphic is TransporterFlash)) GameState.game.enemies_container = this;
 		}
 		
@@ -106,8 +104,6 @@ package core.game.enemy
 		{
 			if (is_kill) return;
 			
-			dt = GameState.game.dt;
-			
 			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
 			
 			// Roadhog achievement
@@ -126,6 +122,8 @@ package core.game.enemy
 		
 		public function destroy():void
 		{
+			trace(is_kill);
+			
 			if (is_kill) return;
 			
 			is_kill = true;

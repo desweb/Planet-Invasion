@@ -19,6 +19,7 @@ package core.game.item
 		private static const SPEED_MIN:uint = 10;
 		private static const SPEED_MAX:uint = 2;
 		
+		private var _is_kill:Boolean = false;
 		protected var _is_pause:Boolean = false;
 		protected var _is_hit:Boolean = false;
 		
@@ -35,7 +36,6 @@ package core.game.item
 			
 			_tween = new TweenLite(this, Tools.random(SPEED_MIN, SPEED_MAX), { x : -100, onComplete:destroy } );
 			
-			GameState.game.items.push(this);
 			GameState.game.items_container = this;
 			
 			addEventListener(Event.ENTER_FRAME, update);
@@ -59,8 +59,12 @@ package core.game.item
 		 * Destroy
 		 */
 		
-		protected function destroy(is_anim:Boolean = false):void
+		public function destroy(is_anim:Boolean = false):void
 		{
+			if (_is_kill) return;
+			
+			_is_kill = true;
+			
 			_tween.kill();
 			_tween = null;
 			

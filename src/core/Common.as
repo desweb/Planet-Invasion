@@ -15,7 +15,7 @@ package core
 		 */
 		
 		// Debug
-		public static const IS_DEBUG:Boolean = true;
+		public static const IS_DEBUG:Boolean = false;
 		
 		// Assets
 		public static const PATH_ASSETS:String = '../assets/';
@@ -25,21 +25,23 @@ package core
 		public static const SOUND_OFF:uint = 2;
 		
 		// Scene id
-		public static const SCENE_ACHIEVEMENT			:uint = 1;
-		public static const SCENE_CREDIT					:uint = 2;
-		public static const SCENE_DIALOG					:uint = 3;
-		public static const SCENE_FINAL						:uint = 4;
-		public static const SCENE_GAME_ADVENTURE	:uint = 5;
-		public static const SCENE_GAME_SURVIVAL		:uint = 6;
-		public static const SCENE_GAME_DUO				:uint = 7;
-		public static const SCENE_GAME_MODE			:uint = 8;
-		public static const SCENE_IMPROVEMENT			:uint = 9;
-		public static const SCENE_MENU						:uint = 10;
-		public static const SCENE_RANK						:uint = 11;
-		public static const SCENE_RESEARCH_DUO		:uint = 12;
-		public static const SCENE_SELECT_LEVEL			:uint = 13;
-		public static const SCENE_TOTURIAL				:uint = 14;
-		public static const SCENE_PROFILE					:uint = 15;
+		public static const SCENE_ACHIEVEMENT					:uint = 1;
+		public static const SCENE_CREDIT							:uint = 2;
+		public static const SCENE_DIALOG							:uint = 3;
+		public static const SCENE_FINAL								:uint = 4;
+		public static const SCENE_GAME_ADVENTURE			:uint = 5;
+		public static const SCENE_GAME_SURVIVAL				:uint = 6;
+		public static const SCENE_GAME_DUO						:uint = 7;
+		public static const SCENE_GAME_MODE					:uint = 8;
+		public static const SCENE_IMPROVEMENT					:uint = 9;
+		public static const SCENE_MENU								:uint = 10;
+		public static const SCENE_RANK								:uint = 11;
+		public static const SCENE_RESEARCH_DUO				:uint = 12;
+		public static const SCENE_SELECT_LEVEL					:uint = 13;
+		public static const SCENE_TOTURIAL						:uint = 14;
+		public static const SCENE_PROFILE							:uint = 15;
+		public static const SCENE_SELECT_SPECIAL_LEVEL	:uint = 16;
+		public static const SCENE_GAME_SPECIAL				:uint = 17;
 		
 		// Frame
 		public static const FRAME_SOUND_ON	:uint = 1;
@@ -64,6 +66,7 @@ package core
 		public static const GAME_ADVENTURE_KEY	:String = '172ae58a586c65c8c4487062c695fe7f';
 		public static const GAME_SURVIVAL_KEY		:String = 'c6acb7315b55571d750dc8fb08c9aa3d';
 		public static const GAME_DUO_KEY				:String = '4f6ef9504774efbcced5d562fec7ac68';
+		public static const GAME_SPECIAL_KEY		:String = '23e66ea657bd37cf76f28c864c9687ef';
 		
 		// Game identifier
 		public static const GAME_1				:uint = 1;
@@ -73,6 +76,7 @@ package core
 		public static const GAME_5				:uint = 5;
 		public static const GAME_SURVIVAL	:uint = 6;
 		public static const GAME_DUO			:uint = 7;
+		public static const GAME_SPECIAL	:uint = 8;
 		
 		public static const TOTAL_LEVEL:uint = 5;
 		

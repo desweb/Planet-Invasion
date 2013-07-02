@@ -54,7 +54,8 @@ package core.scene
 			
 			if (scene_uid == Common.SCENE_GAME_ADVENTURE || 
 				scene_uid == Common.SCENE_GAME_SURVIVAL || 
-				scene_uid == Common.SCENE_GAME_DUO)
+				scene_uid == Common.SCENE_GAME_DUO || 
+				scene_uid == Common.SCENE_GAME_SPECIAL)
 				stopSound();
 			else if (SoundManager.getInstance().available == Common.SOUND_ON) playSound();
 			
@@ -66,7 +67,8 @@ package core.scene
 			if (_current_scene_uid == Common.SCENE_IMPROVEMENT && scene_uid == Common.SCENE_IMPROVEMENT || 
 				_current_scene_uid == Common.SCENE_GAME_ADVENTURE || 
 				_current_scene_uid == Common.SCENE_GAME_SURVIVAL || 
-				_current_scene_uid == Common.SCENE_GAME_DUO)
+				_current_scene_uid == Common.SCENE_GAME_DUO || 
+				_current_scene_uid == Common.SCENE_GAME_SPECIAL)
 			{
 				destroyOldScene();
 				_current_scene.alpha = 1;
@@ -82,7 +84,8 @@ package core.scene
 			
 			if (_current_scene_uid == Common.SCENE_GAME_ADVENTURE || 
 				_current_scene_uid == Common.SCENE_GAME_SURVIVAL || 
-				_current_scene_uid == Common.SCENE_GAME_DUO)
+				_current_scene_uid == Common.SCENE_GAME_DUO || 
+				_current_scene_uid == Common.SCENE_GAME_SPECIAL)
 				_old_scene_uid = 0;
 			else _old_scene_uid = _current_scene_uid;
 			
@@ -101,22 +104,24 @@ package core.scene
 		{
 			switch (scene_uid)
 			{
-				case Common.SCENE_ACHIEVEMENT			: return new AchievementScene();				break;
-				case Common.SCENE_CREDIT					: return new CreditScene();						break;
-				case Common.SCENE_DIALOG					: return new DialogScene();						break;
-				case Common.SCENE_FINAL						: return new FinalScene();							break;
-				case Common.SCENE_GAME_ADVENTURE	: return new GameScene(scene_uid, level);	break;
-				case Common.SCENE_GAME_SURVIVAL		: return new GameScene(scene_uid);			break;
-				case Common.SCENE_GAME_DUO				: return new GameScene(scene_uid);			break;
-				case Common.SCENE_GAME_MODE			: return new GameModeScene();					break;
-				case Common.SCENE_IMPROVEMENT			: return new ImprovementScene();				break;
-				case Common.SCENE_MENU						: return new MenuScene();							break;
-				case Common.SCENE_RANK						: return new RankScene();							break;
-				case Common.SCENE_RESEARCH_DUO		: return new ResearchDuoScene();				break;
-				case Common.SCENE_SELECT_LEVEL			: return new SelectLevelScene();				break;
-				case Common.SCENE_TOTURIAL				: return new TutorialScene();						break;
-				case Common.SCENE_PROFILE					: return new ProfileScene();						break;
-				default														: return new MenuScene();
+				case Common.SCENE_ACHIEVEMENT					: return new AchievementScene();				break;
+				case Common.SCENE_CREDIT							: return new CreditScene();						break;
+				case Common.SCENE_DIALOG							: return new DialogScene();						break;
+				case Common.SCENE_FINAL								: return new FinalScene();							break;
+				case Common.SCENE_GAME_ADVENTURE			: return new GameScene(scene_uid, level);	break;
+				case Common.SCENE_GAME_SURVIVAL				: return new GameScene(scene_uid);			break;
+				case Common.SCENE_GAME_DUO						: return new GameScene(scene_uid);			break;
+				case Common.SCENE_GAME_MODE					: return new GameModeScene();					break;
+				case Common.SCENE_IMPROVEMENT					: return new ImprovementScene();				break;
+				case Common.SCENE_MENU								: return new MenuScene();							break;
+				case Common.SCENE_RANK								: return new RankScene();							break;
+				case Common.SCENE_RESEARCH_DUO				: return new ResearchDuoScene();				break;
+				case Common.SCENE_SELECT_LEVEL					: return new SelectLevelScene();				break;
+				case Common.SCENE_TOTURIAL						: return new TutorialScene();						break;
+				case Common.SCENE_PROFILE							: return new ProfileScene();						break;
+				case Common.SCENE_SELECT_SPECIAL_LEVEL	: return new SelectSpecialLevelScene();		break;
+				case Common.SCENE_GAME_SPECIAL				: return new GameScene(scene_uid, level);	break;
+				default																: return new MenuScene();
 			}
 		}
 		

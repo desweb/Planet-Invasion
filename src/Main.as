@@ -3,6 +3,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import core.API;
 	import core.Common;
 	import core.GameState;
 	import core.User;
@@ -48,6 +49,8 @@ package
 			user = new User();
 			
 			GameState.main = this;
+			
+			API.get_level(function(response:XML):void {});
 			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_MENU);
 		}

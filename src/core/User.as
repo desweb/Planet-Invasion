@@ -23,6 +23,7 @@ package core
 		private	var _improvements:Array;
 		private	var _achievements	:Array;
 		public	var games				:Array;
+		public	var levels				:Array;
 		
 		public var isLog:Boolean;
 		
@@ -86,6 +87,7 @@ package core
 			games[Common.GAME_ADVENTURE_KEY]	= new Array();
 			games[Common.GAME_SURVIVAL_KEY]		= new Array();
 			games[Common.GAME_DUO_KEY]				= new Array();
+			games[Common.GAME_SPECIAL_KEY]		= new Array();
 			
 			for each (var game:Array in games)
 			{
@@ -99,6 +101,8 @@ package core
 				game['total_boost_speed']			=
 				game['total_boost_resistance']	= 0;
 			}
+			
+			levels = new Array();
 		}
 		
 		public function login(accessToken:String, expiredAt:int):void

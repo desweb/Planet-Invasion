@@ -21,6 +21,7 @@ package core.scene
 		private var _adventure_btn			:BtnFlash;
 		private var _survival_btn			:BtnFlash;
 		private var _duo_btn					:BtnFlash;
+		private var _special_level_btn		:BtnFlash;
 		
 		/**
 		 * Constructor
@@ -47,23 +48,27 @@ package core.scene
 			
 			// Tutorial button
 			_tutorial_btn = generateBtn('Tutorial');
-			_tutorial_btn.y = GameState.stageHeight * .3;
+			_tutorial_btn.y = GameState.stageHeight * .25;
 			
 			// Improvements button
 			_improvements_btn = generateBtn('Improvements');
-			_improvements_btn.y = GameState.stageHeight * .4;
+			_improvements_btn.y = GameState.stageHeight * .35;
 			
 			// Adventure button
 			_adventure_btn = generateBtn('Adventure');
-			_adventure_btn.y = GameState.stageHeight * .55;
+			_adventure_btn.y = GameState.stageHeight * .5;
 			
 			// Survival button
-			_survival_btn = generateBtn('Survival', Common.FRAME_BTN_LOCK);
-			_survival_btn.y = GameState.stageHeight * .65;
+			_survival_btn = generateBtn('Survival', !GameState.user.isLog || GameState.user.level_adventure < Common.TOTAL_LEVEL? Common.FRAME_BTN_LOCK: Common.FRAME_BTN_DEFAULT);
+			_survival_btn.y = GameState.stageHeight * .6;
 			
 			// Duo button
 			_duo_btn = generateBtn('Duo', Common.FRAME_BTN_LOCK);
-			_duo_btn.y = GameState.stageHeight * .75;
+			_duo_btn.y = GameState.stageHeight * .7;
+			
+			// Special level button
+			_special_level_btn = generateBtn('Special level', GameState.user.level_adventure < Common.TOTAL_LEVEL? Common.FRAME_BTN_LOCK: Common.FRAME_BTN_DEFAULT);
+			_special_level_btn.y = GameState.stageHeight * .8;
 			
 			// Events
 			_tutorial_btn				.addEventListener(MouseEvent.CLICK, clickTutorial);
@@ -71,6 +76,7 @@ package core.scene
 			_adventure_btn			.addEventListener(MouseEvent.CLICK, clickAdventure);
 			_survival_btn				.addEventListener(MouseEvent.CLICK, clickSurvival);
 			_duo_btn					.addEventListener(MouseEvent.CLICK, clickDuo);
+			_special_level_btn		.addEventListener(MouseEvent.CLICK, clickSpecialLevel);
 		}
 		
 		/**
@@ -111,7 +117,7 @@ package core.scene
 		
 		private function clickSurvival(e:MouseEvent):void
 		{
-			if (!GameState.user.isLog || GameState.user.level_adventure < 5)
+			if (!GameState.user.isLog || GameState.user.level_adventure < Common.TOTAL_LEVEL)
 			{
 				SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
 				
@@ -131,6 +137,13 @@ package core.scene
 		{
 			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
 			
+			var error_popup:ErrorPopup = new ErrorPopup();
+			error_popup.setText('The duo mode will soon be available.');
+			addChild(error_popup);
+			error_popup.display();
+			
+			return;
+			
 			if (!GameState.user.isLog)
 			{
 				var error_popup:ErrorPopup = new ErrorPopup();
@@ -142,6 +155,23 @@ package core.scene
 			}
 			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_DUO);
+		}
+		
+		private function clickSpecialLevel(e:MouseEvent):void
+		{
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
+			
+			/*if (GameState.user.level_adventure < Common.TOTAL_LEVEL)
+			{
+				var error_popup:ErrorPopup = new ErrorPopup();
+				error_popup.setText('You must have finished the adventure mode\nto access to special levels.');
+				addChild(error_popup);
+				error_popup.display();
+				
+				return;
+			}*/
+			
+			SceneManager.getInstance().setCurrentScene(Common.SCENE_SELECT_SPECIAL_LEVEL);
 		}
 	}
 }
