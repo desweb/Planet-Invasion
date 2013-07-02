@@ -164,6 +164,7 @@ package core.game.enemy
 			GameState.game.total_enemy_kill++;
 			GameState.game.incrementationComboEnemy();
 			
+			rotation = Tools.random(0, 359);
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
 			SoundManager.getInstance().play(SoundManager.EXPLOSION);
