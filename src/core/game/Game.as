@@ -100,6 +100,9 @@ package core.game
 		private var _combo_enemy		:uint;
 		private var _combo_enemy_init	:uint = 10;
 		private var _combo_label			:TextField;
+		private var _combo_metal			:uint = 0;
+		private var _combo_crystal			:uint = 0;
+		private var _combo_money		:uint = 0;
 		
 		/**
 		 * Constructor
@@ -472,12 +475,15 @@ package core.game
 		
 		private function initCombo():void
 		{
-			metal	*= _current_combo;
-			crystal	*= _current_combo;
-			money	*= _current_combo;
+			metal	= _combo_metal	* _current_combo;
+			crystal	= _combo_crystal	* _current_combo;
+			money	= _combo_money	* _current_combo;
 			
 			_current_combo	= 0;
 			_combo_enemy	= 0;
+			_combo_metal	= 0;
+			_combo_crystal	= 0;
+			_combo_money	= 0;
 			_combo_timer	= _combo_timer_init;
 			
 			_combo_label.text = 'Combo : x' + _current_combo;
@@ -539,6 +545,8 @@ package core.game
 			_total_metal += value;
 			_metal_label.text = 'Metal : ' + _total_metal;
 			
+			_combo_metal += value;
+			
 			if (value > 0) interfaceEffect(_metal_label);
 		}
 		
@@ -547,6 +555,8 @@ package core.game
 			_total_crystal += value;
 			_crystal_label.text = 'Crystal : ' + _total_crystal;
 			
+			_combo_crystal += value;
+			
 			if (value > 0) interfaceEffect(_crystal_label);
 		}
 		
@@ -554,6 +564,8 @@ package core.game
 		{
 			_total_money += value;
 			_money_label.text = 'Money : ' + _total_money;
+			
+			_combo_money += value;
 			
 			if (value > 0) interfaceEffect(_money_label);
 		}

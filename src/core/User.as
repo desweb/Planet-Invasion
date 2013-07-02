@@ -43,7 +43,7 @@ package core
 			isLog = false;
 			
 			_score					= 0;
-			_level_adventure	= 0;
+			_level_adventure	= 5;
 			_metal					= 150;
 			_crystal					= 150;
 			_money				= 150;
@@ -89,14 +89,14 @@ package core
 			
 			for each (var game:Array in games)
 			{
-				game['total_metal']					= 0;
-				game['total_crystal']					= 0;
-				game['total_money']					= 0;
-				game['score']							= 0;
-				game['total_time']						= 0;
-				game['best_time']						= 0;
-				game['total_boost_attack']			= 0;
-				game['total_boost_speed']			= 0;
+				game['total_metal']					=
+				game['total_crystal']					=
+				game['total_money']					=
+				game['score']							=
+				game['total_time']						=
+				game['best_time']						=
+				game['total_boost_attack']			=
+				game['total_boost_speed']			=
 				game['total_boost_resistance']	= 0;
 			}
 		}

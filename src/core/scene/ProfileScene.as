@@ -269,8 +269,6 @@ package core.scene
 				rank_sub_title_label.selectable				= false;
 				addChild(rank_sub_title_label);
 				
-				rank.rank++;
-				
 				var rank_content_label:TextField = new TextField();
 				rank_content_label.x							= GameState.stageWidth	* .1 + GameState.stageWidth	* .2 * i;
 				rank_content_label.y							= GameState.stageHeight	* .85;
