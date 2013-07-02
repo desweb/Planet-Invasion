@@ -36,11 +36,13 @@ package core.game.enemy
 			
 			launchFireTimer();
 			
-			rotation = 180;
+			new EnemyGun(Common.FIRE_MIDDLE_DEFAULT, this);
 			
-			if (!is_transporter) return;
-			
-			rotation = 0;
+			if (!is_transporter)
+			{
+				rotation = 180;
+				return;
+			}
 			
 			TweenPlugin.activate([BezierThroughPlugin]);
 			
@@ -54,6 +56,7 @@ package core.game.enemy
 			var target_y:int = is_top? Tools.random(y - transporter.deployement_area, y - 50): Tools.random(y + 50, y + transporter.deployement_area);
 			
 			_tween = new TweenLite(this, 1, { bezierThrough:[ { x:transporter.x, y:transporter.y + 50 * (is_top? -1: 1) }, { x:transporter.x - 50, y:target_y } ], orientToBezier:true, ease:Linear.easeNone, onComplete:launchTween } );
+			
 		}
 		
 		/**

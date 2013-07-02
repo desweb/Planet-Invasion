@@ -29,6 +29,8 @@ package core.game.enemy
 			rotation = 180;
 			
 			launchFireTimer();
+			
+			completeFireTimer(null);
 		}
 		
 		/**

@@ -36,6 +36,8 @@ package core.game.enemy
 			super(false);
 			
 			launchFireTimer();
+			
+			completeFireTimer(null);
 		}
 		
 		/**
