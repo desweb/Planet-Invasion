@@ -57,7 +57,7 @@ package core.game.enemy
 				_tween = null;
 			}
 			
-			_tween = new TweenLite(this, Tools.random(1, 3), { bezier:[ { x:target.x * .5, y:target.y * .5 }, { x:target.x, y:target.y } ], orientToBezier:true, ease:Linear.easeNone, onComplete:launchTween } );
+			_tween = new TweenLite(this, Tools.random(1, 3), { bezier:[ { x:target.x * Tools.random(1, 10) * .1, y:target.y * Tools.random(1, 10) * .1 }, { x:target.x, y:target.y } ], orientToBezier:true, ease:Linear.easeNone, onComplete:launchTween } );
 		}
 	}
 }
