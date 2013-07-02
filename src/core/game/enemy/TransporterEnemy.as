@@ -21,11 +21,11 @@ package core.game.enemy
 		
 		public function TransporterEnemy()
 		{
-			_life						= 60;
+			_life						= 150;
 			_collision_damage	= 20;
-			_metal					= 20;
-			_crystal					= 10;
-			_money				= 15;
+			_metal					= 5;
+			_crystal					= 1;
+			_money				= 3;
 			_tween_complete_destroy = TWEEN_COMPLETE_DETROY_FALSE;
 			
 			_graphic = new TransporterFlash();

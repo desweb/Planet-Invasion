@@ -16,16 +16,16 @@ package core.game.enemy
 	public class TurretEnemy extends Enemy
 	{
 		private var _shield_life:int;
-		private var _shield_life_init:int = 10;
+		private var _shield_life_init:int = 100;
 		private var _shield:ShieldEnemyFlash;
 		
 		public function TurretEnemy() 
 		{
-			_life						= 20;
+			_life						= 50;
 			_collision_damage	= 5;
-			_metal					= 5;
-			_crystal					= 10;
-			_money				= 10;
+			_metal					= 1;
+			_crystal					= 2;
+			_money				= 2;
 			_tween_complete_destroy = TWEEN_COMPLETE_DETROY_FALSE;
 			
 			_graphic = new TurretFlash();

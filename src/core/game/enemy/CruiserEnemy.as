@@ -18,11 +18,11 @@ package core.game.enemy
 		
 		public function CruiserEnemy()
 		{
-			_life						= 30;
+			_life						= 150;
 			_collision_damage	= 20;
-			_metal					= 25;
-			_crystal					= 15;
-			_money				= 20;
+			_metal					= 3;
+			_crystal					= 2;
+			_money				= 2;
 			
 			_graphic = new CruiserFlash();
 			addChild(_graphic);

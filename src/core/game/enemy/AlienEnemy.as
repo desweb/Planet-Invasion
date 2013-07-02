@@ -15,11 +15,11 @@ package core.game.enemy
 		
 		public function AlienEnemy() 
 		{
-			_life						= 10;
-			_collision_damage	= 5;
-			_metal					= 10;
-			_crystal					= 5;
-			_money				= 10;
+			_life						= 50;
+			_collision_damage	= 10;
+			_metal					= 2;
+			_crystal					= 1;
+			_money				= 2;
 			
 			_graphic = new AlienFlash();
 			addChild(_graphic);

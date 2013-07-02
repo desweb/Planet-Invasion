@@ -26,11 +26,11 @@ package core.game.enemy
 		{
 			TweenPlugin.activate([BezierPlugin]);
 			
-			_life						= 10;
-			_collision_damage	= 20;
-			_metal					= 10;
-			_crystal					= 10;
-			_money				= 10;
+			_life						= 50;
+			_collision_damage	= 40;
+			_metal					= 2;
+			_crystal					= 2;
+			_money				= 2;
 			
 			_graphic = new KamikazeFlash();
 			addChild(_graphic);
