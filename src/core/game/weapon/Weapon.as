@@ -11,6 +11,7 @@ package core.game.weapon
 	import core.Common;
 	import core.GameState;
 	import core.game.enemy.Enemy;
+	import core.utils.Tools;
 	
 	/**
 	 * Class of weapons
@@ -242,6 +243,7 @@ package core.game.weapon
 				return;
 			}
 			
+			rotation = Tools.random(0, 359);
 			_graphic.gotoAndStop(Common.FRAME_ENTITY_DEAD);
 			
 			var remove_timer:Timer = new Timer(Common.TIMER_ANIMATION_DEAD);

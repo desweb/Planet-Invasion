@@ -52,6 +52,13 @@ package core.game.weapon
 			else _tween = new TweenLite(this, moveSpeed, { x:_target_x, y:_target_y, ease:Linear.easeNone, onComplete:destroy });
 		}
 		
+		override protected function update(e:Event):void 
+		{
+			if (target && (x - 10 < target.x || x + 10 > target.x || y - 10 < target.y || y + 10 > target.y)) destroy();
+			
+			super.update(e);
+		}
+		
 		override public function destroy():void
 		{
 			if (_tween)
@@ -124,8 +131,8 @@ package core.game.weapon
 				var beforeDistMT:Number		= Math.pow(target.x+(target.width/2) - x, 2) + Math.pow(target.y+(target.height/2) - y, 2);
 				var beforeAdjacent:Number	= Math.pow(target.x+(target.width/2) - x, 2);
 				
-				if (y < target.y)	rotation = 180 * Math.cos(beforeAdjacent/beforeDistMT) / Math.PI;
-				else				rotation = -180 * Math.cos(beforeAdjacent/beforeDistMT) / Math.PI;
+				if (y < target.y)	rotation = 180	* Math.cos(beforeAdjacent/beforeDistMT) / Math.PI;
+				else					rotation = -180	* Math.cos(beforeAdjacent/beforeDistMT) / Math.PI;
 			}
 			// Arrière-Haut/Arrière-Bas
 			else if	(x > target.x+target.width)
