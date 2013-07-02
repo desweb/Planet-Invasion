@@ -1,5 +1,11 @@
 package core.game 
 {
+	// Test
+	import flash.display.Loader;
+	import flash.net.URLRequest;
+	import core.Common;
+	
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -20,9 +26,20 @@ package core.game
 			x = 0;
 			y = 0;
 			
-			graphics.beginFill(0x000000);
+			/*var conteneurImage:Loader = new Loader();
+			// url de l'image ou du swf à charger
+			var image:URLRequest = new URLRequest(Common.PATH_ASSETS + 'images/game-bg.jpg');
+			// chargement de l'image ou du swf dans le conteneur
+			conteneurImage.load(image);
+			// affichage du conteneur
+			addChild(conteneurImage);
+			
+			conteneurImage.scaleX =
+			conteneurImage.scaleY = .5;*/
+			
+			/*graphics.beginFill(0x000000);
 			graphics.drawRect(0, 0, GameState.stageWidth, GameState.stageHeight);
-			graphics.endFill();
+			graphics.endFill();*/
 			
 			addEventListener(Event.ENTER_FRAME, update);
 		}

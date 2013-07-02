@@ -43,7 +43,7 @@ package core
 			isLog = false;
 			
 			_score					= 0;
-			_level_adventure	= 5;
+			_level_adventure	= 0;
 			_metal					= 150;
 			_crystal					= 150;
 			_money				= 150;
@@ -51,7 +51,7 @@ package core
 			_improvements = new Array();
 			_improvements[Common.IMPROVEMENT_ARMOR_RESIST]	=
 			_improvements[Common.IMPROVEMENT_GUN_DAMAGE]		=
-			_improvements[Common.IMPROVEMENT_GUN_CADENCE]	= 5;
+			_improvements[Common.IMPROVEMENT_GUN_CADENCE]	= 1;
 			
 			_improvements[Common.IMPROVEMENT_GUN_DOUBLE]						=
 			_improvements[Common.IMPROVEMENT_SHIELD_RESIST]					=
@@ -66,7 +66,7 @@ package core
 			_improvements[Common.IMPROVEMENT_TRI_FORCE]							=
 			_improvements[Common.IMPROVEMENT_IEM]										=
 			_improvements[Common.IMPROVEMENT_BOMB]									=
-			_improvements[Common.IMPROVEMENT_REINFORCE]							= 5;
+			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;
 			
 			_achievements = new Array();
 			createAchievement(Common.ACHIEVEMENT_METAL);
