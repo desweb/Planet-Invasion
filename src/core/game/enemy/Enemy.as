@@ -122,8 +122,6 @@ package core.game.enemy
 		
 		public function destroy():void
 		{
-			trace(is_kill);
-			
 			if (is_kill) return;
 			
 			is_kill = true;

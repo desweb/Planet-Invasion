@@ -67,7 +67,7 @@ package core.scene
 			_duo_btn.y = GameState.stageHeight * .7;
 			
 			// Special level button
-			_special_level_btn = generateBtn('Special level', GameState.user.level_adventure < Common.TOTAL_LEVEL? Common.FRAME_BTN_LOCK: Common.FRAME_BTN_DEFAULT);
+			_special_level_btn = generateBtn('Special level', !GameState.user.levels.length || GameState.user.level_adventure < Common.TOTAL_LEVEL? Common.FRAME_BTN_LOCK: Common.FRAME_BTN_DEFAULT);
 			_special_level_btn.y = GameState.stageHeight * .8;
 			
 			// Events
@@ -161,7 +161,7 @@ package core.scene
 		{
 			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
 			
-			/*if (GameState.user.level_adventure < Common.TOTAL_LEVEL)
+			if (GameState.user.level_adventure < Common.TOTAL_LEVEL)
 			{
 				var error_popup:ErrorPopup = new ErrorPopup();
 				error_popup.setText('You must have finished the adventure mode\nto access to special levels.');
@@ -169,7 +169,17 @@ package core.scene
 				error_popup.display();
 				
 				return;
-			}*/
+			}
+			
+			if (!GameState.user.levels.length)
+			{
+				var error_popup2:ErrorPopup = new ErrorPopup();
+				error_popup2.setText('No level available.');
+				addChild(error_popup2);
+				error_popup2.display();
+				
+				return;
+			}
 			
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_SELECT_SPECIAL_LEVEL);
 		}

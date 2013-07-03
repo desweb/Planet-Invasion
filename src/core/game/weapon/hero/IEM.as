@@ -1,6 +1,5 @@
 package core.game.weapon.hero 
 {
-	import core.game.enemy.Enemy;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -8,6 +7,8 @@ package core.game.weapon.hero
 	
 	import core.Common;
 	import core.GameState;
+	import core.game.enemy.AsteroidEnemy;
+	import core.game.enemy.Enemy;
 	
 	/**
 	 * ...
@@ -44,14 +45,19 @@ package core.game.weapon.hero
 		{
 			visible = false;
 			
-			for each (var e:Enemy in GameState.game.enemies) e.stop();
+			for each (var e:Enemy in GameState.game.enemies)
+			{
+				if (e is AsteroidEnemy) continue;
+				
+				e.pause();
+			}
 			
 			TweenLite.to(this, 3, { onComplete:relaunchEnemies });
 		}
 		
 		private function relaunchEnemies():void
 		{
-			for each (var e:Enemy in GameState.game.enemies) e.restart();
+			for each (var e:Enemy in GameState.game.enemies) e.resume();
 			
 			destroy();
 		}

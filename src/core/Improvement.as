@@ -214,7 +214,7 @@ package core
 					value[2] = 2;
 					value[3] = 3;
 					value[4] = 4;
-					value[5] = 10;
+					value[5] = 5;
 					
 					price[1]['metal']		= 0;
 					price[1]['crystal']	= 40;

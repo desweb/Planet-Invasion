@@ -44,36 +44,39 @@ package core.game.weapon
 		
 		public function Weapon()
 		{
-			// Default position
-			switch (_fire_type)
+			if (!isReinforcement())
 			{
-				case Common.FIRE_TOP_DEFAULT:
-					y = _owner.y - _owner.height * .25;
-					break;
-				case Common.FIRE_TOP_LEFT:
-					y = _owner.y - _owner.height * .3;
-					break;
-				case Common.FIRE_TOP_RIGHT:
-					y = _owner.y - _owner.height * .2;
-					break;
-				case Common.FIRE_MIDDLE_DEFAULT:
-					y = _owner.y;
-					break;
-				case Common.FIRE_MIDDLE_LEFT:
-					y = _owner.y - 5;
-					break;
-				case Common.FIRE_MIDDLE_RIGHT:
-					y = _owner.y + 5;
-					break;
-				case Common.FIRE_BOTTOM_DEFAULT:
-					y = _owner.y + _owner.height * .25;
-					break;
-				case Common.FIRE_BOTTOM_LEFT:
-					y = _owner.y + _owner.height * .2;
-					break;
-				case Common.FIRE_BOTTOM_RIGHT:
-					y = _owner.y + _owner.height * .3;
-					break;
+				// Default position
+				switch (_fire_type)
+				{
+					case Common.FIRE_TOP_DEFAULT:
+						y = _owner.y - _owner.height * .25;
+						break;
+					case Common.FIRE_TOP_LEFT:
+						y = _owner.y - _owner.height * .3;
+						break;
+					case Common.FIRE_TOP_RIGHT:
+						y = _owner.y - _owner.height * .2;
+						break;
+					case Common.FIRE_MIDDLE_DEFAULT:
+						y = _owner.y;
+						break;
+					case Common.FIRE_MIDDLE_LEFT:
+						y = _owner.y - 5;
+						break;
+					case Common.FIRE_MIDDLE_RIGHT:
+						y = _owner.y + 5;
+						break;
+					case Common.FIRE_BOTTOM_DEFAULT:
+						y = _owner.y + _owner.height * .25;
+						break;
+					case Common.FIRE_BOTTOM_LEFT:
+						y = _owner.y + _owner.height * .2;
+						break;
+					case Common.FIRE_BOTTOM_RIGHT:
+						y = _owner.y + _owner.height * .3;
+						break;
+				}
 			}
 			
 			if			(isHero())		constructorHero();
@@ -292,6 +295,11 @@ package core.game.weapon
 		public function isEnemy():Boolean
 		{
 			return _owner_type == Common.OWNER_ENEMY;
+		}
+		
+		public function isReinforcement():Boolean
+		{
+			return _owner_type == Common.OWNER_REINFORCEMENT;
 		}
 	}
 }

@@ -135,8 +135,9 @@ package core
 		public static const TURRET_ENEMY				:uint = 10;
 		
 		// Owner
-		public static const OWNER_HERO	:uint = 1;
-		public static const OWNER_ENEMY:uint = 2;
+		public static const OWNER_HERO					:uint = 1;
+		public static const OWNER_ENEMY				:uint = 2;
+		public static const OWNER_REINFORCEMENT	:uint = 3;
 		
 		// Fire
 		public static const FIRE_TOP_DEFAULT			:uint = 1;

@@ -89,7 +89,7 @@ package core.game.weapon.hero
 		{
 			for each(var e_destroy:Enemy in GameState.game.enemies)
 			{
-				if (Tools.random(1, 6) == 1) e_destroy.destroy();
+				if (!Tools.random(0, 3)) e_destroy.hitWeapon(1000);
 			}
 		}
 		
