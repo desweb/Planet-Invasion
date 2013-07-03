@@ -43,6 +43,8 @@ package core.game
 		protected var _current_level:int;
 		protected var _is_finish:Boolean = false;
 		
+		private var _bg:GameBg;
+		
 		// Time
 		private		var _t	:int;
 		protected	var _dt	:Number;
@@ -274,7 +276,7 @@ package core.game
 		private function onEnterFrame(e:Event):void
 		{
 			var t:int = getTimer();
-			_dt = (t - _t) * 0.001;
+			_dt = (t - _t) * .001;
 			_t = t;
 			
 			update();
@@ -387,8 +389,14 @@ package core.game
 			GameState.user.games[_current_game_key]['total_boost_speed']			+= total_boost_speed;
 			GameState.user.games[_current_game_key]['total_boost_resistance']	+= total_boost_resistance;
 			
-			if (GameState.user.games[_current_game_key]['best_time'] > _total_time || 
-				GameState.user.games[_current_game_key]['best_time'] == 0) GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
+			if			(GameState.user.games[_current_game_key]['best_time'] == 0)
+							GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
+			else if	((_current_game_key == Common.GAME_ADVENTURE_KEY || _current_game_key == Common.GAME_DUO_KEY) && 
+							GameState.user.games[_current_game_key]['best_time'] > _total_time)
+							GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
+			else if	(_current_game_key == Common.GAME_SURVIVAL_KEY && 
+							GameState.user.games[_current_game_key]['best_time'] < _total_time)
+							GameState.user.games[_current_game_key]['best_time'] = int(_total_time);
 			
 			if (GameState.user.isLog && _current_game_key != Common.GAME_SPECIAL_KEY) API.post_gameKey(_current_game_key, function(response:XML):void { } );
 			
@@ -426,6 +434,8 @@ package core.game
 			enemies	= null;
 			weapons	= null;
 			items		= null;
+			
+			if (_bg) _bg.destroy();
 			
 			initCombo();
 		}
@@ -511,8 +521,8 @@ package core.game
 		
 		protected function generateGameBg():void
 		{
-			var bg:GameBg = new GameBg();
-			addChild(bg);
+			_bg = new GameBg();
+			addChild(_bg);
 		}
 		
 		protected function interfaceEffect(label:TextField):void

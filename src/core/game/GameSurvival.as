@@ -1,9 +1,12 @@
 package core.game 
 {
 	import flash.events.TimerEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.Timer;
 	
 	import core.Common;
+	import core.GameState;
 	import core.game.enemy.AlienEnemy;
 	import core.game.enemy.AsteroidEnemy;
 	import core.game.enemy.CruiserEnemy;
@@ -28,14 +31,32 @@ package core.game
 		
 		private var _nb_wave:int = 0;
 		
+		private var _total_time_adventure:uint = 0;
+		private var _time_label:TextField;
+		
 		public function GameSurvival()
 		{
 			generateGameBg();
+			
+			// Interface
+			var interface_format:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 12);
+			interface_format.bold		= true;
+			interface_format.align	= 'center';
 			
 			_timer.start();
 			_timer.addEventListener(TimerEvent.TIMER, completeTimer);
 			
 			super(Common.GAME_SURVIVAL_KEY);
+			
+			_time_label = new TextField();
+			_time_label.x								= GameState.stageWidth	* .4;
+			_time_label.y								= GameState.stageHeight	* .95;
+			_time_label.width						= GameState.stageWidth	* .2;
+			_time_label.defaultTextFormat	= interface_format;
+			_time_label.selectable				= false;
+			interface_container = _time_label;
+			
+			updateTimeLabel();
 		}
 		
 		/**
@@ -71,6 +92,9 @@ package core.game
 		
 		private function completeTimer(e:TimerEvent):void
 		{
+			_total_time_adventure++;
+			updateTimeLabel();
+			
 			if (_timer.currentCount % 30 == 0)
 			{
 				_nb_wave++;
@@ -104,7 +128,7 @@ package core.game
 			}
 			else createEnemy();
 			
-			if (_timer.currentCount == 300) SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SURVIVAL, 1);
+			if (_timer.currentCount == 600) SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SURVIVAL, 1);
 		}
 		
 		/**
@@ -138,6 +162,11 @@ package core.game
 		{
 			transporters_container		= e;
 			enemies[enemies.length]	= e;
+		}
+		
+		public function updateTimeLabel():void
+		{
+			_time_label.text = 'Time : ' + Tools.convertTimeToLabel(_total_time_adventure);
 		}
 	}
 }

@@ -56,7 +56,7 @@ package core
 					break;
 				case Common.ACHIEVEMENT_SURVIVAL:
 					name			= 'Survival';
-					description	= 'Stay alive for 5 minutes in the survival mode.';
+					description	= 'Stay alive for 10 minutes in the survival mode.';
 					score			= 1;
 					break;
 				case Common.ACHIEVEMENT_MISTER_BOOSTER:

@@ -1,5 +1,6 @@
 package core.utils 
 {
+	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	
 	/**

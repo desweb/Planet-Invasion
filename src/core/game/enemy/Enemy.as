@@ -128,15 +128,15 @@ package core.game.enemy
 			
 			if (_tween)
 			{
-				_tween.pause();
 				_tween.kill();
+				_tween = null;
 			}
 			
 			if (_fire_timer)
 			{
 				_fire_timer.removeEventListener(TimerEvent.TIMER, completeFireTimer);
 				_fire_timer.stop();
-				_fire_timer = null
+				_fire_timer = null;
 			}
 			
 			if (_propellant_tween)
@@ -202,7 +202,7 @@ package core.game.enemy
 			
 			if (_fire_timer) _fire_timer.stop();
 			
-			_tween.pause();
+			if (_tween) _tween.pause();
 		}
 		
 		public function resume():void
