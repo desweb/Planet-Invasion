@@ -159,10 +159,10 @@ package core.scene
 		
 		private function clickSpecialLevel(e:MouseEvent):void
 		{
-			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
-			
 			if (GameState.user.level_adventure < Common.TOTAL_LEVEL)
 			{
+				SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
+				
 				var error_popup:ErrorPopup = new ErrorPopup();
 				error_popup.setText('You must have finished the adventure mode\nto access to special levels.');
 				addChild(error_popup);
@@ -173,6 +173,8 @@ package core.scene
 			
 			if (!GameState.user.levels.length)
 			{
+				SoundManager.getInstance().play(SoundManager.MENU_BUTTON_ERROR);
+				
 				var error_popup2:ErrorPopup = new ErrorPopup();
 				error_popup2.setText('No level available.');
 				addChild(error_popup2);
@@ -181,6 +183,7 @@ package core.scene
 				return;
 			}
 			
+			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_SELECT_SPECIAL_LEVEL);
 		}
 	}
