@@ -723,6 +723,8 @@ package core.game
 		
 		private function enableFireIEM(e:TimerEvent):void
 		{
+			if (GameState.game.current_game_key == Common.GAME_SPECIAL_KEY) return;
+			
 			_fireIEMTimer.stop();
 			_fireIEMTimer.reset();
 			_keys[KEY_IEM]['is_timer'] = false;
@@ -732,6 +734,8 @@ package core.game
 		
 		private function enableFireBombardment(e:TimerEvent):void
 		{
+			if (GameState.game.current_game_key == Common.GAME_SPECIAL_KEY) return;
+			
 			_fireBombardmentTimer.stop();
 			_fireBombardmentTimer.reset();
 			_keys[KEY_BOMBARDMENT]['is_timer'] = false;
@@ -741,6 +745,8 @@ package core.game
 		
 		private function enableFireReinforcement(e:TimerEvent):void
 		{
+			if (GameState.game.current_game_key == Common.GAME_SPECIAL_KEY) return;
+			
 			_fireReinforcementTimer.stop();
 			_fireReinforcementTimer.reset();
 			_keys[KEY_REINFORCEMENT]['is_timer'] = false;
