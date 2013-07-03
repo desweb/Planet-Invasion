@@ -4,7 +4,6 @@ package core.game
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
-	import flash.ui.Mouse;
 	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
@@ -101,8 +100,6 @@ package core.game
 		
 		public function Hero() 
 		{
-			Mouse.hide();
-			
 			// Life
 			var life_improvement:Improvement = new Improvement(Common.IMPROVEMENT_ARMOR_RESIST);
 			_life_init = life_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_ARMOR_RESIST]];

@@ -23,6 +23,8 @@ package core.game
 		
 		private function update (e:Event):void
 		{
+			return;
+			
 			if (!Tools.random(0, 3))
 			{
 				var star:Sprite = new Sprite();

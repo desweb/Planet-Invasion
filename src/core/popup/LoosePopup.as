@@ -4,7 +4,6 @@ package core.popup
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.ui.Mouse;
 	
 	import core.Common;
 	import core.GameState;
@@ -139,8 +138,6 @@ package core.popup
 			SoundManager.getInstance().play(SoundManager.MENU_BUTTON);
 			
 			destroy();
-			
-			Mouse.hide();
 			
 			if			(current_game_key == Common.GAME_ADVENTURE_KEY)	SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, GameState.game.current_level);
 			else if	(current_game_key == Common.GAME_SURVIVAL_KEY)		SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);

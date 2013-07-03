@@ -1,12 +1,12 @@
 package core.game 
 {
+	import core.scene.GameScene;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.ui.Mouse;
 	import flash.utils.getTimer;
 	import flash.utils.Timer;
 	
@@ -127,8 +127,6 @@ package core.game
 		public function initialize(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
-			
-			Mouse.hide();
 			
 			_t = getTimer();
 			
@@ -299,8 +297,6 @@ package core.game
 			
 			_is_pause = true;
 			
-			Mouse.show();
-			
 			_hero.pause();
 			
 			if (_timer) _timer.stop();
@@ -315,8 +311,6 @@ package core.game
 			if (!_is_pause) return;
 			
 			_is_pause = false;
-			
-			Mouse.hide();
 			
 			_hero.resume();
 			
@@ -333,7 +327,8 @@ package core.game
 			
 			_is_finish = true;
 			
-			Mouse.show();
+			var s:GameScene = SceneManager.getInstance().scene as GameScene;
+			s.pause(false);
 			
 			var loose_popup:LoosePopup = new LoosePopup();
 			loose_popup.current_game_key = _current_game_key;
@@ -352,7 +347,8 @@ package core.game
 			
 			_is_finish = true;
 			
-			Mouse.show();
+			var s:GameScene = SceneManager.getInstance().scene as GameScene;
+			s.pause(false);
 			
 			if (is_popup)
 			{

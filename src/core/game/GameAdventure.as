@@ -88,8 +88,8 @@ package core.game
 			switch(_current_level)
 			{
 				case 1:
-					_total_wave_init		= 3;
-					_wave_timer_init	= 30;
+					_total_wave_init		= 1;
+					_wave_timer_init	= 5;
 					
 					_nb_enemies[Common.ASTEROID_ENEMY]			= 5;
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 1;

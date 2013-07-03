@@ -1,9 +1,9 @@
 package core.popup 
 {
+	import core.scene.GameScene;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	import flash.ui.Mouse;
 	
 	import core.Common;
 	import core.GameState;
@@ -65,7 +65,7 @@ package core.popup
 			
 			_restart_btn			.removeEventListener(MouseEvent.CLICK,				clickRestartBtn);
 			_back_menu_btn	.removeEventListener(MouseEvent.CLICK,				clickBackMenuBtn);
-			stage					.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
+			if (stage) stage		.removeEventListener(KeyboardEvent.KEY_DOWN,	downKey);
 			
 			stage.dispatchEvent(new Event('resumeGameScene'));
 			
@@ -82,8 +82,6 @@ package core.popup
 			
 			destroy();
 			
-			Mouse.hide();
-			
 			if			(current_game_key == Common.GAME_ADVENTURE_KEY)	SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, GameState.game.current_level);
 			else if	(current_game_key == Common.GAME_SURVIVAL_KEY)		SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
 			else if	(current_game_key == Common.GAME_DUO_KEY)				SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_DUO);
@@ -96,7 +94,6 @@ package core.popup
 			
 			destroy();
 			
-			Mouse.show();
 			SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_MODE);
 		}
 		
@@ -105,6 +102,9 @@ package core.popup
 			if (String.fromCharCode(e.charCode) != 'p') return;
 			
 			SoundManager.getInstance().play(SoundManager.MENU_BUTTON_CLOSE);
+			
+			var scene:GameScene = SceneManager.getInstance().scene as GameScene;
+			scene.resume(null);
 			
 			destroy();
 		}
