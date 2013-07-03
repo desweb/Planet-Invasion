@@ -3,6 +3,7 @@ package core
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	
 	/**
@@ -28,6 +29,9 @@ package core
 		public static const MISSILE							:uint = 13;
 		public static const PROPELLANT					:uint = 14;
 		public static const WIN								:uint = 15;
+		public static const FIRST_BLOOD					:uint = 16;
+		public static const LEGENDARY					:uint = 17;
+		public static const UNSTOPPABLE					:uint = 18;
 		
 		private static var _menu						:Sound;
 		private static var _menu_button			:Sound;
@@ -38,12 +42,15 @@ package core
 		private static var _achievement			:Sound;
 		private static var _buy						:Sound;
 		private static var _explosion				:Sound;
+		private static var _first_blood				:Sound;
 		private static var _game_over				:Sound;
 		private static var _gun						:Sound;
 		private static var _item						:Sound;
 		private static var _laser						:Sound;
+		private static var _legendary				:Sound;
 		private static var _missile					:Sound;
 		private static var _propellant				:Sound;
+		private static var _unstoppable			:Sound;
 		private static var _win						:Sound;
 		
 		private var _menu_button_channel			:SoundChannel;
@@ -104,6 +111,9 @@ package core
 			_explosion = new Sound();
 			_explosion.load(new URLRequest(Common.PATH_ASSETS + 'sound/explosion.mp3'));
 			
+			_first_blood = new Sound();
+			_first_blood.load(new URLRequest(Common.PATH_ASSETS + 'sound/first-blood.mp3'));
+			
 			_game_over = new Sound();
 			_game_over.load(new URLRequest(Common.PATH_ASSETS + 'sound/game-over.mp3'));
 			
@@ -116,11 +126,17 @@ package core
 			_laser = new Sound();
 			_laser.load(new URLRequest(Common.PATH_ASSETS + 'sound/laser.mp3'));
 			
+			_legendary = new Sound();
+			_legendary.load(new URLRequest(Common.PATH_ASSETS + 'sound/legendary.mp3'));
+			
 			_missile = new Sound();
 			_missile.load(new URLRequest(Common.PATH_ASSETS + 'sound/missile.mp3'));
 			
 			_propellant = new Sound();
 			_propellant.load(new URLRequest(Common.PATH_ASSETS + 'sound/propellant.mp3'));
+			
+			_unstoppable = new Sound();
+			_unstoppable.load(new URLRequest(Common.PATH_ASSETS + 'sound/unstoppable.mp3'));
 			
 			_win = new Sound();
 			_win.load(new URLRequest(Common.PATH_ASSETS + 'sound/win.mp3'));
@@ -135,10 +151,12 @@ package core
 				case ACHIEVEMENT				: s = _achievement;			break;
 				case BUY								: s = _buy;						break;
 				case EXPLOSION					: s = _explosion;				break;
+				case FIRST_BLOOD				: s = _first_blood;				break;
 				case GAME_OVER					: s = _game_over;				break;
 				case GUN								: s = _gun;						break;
 				case ITEM								: s = _item;						break;
 				case LASER							: s = _laser;						break;
+				case LEGENDARY					: s = _legendary;				break;
 				case MENU_ALIEN					: s = _menu_alien;			break;
 				case MENU_ALIEN_DEAD		: s = _menu_alien_dead;	break;
 				case MENU_BUTTON				: s = _menu_button;			break;
@@ -146,6 +164,7 @@ package core
 				case MENU_BUTTON_ERROR	: s = _menu_button_error;	break;
 				case MISSILE						: s = _missile;					break;
 				case PROPELLANT					: s = _propellant;				break;
+				case UNSTOPPABLE				: s = _unstoppable;			break;
 				case WIN								: s = _win;						break;
 				default: return;
 			}
@@ -153,6 +172,18 @@ package core
 			var c:SoundChannel = s.play();
 			
 			if (!c) return;
+			
+			if (sound_uid == GUN || 
+				sound_uid == LASER)
+			{
+				c.soundTransform = new SoundTransform();
+				c.soundTransform.volume = .25;
+			}
+			if (sound_uid == MENU_BUTTON)
+			{
+				c.soundTransform = new SoundTransform();
+				c.soundTransform.volume = .5;
+			}
 			
 			c.addEventListener(Event.SOUND_COMPLETE,
 			function completeChannel(e:Event):void

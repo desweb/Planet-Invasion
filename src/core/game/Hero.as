@@ -4,6 +4,7 @@ package core.game
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.ui.Mouse;
 	import flash.utils.Timer;
 	
 	import com.greensock.TweenLite;
@@ -62,12 +63,12 @@ package core.game
 		
 		// Timers
 		private var _fireGunTimer					:Timer;
-		private var _fireLazerTimer					:Timer = new Timer(5000);
+		private var _fireLazerTimer					:Timer = new Timer(20000);
 		private var _fireMissileTimer				:Timer;
-		private var _fireMissileHomingTimer	:Timer = new Timer(5000);
-		private var _fireIEMTimer					:Timer = new Timer(30000);
-		private var _fireBombardmentTimer	:Timer = new Timer(30000);
-		private var _fireReinforcementTimer	:Timer = new Timer(30000);
+		private var _fireMissileHomingTimer	:Timer = new Timer(10000);
+		private var _fireIEMTimer					:Timer = new Timer(45000);
+		private var _fireBombardmentTimer	:Timer = new Timer(45000);
+		private var _fireReinforcementTimer	:Timer = new Timer(45000);
 		
 		// Items
 		public	var is_attack_item		:Boolean = false;
@@ -100,6 +101,8 @@ package core.game
 		
 		public function Hero() 
 		{
+			Mouse.hide();
+			
 			// Life
 			var life_improvement:Improvement = new Improvement(Common.IMPROVEMENT_ARMOR_RESIST);
 			_life_init = life_improvement.value[GameState.user.improvements[Common.IMPROVEMENT_ARMOR_RESIST]];

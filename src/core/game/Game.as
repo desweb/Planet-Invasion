@@ -15,6 +15,7 @@ package core.game
 	import core.API;
 	import core.Common;
 	import core.GameState;
+	import core.SoundManager;
 	import core.game.enemy.Enemy;
 	import core.game.enemy.TransporterEnemy;
 	import core.game.item.AttackItem;
@@ -89,7 +90,7 @@ package core.game
 		public var items			:Array = new Array();
 		
 		// Enemies
-		public var total_enemy_kill			:int			= 0;
+		private var _total_enemy_kill		:int			= 0;
 		private var _speedEnemy			:int			= 5;
 		private var _speedEnemyTimer	:Number	= 2;
 		
@@ -117,8 +118,6 @@ package core.game
 			
 			GameState.game = this;
 			
-			Mouse.hide();
-			
 			addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		
@@ -126,6 +125,8 @@ package core.game
 		public function initialize(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, initialize);
+			
+			Mouse.hide();
 			
 			_t = getTimer();
 			
@@ -392,7 +393,7 @@ package core.game
 			if (GameState.user.isLog && _current_game_key != Common.GAME_SPECIAL_KEY) API.post_gameKey(_current_game_key, function(response:XML):void { } );
 			
 			// Serial killer achievement
-			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, total_enemy_kill);
+			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_SERIAL_KILLER, _total_enemy_kill);
 			
 			// Mister booster achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER, total_boost_pick);
@@ -524,6 +525,15 @@ package core.game
 			TweenLite.to(label, .1, { scaleX : 1, scaleY : 1 });
 		}
 		
+		public function incrementationEnemyKill():void
+		{
+			_total_enemy_kill++;
+			
+			if			(_total_enemy_kill == 1)		SoundManager.getInstance().play(SoundManager.FIRST_BLOOD);
+			else if	(_total_enemy_kill == 100)	SoundManager.getInstance().play(SoundManager.UNSTOPPABLE);
+			else if	(_total_enemy_kill == 300)	SoundManager.getInstance().play(SoundManager.LEGENDARY);
+		}
+		
 		/**
 		 * Getters
 		 */
@@ -536,6 +546,7 @@ package core.game
 		public function get metal						():int			{ return _total_metal; }
 		public function get crystal					():int			{ return _total_crystal; }
 		public function get money					():int			{ return _total_money; }
+		public function get total_enemy_kill		():int			{ return _total_enemy_kill; }
 		
 		/**
 		 * Setters

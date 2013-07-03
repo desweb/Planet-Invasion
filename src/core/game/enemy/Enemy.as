@@ -157,7 +157,7 @@ package core.game.enemy
 				return;
 			}
 			
-			GameState.game.total_enemy_kill++;
+			GameState.game.incrementationEnemyKill();
 			GameState.game.incrementationComboEnemy();
 			
 			rotation = Tools.random(0, 359);

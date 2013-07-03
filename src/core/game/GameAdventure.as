@@ -126,7 +126,7 @@ package core.game
 					_nb_enemies[Common.TURRET_ENEMY]				= 2;
 					break;
 				case 5:
-					/*_total_wave_init		= 10;
+					_total_wave_init		= 10;
 					_wave_timer_init	= 20;
 					
 					_nb_enemies[Common.CRUISER_ENEMY]			= 3;
@@ -136,12 +136,7 @@ package core.game
 					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY]	= 5;
 					_nb_enemies[Common.MINE_ENEMY]					= 3;
 					_nb_enemies[Common.TRANSPORTER_ENEMY]	= 1;
-					_nb_enemies[Common.TURRET_ENEMY]				= 2;*/
-					
-					_total_wave_init		= 1;
-					_wave_timer_init	= 5;
-					
-					_nb_enemies[Common.LIGHT_FIGHTER_ENEMY] = 5;
+					_nb_enemies[Common.TURRET_ENEMY]				= 2;
 					break;
 			}
 		}
