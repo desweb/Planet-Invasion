@@ -34,7 +34,7 @@ package core.popup
 			
 			// Label
 			var label:TextField = new TextField();
-			label.x				= GameState.stageWidth	* .15;
+			label.x				= GameState.stageWidth	* .01;
 			label.y				= GameState.stageHeight	* .025;
 			label.width			= GameState.stageWidth	* .3;
 			label.height		= GameState.stageHeight	* .05;
