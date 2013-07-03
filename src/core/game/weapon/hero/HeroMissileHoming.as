@@ -29,9 +29,15 @@ package core.game.weapon.hero
 			
 			switch (_fire_type)
 			{
+				case Common.FIRE_TOP_LEFT				: _target_y = _owner.y - GameState.stageHeight; break;
 				case Common.FIRE_TOP_DEFAULT			: _target_y = _owner.y - GameState.stageHeight; break;
+				case Common.FIRE_TOP_RIGHT				: _target_y = _owner.y - GameState.stageHeight; break;
+				case Common.FIRE_MIDDLE_LEFT			: _target_y = _owner.y; break;
 				case Common.FIRE_MIDDLE_DEFAULT	: _target_y = _owner.y; break;
+				case Common.FIRE_MIDDLE_RIGHT		: _target_y = _owner.y; break;
+				case Common.FIRE_BOTTOM_LEFT			: _target_y = _owner.y + GameState.stageHeight; break;
 				case Common.FIRE_BOTTOM_DEFAULT	: _target_y = _owner.y + GameState.stageHeight; break;
+				case Common.FIRE_BOTTOM_RIGHT		: _target_y = _owner.y + GameState.stageHeight; break;
 			}
 			
 			var missile_search_damage_improvement:Improvement = new Improvement(Common.IMPROVEMENT_MISSILE_SEARCH_DAMAGE);

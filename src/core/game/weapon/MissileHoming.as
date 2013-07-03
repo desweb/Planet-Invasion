@@ -54,7 +54,7 @@ package core.game.weapon
 		
 		override protected function update(e:Event):void 
 		{
-			if (target && (x - 10 < target.x || x + 10 > target.x || y - 10 < target.y || y + 10 > target.y)) destroy();
+			if (target && x > target.x - 10 && x < target.x + 10 && y > target.y - 10 && y < target.y + 10) destroy();
 			
 			super.update(e);
 		}

@@ -44,21 +44,24 @@ package core.game.weapon
 		
 		override public function destroy():void
 		{
-			_life_timer.stop();
-			_life_timer.removeEventListener(TimerEvent.TIMER, completeLifeTimer);
-			_life_timer = null;
+			if (_life_timer)
+			{
+				_life_timer.stop();
+				_life_timer.removeEventListener(TimerEvent.TIMER, completeLifeTimer);
+				_life_timer = null;
+			}
 			
 			super.destroy();
 		}
 		
 		override public function pause():void 
 		{
-			_life_timer.stop();
+			if (_life_timer) _life_timer.stop();
 			
 			super.pause();
 		}
 		
-		override public function resume():void 
+		override public function resume():void
 		{
 			_life_timer.start();
 			

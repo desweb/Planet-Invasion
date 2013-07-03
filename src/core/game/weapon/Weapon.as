@@ -1,5 +1,6 @@
 package core.game.weapon 
 {
+	import core.game.weapon.hero.HeroMissileHoming;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -49,33 +50,15 @@ package core.game.weapon
 				// Default position
 				switch (_fire_type)
 				{
-					case Common.FIRE_TOP_DEFAULT:
-						y = _owner.y - _owner.height * .25;
-						break;
-					case Common.FIRE_TOP_LEFT:
-						y = _owner.y - _owner.height * .3;
-						break;
-					case Common.FIRE_TOP_RIGHT:
-						y = _owner.y - _owner.height * .2;
-						break;
-					case Common.FIRE_MIDDLE_DEFAULT:
-						y = _owner.y;
-						break;
-					case Common.FIRE_MIDDLE_LEFT:
-						y = _owner.y - 5;
-						break;
-					case Common.FIRE_MIDDLE_RIGHT:
-						y = _owner.y + 5;
-						break;
-					case Common.FIRE_BOTTOM_DEFAULT:
-						y = _owner.y + _owner.height * .25;
-						break;
-					case Common.FIRE_BOTTOM_LEFT:
-						y = _owner.y + _owner.height * .2;
-						break;
-					case Common.FIRE_BOTTOM_RIGHT:
-						y = _owner.y + _owner.height * .3;
-						break;
+					case Common.FIRE_TOP_DEFAULT			: y = _owner.y - _owner.height * .25;	break;
+					case Common.FIRE_TOP_LEFT				: y = _owner.y - _owner.height * .3;	break;
+					case Common.FIRE_TOP_RIGHT				: y = _owner.y - _owner.height * .2;	break;
+					case Common.FIRE_MIDDLE_DEFAULT	: y = _owner.y;			break;
+					case Common.FIRE_MIDDLE_LEFT			: y = _owner.y -	5;	break;
+					case Common.FIRE_MIDDLE_RIGHT		: y = _owner.y +	5;	break;
+					case Common.FIRE_BOTTOM_DEFAULT	: y = _owner.y + _owner.height * .25;	break;
+					case Common.FIRE_BOTTOM_LEFT			: y = _owner.y + _owner.height * .2;		break;
+					case Common.FIRE_BOTTOM_RIGHT		: y = _owner.y + _owner.height * .3;		break;
 				}
 			}
 			
@@ -91,39 +74,15 @@ package core.game.weapon
 		{
 			switch (_fire_type)
 			{
-				case Common.FIRE_TOP_DEFAULT:
-					x = _owner.x + _owner.width * .25;
-					rotation = -45;
-					break;
-				case Common.FIRE_TOP_LEFT:
-					x = _owner.x + _owner.width * .2;
-					rotation = -45;
-					break;
-				case Common.FIRE_TOP_RIGHT:
-					x = _owner.x + _owner.width * .3;
-					rotation = -45;
-					break;
-				case Common.FIRE_MIDDLE_DEFAULT:
-					x = _owner.x + _owner.width * .5;
-					break;
-				case Common.FIRE_MIDDLE_LEFT:
-					x = _owner.x + _owner.width * .5;
-					break;
-				case Common.FIRE_MIDDLE_RIGHT:
-					x = _owner.x + _owner.width * .5;
-					break;
-				case Common.FIRE_BOTTOM_DEFAULT:
-					x = _owner.x + _owner.width * .25;
-					rotation = 45;
-					break;
-				case Common.FIRE_BOTTOM_LEFT:
-					x = _owner.x + _owner.width * .3;
-					rotation = 45;
-					break;
-				case Common.FIRE_BOTTOM_RIGHT:
-					x = _owner.x + _owner.width * .2;
-					rotation = 45;
-					break;
+				case Common.FIRE_TOP_DEFAULT			: x = _owner.x + _owner.width * .25;	rotation = -45; break;
+				case Common.FIRE_TOP_LEFT				: x = _owner.x + _owner.width * .2;	rotation = -45; break;
+				case Common.FIRE_TOP_RIGHT				: x = _owner.x + _owner.width * .3;	rotation = -45; break;
+				case Common.FIRE_MIDDLE_DEFAULT	: x = _owner.x + _owner.width * .5; break;
+				case Common.FIRE_MIDDLE_LEFT			: x = _owner.x + _owner.width * .5; break;
+				case Common.FIRE_MIDDLE_RIGHT		: x = _owner.x + _owner.width * .5; break;
+				case Common.FIRE_BOTTOM_DEFAULT	: x = _owner.x + _owner.width * .25;	rotation = 45; break;
+				case Common.FIRE_BOTTOM_LEFT			: x = _owner.x + _owner.width * .3;	rotation = 45; break;
+				case Common.FIRE_BOTTOM_RIGHT		: x = _owner.x + _owner.width * .2;	rotation = 45; break;
 			}
 		}
 		
@@ -131,42 +90,15 @@ package core.game.weapon
 		{
 			switch (_fire_type)
 			{
-				case Common.FIRE_TOP_DEFAULT:
-					x = _owner.x - _owner.width * .25;
-					rotation = -135;
-					break;
-				case Common.FIRE_TOP_LEFT:
-					x = _owner.x - _owner.width * .2;
-					rotation = -135;
-					break;
-				case Common.FIRE_TOP_RIGHT:
-					x = _owner.x - _owner.width * .3;
-					rotation = -135;
-					break;
-				case Common.FIRE_MIDDLE_DEFAULT:
-					x = _owner.x - _owner.width * .5;
-					rotation = 180;
-					break;
-				case Common.FIRE_MIDDLE_LEFT:
-					x = _owner.x - _owner.width * .5;
-					rotation = 180;
-					break;
-				case Common.FIRE_MIDDLE_RIGHT:
-					x = _owner.x - _owner.width * .5;
-					rotation = 180;
-					break;
-				case Common.FIRE_BOTTOM_DEFAULT:
-					x = _owner.x - _owner.width * .25;
-					rotation = 135;
-					break;
-				case Common.FIRE_BOTTOM_LEFT:
-					x = _owner.x - _owner.width * .3;
-					rotation = 135;
-					break;
-				case Common.FIRE_BOTTOM_RIGHT:
-					x = _owner.x - _owner.width * .2;
-					rotation = 135;
-					break;
+				case Common.FIRE_TOP_DEFAULT			: x = _owner.x - _owner.width * .25;	rotation = -135;	break;
+				case Common.FIRE_TOP_LEFT				: x = _owner.x - _owner.width * .2;	rotation = -135;	break;
+				case Common.FIRE_TOP_RIGHT				: x = _owner.x - _owner.width * .3;	rotation = -135;	break;
+				case Common.FIRE_MIDDLE_DEFAULT	: x = _owner.x - _owner.width * .5;	rotation = 180;	break;
+				case Common.FIRE_MIDDLE_LEFT			: x = _owner.x - _owner.width * .5;	rotation = 180;	break;
+				case Common.FIRE_MIDDLE_RIGHT		: x = _owner.x - _owner.width * .5;	rotation = 180;	break;
+				case Common.FIRE_BOTTOM_DEFAULT	: x = _owner.x - _owner.width * .25;	rotation = 135;	break;
+				case Common.FIRE_BOTTOM_LEFT			: x = _owner.x - _owner.width * .3;	rotation = 135;	break;
+				case Common.FIRE_BOTTOM_RIGHT		: x = _owner.x - _owner.width * .2;	rotation = 135;	break;
 			}
 		}
 		
@@ -287,19 +219,8 @@ package core.game.weapon
 		 * Check
 		 */
 		
-		public function isHero():Boolean
-		{
-			return _owner_type == Common.OWNER_HERO;
-		}
-		
-		public function isEnemy():Boolean
-		{
-			return _owner_type == Common.OWNER_ENEMY;
-		}
-		
-		public function isReinforcement():Boolean
-		{
-			return _owner_type == Common.OWNER_REINFORCEMENT;
-		}
+		public function isHero					():Boolean { return _owner_type == Common.OWNER_HERO; }
+		public function isEnemy				():Boolean { return _owner_type == Common.OWNER_ENEMY; }
+		public function isReinforcement	():Boolean { return _owner_type == Common.OWNER_REINFORCEMENT; }
 	}
 }

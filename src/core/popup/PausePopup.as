@@ -82,6 +82,8 @@ package core.popup
 			
 			destroy();
 			
+			Mouse.hide();
+			
 			if			(current_game_key == Common.GAME_ADVENTURE_KEY)	SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_ADVENTURE, GameState.game.current_level);
 			else if	(current_game_key == Common.GAME_SURVIVAL_KEY)		SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_SURVIVAL);
 			else if	(current_game_key == Common.GAME_DUO_KEY)				SceneManager.getInstance().setCurrentScene(Common.SCENE_GAME_DUO);

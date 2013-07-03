@@ -431,9 +431,9 @@ package core.game
 		
 		public function destroyElement(s:Sprite):void
 		{
-			if			(s is Weapon)	weapons	.splice(weapons	.indexOf(s), 1);
-			else if	(s is Enemy)		enemies	.splice(enemies	.indexOf(s), 1);
-			else if	(s is Item)			items		.splice(items		.indexOf(s), 1);
+			if			(s is Weapon	&& weapons)	weapons	.splice(weapons	.indexOf(s), 1);
+			else if	(s is Enemy	&& enemies)	enemies	.splice(enemies	.indexOf(s), 1);
+			else if	(s is Item		&& items)		items		.splice(items		.indexOf(s), 1);
 			
 			s.parent.removeChild(s);
 			s = null;
