@@ -70,18 +70,18 @@ package core
 			_improvements[Common.IMPROVEMENT_REINFORCE]							= 0;
 			
 			_achievements = new Array();
-			createAchievement(Common.ACHIEVEMENT_METAL);
-			createAchievement(Common.ACHIEVEMENT_CRYSTAL);
-			createAchievement(Common.ACHIEVEMENT_MONEY);
-			createAchievement(Common.ACHIEVEMENT_SERIAL_KILLER);
-			createAchievement(Common.ACHIEVEMENT_NATURAL_DEATH);
-			createAchievement(Common.ACHIEVEMENT_ROADHOG);
+			createAchievement(Common.ACHIEVEMENT_ALIEN_BLAST);
 			createAchievement(Common.ACHIEVEMENT_CONQUEROR);
 			createAchievement(Common.ACHIEVEMENT_COOPERATION);
-			createAchievement(Common.ACHIEVEMENT_SURVIVAL);
-			createAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER);
 			createAchievement(Common.ACHIEVEMENT_CURIOSITY);
-			createAchievement(Common.ACHIEVEMENT_ALIEN_BLAST);
+			createAchievement(Common.ACHIEVEMENT_NATURAL_DEATH);
+			createAchievement(Common.ACHIEVEMENT_CRYSTAL);
+			createAchievement(Common.ACHIEVEMENT_METAL);
+			createAchievement(Common.ACHIEVEMENT_MONEY);
+			createAchievement(Common.ACHIEVEMENT_MISTER_BOOSTER);
+			createAchievement(Common.ACHIEVEMENT_SERIAL_KILLER);
+			createAchievement(Common.ACHIEVEMENT_SURVIVAL);
+			createAchievement(Common.ACHIEVEMENT_ROADHOG);
 			
 			games = new Array();
 			games[Common.GAME_ADVENTURE_KEY]	= new Array();

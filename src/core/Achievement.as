@@ -35,7 +35,7 @@ package core
 					score			= 5000;
 					break;
 				case Common.ACHIEVEMENT_NATURAL_DEATH:
-					name			= 'Dying is natural';
+					name			= 'Death is natural';
 					description	= 'Die 10 times.';
 					score			= 10;
 					break;

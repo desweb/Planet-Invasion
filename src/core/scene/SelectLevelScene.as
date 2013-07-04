@@ -1,6 +1,8 @@
 package core.scene 
 {
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	import core.Common;
 	import core.GameState;
@@ -34,6 +36,21 @@ package core.scene
 			generateBtnSound();
 			
 			_return_scene_uid = Common.SCENE_GAME_MODE;
+			
+			// Title format
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 20);
+			format_title.bold = true;
+			
+			// Title label
+			var title_label:TextField = new TextField();
+			title_label.x							= GameState.stageWidth	* .25;
+			title_label.y							= GameState.stageHeight	* .1;
+			title_label.width						= GameState.stageWidth	* .5;
+			title_label.height					= GameState.stageHeight	* .5;
+			title_label.defaultTextFormat	= format_title;
+			title_label.text						= 'Adventure';
+			title_label.selectable				= false;
+			addChild(title_label);
 			
 			/**
 			 * Levels

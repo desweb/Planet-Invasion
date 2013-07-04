@@ -1,6 +1,8 @@
 package core.scene 
 {
 	import flash.display.Sprite;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	import core.Common;
 	import core.GameState;
@@ -21,8 +23,23 @@ package core.scene
 			generateBg();
 			generateBtnReturn();
 			
+			// Title format
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 20);
+			format_title.bold = true;
+			
+			// Title label
+			var title_label:TextField = new TextField();
+			title_label.x							= GameState.stageWidth	* .25;
+			title_label.y							= GameState.stageHeight	* .1;
+			title_label.width						= GameState.stageWidth	* .5;
+			title_label.height					= GameState.stageHeight	* .5;
+			title_label.defaultTextFormat	= format_title;
+			title_label.text						= 'Tutorial';
+			title_label.selectable				= false;
+			addChild(title_label);
+			
 			var tutorial:TutorialSceneFlash = new TutorialSceneFlash();
-			tutorial.x = GameState.stageWidth	* .1;
+			tutorial.x = GameState.stageWidth	* .125;
 			tutorial.y = GameState.stageHeight	* .3;
 			
 			var bg:Sprite = new Sprite();

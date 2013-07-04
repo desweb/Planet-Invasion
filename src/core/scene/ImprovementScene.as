@@ -77,7 +77,7 @@ package core.scene
 			var resource_label:TextField = new TextField();
 			resource_label.x							= GameState.stageWidth	* .05;
 			resource_label.y							= GameState.stageHeight	* .16;
-			resource_label.width						= GameState.stageWidth	* .5;
+			resource_label.width						= GameState.stageWidth	* .9;
 			resource_label.height						= GameState.stageHeight	* .5;
 			resource_label.defaultTextFormat	= Common.getPolicy('Arial', 0x00FFFF, 12);
 			resource_label.text						= 'My resources : ' + GameState.user.metal + ' metal, ' + GameState.user.crystal + ' crystal, ' + GameState.user.money + ' money';

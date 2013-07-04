@@ -33,7 +33,7 @@ package core.scene
 			credits_title_format.bold = true;
 			
 			// Title format
-			var format_title:TextFormat = Common.getPolicy('Arial', 0x00ffff, 20);
+			var format_title:TextFormat = Common.getPolicy('Arial', 0x00FFFF, 20);
 			format_title.bold = true;
 			
 			// Title label
