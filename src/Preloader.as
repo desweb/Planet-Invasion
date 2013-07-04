@@ -40,24 +40,26 @@ package
 			
 			// Show loader scene
 			_bg = new BgFlash();
-			_bg.gotoAndStop(2);
 			addChild(_bg);
 			
 			var font:Font = new MyArialPolicy();
 			
 			var format:TextFormat = new TextFormat();
-			format.color	= 0x00ffff;
-			format.size	= 24;
+			format.color	= 0x00FFFF;
+			format.size	= 20;
 			format.font	= font.fontName;
+			format.bold	= true;
+			format.align	= 'center';
 			
 			_loading_label = new TextField();
-			_loading_label.text = 'Loading...';
+			_loading_label.width	= stage.stageWidth	* .4;
+			_loading_label.height	= stage.stageHeight	* .1;
+			_loading_label.x = (stage.stageWidth - _loading_label.width) / 2;
+			_loading_label.y = stage.stageHeight * .3;
+			_loading_label.defaultTextFormat = format;
+			_loading_label.text = 'Loading 0%';
 			_loading_label.selectable = false;
-			_loading_label.setTextFormat(format);
 			addChild(_loading_label);
-			
-			_loading_label.x = stage.stageWidth/2 - _loading_label.width/2;
-			_loading_label.y = stage.stageHeight*0.3;
 			
 			_loader = new LoaderFlash();
 			_loader.x = stage.stageWidth / 2;
@@ -67,20 +69,14 @@ package
 			SoundManager.getInstance().load();
 		}
 		
-		private function ioError(e:IOErrorEvent):void 
+		private function ioError(e:IOErrorEvent):void
 		{
 			trace(e.text);
 		}
 		
 		private function progress(e:ProgressEvent):void 
 		{
-			// TODO update loader
-			
-			if (Common.IS_DEBUG)
-			{
-				var percent:int = (e.bytesLoaded / e.bytesTotal) * 100;
-				trace('loading : ' + percent + '%');
-			}
+			_loading_label.text = 'Loading ' + int(e.bytesLoaded / e.bytesTotal * 100) + '%';
 		}
 		
 		private function checkFrame(e:Event):void 
@@ -99,8 +95,6 @@ package
 			removeEventListener(Event.ENTER_FRAME, checkFrame);
 			loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioError);
-			
-			// TODO hide loader
 			
 			startup();
 		}

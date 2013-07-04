@@ -43,7 +43,8 @@ package core.scene
 		private var _scrollRankSurvival	:ScrollManager;
 		private var _scrollRankDuo			:ScrollManager;
 		
-		private var _scrollFormat			:TextFormat;
+		private var _scroll_format			:TextFormat;
+		private var _scroll_format_user	:TextFormat;
 		private var _scroll_format_bold	:TextFormat;
 		
 		public function RankScene()
@@ -58,9 +59,11 @@ package core.scene
 			generateBtnReturn();
 			
 			// Format
-			_scrollFormat				= Common.getPolicy('Arial', 0x00ffff, 15);
-			_scroll_format_bold	= Common.getPolicy('Arial', 0x00ff00, 15);
-			_scroll_format_bold.bold = true;
+			_scroll_format					= Common.getPolicy('Arial', 0x00FFFF, 15);
+			_scroll_format_user			= Common.getPolicy('Arial', 0x00FFFF, 15);
+			_scroll_format_user.bold	= true;
+			_scroll_format_bold			= Common.getPolicy('Arial', 0x00FF00, 15);
+			_scroll_format_bold.bold		= true;
 			
 			// Tab bar
 			_tabRank = generateTab('General');
@@ -110,8 +113,6 @@ package core.scene
 			API.get_rank(1, 50,
 			function(response:XML):void
 			{
-				trace(response);
-				
 				removeEventListener(Event.ENTER_FRAME, updateLoader);
 				removeChild(_loader);
 				_loader = null;
@@ -337,7 +338,7 @@ package core.scene
 			// Rank number
 			var rankLabel:TextField = new TextField();
 			rankLabel.x = GameState.stageWidth*0.1;
-			rankLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
+			rankLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scroll_format;
 			rankLabel.text = user.rank;
 			rankLabel.selectable = false;
 			lineSprite.addChild(rankLabel);
@@ -345,7 +346,7 @@ package core.scene
 			// Username
 			var usernameLabel:TextField = new TextField();
 			usernameLabel.x = GameState.stageWidth * 0.3;
-			usernameLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
+			usernameLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scroll_format;
 			usernameLabel.text = user.username;
 			usernameLabel.selectable = false;
 			lineSprite.addChild(usernameLabel);
@@ -353,7 +354,7 @@ package core.scene
 			// Points
 			var pointsLabel:TextField = new TextField();
 			pointsLabel.x = GameState.stageWidth*0.7;
-			pointsLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scrollFormat;
+			pointsLabel.defaultTextFormat = user.username == GameState.user.username? _scroll_format_bold: _scroll_format;
 			pointsLabel.text = user.score + ' pts';
 			pointsLabel.selectable = false;
 			lineSprite.addChild(pointsLabel);
@@ -371,21 +372,21 @@ package core.scene
 			// Rank number
 			var rankLabel:TextField = new TextField();
 			rankLabel.x = GameState.stageWidth*0.1;
-			rankLabel.defaultTextFormat = _scrollFormat;
+			rankLabel.defaultTextFormat = _scroll_format_user;
 			rankLabel.text = game.rank;
 			user_rank.addChild(rankLabel);
 			
 			// Username
 			var usernameLabel:TextField = new TextField();
 			usernameLabel.x = GameState.stageWidth * 0.3;
-			usernameLabel.defaultTextFormat = _scrollFormat;
+			usernameLabel.defaultTextFormat = _scroll_format_user;
 			usernameLabel.text = GameState.user.username;
 			user_rank.addChild(usernameLabel);
 			
 			// Points
 			var pointsLabel:TextField = new TextField();
 			pointsLabel.x = GameState.stageWidth*0.7;
-			pointsLabel.defaultTextFormat = _scrollFormat;
+			pointsLabel.defaultTextFormat = _scroll_format_user;
 			pointsLabel.text = game.score + ' pts';
 			user_rank.addChild(pointsLabel);
 			
