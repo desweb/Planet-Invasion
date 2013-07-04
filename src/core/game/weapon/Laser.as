@@ -63,7 +63,7 @@ package core.game.weapon
 		
 		override public function resume():void
 		{
-			_life_timer.start();
+			if (_life_timer) _life_timer.start();
 			
 			super.resume();
 		}

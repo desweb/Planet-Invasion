@@ -127,6 +127,8 @@ package core.popup
 			_submitLoader	.alpha = 1;
 			_submitBtn		.alpha = 0;
 			
+			_submitBtn.y = GameState.stageHeight;
+			
 			API.put_user(_usernameInput.text, _emailInput.text, _passwordInput.text,
 			function(response:XML):void
 			{
@@ -134,6 +136,8 @@ package core.popup
 				
 				_submitLoader	.alpha = 0;
 				_submitBtn		.alpha = 1;
+				
+				_submitBtn.y = GameState.stageHeight * .55;
 				
 				removeEventListener(Event.ENTER_FRAME, updateResponse);
 				

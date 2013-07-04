@@ -60,7 +60,7 @@ package core.game.enemy
 		
 		override protected function update(e:Event):void
 		{
-			if (is_kill) return;
+			if (is_kill || _is_pause) return;
 			
 			super.update(e);
 			

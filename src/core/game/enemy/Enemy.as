@@ -179,6 +179,9 @@ package core.game.enemy
 		
 		private function removeThis():void
 		{
+			removeChild(_graphic);
+			_graphic = null;
+			
 			GameState.game.destroyElement(this);
 		}
 		
@@ -211,7 +214,7 @@ package core.game.enemy
 			
 			if (_fire_timer) _fire_timer.start();
 			
-			_tween.resume();
+			if (_tween) _tween.resume();
 		}
 		
 		/**

@@ -28,6 +28,8 @@ package core.game
 	public class GameSurvival extends Game implements IGame
 	{
 		private var _timer:Timer = new Timer(1000);
+		private var _wave_timer1:Timer;
+		private var _wave_timer2:Timer;
 		
 		private var _nb_wave:int = 0;
 		
@@ -67,14 +69,18 @@ package core.game
 		{
 			super.pause();
 			
-			if (_timer) _timer.stop();
+			if (_timer)				_timer.stop();
+			if (_wave_timer1)	_wave_timer1.stop();
+			if (_wave_timer2)	_wave_timer2.stop();
 		}
 		
 		override public function resume():void
 		{
 			super.resume();
 			
-			if (_timer) _timer.start();
+			if (_timer)				_timer.start();
+			if (_wave_timer1)	_wave_timer1.start();
+			if (_wave_timer2)	_wave_timer2.start();
 		}
 		
 		override public function destroy():void
@@ -92,6 +98,8 @@ package core.game
 		
 		private function completeTimer(e:TimerEvent):void
 		{
+			if (_is_pause) return;
+			
 			_total_time_adventure++;
 			updateTimeLabel();
 			
@@ -101,26 +109,26 @@ package core.game
 				
 				for (var i:int = 0; i < 3 * _nb_wave; i++) createEnemy();
 				
-				var timer1:Timer = new Timer(2000);
-				var timer2:Timer = new Timer(4000);
+				_wave_timer1 = new Timer(2000);
+				_wave_timer2 = new Timer(4000);
 				
-				timer1.start();
-				timer2.start();
+				_wave_timer1.start();
+				_wave_timer2.start();
 				
-				timer1.addEventListener(TimerEvent.TIMER, function completeTimer1(e:TimerEvent):void
+				_wave_timer1.addEventListener(TimerEvent.TIMER, function completeTimer1(e:TimerEvent):void
 				{
-					timer1.removeEventListener(TimerEvent.TIMER, completeTimer1);
-					timer1.stop();
-					timer1 = null;
+					_wave_timer1.removeEventListener(TimerEvent.TIMER, completeTimer1);
+					_wave_timer1.stop();
+					_wave_timer1 = null;
 					
 					for (var i:int = 0; i < 3 * _nb_wave; i++) createEnemy();
 				});
 				
-				timer2.addEventListener(TimerEvent.TIMER, function completeTimer2(e:TimerEvent):void
+				_wave_timer2.addEventListener(TimerEvent.TIMER, function completeTimer2(e:TimerEvent):void
 				{
-					timer2.removeEventListener(TimerEvent.TIMER, completeTimer2);
-					timer2.stop();
-					timer2 = null;
+					_wave_timer2.removeEventListener(TimerEvent.TIMER, completeTimer2);
+					_wave_timer2.stop();
+					_wave_timer2 = null;
 					
 					for (var i:int = 0; i < 3 * _nb_wave; i++) createEnemy();
 				});

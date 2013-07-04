@@ -202,7 +202,7 @@ package core.game
 		
 		private function completeTimer(e:TimerEvent):void
 		{
-			if (_is_win) return;
+			if (_is_win || _is_pause) return;
 			
 			if (_is_last_wave)
 			{
