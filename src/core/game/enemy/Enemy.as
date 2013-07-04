@@ -102,9 +102,7 @@ package core.game.enemy
 		
 		protected function update(e:Event):void
 		{
-			if (is_kill) return;
-			
-			if (GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
+			if (is_kill || GameState.game.hero.is_kill || !hitTestObject(GameState.game.hero)) return;
 			
 			// Roadhog achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_ROADHOG, 1);
@@ -125,6 +123,8 @@ package core.game.enemy
 			if (is_kill) return;
 			
 			is_kill = true;
+			
+			GameState.game.destroyElementOfList(this);
 			
 			if (_tween)
 			{
@@ -153,7 +153,7 @@ package core.game.enemy
 			
 			if (_life > 0)
 			{
-				removeThis();
+				GameState.game.destroyElement(this);
 				return;
 			}
 			
@@ -171,17 +171,14 @@ package core.game.enemy
 			{
 				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
 				
-				removeThis();
+				removeAfterTimer();
 			});
 			
 			remove_timer.start();
 		}
 		
-		private function removeThis():void
+		private function removeAfterTimer():void
 		{
-			removeChild(_graphic);
-			_graphic = null;
-			
 			GameState.game.destroyElement(this);
 		}
 		

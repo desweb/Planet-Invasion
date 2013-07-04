@@ -147,29 +147,17 @@ package core.game
 		{
 			switch (Tools.random(0, 9))
 			{
-				case 0: addEnemy(new AlienEnemy());			break;
-				case 1: addEnemy(new AsteroidEnemy());		break;
-				case 2: addEnemy(new CruiserEnemy());		break;
-				case 3: addEnemy(new DestroyerEnemy());	break;
-				case 4: addEnemy(new HeavyFighterEnemy());break;
-				case 5: addEnemy(new KamikazeEnemy());		break;
-				case 6: addEnemy(new LightFighterEnemy());	break;
-				case 7: addEnemy(new MineEnemy());			break;
-				case 8: addTransporterEnemy(new TransporterEnemy());	break;
-				case 9: addEnemy(new TurretEnemy());			break;
+				case 0: new AlienEnemy();				break;
+				case 1: new AsteroidEnemy();		break;
+				case 2: new CruiserEnemy();			break;
+				case 3: new DestroyerEnemy();		break;
+				case 4: new HeavyFighterEnemy();	break;
+				case 5: new KamikazeEnemy();		break;
+				case 6: new LightFighterEnemy();	break;
+				case 7: new MineEnemy();				break;
+				case 8: new TransporterEnemy();	break;
+				case 9: new TurretEnemy();			break;
 			}
-		}
-		
-		private function addEnemy(e:Enemy):void
-		{
-			enemies_container				= e;
-			enemies[enemies.length]	= e;
-		}
-		
-		private function addTransporterEnemy(e:TransporterEnemy):void
-		{
-			transporters_container		= e;
-			enemies[enemies.length]	= e;
 		}
 		
 		public function updateTimeLabel():void

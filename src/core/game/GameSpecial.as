@@ -229,5 +229,4 @@ package core.game
 			interfaceEffect(_wave_label);
 		}
 	}
-
 }

@@ -43,7 +43,7 @@ package core.game.item
 		
 		protected function update(e:Event):void
 		{
-			if (_is_hit || _is_pause) return;
+			if (_is_hit || _is_pause || GameState.game.hero.is_kill) return;
 			
 			// Hero hit
 			if (hitTestObject(GameState.game.hero))
@@ -65,6 +65,8 @@ package core.game.item
 			
 			_is_kill = true;
 			
+			GameState.game.destroyElementOfList(this);
+			
 			_tween.kill();
 			_tween = null;
 			
@@ -72,24 +74,13 @@ package core.game.item
 			
 			if (!is_anim)
 			{
-				removeThis();
+				GameState.game.destroyElement(this);
 				return;
 			}
 			
 			SoundManager.getInstance().play(SoundManager.ITEM);
 			
-			_tween = new TweenLite(this, .5, { scaleX : 2, scaleY : 2, alpha : 0, onComplete:removeThis });
-		}
-		
-		private function removeThis():void
-		{
-			if (_tween)
-			{
-				_tween.kill();
-				_tween = null;
-			}
-			
-			parent.removeChild(this);
+			_tween = new TweenLite(this, .5, { scaleX : 2, scaleY : 2, alpha : 0, onComplete:GameState.game.destroyElement, onCompleteParams:[this] });
 		}
 		
 		/**
@@ -113,6 +104,5 @@ package core.game.item
 			
 			if (_tween) _tween.resume();
 		}
-		
 	}
 }

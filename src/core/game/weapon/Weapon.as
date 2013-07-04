@@ -20,10 +20,10 @@ package core.game.weapon
 	 */
 	public class Weapon extends Sprite
 	{
-		private var _is_hit		:Boolean = false;
-		private var _isKilled	:Boolean = false;
-		protected var _is_pause:Boolean = false;
-		protected var _is_hit_destroy:Boolean = true;
+		private var _is_hit					:Boolean = false;
+		private var _is_kill					:Boolean = false;
+		protected var _is_pause			:Boolean = false;
+		protected var _is_hit_destroy	:Boolean = true;
 		
 		public var dt:Number = 0;
 		
@@ -141,6 +141,8 @@ package core.game.weapon
 				e_hit.hitWeapon(_damage);
 				
 				if (_is_hit_destroy) destroy();
+				
+				break;
 			}
 		}
 		
@@ -159,9 +161,11 @@ package core.game.weapon
 		// Destroy
 		public function destroy():void
 		{
-			if (_isKilled) return;
+			if (_is_kill) return;
 			
-			_isKilled = true;
+			_is_kill = true;
+			
+			GameState.game.destroyElementOfList(this);
 			
 			removeEventListener(Event.ENTER_FRAME, update);
 			
@@ -173,7 +177,7 @@ package core.game.weapon
 			
 			if (!_is_hit || !_is_hit_destroy)
 			{
-				removeThis();
+				GameState.game.destroyElement(this);
 				return;
 			}
 			
@@ -186,15 +190,15 @@ package core.game.weapon
 			{
 				remove_timer.removeEventListener(TimerEvent.TIMER, timerRemove);
 				
-				removeThis();
+				removeAfterTimer();
 			});
 			
 			remove_timer.start();
 		}
 		
-		private function removeThis():void
+		private function removeAfterTimer():void
 		{
-			parent.removeChild(this);
+			GameState.game.destroyElement(this);
 		}
 		
 		/**

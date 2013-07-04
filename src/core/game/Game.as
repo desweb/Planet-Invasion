@@ -84,12 +84,9 @@ package core.game
 		public var total_boost_resistance	:int = 0;
 		
 		// Entities
-		/*public var enemies		:Vector.<Enemy>		= new Vector.<Enemy>();
+		public var enemies		:Vector.<Enemy>		= new Vector.<Enemy>();
 		public var weapons	:Vector.<Weapon>	= new Vector.<Weapon>();
-		public var items			:Vector.<Item>			= new Vector.<Item>();*/
-		public var enemies		:Array = new Array();
-		public var weapons	:Array = new Array();
-		public var items			:Array = new Array();
+		public var items			:Vector.<Item>			= new Vector.<Item>();
 		
 		// Enemies
 		private var _total_enemy_kill		:int			= 0;
@@ -419,29 +416,50 @@ package core.game
 			
 			_hero.destroy();
 			
-			for each(var e:Enemy	in enemies)	e.destroy();
-			for each(var w:Weapon	in weapons)	w.destroy();
-			for each(var i:Item		in items)		i.destroy();
+			var enemies_old_length:uint;
+			while (enemies.length)
+			{
+				if (enemies_old_length && enemies_old_length == enemies.length) enemies.splice(0, 1);
+				
+				enemies_old_length = enemies.length;
+				
+				if (enemies_old_length) enemies[0].destroy();
+			}
 			
-			enemies	.splice(0);
-			weapons	.splice(0);
-			items		.splice(0);
+			var weapons_old_length:uint;
+			while (weapons.length)
+			{
+				if (weapons_old_length && weapons_old_length == weapons.length) weapons.splice(0, 1);
+				
+				weapons_old_length = weapons.length;
+				
+				if (weapons_old_length) weapons[0].destroy();
+			}
 			
-			enemies	= null;
-			weapons	= null;
-			items		= null;
+			var items_old_length:uint;
+			while (items.length)
+			{
+				if (items_old_length && items_old_length == items.length) items.splice(0, 1);
+				
+				items_old_length = items.length;
+				
+				if (items_old_length) items[0].destroy();
+			}
 			
 			if (_bg) _bg.destroy();
 			
 			initCombo();
 		}
 		
+		public function destroyElementOfList(s:Sprite):void
+		{
+			if			(s is Enemy)	enemies	.splice(enemies	.indexOf(s), 1);
+			else if	(s is Weapon)weapons	.splice(weapons	.indexOf(s), 1);
+			else if	(s is Item)		items		.splice(items		.indexOf(s), 1);
+		}
+		
 		public function destroyElement(s:Sprite):void
 		{
-			if			(s is Weapon	&& weapons)	weapons	.splice(weapons	.indexOf(s), 1);
-			else if	(s is Enemy	&& enemies)	enemies	.splice(enemies	.indexOf(s), 1);
-			else if	(s is Item		&& items)		items		.splice(items		.indexOf(s), 1);
-			
 			s.parent.removeChild(s);
 			s = null;
 		}
@@ -462,12 +480,12 @@ package core.game
 			
 			switch (Tools.random(0, 5))
 			{
-				case 0: items_container = new AttackItem		(); break;
-				case 1: items_container = new CrystalItem		(); break;
-				case 2: items_container = new DefenseItem	(); break;
-				case 3: items_container = new GoldItem			(); break;
-				case 4: items_container = new MetalItem		(); break;
-				case 5: items_container = new SpeedItem		(); break;
+				case 0: new AttackItem();	break;
+				case 1: new CrystalItem();	break;
+				case 2: new DefenseItem();break;
+				case 3: new GoldItem();		break;
+				case 4: new MetalItem();	break;
+				case 5: new SpeedItem();	break;
 			}
 		}
 		

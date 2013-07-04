@@ -36,7 +36,7 @@ package core.popup
 			var label:TextField = new TextField();
 			label.x				= GameState.stageWidth	* .01;
 			label.y				= GameState.stageHeight	* .025;
-			label.width			= GameState.stageWidth	* .3;
+			label.width			= GameState.stageWidth	* .8;
 			label.height		= GameState.stageHeight	* .05;
 			label.selectable	= false;
 			label.textColor	= 0x00FF00;
