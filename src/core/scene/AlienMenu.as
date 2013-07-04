@@ -83,7 +83,7 @@ package core.scene
 					break;
 				// Right
 				case 3:
-					p3['x'] = GameState.stageWidth;
+					p3['x'] = GameState.stageWidth + width;
 					p3['y'] = Tools.random(0, GameState.stageHeight);
 					break;
 			}
