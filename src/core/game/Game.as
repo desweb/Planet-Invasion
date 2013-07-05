@@ -359,10 +359,12 @@ package core.game
 		
 		protected function end():void
 		{
+			var score:int = _total_metal + _total_crystal + _total_money;
+			
 			GameState.user.metal	+= _total_metal;
 			GameState.user.crystal	+= _total_crystal;
 			GameState.user.money	+= _total_money;
-			GameState.user.score	+= _total_metal + _total_crystal + _total_money;
+			GameState.user.score	+= score;
 			
 			// Metal, crystal & money achievement
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_METAL,		_total_metal);
@@ -370,8 +372,6 @@ package core.game
 			SceneManager.getInstance().scene.checkAchievement(Common.ACHIEVEMENT_MONEY,		_total_money);
 			
 			if (GameState.user.isLog) API.post_userStat(function(response:XML):void { } );
-			
-			var score:int = _total_metal + _total_crystal + _total_money;
 			
 			GameState.user.games[_current_game_key]['total_metal']					+= _total_metal;
 			GameState.user.games[_current_game_key]['total_crystal']					+= _total_crystal;

@@ -44,15 +44,32 @@ package core.scene
 			addChild(title_label);
 			
 			var i:uint = 0;
-			for each (var level:Array in GameState.user.levels)
+			if (GameState.user.levels.length <= 5)
 			{
-				buttons[i] = generateBtn(level.name);
-				buttons[i].name = level.key;
-				buttons[i].y = GameState.stageHeight * .25 + GameState.stageHeight * .1 * i;
-				
-				buttons[i].addEventListener(MouseEvent.CLICK, clickLevel);
-				
-				i++;
+				for each (var level:Array in GameState.user.levels)
+				{
+					buttons[i] = generateBtn(level.name);
+					buttons[i].name = level.key;
+					buttons[i].y = GameState.stageHeight * .3 + GameState.stageHeight * .1 * i;
+					
+					buttons[i].addEventListener(MouseEvent.CLICK, clickLevel);
+					
+					i++;
+				}
+			}
+			else
+			{
+				for each (var level2:Array in GameState.user.levels)
+				{
+					buttons[i] = generateBtn(level2.name);
+					buttons[i].name = level2.key;
+					buttons[i].y = GameState.stageHeight * .3 + GameState.stageHeight * .1 * (i < 5? i: i - 5);
+					buttons[i].x = i < 5? GameState.stageWidth * .2: GameState.stageWidth * .6;
+					
+					buttons[i].addEventListener(MouseEvent.CLICK, clickLevel);
+					
+					i++;
+				}
 			}
 		}
 		
